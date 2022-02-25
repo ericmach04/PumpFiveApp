@@ -3,7 +3,6 @@ import React, { useCallback } from 'react'
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
-const image = {uri: "https://play-lh.googleusercontent.com/ydkcSXReYXTWms08p6NbzkK85tOpQzcsM227Y2fVvyZXy5-TmZf594XfHZzATPjiFQ"}
 const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
 
 const OpenURLButton = ({ url, children }) => {
@@ -29,7 +28,7 @@ export default function HomePage() {
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
       <Image
         style={styles.Logo}
-        source={image}
+        source={require('../images/pumpfivelogo.png')}
       />
       <View style={styles.rect1}/>
       <Image
