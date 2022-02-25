@@ -50,7 +50,7 @@ const Tabs = () =>{
                         }}/>
                         <Text 
                         style={{color: focused ? 'black' : 'black', fontSize: 12}}>
-                            Home
+                            Place Order
                             </Text>
                     </View>
                 )
@@ -68,7 +68,7 @@ const Tabs = () =>{
                         }}/>
                         <Text 
                         style={{color: focused ? 'black' : 'black', fontSize: 12}}>
-                            Home
+                            Account Settings
                             </Text>
                     </View>
                 )

@@ -23,12 +23,12 @@ import Tabs from './navigation/tabs';
 
 const App = () =>  {
   return (
-    // <NavigationContainer>
-    //   <Tabs />
-    // </NavigationContainer>
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
     // <GasService/>
     // <TireService/>
-    <DetailingService/>
+    // <DetailingService/>
   )
 }
 
