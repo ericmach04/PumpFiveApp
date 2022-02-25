@@ -138,12 +138,13 @@ const styles = StyleSheet.create({
     left: 188,
     top: 579,
     backgroundColor: '#B96835',
-  },price2: {
+  },
+  price2: {
     position: 'absolute',
     width: 74,
     height: 30,
     left: 188,
     top: 616,
     backgroundColor: '#B96835',
-  }
+  },
 })

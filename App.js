@@ -2,6 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import HomePage from "./CustomerApp/HomePage";
 import PlaceOrder from "./CustomerApp/PlaceOrder";
+import GasService from "./CustomerApp/GasService";
+import TireService from "./CustomerApp/TireService";
+import DetailingService from "./CustomerApp/DetailingService";
 
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -20,9 +23,12 @@ import Tabs from './navigation/tabs';
 
 const App = () =>  {
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Tabs />
+    // </NavigationContainer>
+    // <GasService/>
+    // <TireService/>
+    <DetailingService/>
   )
 }
 
