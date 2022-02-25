@@ -1,9 +1,19 @@
 import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button } from 'react-native'
+import { useNavigate } from "react-router-dom";
 import React from 'react'
 // import { NavigationContainer } from '@react-navigation/native';
 // import Tabs from '../navigation/tabs';
 
+
 const image = { uri: "https://reactjs.org/logo-og.png" };
+
+function redirect(){
+  let navigate = useNavigate(); 
+  let path = `./CustomerApp/GasService.js`; 
+  navigate(path);
+  
+}
+
 
 export default function PlaceOrder() {
   return (

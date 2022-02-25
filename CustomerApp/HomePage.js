@@ -59,8 +59,4 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderRadius: 10,
   },
-<<<<<<< HEAD
 })
-=======
-})
->>>>>>> 805f230c81375eec0c12e0bb576ad593713e2de5
