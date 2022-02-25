@@ -1,28 +1,32 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground } from 'react-native'
 import React from 'react'
 
 export default function Login() {
   return (
     <SafeAreaView>
-      <Text numberOfLines={2}>PumpFive </Text>
-      <Text>Fuel Delivery Service</Text>
+      <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
 
-      <Text>
+        <Text numberOfLines={2}>PumpFive </Text>
+        <Text>Fuel Delivery Service</Text>
+
+        <Text>
         Login
-      </Text>
+        </Text>
 
-      <Text> Please sign in to continue</Text>
+        <Text> Please sign in to continue</Text>
 
-      <Text>Email:</Text>
+        <Text>Email:</Text>
 
-      <Text>Password:</Text>
+        <Text>Password:</Text>
 
-      <Button title='LOGIN' onPress={() => console.log("button works")}/>
+        <Button title='LOGIN' onPress={() => console.log("button works")}/>
 
-      <Text>New User?</Text> <TouchableHighlight onPress={() => console.log("Touchable works")}>
+        <Text>New User?</Text> 
+        <TouchableHighlight onPress={() => console.log("Touchable works")}>
 
-        <Text>Sign up</Text>
-      </TouchableHighlight>
+          <Text>Sign up</Text>
+        </TouchableHighlight>
+      </ImageBackground>
 
     </SafeAreaView>
   )

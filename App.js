@@ -5,6 +5,7 @@ import PlaceOrder from "./CustomerApp/PlaceOrder";
 import GasService from "./CustomerApp/GasService";
 import TireService from "./CustomerApp/TireService";
 import DetailingService from "./CustomerApp/DetailingService";
+import LoginPage from "./CustomerApp/Login";
 
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -23,12 +24,13 @@ import Tabs from './navigation/tabs';
 
 const App = () =>  {
   return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
+   // <NavigationContainer>
+     // <Tabs />
+    //</NavigationContainer>
     // <GasService/>
     // <TireService/>
     // <DetailingService/>
+    <LoginPage/>
   )
 }
 
