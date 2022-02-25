@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight } from 'react-native'
 import React from 'react'
 
 export default function Login() {
@@ -18,6 +18,11 @@ export default function Login() {
       <Text>Password:</Text>
 
       <Button title='LOGIN' onPress={() => console.log("button works")}/>
+
+      <Text>New User?</Text> <TouchableHighlight onPress={() => console.log("Touchable works")}>
+
+        <Text>Sign up</Text>
+      </TouchableHighlight>
 
     </SafeAreaView>
   )

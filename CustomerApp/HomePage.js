@@ -1,16 +1,34 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View } from 'react-native'
-import React from 'react'
+import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
+import React, { useCallback } from 'react'
 
-
-const image = {uri: "https://play-lh.googleusercontent.com/ydkcSXReYXTWms08p6NbzkK85tOpQzcsM227Y2fVvyZXy5-TmZf594XfHZzATPjiFQ"}
+const supportedURL = "https://www.pumpfive.com/terms-conditions/";
+const supportedURL2 = "https://www.pumpfive.com/contact/";
 const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
+
+const OpenURLButton = ({ url, children }) => {
+  const handlePress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }, [url]);
+
+  return <Button title={children} onPress={handlePress} />;
+};
+
 export default function HomePage() {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
       <Image
         style={styles.Logo}
-        source={image}
+        source={require('../images/pumpfivelogo.png')}
       />
       <View style={styles.rect1}/>
       <Image
@@ -25,16 +43,10 @@ export default function HomePage() {
       <Text style={styles.text3}>Premium:</Text>
       <View style={styles.price2}><Text>$3.87</Text></View>
       <View style={styles.button1}>
-        <Button
-          title="Terms and Conditions" color="white"
-          onPress={() => Alert.alert('url')}
-        />
+      <OpenURLButton url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
       <View style={styles.button2}>
-        <Button
-          title="Contact Us" color="white"
-          onPress={() => Alert.alert('Left button pressed')}
-        />
+      <OpenURLButton url={supportedURL2}>Contact Us</OpenURLButton>
       </View>
       </ImageBackground>
     </View>
