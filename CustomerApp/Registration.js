@@ -1,16 +1,23 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput } from 'react-native'
 import React from 'react'
 
-export default function Registration() {
+export default function Registration({ navigation }) {
   return ( <View style={styles.container}>
     <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
       <SafeAreaView style={styles.container}>
+      <View style={buttonstyles.backbutton}>
+                              <Button
+                              title="Back"
+                              color="white"
+                              onPress={() => navigation.goBack()}
+                            />
+                            </View>
         
           <Text style={styles.text1}>PumpFive</Text>          
           <Text style={styles.text2}>Fuel Delivery Service</Text>
        
 
-        <Text style={styles.signup}>Sign Up</Text>
+        {/* <Text style={styles.signup}>Sign Up</Text> */}
         
         <Text style={styles.email}>Username: *</Text>
         <TextInput
@@ -54,8 +61,8 @@ export default function Registration() {
                       keyboardType="default"
         />
         <View style={styles.loginview}>
-                              <Button title="Sign up" color="white"></Button>
-                        </View>
+            <Button title="Sign up" color="white" onPress={() => navigation.navigate('HomePage')}></Button>
+        </View>
         
         {/* <Text> Please sign in to continue</Text>
 
@@ -115,7 +122,7 @@ container: {
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 150,
+    top: 30,
   },
   signin: {
     color: "white",
@@ -125,10 +132,10 @@ container: {
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 150,
+    top: 30,
   },
   email: {
-    top: 175,
+    top: 30,
     color: "white",
     fontFamily: "Times New Roman",
     fontSize: 30,
@@ -137,7 +144,7 @@ container: {
     textAlign: "left",
   },
   signup: {
-    top: 300,
+    top: 30,
     color: "white",
     fontFamily: "Times New Roman",
     fontSize: 30,
@@ -211,29 +218,39 @@ container: {
     borderWidth: 1,
     padding: 5,
     backgroundColor: "white",
-    top: 175,
+    top: 30,
   },
   loginview: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     borderWidth: 1,
     width: 100, 
     height: 40,
-    top: 175,
-    right: 10,
-    backgroundColor:"#DAAC3F", 
+    top: 30,
+    // right: 10,
+    backgroundColor:"#DAAC3F",
+    left: 5, 
   },
 
 })
 
 const buttonstyles = StyleSheet.create({
-button: { 
-    top: 600, 
-    borderWidth: 1,
-    width: "50%", 
+  button: { 
+      width: '30%', 
+      height: 40,
+      bottom: 5,
+      left: 230,
+      // top: 270,
+      borderWidth: 1, 
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
+  },
+  backbutton: {
+    width: '15%', 
+    height: 40,
+    top: 65,
+    right: 15,
     backgroundColor:"#DAAC3F", 
-    position: "absolute", 
-    alignItems: "center",
-    justifyContent: "center",
-}
-}))
+    position: "absolute"
+  }
+})

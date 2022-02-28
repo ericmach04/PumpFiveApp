@@ -33,7 +33,13 @@ export default function Login({ navigation }) {
                             onPress={() => navigation.navigate('HomePage')}
                           />
                           </View>
-          <Text style={styles.signup}>New User? Sign up</Text>
+          <View>
+            <Text style={styles.signup}>New User?</Text>
+            <View style={buttonstyles.signupbutton}>
+              <Button title="Sign up" color="white" onPress={() => navigation.navigate('Registration')}></Button>
+            </View>
+          </View>
+          
           {/* <Text> Please sign in to continue</Text>
 
           <Text>Email:</Text>
@@ -198,6 +204,7 @@ const styles = StyleSheet.create({
       height: 40,
       top: 175,
       right: 10,
+      left: 5,
       backgroundColor:"#DAAC3F", 
     },
 
@@ -212,5 +219,16 @@ const buttonstyles = StyleSheet.create({
       position: "absolute", 
       alignItems: "center",
       justifyContent: "center",
-  }
+  },
+  signupbutton: { 
+    // top: 600,
+    left: "40%", 
+    bottom: -260,
+    borderWidth: 1,
+    width: "30%", 
+    backgroundColor:"#DAAC3F", 
+    // position: "absolute", 
+    alignItems: "center",
+    justifyContent: "center",
+}
 })

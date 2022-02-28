@@ -7,6 +7,7 @@ import GasService from "./CustomerApp/GasService";
 import TireService from "./CustomerApp/TireService";
 import DetailingService from "./CustomerApp/DetailingService";
 import LoginPage from "./CustomerApp/Login";
+import Registration from './CustomerApp/Registration';
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
@@ -31,8 +32,9 @@ const App = () =>  {
   return (
     <NavigationContainer>
       
-        <Stack.Navigator screenOptions={{headerShown: false,}}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false,}}>
           <Stack.Screen name="Tabs" component={Tabs} />
+          {/* <Tabs/> */}
           {/* <Stack.Screen name="Tabs" component={Tabs} />
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
@@ -42,6 +44,7 @@ const App = () =>  {
           <Stack.Screen name="TireService" component={TireService} />
           <Stack.Screen name="DetailingService" component={DetailingService} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Registration" component={Registration} />
           
           
         </Stack.Navigator>
@@ -58,6 +61,7 @@ const App = () =>  {
     // <TireService/>
     // <DetailingService/>
     // <LoginPage/>
+    // <Registration/>
   )
 }
 
