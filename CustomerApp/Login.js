@@ -23,7 +23,7 @@ export default function Login({ navigation }) {
           <Text style={styles.email}>Password:</Text>
           <TextInput
                         style={styles.input}
-                        placeholder="Email"
+                        placeholder="Password"
                         keyboardType="default"
           />
           <View style={styles.loginview}>
