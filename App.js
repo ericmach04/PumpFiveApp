@@ -6,7 +6,7 @@ import AcctSettings from "./CustomerApp/AcctSettings";
 import GasService from "./CustomerApp/GasService";
 import TireService from "./CustomerApp/TireService";
 import DetailingService from "./CustomerApp/DetailingService";
-import Login from "./CustomerApp/Login"
+import LoginPage from "./CustomerApp/Login";
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
