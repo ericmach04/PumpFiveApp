@@ -3,7 +3,7 @@ import React from 'react'
 
 //Working On:  construct box with black border, 
 
-export default function AccountSettings() {
+export default function AccountSettings({ navigation }) {
   return (
     //<View>
       //<Text>Login</Text>
@@ -19,7 +19,11 @@ export default function AccountSettings() {
                       <Text style={styles.boxfontsbody}>Member Number: 773123456789</Text>
                       <Text style={styles.boxfontsbody}>User Phone Number: </Text>
                       <View style={buttonstyles.button}>
-                          <Button title="Logout" color="black"></Button>
+                      <Button
+                            title="Logout"
+                            color="white"
+                            onPress={() => navigation.navigate('Login')}
+                          />
                       </View>
                   </View>
 

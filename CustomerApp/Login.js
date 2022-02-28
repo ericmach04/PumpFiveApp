@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
                           <Button
                             title="Login"
                             color="white"
-                            onPress={() => navigation.navigate('HomePage')}
+                            onPress={() => navigation.navigate('Tabs')}
                           />
                           </View>
           <View>

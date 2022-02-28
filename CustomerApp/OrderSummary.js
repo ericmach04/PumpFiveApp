@@ -9,7 +9,7 @@ export default function OrderSummary({navigation}) {
             <View style={styles.rect1}/>
             <Image source={require('../images/orderexample.png')} resizeMode="cover" style={styles.exm}/>
             <View style={buttonstyles.button}>
-                <Button title="Home" color="#DAAC3F" onPress={() => navigation.navigate('HomePage')}/>
+                <Button title="Home" color="#DAAC3F" onPress={() => navigation.navigate('Tabs')}/>
             </View>
             <Image
                 style={styles.icon}

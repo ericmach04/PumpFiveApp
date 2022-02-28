@@ -61,7 +61,7 @@ export default function Registration({ navigation }) {
                       keyboardType="default"
         />
         <View style={styles.loginview}>
-            <Button title="Sign up" color="white" onPress={() => navigation.navigate('HomePage')}></Button>
+            <Button title="Sign up" color="white" onPress={() => navigation.navigate('Tabs')}></Button>
         </View>
         
         {/* <Text> Please sign in to continue</Text>
