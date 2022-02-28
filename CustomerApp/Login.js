@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput } from 'react-native'
 import React from 'react'
 
-export default function Login() {
+export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -27,7 +27,11 @@ export default function Login() {
                         keyboardType="default"
           />
           <View style={styles.loginview}>
-                                <Button title="Login" color="white"></Button>
+                          <Button
+                            title="Login"
+                            color="white"
+                            onPress={() => navigation.navigate('HomePage')}
+                          />
                           </View>
           <Text style={styles.signup}>New User? Sign up</Text>
           {/* <Text> Please sign in to continue</Text>

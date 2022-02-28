@@ -43,10 +43,10 @@ export default function HomePage() {
       <Text style={styles.text3}>Premium:</Text>
       <View style={styles.price2}><Text>$3.87</Text></View>
       <View style={styles.button1}>
-      <OpenURLButton url={supportedURL}>Terms and Conditions</OpenURLButton>
+      <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
       <View style={styles.button2}>
-      <OpenURLButton url={supportedURL2}>Contact Us</OpenURLButton>
+      <OpenURLButton color="white" url={supportedURL2}>Contact Us</OpenURLButton>
       </View>
       </ImageBackground>
     </View>

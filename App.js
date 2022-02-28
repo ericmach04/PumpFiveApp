@@ -12,6 +12,7 @@ import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
 
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import Login from './CustomerApp/Login';
 
 // export default function App() {
 //   // return (
@@ -36,9 +37,11 @@ const App = () =>  {
           <Stack.Screen name="Home" component={HomePage} />
           <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
           <Stack.Screen name="AcctSettings" component={AcctSettings} /> */}
+          <Stack.Screen name="HomePage" component={HomePage} />
           <Stack.Screen name="GasService" component={GasService} />
           <Stack.Screen name="TireService" component={TireService} />
           <Stack.Screen name="DetailingService" component={DetailingService} />
+          <Stack.Screen name="Login" component={Login} />
           
           
         </Stack.Navigator>
