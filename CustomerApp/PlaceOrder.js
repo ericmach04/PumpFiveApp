@@ -33,6 +33,7 @@ export default function PlaceOrder({ navigation }) {
     <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
+              
                 <Text style={styles.text}>
                     Services
                 </Text>

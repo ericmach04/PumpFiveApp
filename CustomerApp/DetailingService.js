@@ -8,11 +8,18 @@ import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from './dropdowns/PaymentDropdown';
 import DetailingDropdown from './dropdowns/DetailingDropdown';
 
-export default function DetailingService() {
+export default function DetailingService({navigation}) {
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
+            <View style={buttonstyles.backbutton}>
+                              <Button
+                              title="Back"
+                              color="white"
+                              onPress={() => navigation.goBack()}
+                            />
+                            </View>
                 <Text style={styles.text}>
                     Checkout
                 </Text>
@@ -108,6 +115,14 @@ const UselessTextInput = () => {
         borderWidth: 1, 
         backgroundColor:"#DAAC3F", 
         position: "absolute"
+    },
+    backbutton: {
+      width: '15%', 
+      height: 40,
+      top: 65,
+      right: 15,
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
     }
 })
 
@@ -128,7 +143,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         flex: 1,
-        top: 30,
+        top: 60,
       },
 
       services:{
@@ -141,7 +156,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 200,
         left: 21,
-        top: -280,
+        top: -250,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 190,
         left: 21,
-        top: -70,
+        top: -40,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -165,7 +180,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 100,
         left: 21,
-        top: 130,
+        top: 160,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -218,7 +233,7 @@ const styles = StyleSheet.create({
       promobutton: {
         // position: 'absolute',
         left: 21,
-        top: 240,
+        top: 270,
         flexDirection:'row', 
         flexWrap:'wrap',
       }

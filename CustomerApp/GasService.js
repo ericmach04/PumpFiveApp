@@ -7,14 +7,24 @@ import DayDropdown from "./dropdowns/DayDropdown";
 import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from './dropdowns/PaymentDropdown';
 
-export default function GasService() {
+export default function GasService({navigation}) {
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
+              
+              <View style={buttonstyles.backbutton}>
+                              <Button
+                              title="Back"
+                              color="white"
+                              onPress={() => navigation.goBack()}
+                            />
+                            </View>
                 <Text style={styles.text}>
                     Checkout
                 </Text>
+              
+            
                 <View style={styles.container}>
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Service</Text>
@@ -100,6 +110,14 @@ function GasScreen({ navigation }) {
         borderWidth: 1, 
         backgroundColor:"#DAAC3F", 
         position: "absolute"
+    },
+    backbutton: {
+      width: '15%', 
+      height: 40,
+      top: 65,
+      right: 15,
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
     }
 })
 
@@ -120,7 +138,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         flex: 1,
-        top: 10,
+        top: 40,
       },
 
       services:{
@@ -133,7 +151,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 280,
         left: 21,
-        top: -330,
+        top: -300,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -145,7 +163,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 190,
         left: 21,
-        top: -40,
+        top: -10,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -157,7 +175,7 @@ const styles = StyleSheet.create({
         width: 350,
         height: 100,
         left: 21,
-        top: 155,
+        top: 185,
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -210,10 +228,14 @@ const styles = StyleSheet.create({
       promobutton: {
         // position: 'absolute',
         left: 21,
-        top: 270,
+        top: 300,
         flexDirection:'row', 
         flexWrap:'wrap',
-      }
+      },
+      checkoutback: {
+        flexDirection:'row', 
+        flexWrap:'wrap',
+      },
 
 
 })
