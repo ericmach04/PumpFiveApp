@@ -73,7 +73,7 @@ export default function DetailingService({navigation}) {
                         keyboardType="default"
                           />
                           <View style={buttonstyles.button}>
-                                <Button title="Order" color="white"></Button>
+                                <Button title="Order" color="white" onPress={() => navigation.navigate('OrderSummary')}></Button>
                           </View>
                     </View>
                 </View>
