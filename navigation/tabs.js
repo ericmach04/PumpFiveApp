@@ -1,4 +1,4 @@
-import { ImageBackground, Image, Button, StyleSheet, Text, View } from 'react-native'
+import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -34,7 +34,10 @@ const Tabs = () =>{
                             Home
                             </Text>
                     </View>
+                    
                 )
+                
+                
                 
             }}></Tab.Screen>
             <Tab.Screen name="Place Order" component={PlaceOrder} options={{
@@ -53,7 +56,20 @@ const Tabs = () =>{
                             Place Order
                             </Text>
                     </View>
-                )
+                ),
+
+                // gasScreen: ({ navigation }) =>(
+                    
+                //         <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                //           {/* <Text>Home Screen</Text> */}
+                //           <Button
+                //             title="Book Now"
+                //             onPress={() => navigation.navigate('GasService')}
+                //           />
+                //         </SafeAreaView>
+                      
+                // ) 
+
             }}></Tab.Screen>
             <Tab.Screen name="Account Settings" component={AcctSettings} options={{
                 tabBarIcon: ({focused}) => (

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput } from 'react-native'
 import React from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -28,9 +28,15 @@ export default function GasService() {
                             </View>                          
                         </View>
                         <Text style={styles.subheadings}>Quantity</Text>
-                        <UselessTextInput />
+                        <TextInput
+                        style={styles.input}
+                        placeholder="Quantity"
+                        keyboardType="default"
+                        />
                         <Text style={styles.subheadings}>Type of Fuel</Text>
                         <GasDropdown></GasDropdown>
+                        
+                        
                     </View>
                     
                     <View style={styles.personalinfo}>
@@ -72,27 +78,17 @@ export default function GasService() {
   )
 }
 
-const UselessTextInput = () => {
-    const [text, onChangeText] = React.useState("Useless Text");
-    const [number, onChangeNumber] = React.useState(null);
-  
-    return (
-      <View>
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
-        /> */}
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Amount of Gas (per gallon)"
-          keyboardType="numeric"
-        />
-      </View>
-    );
-  };
+function GasScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {/* <Text>Home Screen</Text> */}
+      <Button
+        title="BookNow"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
 
   const buttonstyles = StyleSheet.create({
     button: { 

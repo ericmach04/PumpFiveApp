@@ -1,21 +1,31 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button } from 'react-native'
-import { useNavigate } from "react-router-dom";
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, Alert } from 'react-native'
+import { useHistory } from "react-router-dom";
 import React from 'react'
-// import { NavigationContainer } from '@react-navigation/native';
+import GasService from './GasService';
+import GasButton from '../CustomerApp/buttons/GasButton'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 // import Tabs from '../navigation/tabs';
 
 
 const image = { uri: "https://reactjs.org/logo-og.png" };
 
-function redirect(){
-  let navigate = useNavigate(); 
-  let path = `./CustomerApp/GasService.js`; 
-  navigate(path);
-  
-}
+const GasStack = createStackNavigator();
+
+// function GasScreen({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Text>Home Screen</Text>
+//       <Button
+//         title="Go to Details"
+//         onPress={() => navigation.navigate('GasService')}
+//       />
+//     </View>
+//   );
+// }
 
 
-export default function PlaceOrder() {
+export default function PlaceOrder({ navigation }) {
   return (
     // <View>
     //   <Text>PlaceOrder</Text>
@@ -32,7 +42,13 @@ export default function PlaceOrder() {
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station!</Text>
                         <Text style={styles.boxfontsbody}>Because those extra 20 minutes in the morning matter.</Text>
                         <View style={buttonstyles.button}>
-                            <Button title="Book Now" color="white"></Button>
+                          {/* <Text>Home Screen</Text> */}
+                          <Button
+                            title="Book Now"
+                            color="white"
+                            onPress={() => navigation.navigate('GasService')}
+                          />
+                            
                         </View>
                         
                     </View>
@@ -41,7 +57,11 @@ export default function PlaceOrder() {
                         <Text style={styles.boxfontsbody}>PumpFive can provide you with quick tire service. Book your service and we
                         will get back to you in 24 hours.</Text>
                         <View style={buttonstyles.button}>
-                            <Button title="Book Now" color="white"></Button>
+                        <Button
+                            title="Book Now"
+                            color="white"
+                            onPress={() => navigation.navigate('TireService')}
+                          />
                         </View>
                     </View>
                     <View style={styles.detailingservice}>
@@ -49,7 +69,11 @@ export default function PlaceOrder() {
                             <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
                             will get back to you in 24 hours.</Text>
                             <View style={buttonstyles.button}>
-                                <Button title="Book Now" color="white"></Button>
+                              <Button
+                              title="Book Now"
+                              color="white"
+                              onPress={() => navigation.navigate('DetailingService')}
+                            />
                             </View>
                         </View>
                 </View>
