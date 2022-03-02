@@ -30,24 +30,36 @@ export default function GasService({navigation}) {
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
-                        <View style={{flexDirection:'row', flexWrap:'wrap',}}>
+                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 999}}>
+                          
                             <View>
                                 <TimeDropdown></TimeDropdown>
                             </View>
+                            
                             <View>
                                 <DayDropdown></DayDropdown>
-                            </View>                          
+                            </View>  
+                                                    
                         </View>
-                        <Text style={styles.subheadings}>Quantity</Text>
-                        <TextInput
-                        style={styles.input}
-                        placeholder="Quantity"
-                        keyboardType="default"
-                        />
+
+                        <View>
+                          <Text style={styles.subheadings}>Quantity</Text>
+                          <TextInput
+                           style={styles.input}
+                            placeholder="Quantity"
+                            keyboardType="default"
+                          />
+  
+                        </View>
+                       
                         <Text style={styles.subheadings}>Type of Fuel</Text>
-                        <GasDropdown></GasDropdown>
-                        
-                        
+                        <View style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 999}} >
+
+                            <View>
+                              <GasDropdown></GasDropdown>
+                            </View>
+                           
+                        </View>
                     </View>
                     
                     <View style={styles.personalinfo}>

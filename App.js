@@ -9,12 +9,8 @@ import DetailingService from "./CustomerApp/DetailingService";
 import LoginPage from "./CustomerApp/Login";
 import Registration from './CustomerApp/Registration';
 import OrderSummary from './CustomerApp/OrderSummary';
-<<<<<<< HEAD
-import Addresses from './CustomerApp/AcctSettingsPages/Addresses';
-=======
 import Membership from './CustomerApp/AcctSettingsPages/Membership'
 import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
->>>>>>> b62695b7a5cb8b16e8adda82c663b87e09ca0b88
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
