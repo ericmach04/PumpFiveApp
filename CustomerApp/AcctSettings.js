@@ -61,7 +61,9 @@ export default function AcctSettings({ navigation }) {
                     <Text style={styles.boxfontshead2}>Car Information</Text>
                   </View>
                   <View>
-                    <Image source={require('../icons/arrow.png')}/>
+                    <TouchableHighlight onPress={() => navigation.navigate('CarInfo')}>
+                      <Image source={require('../icons/arrow.png')}/>
+                    </TouchableHighlight>
                   </View>
                 </View>
 
