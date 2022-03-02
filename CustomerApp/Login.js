@@ -1,7 +1,22 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput } from 'react-native'
 import React from 'react'
 
+var data = require('./localdb/localdb.json')
+
+function loginAttempt(db) {
+  // var dataparse = JSON.parse(db);
+  // console.log(db);
+
+  for(var x in db)
+  {
+    // console.log(db[x]["email"]);
+   
+  }
+
+}
+
 export default function Login({ navigation }) {
+  
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -19,20 +34,20 @@ export default function Login({ navigation }) {
                         style={styles.input}
                         placeholder="Email"
                         keyboardType="default"
+                        onChangeText={(text) => this.setState({ username: text })}
           />
           <Text style={styles.email}>Password:</Text>
           <TextInput
                         style={styles.input}
                         placeholder="Password"
                         keyboardType="default"
+                        onChangeText={(text) => this.setState({ password: text })}
           />
           <View style={styles.loginview}>
-                          <Button
-                            title="Login"
-                            color="white"
-                            onPress={() => navigation.navigate('Tabs')}
-                          />
-                          </View>
+            <Button title="Login" color="white" onPress={() => navigation.navigate('Tabs')}/>
+            {/* <Button title="Login" color="white" onPress={() => loginAttempt(data)}/> */}
+            {/* <Button onPress={() => this.getValues()} title='Login' /> */}
+          </View>
           <View>
             <Text style={styles.signup}>New User?</Text>
             <View style={buttonstyles.signupbutton}>
