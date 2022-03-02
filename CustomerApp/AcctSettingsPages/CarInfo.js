@@ -24,23 +24,24 @@ export default function CarInfo({ navigation }) {
                                 />
                             </View>
                         </View>
-                        <View style={{top: -350, left: 20}}>
+                        <View style={{top: -150, left: 20}}>
                             <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
                             <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                             <Text style={styles.boxfontsbody}>414-***-****</Text>
                         </View>
 
-                        <View style={{top: -300, left: 20}}>
+                        <View style={{top: -100, left: 20}}>
                         <Text style={styles.boxfontsbody}>Make: Toyota</Text>
                         <Text style={styles.boxfontsbody}>Model: Camry</Text>
                         <Text style={styles.boxfontsbody}>License Plate: 8ABC123</Text>
                         <Text style={styles.boxfontsbody}>Photo:</Text>
-
-                        <Image source={require('../../images/car1.png')} />
-                        <Image source={require('../../images/car2.png')} />
+                        <View style={{flexDirection:'row', justifyContent: 'space-around', left:-15, top: 10,}}>
+                          <Image source={require('../../images/car1.png')} />
+                          <Image source={require('../../images/car2.png')} />
+                        </View>
                         </View>
 
-                        <View style={{top: -250, left: 20}}>
+                        <View style={{top: -90, left: 20}}>
                             <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
                         </View>
                         
