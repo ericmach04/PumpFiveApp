@@ -77,7 +77,9 @@ export default function AcctSettings({ navigation }) {
                     <Text style={styles.boxfontshead2}>Payment</Text>
                   </View>
                   <View>
+                  <TouchableHighlight onPress={() => navigation.navigate('Payment')}>
                     <Image source={require('../icons/arrow.png')}/>
+                  </TouchableHighlight>
                   </View>
                 </View>
 
