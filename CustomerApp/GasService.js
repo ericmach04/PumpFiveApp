@@ -17,6 +17,7 @@ export default function GasService({navigation}) {
                               <Button
                               title="Back"
                               color="white"
+                              // onPress={() => console.log('Clicked')}
                               onPress={() => navigation.goBack()}
                             />
                             </View>

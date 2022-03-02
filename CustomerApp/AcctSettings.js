@@ -1,4 +1,4 @@
-import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView, TouchableHighlight, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 //Addresses Page - In Progresss 
 
 
-export default function Addresses({ navigation }) {
+export default function AcctSettings({ navigation }) {
     return (
       
       <View style={styles.container}>
@@ -34,7 +34,9 @@ export default function Addresses({ navigation }) {
                     <Text style={styles.boxfontshead2}>Addresses</Text>
                   </View>
                   <View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Addresses')}>
                     <Image source={require('../icons/arrow.png')}/>
+                    </TouchableOpacity>
                   </View>
                 </View>
 
@@ -46,7 +48,10 @@ export default function Addresses({ navigation }) {
                     <Text style={styles.boxfontshead2}>Your Membership</Text>
                   </View>
                   <View>
-                    <Image source={require('../icons/arrow.png')}/>
+                    <TouchableHighlight onPress={() => navigation.navigate('Membership')}>
+                      <Image source={require('../icons/arrow.png')}/>
+                    </TouchableHighlight>
+                    
                   </View>
                 </View>
 
