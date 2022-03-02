@@ -9,7 +9,7 @@ import DetailingService from "./CustomerApp/DetailingService";
 import LoginPage from "./CustomerApp/Login";
 import Registration from './CustomerApp/Registration';
 import OrderSummary from './CustomerApp/OrderSummary';
-import Addresses from './CustomerApp/Addresses'
+import Addresses from './CustomerApp/AcctSettingsPages/Addresses';
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
