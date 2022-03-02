@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Image } from 'react-native'
 import React from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -40,6 +40,22 @@ export default function Payment({navigation}) {
                         <Text style={styles.boxfontsbody}>Monthly Membership</Text>
                         <Text style={styles.boxfontsbody}>(2021.11.01)</Text>
                         </View>
+
+                        <View style={{flexDirection:'row', justifyContent: 'space-around', }}>
+                         <View>
+                          <Image source={require('../../icons/bofa.png')}/>
+                         </View>
+                         <View>
+                           <Text style={styles.boxfontshead2}>Bank of America</Text>
+                        </View>
+                        <View>
+                          
+                           <Image source={require('../../icons/visa.png')}/>
+                          
+                        </View>
+                      </View>
+
+
 
                         <View style={{top: -250, left: 20}}>
                             <Text style={{textDecorationLine: 'underline'}}>Cancel Membership</Text>
