@@ -14,7 +14,7 @@ export default function CarInfo({ navigation }) {
                 <View style={styles.container}>
                     <View style={styles.Memberships}>
                         <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
-                            <Text style={styles.text}>Membership</Text>
+                            <Text style={styles.text}>Car Information</Text>
                             <View style={buttonstyles.backbutton}>
                                 <Button
                                 title="Back"
@@ -31,12 +31,17 @@ export default function CarInfo({ navigation }) {
                         </View>
 
                         <View style={{top: -300, left: 20}}>
-                        <Text style={styles.boxfontsbody}>Monthly Membership</Text>
-                        <Text style={styles.boxfontsbody}>(2021.11.01)</Text>
+                        <Text style={styles.boxfontsbody}>Make: Toyota</Text>
+                        <Text style={styles.boxfontsbody}>Model: Camry</Text>
+                        <Text style={styles.boxfontsbody}>License Plate: 8ABC123</Text>
+                        <Text style={styles.boxfontsbody}>Photo:</Text>
+
+                        <Image source={require('../../images/car1.png')} />
+                        <Image source={require('../../images/car2.png')} />
                         </View>
 
                         <View style={{top: -250, left: 20}}>
-                            <Text style={{textDecorationLine: 'underline'}}>Cancel Membership</Text>
+                            <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
                         </View>
                         
                     </View>    
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
         top: 5,
         left: 5,
-        fontFamily: "Times New Roman",
+       
       },
 
       boxfontshead2:{
