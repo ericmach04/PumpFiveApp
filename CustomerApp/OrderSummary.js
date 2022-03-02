@@ -11,10 +11,9 @@ export default function OrderSummary({navigation}) {
             <View style={buttonstyles.button}>
                 <Button title="Home" color="#DAAC3F" onPress={() => navigation.navigate('Tabs')}/>
             </View>
-            <Image
-                style={styles.icon}
-                source={require('../icons/homeicon.png')}
-            />
+            <View style={buttonstyles.button}>
+            <Button title="Home" color="white" onPress={() => navigation.navigate('Tabs')}/>
+            </View>
             </SafeAreaView>
         </ImageBackground>
       </View>
@@ -32,16 +31,15 @@ export default function OrderSummary({navigation}) {
     );
 }
 const buttonstyles = StyleSheet.create({
-    button: { 
-        width: 151, 
-        height: 59,
-        bottom: 5,
-        left: 121,
-        top: 684,
-        borderRadius: 5, 
-        backgroundColor:"#DAAC3F", 
-        position: "absolute"
-    },
+  button: { 
+    position: "absolute",
+    width: 151,
+    height: 45,
+    top: 684,
+    left: 121,
+    backgroundColor:"#DAAC3F", 
+    borderRadius: 5,
+  }
 })
   
   const styles = StyleSheet.create({
