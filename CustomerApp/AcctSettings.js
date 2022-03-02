@@ -87,7 +87,9 @@ export default function AcctSettings({ navigation }) {
                     <Text style={styles.boxfontshead2}>Order History</Text>
                   </View>
                   <View>
+                  <TouchableOpacity onPress={() => navigation.navigate('OrderHistory')}>
                     <Image source={require('../icons/arrow.png')}/>
+                  </TouchableOpacity>
                   </View>
                 </View>
 

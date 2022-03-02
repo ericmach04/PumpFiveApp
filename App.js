@@ -11,6 +11,7 @@ import Registration from './CustomerApp/Registration';
 import OrderSummary from './CustomerApp/OrderSummary';
 import Membership from './CustomerApp/AcctSettingsPages/Membership'
 import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
+import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
@@ -52,8 +53,7 @@ const App = () =>  {
           <Stack.Screen name="Membership" component={Membership} />
           <Stack.Screen name="AcctSettings" component={AcctSettings} />
           <Stack.Screen name="Addresses" component={Addresses} />
-          
-          
+          <Stack.Screen name="OrderHistory" component={OrderHistory} />
           
         </Stack.Navigator>
         
