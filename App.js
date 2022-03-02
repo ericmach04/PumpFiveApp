@@ -10,8 +10,11 @@ import LoginPage from "./CustomerApp/Login";
 import Registration from './CustomerApp/Registration';
 import OrderSummary from './CustomerApp/OrderSummary';
 import Membership from './CustomerApp/AcctSettingsPages/Membership'
+import CarInfo from './CustomerApp/AcctSettingsPages/CarInfo'
+// import Addresses from './CustomerApp/Addresses'
 import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
+import Payment from './CustomerApp/AcctSettingsPages/Payment'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
@@ -52,8 +55,13 @@ const App = () =>  {
           <Stack.Screen name="OrderSummary" component={OrderSummary} />
           <Stack.Screen name="Membership" component={Membership} />
           <Stack.Screen name="AcctSettings" component={AcctSettings} />
+          <Stack.Screen name="CarInfo" component={CarInfo} />
+          {/* <Stack.Screen name="Addresses" component={Addresses} /> */}
           <Stack.Screen name="Addresses" component={Addresses} />
           <Stack.Screen name="OrderHistory" component={OrderHistory} />
+          <Stack.Screen name="Payment" component={Payment} />
+          
+          
           
         </Stack.Navigator>
         
