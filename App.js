@@ -9,6 +9,7 @@ import DetailingService from "./CustomerApp/DetailingService";
 import LoginPage from "./CustomerApp/Login";
 import Registration from './CustomerApp/Registration';
 import OrderSummary from './CustomerApp/OrderSummary';
+import Addresses from './CustomerApp/Addresses'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs'; 
@@ -47,6 +48,7 @@ const App = () =>  {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Registration" component={Registration} />
           <Stack.Screen name="OrderSummary" component={OrderSummary} />
+          <Stack.Screen name="Addresses" component={Addresses} />
           
           
           

@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     left: 188,
     top: 579,
     backgroundColor: '#B96835',
+    color: "white",
   },
   price2: {
     position: 'absolute',
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
     left: 188,
     top: 616,
     backgroundColor: '#B96835',
+    color: "white",
   },
 })
 

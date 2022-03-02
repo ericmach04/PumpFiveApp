@@ -30,19 +30,9 @@ export default function Login({ navigation }) {
           <Text style={styles.signin}>Please sign in to continue</Text>
 
           <Text style={styles.email}>Email:</Text>
-          <TextInput
-                        style={styles.input}
-                        placeholder="Email"
-                        keyboardType="default"
-                        onChangeText={(text) => this.setState({ username: text })}
-          />
-          <Text style={styles.email}>Password:</Text>
-          <TextInput
-                        style={styles.input}
-                        placeholder="Password"
-                        keyboardType="default"
-                        onChangeText={(text) => this.setState({ password: text })}
-          />
+          <TextInput style={styles.input1} placeholder="Email" keyboardType="default"/>
+          <Text style={styles.password}>Password:</Text>
+          <TextInput style={styles.input2} placeholder="Password" keyboardType="default"/>
           <View style={styles.loginview}>
             <Button title="Login" color="white" onPress={() => navigation.navigate('Tabs')}/>
             {/* <Button title="Login" color="white" onPress={() => loginAttempt(data)}/> */}
@@ -126,6 +116,15 @@ const styles = StyleSheet.create({
       top: 150,
     },
     email: {
+      top: 174,
+      color: "white",
+      fontFamily: "Times New Roman",
+      fontSize: 30,
+      lineHeight: 44,
+      fontWeight: "bold",
+      textAlign: "left",
+    },
+    password: {
       top: 175,
       color: "white",
       fontFamily: "Times New Roman",
@@ -203,7 +202,16 @@ const styles = StyleSheet.create({
       top: 5,
       left: 5,
     },
-    input: {
+    input1: {
+      height: 40,
+      // width: 100,
+      margin: 5,
+      borderWidth: 1,
+      padding: 5,
+      backgroundColor: "white",
+      top: 175,
+    },
+    input2: {
       height: 40,
       margin: 5,
       borderWidth: 1,
