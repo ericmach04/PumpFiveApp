@@ -7,7 +7,7 @@ export default function Addresses({ navigation }) {
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
             <Text style={styles.h1}>Addresses</Text>
-            <View style={styles.button}>
+            <View style={styles.backbutton}>
              <Button title="Back" color="white" onPress={() => navigation.goBack()}/>
             </View>
             <View style={styles.box2}>
@@ -91,7 +91,15 @@ export default function Addresses({ navigation }) {
         backgroundColor:"#DAAC3F", 
         position: "absolute",
         borderWidth: 1,
-      }
+      },
+      backbutton: {
+        width: '18%', 
+        height: 40,
+        // top: 65,
+        right: 0,
+        backgroundColor:"#DAAC3F", 
+        position: "absolute"
+    }
   })
   
   
