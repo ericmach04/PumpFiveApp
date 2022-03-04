@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Image } from 'react-native'
 import React from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -30,19 +30,36 @@ export default function Payment({navigation}) {
                                 />
                             </View>
                         </View>
-                        <View style={{top: -350, left: 20}}>
+                        <View style={{top: -300, left: 20}}>
                             <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
                             <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                             <Text style={styles.boxfontsbody}>414-***-****</Text>
                         </View>
 
-                        <View style={{top: -300, left: 20}}>
-                        <Text style={styles.boxfontsbody}>Monthly Membership</Text>
-                        <Text style={styles.boxfontsbody}>(2021.11.01)</Text>
+                        <View style={{top: -270, left: 70}}>
+                        <Text style={styles.boxfontshead}>Credit/Debit Card</Text>
                         </View>
 
-                        <View style={{top: -250, left: 20}}>
-                            <Text style={{textDecorationLine: 'underline'}}>Cancel Membership</Text>
+                        <View style={{flexDirection:'row', justifyContent: 'space-around', top: -250,}}>
+                         <View>
+                          <Image source={require('../../icons/bofa.png')}/>
+                         </View>
+                         <View>
+                           <Text style={styles.boxfontshead2}>Bank of America</Text>
+                        </View>
+                        <View>
+                          
+                           <Image source={require('../../icons/visa.png')}/>
+                          
+                        </View>
+
+                        
+                      </View>
+
+
+
+                        <View style={{top: -150, left: 20}}>
+                            <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
                         </View>
                         
                     </View>    

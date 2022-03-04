@@ -13,6 +13,7 @@ import Membership from './CustomerApp/AcctSettingsPages/Membership'
 import CarInfo from './CustomerApp/AcctSettingsPages/CarInfo'
 // import Addresses from './CustomerApp/Addresses'
 import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
+import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
@@ -57,6 +58,7 @@ const App = () =>  {
           <Stack.Screen name="CarInfo" component={CarInfo} />
           {/* <Stack.Screen name="Addresses" component={Addresses} /> */}
           <Stack.Screen name="Addresses" component={Addresses} />
+          <Stack.Screen name="OrderHistory" component={OrderHistory} />
           <Stack.Screen name="Payment" component={Payment} />
           
           
