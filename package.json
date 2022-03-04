@@ -22,7 +22,8 @@
     "react-native": "0.64.3",
     "react-native-dropdown-picker": "^5.3.0",
     "react-native-web": "0.17.1",
-    "react-router-dom": "^6.2.1"
+    "react-router-dom": "^6.2.1",
+    "tailwind-react-native-classnames": "^1.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

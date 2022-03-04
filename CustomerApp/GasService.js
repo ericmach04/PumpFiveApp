@@ -30,7 +30,7 @@ export default function GasService({navigation}) {
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
-                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 999}}>
+                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
                           
                             <View>
                                 <TimeDropdown></TimeDropdown>
@@ -53,7 +53,7 @@ export default function GasService({navigation}) {
                         </View>
                        
                         <Text style={styles.subheadings}>Type of Fuel</Text>
-                        <View style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 999}} >
+                        <View style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 0}} >
 
                             <View>
                               <GasDropdown></GasDropdown>
@@ -62,23 +62,25 @@ export default function GasService({navigation}) {
                         </View>
                     </View>
                     
-                    <View style={styles.personalinfo}>
+                    <View style={styles.personalinfo,{zIndex:-1}}>
                         <Text style={styles.boxfontshead}>Personal Info</Text>
-                        <TextInput
-                        style={styles.input}
-                        placeholder="First Name"
-                        keyboardType="default"
-                        />
-                        <TextInput
-                        style={styles.input}
-                        placeholder="Last Name"
-                        keyboardType="default"
-                        />
-                        <TextInput
-                        style={styles.input}
-                        placeholder="Address"
-                        keyboardType="default"
-                        />
+
+                            <TextInput
+                              style={styles.input}
+                              placeholder="First Name"
+                              keyboardType="default"
+                            />
+                            <TextInput
+                              style={styles.input}
+                              placeholder="Last Name"
+                              keyboardType="default"
+                            />
+                            <TextInput
+                              style={styles.input}
+                              placeholder="Address"
+                              keyboardType="default"
+                            />
+                          
                     </View>
                     <View style={styles.paymentinfo}>
                         <Text style={styles.boxfontshead}>Payment Information</Text>
