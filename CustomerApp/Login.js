@@ -55,7 +55,8 @@ export default function Login({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => { }}
+          // onPress={() => { }}
+          onPress={() => navigation.navigate('Tabs')}
           style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
 
@@ -63,6 +64,7 @@ export default function Login({ navigation }) {
 
         <TouchableOpacity
           // onPress={handleSignUp}
+          onPress={() => navigation.navigate('Registration')}
           style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Register</Text>
 
