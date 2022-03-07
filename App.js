@@ -37,7 +37,6 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView>
       <NavigationContainer>
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, }}>
@@ -74,7 +73,6 @@ const App = () => {
 
 
       </NavigationContainer>
-    </SafeAreaView>
     // <GasService/>
     // <TireService/>
     // <DetailingService/>
