@@ -13,6 +13,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+//Addresses Page - In Progresss
+
 export default function AcctSettings({ navigation }) {
   return (
     <View style={styles.container}>
@@ -152,7 +154,11 @@ export default function AcctSettings({ navigation }) {
                 <Text style={styles.boxfontshead2}>Order History</Text>
               </View>
               <View>
-                <Image source={require("../icons/arrow.png")} />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("OrderHistory")}
+                >
+                  <Image source={require("../icons/arrow.png")} />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -249,6 +255,55 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flex: 1,
     top: 30,
+  },
+
+  // Addresses
+  addrfontshead: {
+    color: "black",
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    top: 20,
+    left: 5,
+  },
+
+  //Your Membership:
+  memfontshead: {
+    color: "black",
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    top: 40,
+    left: 5,
+  },
+
+  //mem2
+  mem2fontsbody: {
+    color: "black",
+    lineHeight: 30,
+    textAlign: "center",
+    top: 40,
+    right: -15,
+  },
+
+  //mml
+  mmlfontsbody: {
+    color: "black",
+    lineHeight: 30,
+    textAlign: "center",
+    top: 60,
+    right: -15,
+  },
+
+  //lic
+  licfontsbody: {
+    color: "black",
+    lineHeight: 30,
+    textAlign: "center",
+    top: 50,
+    right: -15,
   },
 
   boxfontshead: {
@@ -354,3 +409,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
   },
 });
+
+//Working on implementation
+
+/* <view>
+      rect1: {
+          position: 'absolute',
+          width: 350,
+          height: 243,
+          left: 21,
+          top: 287,
+          backgroundColor: '#CDCABF',
+          borderWidth: 2,
+          borderColor: '#000000',
+          borderRadius: 10,
+          },
+  </view> */
