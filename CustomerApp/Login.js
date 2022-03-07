@@ -33,7 +33,10 @@ export default function Login({ navigation }) {
   // }
   
   return (
+    
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+      
       
       <View style={styles.inputContainer}>
         <TextInput placeholder="Email" 
@@ -71,8 +74,9 @@ export default function Login({ navigation }) {
         </TouchableOpacity>
 
       </View>
-
+      </ImageBackground>
     </KeyboardAvoidingView>
+    
 
     
 
@@ -127,12 +131,14 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-      justifyContent: 'center',
-      alignItems: 'center',
+      // justifyContent: 'center',
+      // alignItems: 'center',
       flex: 1,
     },
     inputContainer:{
       width: '80%',
+      // justifyContent: 'center',
+      // alignItems: 'center',
 
     },
     input:{
@@ -141,6 +147,9 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       borderRadius: 10,
       marginTop: 5,
+      left: "10%",
+      // justifyContent: 'center',
+      // alignItems: 'center',
 
     },
     buttonContainer:{
@@ -156,6 +165,7 @@ const styles = StyleSheet.create({
       padding: 15,
       borderRadius: 10,
       alignItems: 'center',
+      left: "30%",
 
     },
     buttonOutline:{
@@ -178,10 +188,10 @@ const styles = StyleSheet.create({
 
     },
 
-  //   image: {
-  //     flex: 1,
-  //     justifyContent: "center"
-  //   },
+    image: {
+      flex: 1,
+      justifyContent: "center"
+    },
 
   //   text1: {
   //     color: "white",
