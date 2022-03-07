@@ -6,7 +6,7 @@ export default function OrderHistory({ navigation }) {
       <View style={styles.container}>
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
-            <View style={styles.button}>
+            <View style={styles.backbutton}>
              <Button title="Back" color="white" onPress={() => navigation.goBack()}/>
             </View>
             <View>
@@ -64,6 +64,14 @@ export default function OrderHistory({ navigation }) {
         position: "absolute",
         borderWidth: 1,
       },
+      backbutton: {
+        width: '18%', 
+        height: 40,
+        // top: 65,
+        right: 0,
+        backgroundColor:"#DAAC3F", 
+        position: "absolute"
+    },
       h1: {
         position: "absolute",
         top: 40,
