@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import HomePage from "./CustomerApp/HomePage";
 import PlaceOrder from "./CustomerApp/PlaceOrder";
 import AcctSettings from "./CustomerApp/AcctSettings";
@@ -17,9 +17,9 @@ import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
-import Tabs from './navigation/tabs'; 
+import Tabs from './navigation/tabs';
 
-import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './CustomerApp/Login';
 
 // export default function App() {
@@ -35,17 +35,18 @@ import Login from './CustomerApp/Login';
 // }
 const Stack = createNativeStackNavigator();
 
-const App = () =>  {
+const App = () => {
   return (
-    <NavigationContainer>
-      
-        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false,}}>
+    <SafeAreaView>
+      <NavigationContainer>
+
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, }}>
           <Stack.Screen name="Tabs" component={Tabs} />
           {/* <Tabs/> */}
           {/* <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
-          <Stack.Screen name="AcctSettings" component={AcctSettings} /> */}
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
+            <Stack.Screen name="AcctSettings" component={AcctSettings} /> */}
           <Stack.Screen name="HomePage" component={HomePage} />
           <Stack.Screen name="GasService" component={GasService} />
           <Stack.Screen name="TireService" component={TireService} />
@@ -60,19 +61,20 @@ const App = () =>  {
           <Stack.Screen name="Addresses" component={Addresses} />
           <Stack.Screen name="OrderHistory" component={OrderHistory} />
           <Stack.Screen name="Payment" component={Payment} />
-          
-          
-          
+
+
+
         </Stack.Navigator>
-        
-        
-      {/* <Tabs/> */}
-      {/* <Screen>
-        
-      </Screen> */}
-      
-      
-    </NavigationContainer>
+
+
+        {/* <Tabs/> */}
+        {/* <Screen>
+          
+        </Screen> */}
+
+
+      </NavigationContainer>
+    </SafeAreaView>
     // <GasService/>
     // <TireService/>
     // <DetailingService/>

@@ -26,7 +26,7 @@ export default function GasService({ navigation }) {
         </Text>
 
 
-        <View style={styles.container,{ zIndex: 1 }}>
+        <View style={styles.container}>
 
           <View style={styles.tireservice}>
             <Text style={styles.boxfontshead}>Tire Service</Text>
@@ -62,7 +62,7 @@ export default function GasService({ navigation }) {
         </View>
 
         <View style={styles.personalinfo}>
-          <View style={styles.container, {zIndex: -1}}>
+          <View style={styles.container}>
 
             <Text style={styles.boxfontshead}>Personal Info</Text>
             <TextInput
@@ -160,6 +160,7 @@ const buttonstyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex: 0
   },
 
   image: {
