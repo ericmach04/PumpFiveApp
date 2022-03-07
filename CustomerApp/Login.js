@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, TouchableOpacity,} from 'react-native'
-import React, { useState } from 'react'
-// import { auth } from '../firebase'
+import React, { useEffect, useState } from 'react'
+import { auth } from '../firebase'
 
 // var data = require('./localdb/localdb.json')
 
@@ -22,15 +22,34 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // const handleSignUp = () => {
-  //   auth
-  //   .createUserWithEmailAndPassword(email, password)
-  //   .then(userCredentials => {
-  //     const user = userCredentials.user;
-  //     console.log(user.email);
-  //   })
-  //   .catch(error => alert(error.message))
-  // }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user){
+        navigation.replace("Tabs")
+      }
+    })
+
+    return unsubscribe
+  }, [])
+
+  const handleSignUp = () => {
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      console.log("Registered with: ",user.email);
+    })
+    .catch(error => alert(error.message))
+  }
+
+  const handleLogin = () => {
+    auth.signInWithEmailAndPassword(email, password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      console.log("Logged in with: ",user.email);
+    })
+    .catch(error => alert(error.message))
+  }
   
   return (
     
@@ -48,7 +67,7 @@ export default function Login({ navigation }) {
 
         <TextInput placeholder="Password" 
                     value={password} 
-                    onChangeText={text => setPassword(password)}
+                    onChangeText={text => setPassword(text)}
                     style={styles.input}
                     secureTextEntry>
                     
@@ -59,15 +78,15 @@ export default function Login({ navigation }) {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           // onPress={() => { }}
-          onPress={() => navigation.navigate('Tabs')}
+          onPress={handleLogin}
           style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
 
         </TouchableOpacity>
 
         <TouchableOpacity
-          // onPress={handleSignUp}
-          onPress={() => navigation.navigate('Registration')}
+          onPress={handleSignUp}
+          // onPress={() => navigation.navigate('Registration')}
           style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Register</Text>
 

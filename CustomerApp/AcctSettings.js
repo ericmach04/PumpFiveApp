@@ -12,10 +12,21 @@ import {
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { auth } from "../firebase";
 
 //Addresses Page - In Progresss
 
 export default function AcctSettings({ navigation }) {
+
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login")
+      })
+      .catch(error => alert(error.message))
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -37,7 +48,7 @@ export default function AcctSettings({ navigation }) {
                 <Button
                   title="Logout"
                   color="white"
-                  onPress={() => navigation.navigate("Login")}
+                  onPress={handleSignOut}
                 />
               </View>
             </View>
