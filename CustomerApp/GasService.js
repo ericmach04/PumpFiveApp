@@ -62,7 +62,7 @@ export default function GasService({navigation}) {
                         </View>
                     </View>
                     
-                    <View style={styles.personalinfo,{zIndex:-1}}>
+                    <View style={styles.personalinfo}>
                         <Text style={styles.boxfontshead}>Personal Info</Text>
 
                             <TextInput

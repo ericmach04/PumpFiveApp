@@ -47,7 +47,7 @@ export default function PlaceOrder({ navigation }) {
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => navigation.navigate('GasService')}
+                            onPress={() => navigation.navigate('CalendarScreen')}
                           />
                             
                         </View>

@@ -15,6 +15,7 @@ import CarInfo from './CustomerApp/AcctSettingsPages/CarInfo'
 import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
+import CalendarScreen from './CustomerApp/CalendarScreen'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -41,12 +42,8 @@ const App = () => {
 
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, }}>
           <Stack.Screen name="Tabs" component={Tabs} />
-          {/* <Tabs/> */}
-          {/* <Stack.Screen name="Tabs" component={Tabs} />
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
-            <Stack.Screen name="AcctSettings" component={AcctSettings} /> */}
           <Stack.Screen name="HomePage" component={HomePage} />
+          <Stack.Screen name="CalendarScreen" component={CalendarScreen}/>
           <Stack.Screen name="GasService" component={GasService} />
           <Stack.Screen name="TireService" component={TireService} />
           <Stack.Screen name="DetailingService" component={DetailingService} />
@@ -66,18 +63,8 @@ const App = () => {
         </Stack.Navigator>
 
 
-        {/* <Tabs/> */}
-        {/* <Screen>
-          
-        </Screen> */}
-
 
       </NavigationContainer>
-    // <GasService/>
-    // <TireService/>
-    // <DetailingService/>
-    // <LoginPage/>
-    // <Registration/>
   )
 }
 
