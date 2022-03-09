@@ -31,17 +31,8 @@ export default function HomePage() {
         source={require('../images/pumpfivelogo.png')}
       />
       <View style={styles.rect1}/>
-      <Image
-        style={styles.map}
-        source={map}
-      />
-      <Text style={styles.text4}>Number of drivers in the area: 4</Text>
+      
       <View style={styles.rect2}/>
-      <Text style={styles.text1}>Gas Price (per Gallon)</Text>
-      <Text style={styles.text2}>Regular:</Text>
-      <View style={styles.price1}><Text>$3.16</Text></View>
-      <Text style={styles.text3}>Premium:</Text>
-      <View style={styles.price2}><Text>$3.87</Text></View>
       <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
@@ -62,28 +53,32 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   Logo: {
-    position: 'absolute',
-    width: 225,
-    height: 225,
-    left: 83,
-    top: 48,
+    position: "absolute",
+    width: "65%",
+    height: "25%",
+    left: "17.5%",
+    right: "17.5%",
+    top: "8%",
   },
   rect1: {
     position: 'absolute',
-    width: 350,
-    height: 243,
-    left: 21,
-    top: 287,
+    width: "90%",
+    height: "30%",
+    left: "5%",
+    right: "5%",
+    top: "35%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
     borderRadius: 10,
-  },rect2: {
+  },
+  rect2: {
     position: 'absolute',
-    width: 350,
-    height: 122,
-    left: 21,
-    top: 544,
+    width: "90%",
+    height: "15%",
+    left: "5%",
+    right: "5%",
+    top: "68%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
@@ -91,22 +86,26 @@ const styles = StyleSheet.create({
   },
   button1: {
     position: 'absolute',
-    width: 195,
-    height: 40,
-    left: 30,
-    top: 690,
+    width: "45%",
+    height: "5%",
+    left: "5%",
+    top: "89%",
     backgroundColor: '#B96835',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },button2: {
+    borderRadius: 20,
+    textAlign: "center",
+  },
+  button2: {
     position: 'absolute',
-    width: 110,
-    height: 40,
-    left: 250,
-    top: 690,
+    width: "28%",
+    height: "5%",
+    right: "5%",
+    top: "89%",
     backgroundColor: '#B96835',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderRadius: 20,
   },
   text1: {
     position: 'absolute',
@@ -127,39 +126,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     top: 620,
     left: 105,
-  },
-  map: {
-    position: 'absolute',
-    width: 313,
-    height: 151,
-    left: 40,
-    top: 315,
-  },
-  text4: {
-    position: 'absolute',
-    fontWeight: 'bold',
-    fontSize: 18,
-    lineHeight: 21,
-    top: 489,
-    alignSelf: 'center',
-  },
-  price1: {
-    position: 'absolute',
-    width: 74,
-    height: 30,
-    left: 188,
-    top: 579,
-    backgroundColor: '#B96835',
-    color: "white",
-  },
-  price2: {
-    position: 'absolute',
-    width: 74,
-    height: 30,
-    left: 188,
-    top: 616,
-    backgroundColor: '#B96835',
-    color: "white",
   },
 })
 

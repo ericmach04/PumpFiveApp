@@ -1,4 +1,4 @@
-import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView, SafeAreaInsets} from 'react-native'
 import React from 'react'
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -16,6 +16,9 @@ const Tabs = () =>{
             tabBarShowLabel: false,
             tabBarActiveBackgroundColor: "#CEB764",
             tabBarInactiveBackgroundColor: "#CDCABF",
+            tabBarStyle: {
+                paddingBottom: 0,
+            },
          }}
          >
             <Tab.Screen name="Home" component={HomePage} options={{
