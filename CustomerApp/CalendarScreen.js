@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, SafeAreaView, Button } from 'react-native'
 import { Calendar } from 'react-native-calendario';
-import Moment from 'moment'
-import DatePicker from "react-datepicker";
+import moment from 'moment'
+
 
 
 
 
 export default function CalendarScreen({navigation}){
     const [dateState, setDateState] = useState(new Date())
-     const changeDate = (e) => {
-         setDateState(e)
+    const changeDate = (e) => {
+        setDateState(e)
+        
     }
-    
-    
-    
-
     return (
        <SafeAreaView>
            <View style={buttonstyles.backbutton}>
@@ -28,8 +25,8 @@ export default function CalendarScreen({navigation}){
             <Calendar
                 value={dateState}
                 onChange={changeDate}
+                onPress={() => navigation.navigate('GasService', {dateState})}
                 
-               
             />
 
         
