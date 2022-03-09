@@ -37,11 +37,9 @@ export default function PlaceOrder({ navigation }) {
                 <Text style={styles.text}>
                     Services
                 </Text>
-                <View style={styles.container}>
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
-                        <Text style={styles.boxfontsbody}>Because you hate going to the gas station!</Text>
-                        <Text style={styles.boxfontsbody}>Because those extra 20 minutes in the morning matter.</Text>
+                        <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
                         <View style={buttonstyles.button}>
                           {/* <Text>Home Screen</Text> */}
                           <Button
@@ -77,7 +75,6 @@ export default function PlaceOrder({ navigation }) {
                             />
                             </View>
                         </View>
-                </View>
                 {/* <NavigationContainer>
                     <Tabs />
                 </NavigationContainer> */}
@@ -114,10 +111,11 @@ const styles = StyleSheet.create({
 
       gasservice: {
         position: 'absolute',
-        width: 350,
-        height: 175,
-        left: 21,
-        top: -275,
+        width: "90%",
+        height: "25%",
+        left: "5%",
+        right: "5%",
+        top: "20%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -126,10 +124,11 @@ const styles = StyleSheet.create({
 
       tireservice:{
         position: 'absolute',
-        width: 350,
-        height: 175,
-        left: 21,
-        top: -80,
+        width: "90%",
+        height: "25%",
+        left: "5%",
+        right: "5%",
+        top: "48%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -138,10 +137,11 @@ const styles = StyleSheet.create({
 
       detailingservice:{
         position: 'absolute',
-        width: 350,
-        height: 175,
-        left: 21,
-        top: 115,
+        width: "90%",
+        height: "25%",
+        left: "5%",
+        right: "5%",
+        top: "76%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         fontWeight: "bold",
         textAlign: "left",
-        top: 5,
-        left: 5,
+        top: "3%",
+        left: "2%",
       },
 
       boxfontsbody:{
@@ -163,8 +163,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         lineHeight: 30,
         textAlign: "left",
-        top: 5,
-        left: 5,
+        top: "3%",
+        left: "2%",
+        right: "2%",
+        width: "95%",
       },
 
 
@@ -172,11 +174,11 @@ const styles = StyleSheet.create({
 
 const buttonstyles = StyleSheet.create({
     button: { 
-        width: 100, 
-        height: 40,
-        bottom: 5,
-        right: 10,
-        borderWidth: 1, 
+        width: "30%", 
+        height: "21%",
+        bottom: "5%",
+        right: "5%",
+        borderRadius: 20,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
     }
