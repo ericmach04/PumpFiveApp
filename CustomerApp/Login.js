@@ -69,9 +69,9 @@ export default function Login({ navigation }) {
     }));
   }
 
-  // componentDidMount() {
-
-  // }
+  componentDidMount = () => {
+    getUsers(onUserReceived)
+  }
   
   return (
     
@@ -119,6 +119,7 @@ export default function Login({ navigation }) {
 
         <TouchableOpacity
           onPress={handleSignUp}
+          // onPress={() => navigation.navigate('Registration')}
           // onPress={() => navigation.navigate('Registration')}
           style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Register</Text>
