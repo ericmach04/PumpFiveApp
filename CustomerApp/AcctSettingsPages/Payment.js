@@ -3,31 +3,71 @@ import {
   Text,
   View,
   SafeAreaView,
+  ScrollView,
+  ActivityIndicator,
   ImageBackground,
   Button,
   TextInput,
   UselessTextInput,
   Image,
 } from "react-native";
-import React from "react";
+import React, {Component} from "react";
+import firebase from 'firebase';
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import {getCards} from '../../firebasefunctions'
+import { ListItem } from "react-native-elements";
 // import TimeDropdown from "../dropdowns/TimeDropdown";
 // import DayDropdown from "../dropdowns/DayDropdown";
 // import GasDropdown from "../dropdowns/GasDropdown";
 // import PaymentDropdown from '../dropdowns/PaymentDropdown';
 
-export default function Payment({ navigation }) {
+export default class Payment extends Component{
 
-  // onCardsReceived = (cardList) => {
-  //   console.log(cardList);
-  // }
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection('Credit_Cards');
+    this.state = {
+      isLoading: true,
+      cards: []
+    };
+  }
 
-  // componentDidMount(){
-  //   getCards(onCardsReceived)
-  // }
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getCardData);
+  }
 
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  getCardData = (querySnapshot) => {
+    const cards = [];
+    querySnapshot.forEach((res) => {
+      const { createdAt, cvv, email, expiry, number, type } = res.data();
+      cards.push({
+        key: res.id,
+        createdAt,
+        cvv,
+        email,
+        expiry,
+        number,
+        type
+      });
+    });
+    this.setState({
+      cards,
+      isLoading: false
+   });
+  }
+render(){
+  if(this.state.isLoading){
+    return(
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="red"/>
+      </View>
+    )
+  }
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -35,7 +75,29 @@ export default function Payment({ navigation }) {
         style={styles.image}
       >
         <SafeAreaView style={styles.container}>
-          <View style={styles.container}>
+          <ScrollView>
+                {
+                  this.state.cards.map((res, i) => {
+                    return (
+                      <ListItem 
+                        key={i}           
+                        bottomDivider>
+                        <ListItem.Content>
+                          <ListItem.Title>{res.email}</ListItem.Title>
+                          <ListItem.Subtitle>{res.number}</ListItem.Subtitle>
+                          <ListItem.Subtitle>{res.type}</ListItem.Subtitle>
+                          <ListItem.Subtitle>{res.expiry}</ListItem.Subtitle>
+                          <ListItem.Subtitle>{res.cvv}</ListItem.Subtitle>
+                        </ListItem.Content>
+                        <ListItem.Chevron 
+                          color="black" 
+                        />
+                      </ListItem>
+                    );
+                  })
+                }
+            </ScrollView>
+          {/* <View style={styles.container}>
             <View style={styles.Memberships}>
               <View
                 style={{
@@ -66,7 +128,7 @@ export default function Payment({ navigation }) {
 
               <View
                 style={{ flexDirection: "row", justifyContent: "space-around" }}
-              >
+              > */}
                 {/* <View style={{ top: -219, left: 10 }}>
                   <Image source={require("../../icons/bofa.png")} />
                 </View> */}
@@ -100,27 +162,28 @@ export default function Payment({ navigation }) {
                     </View>
                   </View>
                 </View> */}
-              </View>
+              {/* </View>
 
               <View style={buttonstyles.paybutton}>
                 <Button
                   title="+ Add Payment Method"
                   color="black"
                   onPress={() => navigation.navigate("AddCard")}
-                />
+                /> */}
                  {/* <Button
                   title="Get Cards"
                   color="black"
                   onPress={getCards}
                 /> */}
-              </View>
+              {/* </View> */}
 
-            </View>
-          </View>
+            {/* </View> */}
+          {/* </View> */}
         </SafeAreaView>
       </ImageBackground>
     </View>
   );
+}
 }
 
 // function GasScreen({ navigation }) {
@@ -328,5 +391,14 @@ const styles = StyleSheet.create({
     right: 10,
     left: 5,
     backgroundColor: "#DAAC3F",
+  },
+  loader: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',    
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });

@@ -6,7 +6,7 @@ import {addCard} from '../../firebasefunctions'
 
 // export default function AddCard({ navigation }) {
     var dataobject;
-    var useremail = auth.currentUser.email;
+    var useremail = auth.currentUser?.email;
     export default class AddCard extends Component {
 
     _onFocus = field => console.log('focusing', field)
