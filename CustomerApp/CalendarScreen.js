@@ -7,12 +7,18 @@ import moment from 'moment'
 
 
 
+
 export default function CalendarScreen({navigation}){
     const [dateState, setDateState] = useState(new Date())
     const changeDate = (e) => {
-        setDateState(e)
-        
+        setDateState(e)    
     }
+
+    let currentDate = new Date()
+    let day = currentDate.getDay()
+    let month = currentDate.getMonth()
+    let year = currentDate.getFullYear()
+
     return (
        <SafeAreaView>
            <View style={buttonstyles.backbutton}>
@@ -24,8 +30,16 @@ export default function CalendarScreen({navigation}){
             </View>
             <Calendar
                 value={dateState}
-                onChange={changeDate}
-                onPress={() => navigation.navigate('GasService', {dateState})}
+                minDate={currentDate}
+                onDayPress={changeDate}
+                onPress={() => navigation.navigate('GasService', {day},{month},{year})}
+
+                theme={{
+                  activeDayColor:{
+                    color:'#6d95da'
+                  }
+                }
+                }
                 
             />
 

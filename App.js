@@ -16,6 +16,8 @@ import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 import CalendarScreen from './CustomerApp/CalendarScreen'
+import TimeBooking from './CustomerApp/TimeBooking'
+
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -44,6 +46,7 @@ const App = () => {
           <Stack.Screen name="Tabs" component={Tabs} />
           <Stack.Screen name="HomePage" component={HomePage} />
           <Stack.Screen name="CalendarScreen" component={CalendarScreen}/>
+          <Stack.Screen name="TimeBooking" component={TimeBooking}/> 
           <Stack.Screen name="GasService" component={GasService} />
           <Stack.Screen name="TireService" component={TireService} />
           <Stack.Screen name="DetailingService" component={DetailingService} />
