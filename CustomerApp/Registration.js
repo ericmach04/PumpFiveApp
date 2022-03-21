@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
 // import { addUser, getUsers } from '../firebase'
@@ -9,6 +9,8 @@ export default function Registration({ navigation }) {
   const [password, setPassword] = useState('')
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
+  const [cMake, setcMake] = useState('')
+  const [cModel, setcModel] = useState('')
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -37,6 +39,7 @@ export default function Registration({ navigation }) {
     .catch(error => alert(error.message))
   }
   return ( <View style={styles.container}>
+    <ScrollView>
     <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
       <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -92,6 +95,23 @@ export default function Registration({ navigation }) {
                       keyboardType="default"
         />
 
+        <Text style={styles.email}>Your car make: *</Text>
+        <TextInput
+                      style={styles.input}
+                      value = {lname}
+                      onChangeText={text => cMake(text)}
+                      placeholder="enter car Make"
+                      keyboardType="default"
+        />
+        <Text style={styles.email}>Your car model: *</Text>
+        <TextInput
+                      style={styles.input}
+                      value = {lname}
+                      onChangeText={text => cModel(text)}
+                      placeholder="enter car Model"
+                      keyboardType="default"
+        />
+
         <Text style={styles.email}>New Password: *</Text>
         <TextInput
                       style={styles.input}
@@ -132,6 +152,7 @@ export default function Registration({ navigation }) {
     </KeyboardAvoidingView>
     </SafeAreaView>
     </ImageBackground>
+    </ScrollView>
     </View>
 )
 }
@@ -152,23 +173,25 @@ container: {
 
   text1: {
     color: "white",
-    fontFamily: "Times New Roman",
+   
     fontSize: 48,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 30,
+    left: "10%",
+    top: "-20%"
   },
   text2: {
     color: "white",
-    fontFamily: "Times New Roman",
+    
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 30,
+    left: "10%",
+    top: "-15%"
   },
   login: {
     color: "white",
@@ -193,11 +216,14 @@ container: {
   email: {
     top: 30,
     color: "white",
-    fontFamily: "Times New Roman",
+   
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
+
+    left: "10%",
+    top: "10%"
   },
   signup: {
     top: 30,
@@ -275,6 +301,7 @@ container: {
     padding: "1%",
     backgroundColor: "white",
     top: "4%",
+    left: "10%",
   },
   loginview: {
     // justifyContent: 'center',
