@@ -16,6 +16,7 @@ import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 import CalendarScreen from './CustomerApp/CalendarScreen'
+import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -78,6 +79,8 @@ const App = () => {
           <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
           <Stack.Screen name="DriverInfo" component={DriverInfo} />
           <Stack.Screen name="JobHistory" component={JobHistory} />
+
+          <Stack.Screen name="AddCard" component={AddCard} />
 
 
 

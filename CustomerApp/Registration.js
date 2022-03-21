@@ -303,9 +303,9 @@ const buttonstyles = StyleSheet.create({
   },
   backbutton: {
     width: '15%', 
-    height: 40,
-    top: 65,
-    right: 15,
+    height: "6%",
+    top: "5%",
+    right: "5%",
     backgroundColor:"#DAAC3F", 
     position: "absolute"
   }

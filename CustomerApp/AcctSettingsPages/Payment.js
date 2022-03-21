@@ -12,12 +12,22 @@ import {
 import React from "react";
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
+import {getCards} from '../../firebasefunctions'
 // import TimeDropdown from "../dropdowns/TimeDropdown";
 // import DayDropdown from "../dropdowns/DayDropdown";
 // import GasDropdown from "../dropdowns/GasDropdown";
 // import PaymentDropdown from '../dropdowns/PaymentDropdown';
 
 export default function Payment({ navigation }) {
+
+  // onCardsReceived = (cardList) => {
+  //   console.log(cardList);
+  // }
+
+  // componentDidMount(){
+  //   getCards(onCardsReceived)
+  // }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -44,24 +54,24 @@ export default function Payment({ navigation }) {
                   />
                 </View>
               </View>
-              <View style={{ top: -235, left: 20 }}>
+              <View style={{ bottom: "60%", left: "5%" }}>
                 <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
                 <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
               </View>
 
-              <View style={{ top: -230, left: 19 }}>
+              <View style={{ bottom: "60%", left: "5%" }}>
                 <Text style={styles.creditdebit}>Credit/Debit Card</Text>
               </View>
 
               <View
                 style={{ flexDirection: "row", justifyContent: "space-around" }}
               >
-                <View style={{ top: -219, left: 10 }}>
+                {/* <View style={{ top: -219, left: 10 }}>
                   <Image source={require("../../icons/bofa.png")} />
-                </View>
+                </View> */}
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-around",
@@ -89,16 +99,22 @@ export default function Payment({ navigation }) {
                       <Image source={require("../../icons/mastercard.png")} />
                     </View>
                   </View>
-                </View>
+                </View> */}
               </View>
 
               <View style={buttonstyles.paybutton}>
                 <Button
                   title="+ Add Payment Method"
                   color="black"
-                  onPress={() => navigation.navigate("AcctSettings")}
+                  onPress={() => navigation.navigate("AddCard")}
                 />
+                 {/* <Button
+                  title="Get Cards"
+                  color="black"
+                  onPress={getCards}
+                /> */}
               </View>
+
             </View>
           </View>
         </SafeAreaView>
@@ -141,9 +157,9 @@ const buttonstyles = StyleSheet.create({
   // + Add Payment Button
   paybutton: {
     width: "77%",
-    height: 40,
-    top: 380,
-    right: 60,
+    height: "7%",
+    top: "85%",
+    right: "10%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
