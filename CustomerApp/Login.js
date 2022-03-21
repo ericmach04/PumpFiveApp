@@ -105,6 +105,9 @@ export default function Login({ navigation }) {
 
         </TextInput>
 
+        <Text style={styles.email}>
+          Password:
+        </Text>
         <TextInput placeholder="Password" 
                     value={password} 
                     onChangeText={text => setPassword(text)}
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
 
     },
     button:{
-      backgroundColor: '#0782F9',
+      backgroundColor: '#f9c107',
       width: '100%',
       padding: 15,
       borderRadius: 10,
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
     buttonOutline:{
       backgroundColor: 'white',
       marginTop: 5,
-      borderColor: '#0782F9',
+      borderColor: '#f9c107',
       borderWidth: 2,
 
     },
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
 
     },
     buttonOutlineText:{
-      color: 'blue',
+      color: '#f9c107',
       fontWeight: '700',
       fontSize: 16,
 
@@ -264,7 +267,7 @@ const styles = StyleSheet.create({
 
     
       left: "10%",
-      top: "-50%"
+      top: "-20%"
      },
      text2: {
        color: "white",
@@ -276,7 +279,7 @@ const styles = StyleSheet.create({
        top: 30,
 
        left: "10%",
-       top: "-50%"
+       top: "-15%"
      },
   //   login: {
   //     color: "white",
@@ -314,15 +317,21 @@ const styles = StyleSheet.create({
        left: "10%",
        top: "10%"
      },
-  //   password: {
+     password: {
   //     top: 175,
-  //     color: "white",
-  //     fontFamily: "Times New Roman",
-  //     fontSize: 30,
-  //     lineHeight: 44,
-  //     fontWeight: "bold",
+       color: "white",
+
+       fontSize: 30,
+       lineHeight: 44,
+       fontWeight: "bold",
+       paddingHorizontal: 15,
+       paddingVertical: 10,
+       borderRadius: 10,
+       marginTop: 5,
+       left: "10%",
+       top: "10%"
   //     textAlign: "left",
-  //   },
+     },
   //   signup: {
   //     top: 300,
   //     color: "white",
