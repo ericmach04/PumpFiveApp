@@ -181,5 +181,5 @@ const buttonstyles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
-    }
+    },
 })

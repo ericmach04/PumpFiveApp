@@ -19,9 +19,20 @@ import CalendarScreen from './CustomerApp/CalendarScreen'
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
+import DriverTabs from './navigation/DriverTabs';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './CustomerApp/Login';
+
+import DriverHome from './DriverApp/DriverHome';
+import DriverOrder from './DriverApp/DriverOrder';
+import DriverJobs from './DriverApp/DriverJobs';
+import DriverAccount from './DriverApp/DriverAccount';
+
+import DriverAddresses from './DriverApp/DriverAccountPages/DriverAddresses';
+import DriverInfo from './DriverApp/DriverAccountPages/DriverInfo';
+import JobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
+
 
 // export default function App() {
 //   // return (
@@ -57,6 +68,16 @@ const App = () => {
           <Stack.Screen name="Addresses" component={Addresses} />
           <Stack.Screen name="OrderHistory" component={OrderHistory} />
           <Stack.Screen name="Payment" component={Payment} />
+
+          <Stack.Screen name="DriverTabs" component={DriverTabs} />
+          <Stack.Screen name="DriverHome" component={DriverHome} />
+          <Stack.Screen name="DriverOrder" component={DriverOrder} />
+          <Stack.Screen name="DriverJobs" component={DriverJobs} />
+          <Stack.Screen name="DriverAccount" component={DriverAccount} />
+
+          <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
+          <Stack.Screen name="DriverInfo" component={DriverInfo} />
+          <Stack.Screen name="JobHistory" component={JobHistory} />
 
 
 

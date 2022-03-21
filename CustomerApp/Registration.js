@@ -1,10 +1,49 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { auth } from '../firebase'
+// import { addUser, getUsers } from '../firebase'
+import {addUser} from '../firebasefunctions'
 
 export default function Registration({ navigation }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user){
+        navigation.replace("Tabs")
+      }
+    })
+
+    return unsubscribe
+  }, [])
+
+  const handleSignUp = () => {
+    auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(userCredentials => {
+      const user = userCredentials.user;
+      console.log("Registered with: ",user.email);
+
+      addUser({
+        email: email,
+        password: password,
+        fname: fname,
+        lname: lname,
+      })
+    })
+    .catch(error => alert(error.message))
+  }
   return ( <View style={styles.container}>
     <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
       <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        // style={{ flex: 1 }}
+      >
+      <View style={styles.inner}>
       <View style={buttonstyles.backbutton}>
                               <Button
                               title="Back"
@@ -29,6 +68,8 @@ export default function Registration({ navigation }) {
         <Text style={styles.email}>Email: *</Text>
         <TextInput
                       style={styles.input}
+                      value = {email}
+                      onChangeText={text => setEmail(text)}
                       placeholder="enter Email"
                       keyboardType="default"
         />
@@ -36,13 +77,17 @@ export default function Registration({ navigation }) {
         <Text style={styles.email}>First name: *</Text>
         <TextInput
                       style={styles.input}
+                      value = {fname}
+                      onChangeText={text => setFname(text)}
                       placeholder="Enter First name"
                       keyboardType="default"
         />
-
+        
         <Text style={styles.email}>Last name: *</Text>
         <TextInput
                       style={styles.input}
+                      value = {lname}
+                      onChangeText={text => setLname(text)}
                       placeholder="enter Last name"
                       keyboardType="default"
         />
@@ -57,11 +102,17 @@ export default function Registration({ navigation }) {
         <Text style={styles.email}>Re-enter Password:</Text>
         <TextInput
                       style={styles.input}
+                      value = {password}
+                      onChangeText={text => setPassword(text)}
                       placeholder="Retype Password"
                       keyboardType="default"
         />
         <View style={styles.loginview}>
-            <Button title="Sign up" color="white" onPress={() => navigation.navigate('Tabs')}></Button>
+            <Button title="Sign up" 
+                    color="white" 
+                    onPress={handleSignUp}
+                    // onPress={() => navigation.navigate('Tabs')}
+                    ></Button>
         </View>
         
         {/* <Text> Please sign in to continue</Text>
@@ -77,7 +128,8 @@ export default function Registration({ navigation }) {
 
           <Text>Sign up</Text>
         </TouchableHighlight> */}
-
+    </View> 
+    </KeyboardAvoidingView>
     </SafeAreaView>
     </ImageBackground>
     </View>
@@ -87,6 +139,10 @@ export default function Registration({ navigation }) {
 const styles = StyleSheet.create({
 container: {
     flex: 1,
+  },
+  inner: {
+    // flex: 1,
+    justifyContent: "flex-end",
   },
 
   image: {
@@ -213,12 +269,12 @@ container: {
     left: 5,
   },
   input: {
-    height: 40,
-    margin: 5,
+    height: "5.5%",
+    margin: "1%",
     borderWidth: 1,
-    padding: 5,
+    padding: "1%",
     backgroundColor: "white",
-    top: 30,
+    top: "4%",
   },
   loginview: {
     // justifyContent: 'center',

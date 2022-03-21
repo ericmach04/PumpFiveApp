@@ -30,9 +30,13 @@ export default function HomePage() {
         style={styles.Logo}
         source={require('../images/pumpfivelogo.png')}
       />
-      <View style={styles.rect1}/>
+      <View style={styles.rect1}>
+        <Text style={styles.boxfontshead}>Company Updates</Text>
+      </View>
       
-      <View style={styles.rect2}/>
+      <View style={styles.rect2}>
+        <Text style={styles.boxfontsbody}>Number of Drivers in Area: </Text>
+      </View>
       <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
@@ -72,17 +76,39 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderRadius: 10,
   },
+  boxfontshead:{
+    color: "black",
+    fontSize: 18,
+    lineHeight: 30,
+    fontWeight: "bold",
+    textAlign: "left",
+    top: "3%",
+    left: "27%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    // alignContent: "center"
+  },
   rect2: {
     position: 'absolute',
     width: "90%",
-    height: "15%",
+    height: "8%",
     left: "5%",
     right: "5%",
-    top: "68%",
+    top: "66%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
     borderRadius: 10,
+  },
+  boxfontsbody:{
+    color: "black",
+    fontSize: 24,
+    lineHeight: 30,
+    textAlign: "left",
+    top: "20%",
+    left: "2%",
+    right: "2%",
+    width: "95%",
   },
   button1: {
     position: 'absolute',

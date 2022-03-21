@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, TouchableOpacity,} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import { addUser, getUsers } from '../firebase'
+// import { addUser, getUsers } from '../firebase'
+import {addUser} from '../firebasefunctions'
 
 // var data = require('./localdb/localdb.json')
 
@@ -39,6 +40,11 @@ export default function Login({ navigation }) {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log("Registered with: ",user.email);
+
+      addUser({
+        email: email,
+        password: password
+      })
     })
     .catch(error => alert(error.message))
   }
@@ -48,30 +54,31 @@ export default function Login({ navigation }) {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log("Logged in with: ",user.email);
+
     })
     .catch(error => alert(error.message))
   }
 
-  var state = {
-    userList: [],
-    currentUser: null,
-  }
+  // var state = {
+  //   userList: [],
+  //   currentUser: null,
+  // }
 
-  onFoodAdded = (user) => {
-    console.log("User Added");
-    console.log(user);
-  }
+  // onFoodAdded = (user) => {
+  //   console.log("User Added");
+  //   console.log(user);
+  // }
 
-  onUserReceived = (userList) => {
-    console.log(userList);
-    this.setState(prevState  => ({
-      userList: prevState.userList = userList
-    }));
-  }
+  // onUserReceived = (userList) => {
+  //   console.log(userList);
+  //   this.setState(prevState  => ({
+  //     userList: prevState.userList = userList
+  //   }));
+  // }
 
-  componentDidMount = () => {
-    getUsers(onUserReceived)
-  }
+  // componentDidMount = () => {
+  //   getUsers(onUserReceived)
+  // }
   
   return (
     
@@ -118,8 +125,8 @@ export default function Login({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={handleSignUp}
-          // onPress={() => navigation.navigate('Registration')}
+          // onPress={handleSignUp}
+          onPress={() => navigation.navigate('Registration')}
           // onPress={() => navigation.navigate('Registration')}
           style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Register</Text>
