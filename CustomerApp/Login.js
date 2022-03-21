@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, TouchableOpacity,} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
+// import { addUser, getUsers } from '../firebase'
+import {addUser} from '../firebasefunctions'
 
 // var data = require('./localdb/localdb.json')
 
@@ -38,6 +40,11 @@ export default function Login({ navigation }) {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log("Registered with: ",user.email);
+
+      addUser({
+        email: email,
+        password: password
+      })
     })
     .catch(error => alert(error.message))
   }
@@ -47,9 +54,31 @@ export default function Login({ navigation }) {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log("Logged in with: ",user.email);
+
     })
     .catch(error => alert(error.message))
   }
+
+  // var state = {
+  //   userList: [],
+  //   currentUser: null,
+  // }
+
+  // onFoodAdded = (user) => {
+  //   console.log("User Added");
+  //   console.log(user);
+  // }
+
+  // onUserReceived = (userList) => {
+  //   console.log(userList);
+  //   this.setState(prevState  => ({
+  //     userList: prevState.userList = userList
+  //   }));
+  // }
+
+  // componentDidMount = () => {
+  //   getUsers(onUserReceived)
+  // }
   
   return (
     
@@ -58,7 +87,18 @@ export default function Login({ navigation }) {
       
       
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" 
+        <Text style={styles.text1}>
+          Login
+        </Text>
+        <Text style={styles.text2}>
+          Please sign in to continue
+        </Text>
+
+
+        <Text style={styles.email}>
+          Email:
+        </Text>
+        <TextInput placeholder="Email ID" 
                     value={email} 
                     onChangeText={text => setEmail(text)}
                     style={styles.input}>
@@ -85,7 +125,8 @@ export default function Login({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={handleSignUp}
+          // onPress={handleSignUp}
+          onPress={() => navigation.navigate('Registration')}
           // onPress={() => navigation.navigate('Registration')}
           style={[styles.button, styles.buttonOutline]}>
             <Text style={styles.buttonOutlineText}>Register</Text>
@@ -212,26 +253,31 @@ const styles = StyleSheet.create({
       justifyContent: "center"
     },
 
-  //   text1: {
-  //     color: "white",
-  //     fontFamily: "Times New Roman",
-  //     fontSize: 48,
-  //     lineHeight: 44,
-  //     fontWeight: "bold",
-  //     textAlign: "left",
-  //     // flex: 1,
-  //     top: 30,
-  //   },
-  //   text2: {
-  //     color: "white",
-  //     fontFamily: "Times New Roman",
-  //     fontSize: 30,
-  //     lineHeight: 44,
-  //     fontWeight: "bold",
-  //     textAlign: "left",
-  //     // flex: 1,
-  //     top: 30,
-  //   },
+     text1: {
+       color: "white",
+       fontSize: 48,
+       lineHeight: 44,
+       fontWeight: "700",
+     //  textAlign: "left",
+     //   flex: 1,
+       top: 40,
+
+    
+      left: "10%",
+      top: "-50%"
+     },
+     text2: {
+       color: "white",
+       fontSize: 24,
+       lineHeight: 24,
+       fontWeight: "100",
+      // textAlign: "left",
+      //  flex: 1,
+       top: 30,
+
+       left: "10%",
+       top: "-50%"
+     },
   //   login: {
   //     color: "white",
   //     fontFamily: "Times New Roman",
@@ -252,15 +298,22 @@ const styles = StyleSheet.create({
   //     // flex: 1,
   //     top: 150,
   //   },
-  //   email: {
-  //     top: 174,
-  //     color: "white",
-  //     fontFamily: "Times New Roman",
-  //     fontSize: 30,
-  //     lineHeight: 44,
-  //     fontWeight: "bold",
-  //     textAlign: "left",
-  //   },
+     email: {
+      // top: 174,
+       color: "white",
+
+       fontSize: 30,
+       lineHeight: 44,
+       fontWeight: "bold",
+      // textAlign: "left",
+
+       paddingHorizontal: 15,
+       paddingVertical: 10,
+       borderRadius: 10,
+       marginTop: 5,
+       left: "10%",
+       top: "10%"
+     },
   //   password: {
   //     top: 175,
   //     color: "white",

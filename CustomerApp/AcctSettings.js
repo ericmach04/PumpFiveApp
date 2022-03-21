@@ -52,7 +52,7 @@ export default function AcctSettings({ navigation }) {
                 />
               </View>
             </View>
-            <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
+            <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
             <Text style={styles.boxfontsbody}>Member Number: 773123456789</Text>
             <Text style={styles.boxfontsbody}>
               User Phone Number: 414-***-****

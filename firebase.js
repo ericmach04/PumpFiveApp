@@ -7,6 +7,7 @@
 // import { getAuth } from "firebase/auth"
 
 import * as firebase from "firebase"
+import "firebase/firestore"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -30,4 +31,10 @@ else{
 }
 
 const auth = firebase.auth()
+
+const db = firebase.firestore(app);
+
+export const AnimalsRef = db.collection("Animals");
+
 export { auth };
+export { firebase };
