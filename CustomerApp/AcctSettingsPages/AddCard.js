@@ -23,7 +23,7 @@ import {addCard} from '../../firebasefunctions'
         console.log("Email: ", useremail)
 
         addCard({
-            email: useremail,
+            email: auth.currentUser?.email,
             number: dataobject["values"]["number"],
             type: dataobject["values"]["type"],
             cvv: dataobject["values"]["cvc"],
