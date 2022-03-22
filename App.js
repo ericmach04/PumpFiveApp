@@ -17,6 +17,7 @@ import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 import CalendarScreen from './CustomerApp/CalendarScreen'
 import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
+import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -81,6 +82,7 @@ const App = () => {
           <Stack.Screen name="JobHistory" component={JobHistory} />
 
           <Stack.Screen name="AddCard" component={AddCard} />
+          <Stack.Screen name="AddAddress" component={AddAddress} />
 
 
 

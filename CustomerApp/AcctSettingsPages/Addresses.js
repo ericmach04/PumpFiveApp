@@ -1,32 +1,149 @@
-import { StyleSheet, Text, View, ImageBackground, Button} from 'react-native'
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  ActivityIndicator,
+  ImageBackground,
+  Button,
+  TextInput,
+  UselessTextInput,
+  Image,
+} from "react-native";
+import React, {Component} from "react";
+import firebase from 'firebase';
+import { useState } from "react";
+import {getCards} from '../../firebasefunctions'
+import { auth } from '../../firebase'
 
-export default function Addresses({ navigation }) {
+export default class Addresses extends Component{
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection('Addresses');
+    this.state = {
+      isLoading: true,
+      addresses: []
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getAddressData);
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  getAddressData = (querySnapshot) => {
+    const addresses = [];
+    querySnapshot.forEach((res) => {
+      const { email, streetnumber, city, state, zip } = res.data();
+      if(email == auth.currentUser?.email){
+      addresses.push({
+        key: res.id,
+        email,
+        streetnumber,
+        city,
+        state,
+        zip
+      });
+    }
+    });
+    this.setState({
+      addresses,
+      isLoading: false
+   });
+  }
+
+  render(){
+    if(this.state.isLoading){
+      return(
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="red"/>
+        </View>
+      )
+    }
+    var count = 0;
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
             <Text style={styles.h1}>Addresses</Text>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => navigation.goBack()}/>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.goBack()}/>
             </View>
-            <View style={styles.box2}>
-              <Text style={styles.h2}>123@gmail.com</Text>
-              <Text style={styles.h2}>Member no. 773123456789</Text>
-              <Text style={styles.h2}>414-***-****</Text>
-            </View>
-            <View style={styles.box3}>
-              <Text style={styles.head3}>Default Billing Address</Text>
-            </View>
-            <View style={styles.box4}>
-              <Text style={styles.h2}>123 s 12th St</Text>
-              <Text style={styles.h2}>Milwaukee, WI</Text>
-              <Text style={styles.h2}>53215</Text>
-            </View>
+            {
+                  this.state.addresses.map((res, i) => {
+                    count+=1;
+                    
+                    return (
+                      
+                      <View 
+                        style={{ top:"20%", left: "2%",}}
+                      >
+                        <View>
+                          <Text style={styles.bofadeeznutsbold}>Address #{count}</Text>
+                        </View>
+                        {/* <View>
+                          <Image source={image} />
+                        </View> */}
+                        <View>
+                          <Text style={styles.bofadeeznuts}>{res.streetnumber}</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.bofadeeznuts}>{res.city}, {res.state}, {res.zip}</Text>
+                        </View>
+                        <Text style={{textDecorationLine: 'underline', textAlign: "center"}}>Edit</Text>
+                        <Text style={{textDecorationLine: 'underline', textAlign: "center"}}>Delete</Text>
+                      </View>
+                      
+                    );
+                  })
+                }
+
+            <View style={buttonstyles.paybutton}>
+                <Button
+                  title="Add an Address"
+                  color="black"
+                  onPress={() => this.props.navigation.navigate('AddAddress')}
+                />
+              </View>
           </View>
         </ImageBackground>
       </View>
-  )}
+  )}}
+
+  const buttonstyles = StyleSheet.create({
+    button: {
+      width: "30%",
+      height: 40,
+      bottom: 5,
+      left: 230,
+      // top: 270,
+      borderWidth: 1,
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+    },
+    backbutton: {
+      width: "18%",
+      height: 40,
+      // top: 65,
+      right: 0,
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+    },
+    // + Add Payment Button
+    paybutton: {
+      width: "77%",
+      height: "7%",
+      top: "85%",
+      right: "10%",
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+    },
+  });
+
   const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -52,6 +169,7 @@ export default function Addresses({ navigation }) {
         fontWeight: "bold",
         fontSize: 36,
         lineHeight: 42,
+        textDecorationLine: 'underline',
       },
       box2: {
         position: "absolute",
@@ -59,6 +177,20 @@ export default function Addresses({ navigation }) {
         height: 69,
         left: 40,
         top: 150,
+      },
+      bofadeeznuts: {
+        color: "black",
+        fontSize: 25,
+        // lineHeight: 20,
+        //fontWeight: "bold",
+        textAlign: "center",
+      },
+      bofadeeznutsbold: {
+        color: "black",
+        fontSize: 35,
+        // lineHeight: 35,
+        fontWeight: "bold",
+        textAlign: "center",
       },
       h2: {
         fontSize: 20,
@@ -99,7 +231,16 @@ export default function Addresses({ navigation }) {
         right: 0,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
-    }
+    },
+    loader: {
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',    
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+    },
   })
   
   

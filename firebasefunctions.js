@@ -9,6 +9,11 @@ export function addUser(user, addComplete){
         password: user.password,
         fname: user.fname,
         lname: user.lname,
+        phone: user.phone,
+        cMake: user.cMake,
+        cModel: user.cModel,
+        cYear: user.cYear,
+        paid: "no",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
     .catch((error) => console.log(error))
@@ -24,6 +29,21 @@ export function addCard(card, addComplete){
         type: card.type,
         cvv: card.cvv,
         expiry: card.expiry,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .catch((error) => console.log(error))
+
+}
+
+export function addAddress(address, addComplete){
+    firebase.firestore()
+    .collection('Addresses')
+    .add({
+        email: address.email,
+        streetnumber: address.streetnumber,
+        city: address.city,
+        state: address.state,
+        zip: address.zip,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
     .catch((error) => console.log(error))

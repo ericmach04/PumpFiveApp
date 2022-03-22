@@ -30,6 +30,8 @@ import {addCard} from '../../firebasefunctions'
             expiry: dataobject["values"]["expiry"],
         })
 
+        
+
     }
     // _printVals = () => {
     //     console.log("Final object:", this.dataobject)

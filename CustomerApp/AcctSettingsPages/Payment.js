@@ -47,6 +47,7 @@ export default class Payment extends Component{
     const cards = [];
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
+      if(email == auth.currentUser?.email){
       cards.push({
         key: res.id,
         createdAt,
@@ -56,6 +57,7 @@ export default class Payment extends Component{
         number,
         type
       });
+    }
     });
     this.setState({
       cards,
@@ -96,27 +98,24 @@ render(){
                   <Button
                     title="Back"
                     color="white"
-                    onPress={() => navigation.goBack()}
+                    onPress={() => this.props.navigation.goBack()}
                   />
                 </View>
               </View>
-              <View style={{ bottom: "45%", left: "5%" }}>
+              {/* <View style={{ bottom: "45%", left: "5%" }}>
                 <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
                 <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
-              </View>
+              </View> */}
 
-              <View style={{ bottom: "45%", left: "5%" }}>
-                <Text style={styles.creditdebit}>Credit/Debit Card</Text>
+              <View style={{ bottom: "55%",}}>
+                <Text style={styles.creditdebit}>Credit/Debit Card (Add up to 3)</Text>
               </View> 
-              
-              {/* <View
-                style={{ flexDirection: "row", justifyContent: "space-around" }}
-              > */}
                 {
                   this.state.cards.map((res, i) => {
                     var image;
                     var text;
+                    var lastfour;
 
                     count+=1;
                     if(res.type=="visa"){
@@ -127,26 +126,14 @@ render(){
                       image = require("../../icons/mastercard.png")
                       text="Mastercard "
                     }
+
+                    var cardarray = res.number.split(" ")
+                    lastfour = cardarray[3]
+                    
                     return (
                       
-                      // <View style={{ bottom: "35%", left: "5%", flexDirection: "row", justifyContent: "space-around",}}>
-                      //   <ListItem 
-                      //     key={i}           
-                      //     bottomDivider>
-                      //     <ListItem.Content>
-                      //       <ListItem.Title>{res.email}</ListItem.Title>
-                      //       <ListItem.Subtitle>{res.number}</ListItem.Subtitle>
-                      //       <ListItem.Subtitle>{res.type}</ListItem.Subtitle>
-                      //       <ListItem.Subtitle>{res.expiry}</ListItem.Subtitle>
-                      //       <ListItem.Subtitle>{res.cvv}</ListItem.Subtitle>
-                      //     </ListItem.Content>
-                      //     <ListItem.Chevron 
-                      //       color="black" 
-                      //     />
-                      //   </ListItem>
-                      // </View>
                       <View 
-                        style={{ top: -219, left: 10,}}
+                        style={{ top: -270, left: 10,}}
                       >
                         <View>
                           <Text style={styles.bofadeeznuts}>Card {count}</Text>
@@ -155,7 +142,7 @@ render(){
                           <Image source={image} />
                         </View>
                         <View>
-                          <Text style={styles.bofadeeznuts}>{text} ending in ****</Text>
+                          <Text style={styles.bofadeeznuts}>{text}ending in {lastfour}</Text>
                         </View>
                         <View>
                           <Text style={styles.bofadeeznuts}>Exp: {res.expiry}</Text>
@@ -165,41 +152,6 @@ render(){
                     );
                   })
                 }
-              {/* </View> */}
-              
-                {/* <View style={{ top: -219, left: 10 }}>
-                  <Image source={require("../../icons/bofa.png")} />
-                </View> */}
-
-                {/* <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                ></View>
-                <View style={{ top: -215, left: -15 }}>
-                  <Text style={styles.bofadeeznuts}>Bank of America</Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <View style={{ top: -215, left: -20 }}>
-                    <Image source={require("../../icons/visa.png")} />
-
-                    <View style={{ top: 15, left: -230 }}>
-                      <Image source={require("../../icons/chase.png")} />
-                      <Text style={styles.chasemoneynotchics}>Chase</Text>
-                    </View>
-
-                    <View style={{ top: -45, left: -2 }}>
-                      <Image source={require("../../icons/mastercard.png")} />
-                    </View>
-                  </View>
-                </View> */}
               
 
               <View style={buttonstyles.paybutton}>
