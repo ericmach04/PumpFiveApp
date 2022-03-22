@@ -3,21 +3,75 @@ import {
   Text,
   View,
   SafeAreaView,
+  ScrollView,
+  ActivityIndicator,
   ImageBackground,
   Button,
   TextInput,
   UselessTextInput,
   Image,
 } from "react-native";
-import React from "react";
+import React, {Component} from "react";
+import firebase from 'firebase';
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
+import {getCards} from '../../firebasefunctions'
+import { ListItem } from "react-native-elements";
+import { auth } from '../../firebase'
 // import TimeDropdown from "../dropdowns/TimeDropdown";
 // import DayDropdown from "../dropdowns/DayDropdown";
 // import GasDropdown from "../dropdowns/GasDropdown";
 // import PaymentDropdown from '../dropdowns/PaymentDropdown';
 
-export default function Payment({ navigation }) {
+// var useremail=auth.currentUser?.email;
+export default class Payment extends Component{
+
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection('Credit_Cards');
+    this.state = {
+      isLoading: true,
+      cards: []
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getCardData);
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  getCardData = (querySnapshot) => {
+    const cards = [];
+    querySnapshot.forEach((res) => {
+      const { createdAt, cvv, email, expiry, number, type } = res.data();
+      cards.push({
+        key: res.id,
+        createdAt,
+        cvv,
+        email,
+        expiry,
+        number,
+        type
+      });
+    });
+    this.setState({
+      cards,
+      isLoading: false
+   });
+  }
+render(){
+  if(this.state.isLoading){
+    return(
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="red"/>
+      </View>
+    )
+  }
+
+  var count =0;
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -25,6 +79,8 @@ export default function Payment({ navigation }) {
         style={styles.image}
       >
         <SafeAreaView style={styles.container}>
+          
+            
           <View style={styles.container}>
             <View style={styles.Memberships}>
               <View
@@ -44,24 +100,78 @@ export default function Payment({ navigation }) {
                   />
                 </View>
               </View>
-              <View style={{ top: -235, left: 20 }}>
-                <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
+              <View style={{ bottom: "45%", left: "5%" }}>
+                <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
                 <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
               </View>
 
-              <View style={{ top: -230, left: 19 }}>
+              <View style={{ bottom: "45%", left: "5%" }}>
                 <Text style={styles.creditdebit}>Credit/Debit Card</Text>
-              </View>
-
-              <View
+              </View> 
+              
+              {/* <View
                 style={{ flexDirection: "row", justifyContent: "space-around" }}
-              >
-                <View style={{ top: -219, left: 10 }}>
-                  <Image source={require("../../icons/bofa.png")} />
-                </View>
+              > */}
+                {
+                  this.state.cards.map((res, i) => {
+                    var image;
+                    var text;
 
-                <View
+                    count+=1;
+                    if(res.type=="visa"){
+                      image = require("../../icons/visa.png")
+                      text="Visa "
+                    }
+                    else if(res.type=="master-card"){
+                      image = require("../../icons/mastercard.png")
+                      text="Mastercard "
+                    }
+                    return (
+                      
+                      // <View style={{ bottom: "35%", left: "5%", flexDirection: "row", justifyContent: "space-around",}}>
+                      //   <ListItem 
+                      //     key={i}           
+                      //     bottomDivider>
+                      //     <ListItem.Content>
+                      //       <ListItem.Title>{res.email}</ListItem.Title>
+                      //       <ListItem.Subtitle>{res.number}</ListItem.Subtitle>
+                      //       <ListItem.Subtitle>{res.type}</ListItem.Subtitle>
+                      //       <ListItem.Subtitle>{res.expiry}</ListItem.Subtitle>
+                      //       <ListItem.Subtitle>{res.cvv}</ListItem.Subtitle>
+                      //     </ListItem.Content>
+                      //     <ListItem.Chevron 
+                      //       color="black" 
+                      //     />
+                      //   </ListItem>
+                      // </View>
+                      <View 
+                        style={{ top: -219, left: 10,}}
+                      >
+                        <View>
+                          <Text style={styles.bofadeeznuts}>Card {count}</Text>
+                        </View>
+                        <View>
+                          <Image source={image} />
+                        </View>
+                        <View>
+                          <Text style={styles.bofadeeznuts}>{text} ending in ****</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.bofadeeznuts}>Exp: {res.expiry}</Text>
+                        </View>
+                      </View>
+                      
+                    );
+                  })
+                }
+              {/* </View> */}
+              
+                {/* <View style={{ top: -219, left: 10 }}>
+                  <Image source={require("../../icons/bofa.png")} />
+                </View> */}
+
+                {/* <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-around",
@@ -89,22 +199,30 @@ export default function Payment({ navigation }) {
                       <Image source={require("../../icons/mastercard.png")} />
                     </View>
                   </View>
-                </View>
-              </View>
+                </View> */}
+              
 
               <View style={buttonstyles.paybutton}>
                 <Button
                   title="+ Add Payment Method"
                   color="black"
-                  onPress={() => navigation.navigate("AcctSettings")}
+                  onPress={() => this.props.navigation.navigate('AddCard')}
+                />
+                 <Button
+                  title="Get Cards"
+                  color="black"
+                  onPress={getCards}
                 />
               </View>
+
             </View>
           </View>
+          
         </SafeAreaView>
       </ImageBackground>
     </View>
   );
+}
 }
 
 // function GasScreen({ navigation }) {
@@ -141,9 +259,9 @@ const buttonstyles = StyleSheet.create({
   // + Add Payment Button
   paybutton: {
     width: "77%",
-    height: 40,
-    top: 380,
-    right: 60,
+    height: "7%",
+    top: "85%",
+    right: "10%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
@@ -195,8 +313,8 @@ const styles = StyleSheet.create({
   //bofadeeznuts
   bofadeeznuts: {
     color: "black",
-    fontSize: 25,
-    lineHeight: 30,
+    fontSize: 15,
+    lineHeight: 20,
     //fontWeight: "bold",
     textAlign: "left",
   },
@@ -312,5 +430,24 @@ const styles = StyleSheet.create({
     right: 10,
     left: 5,
     backgroundColor: "#DAAC3F",
+  },
+  loader: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',    
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+  rectangle: {
+    height: "50%",
+    width: "40%",
+    backgroundColor: 'white',
+    position: 'absolute', 
+    // zIndex: 99,
+    top: '50%',
+    left: '40%',
+    borderWidth: 1,
   },
 });

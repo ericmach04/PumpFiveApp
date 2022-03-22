@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
-// import { addUser, getUsers } from '../firebase'
-import {addUser} from '../firebasefunctions'
+import { addUser } from '../firebasefunctions'
 
 export default function Registration({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
+  const [cMake, setcMake] = useState('')
+  const [cModel, setcModel] = useState('')
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user){
+      if (user) {
         navigation.replace("Tabs")
       }
     })
@@ -22,100 +23,118 @@ export default function Registration({ navigation }) {
 
   const handleSignUp = () => {
     auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
-      console.log("Registered with: ",user.email);
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log("Registered with: ", user.email);
 
-      addUser({
-        email: email,
-        password: password,
-        fname: fname,
-        lname: lname,
+        addUser({
+          email: email,
+          password: password,
+          fname: fname,
+          lname: lname,
+        })
       })
-    })
-    .catch(error => alert(error.message))
+      .catch(error => alert(error.message))
   }
-  return ( <View style={styles.container}>
-    <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
-      <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        // style={{ flex: 1 }}
-      >
-      <View style={styles.inner}>
-      <View style={buttonstyles.backbutton}>
-                              <Button
-                              title="Back"
-                              color="white"
-                              onPress={() => navigation.goBack()}
-                            />
-                            </View>
-        
-          <Text style={styles.text1}>PumpFive</Text>          
-          <Text style={styles.text2}>Fuel Delivery Service</Text>
-       
+  return (<View style={styles.container}>
+    <ScrollView>
+      <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : null}
+          // style={{ flex: 1 }}
+          >
+            <View style={styles.inner}>
+              <View style={buttonstyles.backbutton}>
+                <Button
+                  title="Back"
+                  color="white"
+                  onPress={() => navigation.goBack()}
+                />
+              </View>
 
-        {/* <Text style={styles.signup}>Sign Up</Text> */}
-        
-        <Text style={styles.email}>Username: *</Text>
-        <TextInput
-                      style={styles.input}
-                      placeholder="create Username"
-                      keyboardType="default"
-        />
-        
-        <Text style={styles.email}>Email: *</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {email}
-                      onChangeText={text => setEmail(text)}
-                      placeholder="enter Email"
-                      keyboardType="default"
-        />
+              <Text style={styles.text1}>PumpFive</Text>
+              <Text style={styles.text2}>Fuel Delivery Service</Text>
 
-        <Text style={styles.email}>First name: *</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {fname}
-                      onChangeText={text => setFname(text)}
-                      placeholder="Enter First name"
-                      keyboardType="default"
-        />
-        
-        <Text style={styles.email}>Last name: *</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {lname}
-                      onChangeText={text => setLname(text)}
-                      placeholder="enter Last name"
-                      keyboardType="default"
-        />
 
-        <Text style={styles.email}>New Password: *</Text>
-        <TextInput
-                      style={styles.input}
-                      placeholder="create password"
-                      keyboardType="default"
-        />
+              {/* <Text style={styles.signup}>Sign Up</Text> */}
 
-        <Text style={styles.email}>Re-enter Password:</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {password}
-                      onChangeText={text => setPassword(text)}
-                      placeholder="Retype Password"
-                      keyboardType="default"
-        />
-        <View style={styles.loginview}>
-            <Button title="Sign up" 
-                    color="white" 
-                    onPress={handleSignUp}
-                    // onPress={() => navigation.navigate('Tabs')}
-                    ></Button>
-        </View>
-        
-        {/* <Text> Please sign in to continue</Text>
+              <Text style={styles.email}>Username: *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="create Username"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>Email: *</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={text => setEmail(text)}
+                placeholder="enter Email"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>First name: *</Text>
+              <TextInput
+                style={styles.input}
+                value={fname}
+                onChangeText={text => setFname(text)}
+                placeholder="Enter First name"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>Last name: *</Text>
+              <TextInput
+                style={styles.input}
+                value={lname}
+                onChangeText={text => setLname(text)}
+                placeholder="enter Last name"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>Your car make: *</Text>
+              <TextInput
+                style={styles.input}
+                value={lname}
+                onChangeText={text => cMake(text)}
+                placeholder="enter car Make"
+                keyboardType="default"
+              />
+              <Text style={styles.email}>Your car model: *</Text>
+              <TextInput
+                style={styles.input}
+                value={lname}
+                onChangeText={text => cModel(text)}
+                placeholder="enter car Model"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>New Password: *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="create password"
+                keyboardType="default"
+              />
+
+              <Text style={styles.email}>Re-enter Password:</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={text => setPassword(text)}
+                placeholder="Retype Password"
+                keyboardType="default"
+              />
+              <View style={styles.loginview}>
+                <Button title="Sign up"
+                  color="white"
+                  onPress={handleSignUp}
+                // onPress={() => navigation.navigate('Tabs')}
+                ></Button>
+              </View>
+
+              {/* <Text> Please sign in to continue</Text>
 
         <Text>Email:</Text>
 
@@ -128,16 +147,17 @@ export default function Registration({ navigation }) {
 
           <Text>Sign up</Text>
         </TouchableHighlight> */}
-    </View> 
-    </KeyboardAvoidingView>
-    </SafeAreaView>
-    </ImageBackground>
-    </View>
-)
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </ImageBackground>
+    </ScrollView>
+  </View>
+  )
 }
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
   },
   inner: {
@@ -152,23 +172,25 @@ container: {
 
   text1: {
     color: "white",
-    fontFamily: "Times New Roman",
+
     fontSize: 48,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 30,
+    left: "10%",
+    top: "-20%"
   },
   text2: {
     color: "white",
-    fontFamily: "Times New Roman",
+
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
     // flex: 1,
-    top: 30,
+    left: "10%",
+    top: "-15%"
   },
   login: {
     color: "white",
@@ -193,11 +215,14 @@ container: {
   email: {
     top: 30,
     color: "white",
-    fontFamily: "Times New Roman",
+
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
+
+    left: "10%",
+    top: "10%"
   },
   signup: {
     top: 30,
@@ -209,9 +234,9 @@ container: {
     textAlign: "left",
   },
 
-  services:{
-      flexDirection: "column",
-      justifyContent: "space-around"
+  services: {
+    flexDirection: "column",
+    justifyContent: "space-around"
   },
 
   gasservice: {
@@ -224,9 +249,9 @@ container: {
     borderWidth: 2,
     borderColor: '#000000',
     borderRadius: 10,
-},
+  },
 
-  tireservice:{
+  tireservice: {
     position: 'absolute',
     width: 350,
     height: 175,
@@ -238,7 +263,7 @@ container: {
     borderRadius: 10,
   },
 
-  detailingservice:{
+  detailingservice: {
     position: 'absolute',
     width: 350,
     height: 175,
@@ -250,7 +275,7 @@ container: {
     borderRadius: 10,
   },
 
-  boxfontshead:{
+  boxfontshead: {
     color: "black",
     fontSize: 24,
     lineHeight: 30,
@@ -260,7 +285,7 @@ container: {
     left: 5,
   },
 
-  boxfontsbody:{
+  boxfontsbody: {
     color: "black",
     fontSize: 18,
     lineHeight: 30,
@@ -275,38 +300,39 @@ container: {
     padding: "1%",
     backgroundColor: "white",
     top: "4%",
+    left: "10%",
   },
   loginview: {
     // justifyContent: 'center',
     // alignItems: 'center',
     borderWidth: 1,
-    width: 100, 
+    width: 100,
     height: 40,
     top: 30,
     // right: 10,
-    backgroundColor:"#DAAC3F",
-    left: 5, 
+    backgroundColor: "#DAAC3F",
+    left: 5,
   },
 
 })
 
 const buttonstyles = StyleSheet.create({
-  button: { 
-      width: '30%', 
-      height: 40,
-      bottom: 5,
-      left: 230,
-      // top: 270,
-      borderWidth: 1, 
-      backgroundColor:"#DAAC3F", 
-      position: "absolute"
+  button: {
+    width: '30%',
+    height: 40,
+    bottom: 5,
+    left: 230,
+    // top: 270,
+    borderWidth: 1,
+    backgroundColor: "#DAAC3F",
+    position: "absolute"
   },
   backbutton: {
-    width: '15%', 
-    height: 40,
-    top: 65,
-    right: 15,
-    backgroundColor:"#DAAC3F", 
+    width: '15%',
+    height: "6%",
+    top: "5%",
+    right: "5%",
+    backgroundColor: "#DAAC3F",
     position: "absolute"
   }
 })

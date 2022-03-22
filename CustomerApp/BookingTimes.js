@@ -6,47 +6,54 @@ import firestore from '@react-native-firebase/firestore'
 
    
 
-export default function BookingTimes() {
-    const [loading, setLoading] = useState(true); //set loading to true on component mount
-    const [bookingTimes, setBookingTimes] = useState([]); // Initial empty array of booking times
+export default class BookingTimes extends Component {
+    constructor() {
+        super();
+        this.docs = firebase.firestore().collection('Booking_Times');
+        this.state = {
+          isLoading: true,
+          bookingTimes: []
+        };
+      }
 
-    useEffect(() => {
-        const subscriber = firestore()
-            .collection('Booking_Times')
-            .onSnapshot(() => {
-                const bookingTimes = [];
-                
-                querySnapshot.forEach(documentSnapshot => {
-                    bookingTimes.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
-                    });
-                });
-
-                setBookingTimes(bookingTimes);
-                setLoading(false);
-            });
-
-            
-            
-        return () => subscriber(); //unsubscribe from events when not in use
-    }, []);
-
-   
-
-    if (loading) {
-        return <ActivityIndicator/>
+    componentDidMount() {
+        this.unsubscribe = this.docs.onSnapshot(this.getTimeSlots)
     }
 
-    return(
-        <FlatList
-            data={bookingTimes}
-            renderItem={({item}) => (
-                <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
-                    {/* <Text>Booking Times: {item.id}</Text> */}
-                    <Text>Booking Times: {item.value}</Text>
-                </View>
-            )} 
-        />
-    );
+    componentWillUnmount(){
+        this.unsubscribe();
+      }
+
+    async getTimeSlots (){
+        const snapshot = await firestore().collection('Booking_Times').get()
+        return snapshot.docs.map(doc => doc.data());
+    }
+
+    // async getTimeSlots = (querySnapshot) => {
+    //     const bookingTimes = [];
+    //     querySnapshot.forEach((slot) => {
+    //         const {} = slot.data();
+
+    //     }
+
+
+    // }
+    
+   
+
+    // if (loading) {
+    //     return <ActivityIndicator/>
+    // }
+
+    // return(
+    //     <FlatList
+    //         data={bookingTimes}
+    //         renderItem={({item}) => (
+    //             <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
+    //                 {/* <Text>Booking Times: {item.id}</Text> */}
+    //                 <Text>Booking Times: {item.value}</Text>
+    //             </View>
+    //         )} 
+    //     />
+    // );  
 }

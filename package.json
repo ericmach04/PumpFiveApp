@@ -26,8 +26,14 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+<<<<<<< HEAD
     "react-native-calendars": "^1.1279.0",
+=======
+    "react-native-calendario": "^3.0.1",
+    "react-native-credit-card-input": "^0.4.1",
+>>>>>>> 268e4f4da777f21b6f890c212f5706c42eddc6bd
     "react-native-dropdown-picker": "^5.3.0",
+    "react-native-elements": "^3.4.2",
     "react-native-web": "0.17.1",
     "react-router-dom": "^6.2.1",
     "tailwind-react-native-classnames": "^1.5.1"

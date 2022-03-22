@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, Alert } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ScrollView} from 'react-native'
 import { useHistory } from "react-router-dom";
 import React from 'react'
 import GasService from './GasService';
@@ -12,24 +12,8 @@ const image = { uri: "https://reactjs.org/logo-og.png" };
 
 const GasStack = createStackNavigator();
 
-// function GasScreen({ navigation }) {
-//   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Text>Home Screen</Text>
-//       <Button
-//         title="Go to Details"
-//         onPress={() => navigation.navigate('GasService')}
-//       />
-//     </View>
-//   );
-// }
-
-
 export default function PlaceOrder({ navigation }) {
   return (
-    // <View>
-    //   <Text>PlaceOrder</Text>
-    // </View>
     <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
@@ -37,6 +21,7 @@ export default function PlaceOrder({ navigation }) {
                 <Text style={styles.text}>
                     Services
                 </Text>
+                <ScrollView style={styles.scroll} alwaysBounceHorizontal={false} alwaysBounceVertical={false} bounces={false}>
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
@@ -75,9 +60,19 @@ export default function PlaceOrder({ navigation }) {
                             />
                             </View>
                         </View>
-                {/* <NavigationContainer>
-                    <Tabs />
-                </NavigationContainer> */}
+                        <View style={styles.tintingservice}>
+                        <Text style={styles.boxfontshead}>Tinting Services</Text>
+                            <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
+                            will get back to you in 24 hours.</Text>
+                            <View style={buttonstyles.button}>
+                              <Button
+                              title="Book Now"
+                              color="white"
+                              onPress={() => navigation.navigate('DetailingService')}
+                            />
+                            </View>
+                        </View>
+                    </ScrollView>
             </SafeAreaView>
         </ImageBackground>
     </View>
@@ -91,31 +86,23 @@ const styles = StyleSheet.create({
 
       image: {
         flex: 1,
-        justifyContent: "center"
+        //justifyContent: "center"
       },
 
       text: {
         color: "white",
         fontSize: 48,
-        lineHeight: 44,
+        lineHeight: 70,
         fontWeight: "bold",
         textAlign: "center",
-        flex: 1,
-        top: 30,
-      },
-
-      services:{
-          flexDirection: "column",
-          justifyContent: "space-around"
+        //flex: 1,
+        top: 0,
       },
 
       gasservice: {
-        position: 'absolute',
-        width: "90%",
-        height: "25%",
-        left: "5%",
-        right: "5%",
-        top: "20%",
+        width: "100%",
+        height: "50%",
+        //top: "0%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -123,12 +110,9 @@ const styles = StyleSheet.create({
     },
 
       tireservice:{
-        position: 'absolute',
-        width: "90%",
-        height: "25%",
-        left: "5%",
-        right: "5%",
-        top: "48%",
+        width: "100%",
+        height: "50%",
+        //top: "5%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -136,12 +120,18 @@ const styles = StyleSheet.create({
       },
 
       detailingservice:{
-        position: 'absolute',
-        width: "90%",
-        height: "25%",
-        left: "5%",
-        right: "5%",
-        top: "76%",
+        width: "100%",
+        height: "50%",
+        //top: "10%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+      },
+      tintingservice:{
+        width: "100%",
+        height: "50%",
+        //top: "15%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
@@ -168,8 +158,12 @@ const styles = StyleSheet.create({
         right: "2%",
         width: "95%",
       },
-
-
+      scroll: {
+        width: "90%",
+        left: "5%",
+        right: "5%",
+        
+      },
 })
 
 const buttonstyles = StyleSheet.create({
