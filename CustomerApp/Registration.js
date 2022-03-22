@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase'
-// import { addUser, getUsers } from '../firebase'
-import {addUser} from '../firebasefunctions'
+import { addUser } from '../firebasefunctions'
 
 import PhoneInput from 'react-native-phone-input'
 
@@ -43,10 +42,11 @@ export default function Registration({ navigation }) {
         cModel: cModel,
         cYear: cYear
       })
-    })
-    .catch(error => alert(error.message))
-  }
-  return ( <View style={styles.container}>
+      .catch(error => alert(error.message))
+  })}
+
+  return ( 
+  <View style={styles.container}>
     
     <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
       <SafeAreaView style={styles.container}>
@@ -201,7 +201,7 @@ export default function Registration({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
   },
   inner: {
@@ -216,7 +216,7 @@ container: {
 
   text1: {
     color: "white",
-   
+
     fontSize: 48,
     lineHeight: 44,
     fontWeight: "bold",
@@ -227,7 +227,7 @@ container: {
   },
   text2: {
     color: "white",
-    
+
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
@@ -295,9 +295,9 @@ container: {
     textAlign: "left",
   },
 
-  services:{
-      flexDirection: "column",
-      justifyContent: "space-around"
+  services: {
+    flexDirection: "column",
+    justifyContent: "space-around"
   },
 
   gasservice: {
@@ -310,9 +310,9 @@ container: {
     borderWidth: 2,
     borderColor: '#000000',
     borderRadius: 10,
-},
+  },
 
-  tireservice:{
+  tireservice: {
     position: 'absolute',
     width: 350,
     height: 175,
@@ -324,7 +324,7 @@ container: {
     borderRadius: 10,
   },
 
-  detailingservice:{
+  detailingservice: {
     position: 'absolute',
     width: 350,
     height: 175,
@@ -336,7 +336,7 @@ container: {
     borderRadius: 10,
   },
 
-  boxfontshead:{
+  boxfontshead: {
     color: "black",
     fontSize: 24,
     lineHeight: 30,
@@ -346,7 +346,7 @@ container: {
     left: 5,
   },
 
-  boxfontsbody:{
+  boxfontsbody: {
     color: "black",
     fontSize: 18,
     lineHeight: 30,
@@ -359,33 +359,33 @@ container: {
     // justifyContent: 'center',
     // alignItems: 'center',
     borderWidth: 1,
-    width: 100, 
+    width: 100,
     height: 40,
     top: 30,
     // right: 10,
-    backgroundColor:"#DAAC3F",
-    left: 5, 
+    backgroundColor: "#DAAC3F",
+    left: 5,
   },
 
 })
 
 const buttonstyles = StyleSheet.create({
-  button: { 
-      width: '30%', 
-      height: 40,
-      bottom: 5,
-      left: 230,
-      // top: 270,
-      borderWidth: 1, 
-      backgroundColor:"#DAAC3F", 
-      position: "absolute"
+  button: {
+    width: '30%',
+    height: 40,
+    bottom: 5,
+    left: 230,
+    // top: 270,
+    borderWidth: 1,
+    backgroundColor: "#DAAC3F",
+    position: "absolute"
   },
   backbutton: {
     width: '15%', 
     height: "7%",
     top: "5%",
     right: "5%",
-    backgroundColor:"#DAAC3F", 
+    backgroundColor: "#DAAC3F",
     position: "absolute"
   }
 })

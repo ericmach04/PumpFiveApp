@@ -16,8 +16,10 @@ import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 import CalendarScreen from './CustomerApp/CalendarScreen'
+import BookingTimes from './CustomerApp/BookingTimes';
 import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
 import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
+
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
@@ -51,46 +53,52 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-      <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, }}>
-          <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen name="HomePage" component={HomePage} />
-          <Stack.Screen name="CalendarScreen" component={CalendarScreen}/>
-          <Stack.Screen name="GasService" component={GasService} />
-          <Stack.Screen name="TireService" component={TireService} />
-          <Stack.Screen name="DetailingService" component={DetailingService} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Registration" component={Registration} />
-          <Stack.Screen name="OrderSummary" component={OrderSummary} />
-          <Stack.Screen name="Membership" component={Membership} />
-          <Stack.Screen name="AcctSettings" component={AcctSettings} />
-          <Stack.Screen name="CarInfo" component={CarInfo} />
-          {/* <Stack.Screen name="Addresses" component={Addresses} /> */}
-          <Stack.Screen name="Addresses" component={Addresses} />
-          <Stack.Screen name="OrderHistory" component={OrderHistory} />
-          <Stack.Screen name="Payment" component={Payment} />
+    <NavigationContainer>
 
-          <Stack.Screen name="DriverTabs" component={DriverTabs} />
-          <Stack.Screen name="DriverHome" component={DriverHome} />
-          <Stack.Screen name="DriverOrder" component={DriverOrder} />
-          <Stack.Screen name="DriverJobs" component={DriverJobs} />
-          <Stack.Screen name="DriverAccount" component={DriverAccount} />
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false, }}>
+        <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
+        <Stack.Screen name="BookingTimes" component={BookingTimes} />
+        <Stack.Screen name="GasService" component={GasService} />
+        <Stack.Screen name="TireService" component={TireService} />
+        <Stack.Screen name="DetailingService" component={DetailingService} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="OrderSummary" component={OrderSummary} />
+        <Stack.Screen name="Membership" component={Membership} />
+        <Stack.Screen name="AcctSettings" component={AcctSettings} />
+        <Stack.Screen name="CarInfo" component={CarInfo} />
+        {/* <Stack.Screen name="Addresses" component={Addresses} /> */}
+        <Stack.Screen name="Addresses" component={Addresses} />
+        <Stack.Screen name="OrderHistory" component={OrderHistory} />
+        <Stack.Screen name="Payment" component={Payment} />
 
-          <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
-          <Stack.Screen name="DriverInfo" component={DriverInfo} />
-          <Stack.Screen name="JobHistory" component={JobHistory} />
+        <Stack.Screen name="DriverTabs" component={DriverTabs} />
+        <Stack.Screen name="DriverHome" component={DriverHome} />
+        <Stack.Screen name="DriverOrder" component={DriverOrder} />
+        <Stack.Screen name="DriverJobs" component={DriverJobs} />
+        <Stack.Screen name="DriverAccount" component={DriverAccount} />
 
+        <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
+        <Stack.Screen name="DriverInfo" component={DriverInfo} />
+        <Stack.Screen name="JobHistory" component={JobHistory} />
+
+<<<<<<< HEAD
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />
+=======
+        <Stack.Screen name="AddCard" component={AddCard} />
+>>>>>>> fae467aaff637b56c623d5aef8714fc5342d876d
 
 
 
-        </Stack.Navigator>
+      </Stack.Navigator>
 
 
 
-      </NavigationContainer>
+    </NavigationContainer>
   )
 }
 
