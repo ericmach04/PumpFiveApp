@@ -11,14 +11,14 @@ export default function Registration({ navigation }) {
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [phone, setPhone] = useState('')
-  const [cMake, setcMake] = useState('')
-  const [cModel, setcModel] = useState('')
-  const [cYear, setcYear] = useState('')
+  // const [cMake, setcMake] = useState('')
+  // const [cModel, setcModel] = useState('')
+  // const [cYear, setcYear] = useState('')
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user){
-        navigation.replace("Login")
+        navigation.replace("Tabs")
       }
     })
 
@@ -31,6 +31,11 @@ export default function Registration({ navigation }) {
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log("Registered with: ",user.email);
+      console.log("pass ",password);
+      console.log("fname: ",fname);
+      console.log("lname: ",lname);
+      console.log("phone: ",phone);
+      
 
       addUser({
         email: email,
@@ -38,9 +43,6 @@ export default function Registration({ navigation }) {
         fname: fname,
         lname: lname,
         phone: phone,
-        cMake: cMake,
-        cModel: cModel,
-        cYear: cYear
       })
       .catch(error => alert(error.message))
   })}
@@ -98,60 +100,25 @@ export default function Registration({ navigation }) {
                                 placeholder="Retype Password"
                                 keyboardType="default"
                   />
-        <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
-          <Text style={styles.email}>First name: *</Text>
-          <Text style={styles.email}>Last name: *</Text>
-        </View>
 
-        <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
+          <Text style={styles.email}>First name: *</Text>
           <TextInput
-                        style={styles.input2}
+                        style={styles.input}
                         value = {fname}
                         onChangeText={text => setFname(text)}
                         placeholder="Enter First name"
                         keyboardType="default"
           />
-          
+
+          <Text style={styles.email}>Last name: *</Text>
           <TextInput
-                        style={styles.input2}
+                        style={styles.input}
                         value = {lname}
                         onChangeText={text => setLname(text)}
                         placeholder="enter Last name"
                         keyboardType="default"
           />
-        </View>
-
-        <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
-          <Text style={styles.email}>Car make: *</Text>
-          <Text style={styles.email}>Car model: *</Text>
-          <Text style={styles.email}>Car year: *</Text>
-        </View>
-
-        <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
-          <TextInput
-                        style={styles.input2}
-                        value = {cMake}
-                        onChangeText={text => setcMake(text)}
-                        placeholder="Enter Car Make"
-                        keyboardType="default"
-          />
-          
-          <TextInput
-                        style={styles.input2}
-                        value = {cModel}
-                        onChangeText={text => setcModel(text)}
-                        placeholder="Enter Car Model"
-                        keyboardType="default"
-          />
-          
-          <TextInput
-                        style={styles.input2}
-                        value = {cYear}
-                        onChangeText={text => setcYear(text)}
-                        placeholder="Enter Car Year"
-                        keyboardType="numeric"
-          />
-        </View>
+        
        
         <Text style={styles.email}>Phone Number: *</Text>
         <TextInput
@@ -268,7 +235,7 @@ const styles = StyleSheet.create({
     left: "2%",
   },
   input: {
-    height: "4%",
+    height: "4.5%",
     margin: "1%",
     borderWidth: 1,
     padding: "1%",
