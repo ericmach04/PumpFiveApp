@@ -21,7 +21,7 @@ export default function PlaceOrder({ navigation }) {
                 <Text style={styles.text}>
                     Services
                 </Text>
-                <ScrollView style={styles.scroll} alwaysBounceHorizontal={false} alwaysBounceVertical={false} bounces={false}>
+                <ScrollView style={styles.scroll} alwaysBounceHorizontal={false}>
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>

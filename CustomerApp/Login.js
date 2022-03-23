@@ -206,10 +206,12 @@ const styles = StyleSheet.create({
     },
     input:{
       backgroundColor: 'white',
-      paddingHorizontal: 15,
-      paddingVertical: 10,
+      height: "10%",
+      top: "6%",
+      // paddingHorizontal: 15,
+      // paddingVertical: 10,
       borderRadius: 10,
-      marginTop: 5,
+      // marginTop: 5,
       left: "10%",
       // justifyContent: 'center',
       // alignItems: 'center',
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
        paddingVertical: 10,
        borderRadius: 10,
        marginTop: 5,
-       left: "10%",
+       left: "5%",
        top: "10%"
      },
      password: {
