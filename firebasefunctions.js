@@ -50,6 +50,21 @@ export function addAddress(address, addComplete){
 
 }
 
+export function addCarInfo(carinfo, addComplete){
+    firebase.firestore()
+    .collection('Car_Info')
+    .add({
+        email: carinfo.email,
+        make: carinfo.make,
+        model: carinfo.model,
+        year: carinfo.year,
+        license: carinfo.license,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .catch((error) => console.log(error))
+
+}
+
 export function getCards() {
     firebase.firestore()
     .collection('Credit_Cards')

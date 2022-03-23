@@ -108,9 +108,9 @@ render(){
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
               </View> */}
 
-              <View style={{ bottom: "55%",}}>
+              {/* <View style={{ bottom: "55%",}}>
                 <Text style={styles.creditdebit}>Credit/Debit Card (Add up to 3)</Text>
-              </View> 
+              </View>  */}
                 {
                   this.state.cards.map((res, i) => {
                     var image;
@@ -133,12 +133,12 @@ render(){
                     return (
                       
                       <View 
-                        style={{ top: -270, left: 10,}}
+                        style={{ top: "-35%", left: 10,}}
                       >
                         <View>
-                          <Text style={styles.bofadeeznuts}>Card {count}</Text>
+                          <Text style={styles.bofadeeznutsbold}>Card {count}</Text>
                         </View>
-                        <View>
+                        <View style={{justifyContent: "center", alignItems: "center"}}>
                           <Image source={image} />
                         </View>
                         <View>
@@ -265,10 +265,17 @@ const styles = StyleSheet.create({
   //bofadeeznuts
   bofadeeznuts: {
     color: "black",
-    fontSize: 15,
-    lineHeight: 20,
+    fontSize: 25,
+    // lineHeight: 20,
     //fontWeight: "bold",
-    textAlign: "left",
+    textAlign: "center",
+  },
+  bofadeeznutsbold: {
+    color: "black",
+    fontSize: 35,
+    // lineHeight: 35,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 
   //chasemoneynotchics

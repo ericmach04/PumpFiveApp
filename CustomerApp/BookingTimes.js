@@ -44,16 +44,19 @@ export default class BookingTimes extends Component {
     // if (loading) {
     //     return <ActivityIndicator/>
     // }
-
-    // return(
-    //     <FlatList
-    //         data={bookingTimes}
-    //         renderItem={({item}) => (
-    //             <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
-    //                 {/* <Text>Booking Times: {item.id}</Text> */}
-    //                 <Text>Booking Times: {item.value}</Text>
-    //             </View>
-    //         )} 
-    //     />
-    // );  
+//     render(){
+//     return(
+      
+//         <FlatList
+//             data={bookingTimes}
+//             renderItem={({item}) => (
+//                 <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
+//                     {/* <Text>Booking Times: {item.id}</Text> */}
+//                     <Text>Booking Times: {item.value}</Text>
+//                 </View>
+//             )} 
+//         />
+      
+//     );  
+// }
 }
