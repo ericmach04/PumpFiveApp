@@ -256,6 +256,13 @@ export default class AcctSettings extends Component{
                                     onPress={this.handleSignOut}
                                   />
                                 </View> */}
+                    <View style={styles.paybutton}>
+                                  <Button
+                                    title="View Driver Side"
+                                    color="white"
+                                    onPress={() => this.props.navigation.navigate('DriverTabs')}
+                                  />
+                    </View>
                   </View>
 
               {/* <View style={Logoutstyles.button}>       
@@ -374,6 +381,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: 60,
     right: -15,
+  },
+  paybutton: {
+    width: "77%",
+    height: "7%",
+    top: "90%",
+    right: "10%",
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
   },
 
   //lic

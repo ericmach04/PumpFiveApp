@@ -141,4 +141,26 @@ const styles = StyleSheet.create({
     
   }
 
+<<<<<<< HEAD
 });
+=======
+    // if (loading) {
+    //     return <ActivityIndicator/>
+    // }
+//     render(){
+//     return(
+      
+//         <FlatList
+//             data={bookingTimes}
+//             renderItem={({item}) => (
+//                 <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
+//                     {/* <Text>Booking Times: {item.id}</Text> */}
+//                     <Text>Booking Times: {item.value}</Text>
+//                 </View>
+//             )} 
+//         />
+      
+//     );  
+// }
+}
+>>>>>>> fb9250146244048fe292cebd11f34fd0d6cba0bf
