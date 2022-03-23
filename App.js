@@ -19,6 +19,7 @@ import CalendarScreen from './CustomerApp/CalendarScreen'
 // import BookingTimes from './CustomerApp/BookingTimes';
 import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
 import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
+import AddCarInfo from './CustomerApp/AcctSettingsPages/AddCarInfo';
 
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
@@ -87,6 +88,7 @@ const App = () => {
 
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />
+          <Stack.Screen name="AddCarInfo" component={AddCarInfo} />
 
 
 

@@ -1,17 +1,82 @@
-import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import React from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  ActivityIndicator,
+  ImageBackground,
+  Button,
+  TextInput,
+  UselessTextInput,
+  Image,
+} from "react-native";
+import React, {Component} from "react";
+import firebase from 'firebase';
+import { useState } from "react";
+import {getCards} from '../../firebasefunctions'
+import { auth } from '../../firebase'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
 //car info Page - In Progresss 
 
-export default function CarInfo({ navigation }) {
+export default class CarInfo extends Component{
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection('Car_Info');
+    this.state = {
+      isLoading: true,
+      addresses: []
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getCarData);
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  getCarData = (querySnapshot) => {
+    const cars = [];
+    querySnapshot.forEach((res) => {
+      const { email, make, model, year, license } = res.data();
+      // console.log("Email1: ", email)
+      // console.log("Email2: ", auth.currentUser?.email)
+      if(email == auth.currentUser?.email){
+      cars.push({
+        key: res.id,
+        email,
+        make,
+        model,
+        year,
+        license
+      });
+    }
+    });
+    console.log(cars)
+    this.setState({
+      cars,
+      isLoading: false
+   });
+  }
+
+  render() {
+    if(this.state.isLoading){
+      return(
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="red"/>
+        </View>
+      )
+    }
+    var count = 0;
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
-                <View style={styles.container}>
                     <View style={styles.Memberships}>
                         <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
                             <Text style={styles.text}>Car Information</Text>
@@ -20,38 +85,56 @@ export default function CarInfo({ navigation }) {
                                 title="Back"
                                 color="white"
                                 //   onPress={() => console.log('Clicked')}
-                                onPress={() => navigation.goBack()}
+                                onPress={() => this.props.navigation.goBack()}
                                 />
                             </View>
                         </View>
-                        <View style={{top: -150, left: 20}}>
-                            <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
-                            <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
-                            <Text style={styles.boxfontsbody}>414-***-****</Text>
-                        </View>
 
-                        <View style={{top: -100, left: 20}}>
+                        {/* <View style={{top: -100, left: 20}}>
                         <Text style={styles.boxfontsbody}>Make: Toyota</Text>
                         <Text style={styles.boxfontsbody}>Model: Camry</Text>
                         <Text style={styles.boxfontsbody}>License Plate: 8ABC123</Text>
                         <Text style={styles.boxfontsbody}>Photo:</Text>
-                        <View style={{flexDirection:'row', justifyContent: 'space-around', left:-15, top: 10,}}>
-                          <Image source={require('../../images/car1.png')} />
-                          <Image source={require('../../images/car2.png')} />
-                        </View>
-                        </View>
+                        </View> */}
 
-                        <View style={{top: -90, left: 20}}>
+                        {
+                          this.state.cars.map((res, i) => {
+                            count+=1;
+                            
+                            return (
+                                    <View style={{ top: "-40%", left: "2%",}}>
+                                      <View>
+                                        <Text style={styles.bofadeeznutsbold}>Car #{count}</Text>
+                                      </View>
+                                      <Text style={styles.bofadeeznuts}>{res.year} {res.make} {res.model}</Text>
+                                      <Text style={styles.bofadeeznuts}>License Plate: {res.license}</Text>
+                                      <Text style={styles.bofadeeznuts}>Photo:</Text>
+                                    </View>
+                              
+                            );
+                          })
+                        }
+                        
+
+                        {/* <View style={{top: "10%", left: 20}}>
                             <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
-                        </View>
+                        </View> */}
+
+                        <View style={buttonstyles.paybutton}>
+                          <Button
+                            title="Add a New Car"
+                            color="black"
+                            onPress={() => this.props.navigation.navigate('AddCarInfo')}
+                          />
+                      </View>
                         
                     </View>    
                         
-                </View>
+                
             </SafeAreaView>
          </ImageBackground>   
     </View>
-  )}
+  )}}
     
   const buttonstyles = StyleSheet.create({
     button: { 
@@ -71,7 +154,15 @@ export default function CarInfo({ navigation }) {
         right: 0,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
-    }
+    },
+    paybutton: {
+      width: "77%",
+      height: "7%",
+      top: "85%",
+      right: "10%",
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+    },
 })
 
 const styles = StyleSheet.create({
@@ -82,6 +173,20 @@ const styles = StyleSheet.create({
       UserAccount:{
         flexDirection: "column",
         justifyContent: "space-around"
+    },
+    bofadeeznuts: {
+      color: "black",
+      fontSize: 25,
+      // lineHeight: 20,
+      //fontWeight: "bold",
+      textAlign: "center",
+    },
+    bofadeeznutsbold: {
+      color: "black",
+      fontSize: 35,
+      // lineHeight: 35,
+      fontWeight: "bold",
+      textAlign: "center",
     },
   
   
@@ -104,7 +209,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    top: 40,
+    top: "10%",
   },
   
   
@@ -269,6 +374,15 @@ const styles = StyleSheet.create({
         right: 10,
         left: 5,
         backgroundColor:"#DAAC3F", 
+      },
+      loader: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',    
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
       },
       
   

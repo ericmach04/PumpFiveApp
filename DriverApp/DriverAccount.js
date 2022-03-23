@@ -157,6 +157,13 @@ import {
                     <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
                     <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
             {/* </View> */}
+            <View style={styles.paybutton}>
+                                  <Button
+                                    title="View Customer Side"
+                                    color="white"
+                                    onPress={() => navigation.navigate('Tabs')}
+                                  />
+                    </View>
           </SafeAreaView>
         </ImageBackground>
       </View>
@@ -210,6 +217,14 @@ import {
       borderWidth: 2,
       borderColor: "#000000",
       borderRadius: 10,
+    },
+    paybutton: {
+      width: "77%",
+      height: "7%",
+      top: "90%",
+      right: "10%",
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
     },
   
     text: {
