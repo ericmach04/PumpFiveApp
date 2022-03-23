@@ -11,17 +11,9 @@ import {
   UselessTextInput,
   Image,
 } from "react-native";
-<<<<<<< HEAD
 import React, { Component } from "react";
 import firebase from "firebase";
-import { useState } from "react";
-import DropDownPicker from "react-native-dropdown-picker";
 import { getCards } from "../../firebasefunctions";
-=======
-import React, {Component} from "react";
-import firebase from 'firebase';
-import {getCards} from '../../firebasefunctions'
->>>>>>> efe728f6df39a21cf356044054a010b407d04f4b
 import { ListItem } from "react-native-elements";
 import { auth } from "../../firebase";
 // import TimeDropdown from "../dropdowns/TimeDropdown";
