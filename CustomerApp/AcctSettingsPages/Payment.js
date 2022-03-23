@@ -13,8 +13,6 @@ import {
 } from "react-native";
 import React, {Component} from "react";
 import firebase from 'firebase';
-import { useState } from "react";
-import DropDownPicker from "react-native-dropdown-picker";
 import {getCards} from '../../firebasefunctions'
 import { ListItem } from "react-native-elements";
 import { auth } from '../../firebase'

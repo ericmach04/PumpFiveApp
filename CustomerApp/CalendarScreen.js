@@ -22,7 +22,7 @@ export default function CalendarScreen({ navigation }) {
       </View>
       <Calendar
         minDate={current}
-        onDayPress={day => {navigate('BookingTimes', {day})}}
+        onDayPress={day => {navigation.navigate('BookingTimes', {day})}}
 
 
         theme={{
