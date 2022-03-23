@@ -16,7 +16,7 @@ import Addresses from './CustomerApp/AcctSettingsPages/Addresses'
 import OrderHistory from './CustomerApp/AcctSettingsPages/OrderHistory'
 import Payment from './CustomerApp/AcctSettingsPages/Payment'
 import CalendarScreen from './CustomerApp/CalendarScreen'
-// import BookingTimes from './CustomerApp/BookingTimes';
+import BookingTimes from './CustomerApp/BookingTimes';
 import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
 import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
 import AddCarInfo from './CustomerApp/AcctSettingsPages/AddCarInfo';
@@ -61,7 +61,7 @@ const App = () => {
         <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
-        {/* <Stack.Screen name="BookingTimes" component={BookingTimes} /> */}
+        <Stack.Screen name="BookingTimes" component={BookingTimes} /> 
         <Stack.Screen name="GasService" component={GasService} />
         <Stack.Screen name="TireService" component={TireService} />
         <Stack.Screen name="DetailingService" component={DetailingService} />
