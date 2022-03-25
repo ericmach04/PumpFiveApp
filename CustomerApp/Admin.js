@@ -15,6 +15,7 @@ import {
   } from "react-native";
   import React, { Component } from "react";
   import firebase from "firebase";
+  import { auth } from "../firebase";
   import { useState } from "react";
   import { NavigationContainer } from "@react-navigation/native";
   import { createStackNavigator } from "@react-navigation/stack";
@@ -34,6 +35,15 @@ import {
           isLoading: true,
           prices: [],
         };
+      }
+
+      handleSignOut = () => {
+        auth
+          .signOut()
+          .then(() => {
+            this.props.navigation.navigate('Login')
+          })
+          .catch(error => alert(error.message))
       }
      
       componentDidMount() {
@@ -137,14 +147,14 @@ import {
                   }}
                 >
                   <Text style={styles.text}>Welcome, Talethea!</Text>
-                  <View style={buttonstyles.backbutton}>
+                  {/* <View style={buttonstyles.backbutton}>
                     <Button
                       title="Back"
                       color="white"
                       //   onPress={() => console.log('Clicked')}
                       onPress={() => navigation.goBack()}
                     />
-                  </View>
+                  </View> */}
                 </View>
                   
                 <Text style={styles.gastext}>Enter Today's Regular Gas Price: *</Text>
@@ -205,6 +215,13 @@ import {
                                 onPress={() => this.updatePrices()} 
                             />
                 </View>
+                <View style={styles.loginview}>
+                                  <Button
+                                    title="Logout"
+                                    color="white"
+                                    onPress={this.handleSignOut}
+                                  />
+                                </View>
               </View>
             </SafeAreaView>
           </ImageBackground>
