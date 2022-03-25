@@ -222,6 +222,10 @@ container: {
     fontWeight: "bold",
     textAlign: "left",
 
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
     left: "10%",
     top: "10%"
   },
@@ -301,7 +305,6 @@ container: {
     padding: "1%",
     backgroundColor: "white",
     top: "4%",
-    left: "10%",
   },
   loginview: {
     // justifyContent: 'center',
@@ -325,8 +328,15 @@ const buttonstyles = StyleSheet.create({
       left: 230,
       // top: 270,
       borderWidth: 1, 
-      backgroundColor:"#DAAC3F", 
-      position: "absolute"
+      //backgroundColor:"#DAAC3F", 
+      position: "absolute",
+
+      backgroundColor: '#f9c107',
+      //width: '100%',
+      //padding: 15,
+      borderRadius: 10
+      //alignItems: 'center',
+      //left: "30%",
   },
   backbutton: {
     width: '15%', 
