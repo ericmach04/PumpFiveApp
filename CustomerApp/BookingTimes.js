@@ -70,6 +70,9 @@ export default class BookingTimes extends Component {
         <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
           <Text style={styles.text}>Pick a Time</Text>
+          <View style={styles.backbutton}>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('Tabs')}/>
+          </View>
           {
             this.state.bookingTimes.map((slots, i) => {
               
@@ -125,6 +128,14 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 40,
   },
+  backbutton: {
+    width: '18%', 
+    height: 40,
+    // top: 65,
+    right: 0,
+    backgroundColor:"#DAAC3F", 
+    position: "absolute"
+},
 
   slot: {
     marginTop: 0,

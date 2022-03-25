@@ -38,6 +38,8 @@ import DriverAddresses from './DriverApp/DriverAccountPages/DriverAddresses';
 import DriverInfo from './DriverApp/DriverAccountPages/DriverInfo';
 import JobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
 
+import Admin from './CustomerApp/Admin'
+
 
 // export default function App() {
 //   // return (
@@ -89,6 +91,8 @@ const App = () => {
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />
           <Stack.Screen name="AddCarInfo" component={AddCarInfo} />
+
+          <Stack.Screen name="Admin" component={Admin} />
 
 
 

@@ -258,9 +258,9 @@ export default class AcctSettings extends Component{
                                 </View> */}
                     <View style={styles.paybutton}>
                                   <Button
-                                    title="View Driver Side"
+                                    title="View Admin Page"
                                     color="white"
-                                    onPress={() => this.props.navigation.navigate('DriverTabs')}
+                                    onPress={() => this.props.navigation.navigate('Admin')}
                                   />
                     </View>
                   </View>
