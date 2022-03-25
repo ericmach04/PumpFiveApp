@@ -232,6 +232,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
 
+<<<<<<< HEAD
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    left: "10%",
+    top: "10%"
+=======
     left: "2%",
   },
   input: {
@@ -251,6 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     top: "0%",
     left: "2%",
+>>>>>>> 9a76f629198d7ac603e73b2a548fb9987e4a1850
   },
   signup: {
     top: 30,
@@ -321,7 +330,18 @@ const styles = StyleSheet.create({
     top: 5,
     left: 5,
   },
+<<<<<<< HEAD
+  input: {
+    height: "5.5%",
+    margin: "1%",
+    borderWidth: 1,
+    padding: "1%",
+    backgroundColor: "white",
+    top: "4%",
+  },
+=======
   
+>>>>>>> 9a76f629198d7ac603e73b2a548fb9987e4a1850
   loginview: {
     // justifyContent: 'center',
     // alignItems: 'center',
@@ -337,6 +357,24 @@ const styles = StyleSheet.create({
 })
 
 const buttonstyles = StyleSheet.create({
+<<<<<<< HEAD
+  button: { 
+      width: '30%', 
+      height: 40,
+      bottom: 5,
+      left: 230,
+      // top: 270,
+      borderWidth: 1, 
+      //backgroundColor:"#DAAC3F", 
+      position: "absolute",
+
+      backgroundColor: '#f9c107',
+      //width: '100%',
+      //padding: 15,
+      borderRadius: 10
+      //alignItems: 'center',
+      //left: "30%",
+=======
   button: {
     width: '30%',
     height: 40,
@@ -346,6 +384,7 @@ const buttonstyles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "#DAAC3F",
     position: "absolute"
+>>>>>>> 9a76f629198d7ac603e73b2a548fb9987e4a1850
   },
   backbutton: {
     width: '15%', 
