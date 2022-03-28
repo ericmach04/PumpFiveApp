@@ -60,7 +60,7 @@ export default function Registration({ navigation }) {
       <View style={buttonstyles.backbutton}>
                               <Button
                               title="Back"
-                              color="white"
+                              color='#f9c107'
                               onPress={() => navigation.goBack()}
                             />
                             </View>
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
   inner: {
     // flex: 1,
     justifyContent: "flex-end",
+    
   },
 
   image: {
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     // flex: 1,
     left: "2%",
-    top: "-15%"
+    top: "9%"
   },
   text2: {
     color: "white",
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     // flex: 1,
     left: "2%",
-    top: "-20%"
+    top: "9%"
   },
   login: {
     color: "white",
@@ -233,11 +234,11 @@ const styles = StyleSheet.create({
     textAlign: "left",
 
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    //paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
     left: "10%",
-    top: "10%"
+    top: "8%"
   },
   signup: {
     top: 30,
@@ -314,18 +315,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: "1%",
     backgroundColor: "white",
-    top: "4%",
+    top: "7%",
   },
   loginview: {
     // justifyContent: 'center',
     // alignItems: 'center',
     borderWidth: 1,
-    width: 100,
-    height: 40,
-    top: 30,
+    width: '15%',
+    height: '45%',
+    top: '6%',
     // right: 10,
     backgroundColor: "#DAAC3F",
-    left: 5,
+    left: '5%',
   },
 
 })
@@ -349,11 +350,20 @@ const buttonstyles = StyleSheet.create({
       //left: "30%",
   },
   backbutton: {
-    width: '15%', 
+    width: '26%', 
     height: "7%",
-    top: "5%",
+    top: "7%",
     right: "5%",
-    backgroundColor: "#DAAC3F",
+  //  backgroundColor: "#DAAC3F",
+    backgroundColor: '#f9c107',
+    padding: 11,
+    borderRadius: 10, 
     position: "absolute"
+  },
+  buttonContainer:{
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40
   }
 })
