@@ -457,4 +457,3 @@ const buttonstyles = StyleSheet.create({
 }
 })
 
-//info@pumpfive.com pumpfive123!
