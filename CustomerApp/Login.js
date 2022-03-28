@@ -26,8 +26,16 @@ export default function Login({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
+
       if (user){
-        navigation.replace("Tabs")
+        // console.log("user: ", user.email)
+        if(user.email == "info@pumpfive.com" || user.email == "talethea@gmail.com")
+        {
+          navigation.replace("Admin")
+        }
+        else{
+          navigation.replace("Tabs")
+        }
       }
     })
 
