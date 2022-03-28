@@ -1,150 +1,169 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { auth } from '../firebase'
-import { addUser } from '../firebasefunctions'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Button,
+  TouchableHighlight,
+  ImageBackground,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { auth } from "../firebase";
+import { addUser } from "../firebasefunctions";
 
-import PhoneInput from 'react-native-phone-input'
+import PhoneInput from "react-native-phone-input";
 
 export default function Registration({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [phone, setPhone] = useState("");
   // const [cMake, setcMake] = useState('')
   // const [cModel, setcModel] = useState('')
   // const [cYear, setcYear] = useState('')
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user){
-        navigation.replace("Tabs")
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Tabs");
       }
-    })
+    });
 
-    return unsubscribe
-  }, [])
+    return unsubscribe;
+  }, []);
 
   const handleSignUp = () => {
     auth
-    .createUserWithEmailAndPassword(email, password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
-      console.log("Registered with: ",user.email);
-      console.log("pass ",password);
-      console.log("fname: ",fname);
-      console.log("lname: ",lname);
-      console.log("phone: ",phone);
-      
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Registered with: ", user.email);
+        console.log("pass ", password);
+        console.log("fname: ", fname);
+        console.log("lname: ", lname);
+        console.log("phone: ", phone);
 
-      addUser({
-        email: email,
-        password: password,
-        fname: fname,
-        lname: lname,
-        phone: phone,
-      })
-      .catch(error => alert(error.message))
-  })}
+        addUser({
+          email: email,
+          password: password,
+          fname: fname,
+          lname: lname,
+          phone: phone,
+        }).catch((error) => alert(error.message));
+      });
+  };
 
-  return ( 
-  <View style={styles.container}>
-    
-    <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
-      <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        // style={{ flex: 1 }}
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../images/pumpfivebackground.jpeg")}
+        style={styles.image}
       >
-      <View style={styles.inner}>
-      <View style={buttonstyles.backbutton}>
-                              <Button
-                              title="Back"
-                              color='#f9c107'
-                              onPress={() => navigation.goBack()}
-                            />
-                            </View>
-        
-          <Text style={styles.text1}>PumpFive</Text>          
-          <Text style={styles.text2}>Fuel Delivery Service</Text>
-       
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            // style={{ flex: 1 }}
+          >
+            <View style={styles.inner}>
+              <View style={buttonstyles.backbutton}>
+                <Button
+                  title="Back"
+                  color="white"
+                  onPress={() => navigation.goBack()}
+                />
+              </View>
 
-        {/* <Text style={styles.signup}>Sign Up</Text> */}
-        <ScrollView
-          // bounces={false}
-          // ref={ref => {this.scrollView = ref}}
-          // onContentSizeChange={() => scrollToEnd({animated: true})}
-        >
-        
-        <Text style={styles.email}>Email: *</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {email}
-                      onChangeText={text => setEmail(text)}
-                      placeholder="enter Email"
-                      keyboardType="default"
-        />
+              <Text style={styles.text1}>PumpFive</Text>
+              <Text style={styles.text2}>Fuel Delivery Service</Text>
 
-          <Text style={styles.email}>Password: *</Text>
-                  <TextInput
-                                style={styles.input}
-                                placeholder="create password"
-                                keyboardType="default"
-                  />
+              {/* <Text style={styles.signup}>Sign Up</Text> */}
+              <ScrollView
+              // bounces={false}
+              // ref={ref => {this.scrollView = ref}}
+              // onContentSizeChange={() => scrollToEnd({animated: true})}
+              >
+                {/* This Controls enterEmail text box */}
+                <Text style={styles.email}>Email: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  placeholder="enter Email"
+                  keyboardType="default"
+                  top="4%"
+                  borderRadius="10"
+                />
 
-                  <Text style={styles.email}>Re-enter Password:</Text>
-                  <TextInput
-                                style={styles.input}
-                                value = {password}
-                                onChangeText={text => setPassword(text)}
-                                placeholder="Retype Password"
-                                keyboardType="default"
-                  />
+                <Text style={styles.email}>Password: *</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="create password"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-          <Text style={styles.email}>First name: *</Text>
-          <TextInput
-                        style={styles.input}
-                        value = {fname}
-                        onChangeText={text => setFname(text)}
-                        placeholder="Enter First name"
-                        keyboardType="default"
-          />
+                <Text style={styles.email}>Re-enter Password:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  placeholder="Retype Password"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-          <Text style={styles.email}>Last name: *</Text>
-          <TextInput
-                        style={styles.input}
-                        value = {lname}
-                        onChangeText={text => setLname(text)}
-                        placeholder="enter Last name"
-                        keyboardType="default"
-          />
-        
-       
-        <Text style={styles.email}>Phone Number: *</Text>
-        <TextInput
-                      style={styles.input}
-                      value = {phone}
-                      onChangeText={text => setPhone(text)}
-                      placeholder="***-***-****"
-                      keyboardType="default"
-        />
-        {/* <PhoneInput
+                <Text style={styles.email}>First name: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={fname}
+                  onChangeText={(text) => setFname(text)}
+                  placeholder="Enter First name"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
+
+                <Text style={styles.email}>Last name: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={lname}
+                  onChangeText={(text) => setLname(text)}
+                  placeholder="enter Last name"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
+
+                <Text style={styles.email}>Phone Number: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={phone}
+                  onChangeText={(text) => setPhone(text)}
+                  placeholder="***-***-****"
+                  keyboardType="default"
+                  top="2%"
+
+                  //top = "10%"
+                />
+                {/* <PhoneInput
           style={styles.input}
           value = {phone}
           onChangeText={text => setPhone(text)}
           placeholder="enter Last name"
         /> */}
-       
 
-        <View style={styles.loginview}>
-            <Button title="Sign up" 
-                    color="white" 
+                <View style={styles.loginview}>
+                  <Button
+                    title="Sign up"
+                    color="white"
                     onPress={handleSignUp}
                     // onPress={() => navigation.navigate('Tabs')}
-                    ></Button>
-        </View>
-        
-        {/* <Text> Please sign in to continue</Text>
+                  ></Button>
+                </View>
+
+                {/* <Text> Please sign in to continue</Text>
 
         <Text>Email:</Text>
 
@@ -157,15 +176,16 @@ export default function Registration({ navigation }) {
 
           <Text>Sign up</Text>
         </TouchableHighlight> */}
-    </ScrollView>
-    </View> 
-    </KeyboardAvoidingView>
-    </SafeAreaView>
-    </ImageBackground>
-    
+              </ScrollView>
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </ImageBackground>
     </View>
-)
+  );
 }
+
+// ==================== CSS Styling ==================== //
 
 const styles = StyleSheet.create({
   container: {
@@ -179,9 +199,10 @@ const styles = StyleSheet.create({
 
   image: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
+  // Header On Page
   text1: {
     color: "white",
 
@@ -189,21 +210,21 @@ const styles = StyleSheet.create({
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
-    // flex: 1,
     left: "2%",
-    top: "9%"
+    top: "8%",
   },
+
   text2: {
     color: "white",
-
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
-    // flex: 1,
     left: "2%",
-    top: "9%"
+    top: "8%",
   },
+
+  //Effects Nothing On This Page
   login: {
     color: "white",
     fontFamily: "Times New Roman",
@@ -214,6 +235,8 @@ const styles = StyleSheet.create({
     // flex: 1,
     top: 30,
   },
+
+  //Effects Nothing On This Page
   signin: {
     color: "white",
     fontFamily: "Times New Roman",
@@ -224,10 +247,12 @@ const styles = StyleSheet.create({
     // flex: 1,
     top: 30,
   },
+
+  // Email Header
   email: {
-    // top: "1%",
+    top: "8%",
     color: "white",
-   
+
     fontSize: 20,
     lineHeight: 44,
     fontWeight: "bold",
@@ -237,8 +262,7 @@ const styles = StyleSheet.create({
     //paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    left: "10%",
-    top: "8%"
+    left: "0%",
   },
   signup: {
     top: 30,
@@ -252,42 +276,42 @@ const styles = StyleSheet.create({
 
   services: {
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
 
   gasservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: -275,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
   tireservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: -80,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
   detailingservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: 115,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
@@ -328,42 +352,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
     left: '5%',
   },
-
-})
+});
 
 const buttonstyles = StyleSheet.create({
-  button: { 
-      width: '30%', 
-      height: 40,
-      bottom: 5,
-      left: 230,
-      // top: 270,
-      borderWidth: 1, 
-      //backgroundColor:"#DAAC3F", 
-      position: "absolute",
+  button: {
+    width: "30%",
+    height: 40,
+    bottom: 5,
+    left: 230,
+    // top: 270,
+    borderWidth: 1,
+    //backgroundColor:"#DAAC3F",
+    position: "absolute",
 
-      backgroundColor: '#f9c107',
-      //width: '100%',
-      //padding: 15,
-      borderRadius: 10
-      //alignItems: 'center',
-      //left: "30%",
+    backgroundColor: "#f9c107",
+    //width: '100%',
+    //padding: 15,
+    borderRadius: 10,
+    //alignItems: 'center',
+    //left: "30%",
   },
+
+  // backbutton Completed
   backbutton: {
-    width: '26%', 
+    width: "15%",
     height: "7%",
     top: "7%",
     right: "5%",
-  //  backgroundColor: "#DAAC3F",
-    backgroundColor: '#f9c107',
-    padding: 11,
-    borderRadius: 10, 
-    position: "absolute"
+    backgroundColor: "#DAAC3F",
+    padding: "10%",
+    borderRadius: 10,
+    position: "absolute",
   },
-  buttonContainer:{
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40
-  }
-})
+});
