@@ -90,7 +90,7 @@ export default class Registration extends Component{
       if (user){
         this.props.navigation.replace("Tabs")
       }
-    })
+    });
 
     return unsubscribe
   }
@@ -240,6 +240,8 @@ export default class Registration extends Component{
 )
 }}
 
+// ==================== CSS Styling ==================== //
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -251,9 +253,10 @@ const styles = StyleSheet.create({
 
   image: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
+  // Header On Page
   text1: {
     color: "white",
 
@@ -261,21 +264,21 @@ const styles = StyleSheet.create({
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
-    // flex: 1,
     left: "2%",
-    top: "-15%"
+    top: "8%",
   },
+
   text2: {
     color: "white",
-
     fontSize: 30,
     lineHeight: 44,
     fontWeight: "bold",
     textAlign: "left",
-    // flex: 1,
     left: "2%",
-    top: "-20%"
+    top: "8%",
   },
+
+  //Effects Nothing On This Page
   login: {
     color: "white",
     fontFamily: "Times New Roman",
@@ -286,6 +289,8 @@ const styles = StyleSheet.create({
     // flex: 1,
     top: 30,
   },
+
+  //Effects Nothing On This Page
   signin: {
     color: "white",
     fontFamily: "Times New Roman",
@@ -296,10 +301,12 @@ const styles = StyleSheet.create({
     // flex: 1,
     top: 30,
   },
+
+  // Email Header
   email: {
-    top: "1%",
+    top: "8%",
     color: "white",
-   
+
     fontSize: 20,
     lineHeight: 44,
     fontWeight: "bold",
@@ -309,8 +316,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    left: "1%",
-    top: "2%"
+    left: "0%",
   },
   signup: {
     top: 30,
@@ -324,42 +330,42 @@ const styles = StyleSheet.create({
 
   services: {
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
 
   gasservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: -275,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
   tireservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: -80,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
   detailingservice: {
-    position: 'absolute',
+    position: "absolute",
     width: 350,
     height: 175,
     left: 21,
     top: 115,
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
 
@@ -400,33 +406,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
     left: 5,
   },
-
-})
+});
 
 const buttonstyles = StyleSheet.create({
-  button: { 
-      width: '30%', 
-      height: 40,
-      bottom: 5,
-      left: 230,
-      // top: 270,
-      borderWidth: 1, 
-      //backgroundColor:"#DAAC3F", 
-      position: "absolute",
+  button: {
+    width: "30%",
+    height: 40,
+    bottom: 5,
+    left: 230,
+    // top: 270,
+    borderWidth: 1,
+    //backgroundColor:"#DAAC3F",
+    position: "absolute",
 
-      backgroundColor: '#f9c107',
-      //width: '100%',
-      //padding: 15,
-      borderRadius: 10
-      //alignItems: 'center',
-      //left: "30%",
+    backgroundColor: "#f9c107",
+    //width: '100%',
+    //padding: 15,
+    borderRadius: 10,
+    //alignItems: 'center',
+    //left: "30%",
   },
+
+  // backbutton Completed
   backbutton: {
-    width: '15%', 
+    width: "15%",
     height: "7%",
     top: "5%",
     right: "5%",
     backgroundColor: "#DAAC3F",
-    position: "absolute"
-  }
-})
+    padding: "10%",
+    borderRadius: 10,
+    position: "absolute",
+  },
+});

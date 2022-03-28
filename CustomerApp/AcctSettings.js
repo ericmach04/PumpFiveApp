@@ -12,19 +12,18 @@ import {
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import firebase from 'firebase';
+import firebase from "firebase";
 import { auth } from "../firebase";
 
 //Addresses Page - In Progresss
 
-export default class AcctSettings extends Component{
-
+export default class AcctSettings extends Component {
   constructor() {
     super();
-    this.docs = firebase.firestore().collection('Users');
+    this.docs = firebase.firestore().collection("Users");
     this.state = {
       isLoading: true,
-      users: []
+      users: [],
     };
   }
 
@@ -32,134 +31,78 @@ export default class AcctSettings extends Component{
     this.unsubscribe = this.docs.onSnapshot(this.getUserData);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.unsubscribe();
   }
 
   getUserData = (querySnapshot) => {
     const users = [];
     querySnapshot.forEach((res) => {
-      const { email, phone, fname, lname} = res.data();
-      console.log(email)
+      const { email, phone, fname, lname } = res.data();
+      console.log(email);
       // console.log(phone)
       // console.log(fname)
       // console.log(lname)
-      if(email.toLowerCase() == auth.currentUser?.email){
-      users.push({
-        key: res.id,
-        email,
-        phone,
-        fname,
-        lname
-      });
-    }
-    // console.log(users)
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        users.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+        });
+      }
+      // console.log(users)
     });
     this.setState({
       users,
-      isLoading: false
-   });
-  }
+      isLoading: false,
+    });
+  };
 
   handleSignOut = () => {
     auth
       .signOut()
       .then(() => {
-        this.props.navigation.navigate('Login')
+        this.props.navigation.navigate("Login");
       })
-      .catch(error => alert(error.message))
-  }
-  render(){
-    
-      return (
-        <View style={styles.container}>
-          <ImageBackground
-            source={require("../images/pumpfivebackground.jpeg")}
-            style={styles.image}
-          >
-            <SafeAreaView style={styles.container}>
-              <Text style={styles.text}>Account Settings</Text>
-              
-                  <View style={styles.Addresses}>
-                    
-                          {
-                        this.state.users.map((res, i) => {
-                          console.log(res.email)
-                          
-                          return (
-                            <View>
-                              <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
-                            
-                                <Text style={styles.boxfontshead}>{res.fname} {res.lname}</Text>
-                                <View style={styles.loginview}>
-                                  <Button
-                                    title="Logout"
-                                    color="white"
-                                    onPress={this.handleSignOut}
-                                  />
-                                </View>
-                              </View>
-                              <Text style={styles.boxfontsbody}>{res.email}</Text>
-                              <Text style={styles.boxfontsbody}>Member Number: {res.key}</Text>
-                              <Text style={styles.boxfontsbody}>
-                              User Phone Number: {res.phone}
-                              </Text>
-                            </View>
-                            
-                            
-                          );
-                        })
-                      }
-                      
-                      
-                      
-                    
+      .catch((error) => alert(error.message));
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../images/pumpfivebackground.jpeg")}
+          style={styles.image}
+        >
+          <SafeAreaView style={styles.container}>
+            <Text style={styles.text}>Account Settings</Text>
 
+            <View style={styles.Addresses}>
+              {this.state.users.map((res, i) => {
+                console.log(res.email);
+
+                return (
+                  <View>
                     <View
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-around",
                         left: 5,
-                        top: 40,
                       }}
                     >
-                      <View>
-                        <Image source={require("../icons/menu.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Addresses</Text>
-                      </View>
-                      <View>
-                        <TouchableOpacity
-                          onPress={() => this.props.navigation.navigate('Addresses')}
-                        >
-                          <Image source={require("../icons/arrow.png")} />
-                        </TouchableOpacity>
+                      <Text style={styles.boxfontshead}>
+                        {res.fname} {res.lname}
+                      </Text>
+                      <View style={styles.loginview}>
+                        <Button
+                          title="Logout"
+                          color="white"
+                          onPress={this.handleSignOut}
+                        />
                       </View>
                     </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        left: 5,
-                        top: 70,
-                      }}
-                    >
-                      <View>
-                        <Image source={require("../icons/tag.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Your Membership</Text>
-                      </View>
-                      <View>
-                        <TouchableHighlight
-                          onPress={() => this.props.navigation.navigate('Membership')}
-                        >
-                          <Image source={require("../icons/arrow.png")} />
-                        </TouchableHighlight>
-                      </View>
-                    </View>
+<<<<<<< HEAD
 
                     <View
                       style={{
@@ -263,26 +206,187 @@ export default class AcctSettings extends Component{
                                     onPress={() => this.props.navigation.navigate('Admin')}
                                   />
                     </View> */}
+=======
+                    <Text style={styles.boxfontsbody}>{res.email}</Text>
+                    <Text style={styles.boxfontsbody}>
+                      Member Number: {res.key}
+                    </Text>
+                    <Text style={styles.boxfontsbody}>
+                      User Phone Number: {res.phone}
+                    </Text>
+>>>>>>> 229c73ab52708f883746961f8427135334e3165b
                   </View>
+                );
+              })}
 
-              {/* <View style={Logoutstyles.button}>       
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 40,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/menu.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Addresses</Text>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Addresses")}
+                  >
+                    <Image source={require("../icons/arrow.png")} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 70,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/tag.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Your Membership</Text>
+                </View>
+                <View>
+                  <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate("Membership")}
+                  >
+                    <Image source={require("../icons/arrow.png")} />
+                  </TouchableHighlight>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 100,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/car.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Car Information</Text>
+                </View>
+                <View>
+                  <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate("CarInfo")}
+                  >
+                    <Image source={require("../icons/arrow.png")} />
+                  </TouchableHighlight>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 130,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/card.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Payment</Text>
+                </View>
+                <View>
+                  <TouchableHighlight
+                    onPress={() => this.props.navigation.navigate("Payment")}
+                  >
+                    <Image source={require("../icons/arrow.png")} />
+                  </TouchableHighlight>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 160,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/bag.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Order History</Text>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate("OrderHistory")
+                    }
+                  >
+                    <Image source={require("../icons/arrow.png")} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  left: 5,
+                  top: 190,
+                }}
+              >
+                <View>
+                  <Image source={require("../icons/bell.png")} />
+                </View>
+                <View>
+                  <Text style={styles.boxfontshead2}>Notifications</Text>
+                </View>
+                <View>
+                  <Image source={require("../icons/off.png")} />
+                </View>
+              </View>
+
+              <View style={styles.loginview}>
+                <Button
+                  title="Logout"
+                  color="white"
+                  onPress={this.handleSignOut}
+                />
+              </View>
+              <View style={styles.paybutton}>
+                <Button
+                  title="View Admin Page"
+                  color="white"
+                  onPress={() => this.props.navigation.navigate("Admin")}
+                />
+              </View>
+            </View>
+
+            {/* <View style={Logoutstyles.button}>       
                       <Button title="< == "color="black" onPress={() => navigation.navigate('HomePage')}/>
                       <Text style={styles.addrfontshead}>* Default Billing Address</Text>
                       <View style={Logoutstyles.button}>       
                         <Button title="==>" color="black" onPress={() => navigation.navigate('Login')}/> 
                       </View>      */}
-              {/* <Text style={styles.mem2fontsbody}>Monthly Membership: 3/1/2022</Text>    
+            {/* <Text style={styles.mem2fontsbody}>Monthly Membership: 3/1/2022</Text>    
                       <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
                       <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
-              {/* </View> */}
-            </SafeAreaView>
-          </ImageBackground>
-        </View>
-      )
-    }
-  
+            {/* </View> */}
+          </SafeAreaView>
+        </ImageBackground>
+      </View>
+    );
+  }
 }
-
 
 const buttonstyles = StyleSheet.create({
   button: {
@@ -503,19 +607,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
   },
 });
-
-//Working on implementation
-
-/* <view>
-      rect1: {
-          position: 'absolute',
-          width: 350,
-          height: 243,
-          left: 21,
-          top: 287,
-          backgroundColor: '#CDCABF',
-          borderWidth: 2,
-          borderColor: '#000000',
-          borderRadius: 10,
-          },
-  </view> */
