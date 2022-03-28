@@ -4,12 +4,12 @@ import firebase from "firebase";
 import { auth } from "../../firebase";
 import {addCarInfo} from '../../firebasefunctions'
 
-export default class AddCarInfo extends Component {
+export default class EditCarInfo extends Component {
   constructor() {
     super();
     this.dbRef = firebase.firestore().collection('Car_Info');
     this.state = {
-      email: '',
+      email: auth.currentUser?.email,
       make: '',
       model: '',
       year: '',
@@ -17,43 +17,61 @@ export default class AddCarInfo extends Component {
       isLoading: false
     };
   }
+
+  componentDidMount() {
+    const dbRef = firebase.firestore().collection('Car_Info').doc(this.props.route.params.userkey)
+    dbRef.get().then((res) => {
+      if (res.exists) {
+        const car = res.data();
+        this.setState({
+          key: res.id,
+          email: auth.currentUser?.email,
+          make: car.make,
+          model: car.model,
+          year: car.year,
+          license: car.license,
+          isLoading: false
+        });
+      } else {
+        console.log("Document does not exist!");
+      }
+    });
+  }
   inputValueUpdate = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
 
-  addCar() {
-    if(this.state.make === '' || this.state.model === '' || this.state.year === '' || this.state.license === ''){
-     alert('Please fill out all fields')
-    } else {
+  updateCar() {
+    this.setState({
+      isLoading: true,
+    });
+    const updateDBRef = firebase.firestore().collection('Car_Info').doc(this.state.key);
+    updateDBRef.set({
+      email: auth.currentUser?.email,
+      make: this.state.make,
+      model: this.state.model,
+      year: this.state.year,
+      license: this.state.license,
+    }).then((docRef) => {
       this.setState({
-        isLoading: true,
-      });      
-      this.dbRef.add({
         email: auth.currentUser?.email,
-        make: this.state.make,
-        model: this.state.model,
-        year: this.state.year,
-        license: this.state.license,
-      }).then((res) => {
-        this.setState({
-          email: '',
-          make: '',
-          model: '',
-          year: '',
-          license: '',
-          isLoading: false,
-        });
-        this.props.navigation.navigate('CarInfo')
-      })
-      .catch((err) => {
-        console.error("Error found: ", err);
-        this.setState({
-          isLoading: false,
-        });
+        key: '',
+        make: '',
+        model: '',
+        year: '',
+        license: '',
+        isLoading: false,
       });
-    }
+      this.props.navigation.navigate('CarInfo');
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      this.setState({
+        isLoading: false,
+      });
+    });
   }
 
     // const [email, setEmail] = useState('')
@@ -85,9 +103,9 @@ export default class AddCarInfo extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
-            <Text style={styles.h1}>Add Car Info</Text>
+            <Text style={styles.h1}>Edit Car Info</Text>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => navigation.navigate('CarInfo')}/>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('CarInfo')}/>
             </View>
             
                 <Text style={styles.email}>Car Make: *</Text>
@@ -142,9 +160,9 @@ export default class AddCarInfo extends Component {
           </View>
           <View style={styles.paybutton}>
                 <Button
-                  title="Add Car"
+                  title="Edit Car"
                   color="black"
-                  onPress={() => this.addCar()}
+                  onPress={() => this.updateCar()}
                 //   onPress={() => navigation.navigate("AddCard")}
                 />
               </View>

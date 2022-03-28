@@ -101,15 +101,17 @@ export default class AcctSettings extends Component {
                           onPress={this.handleSignOut}
                         />
                       </View>
-                    </View>
-                    <Text style={styles.boxfontsbody}>{res.email}</Text>
+
+                    
+                  </View>
+                  <Text style={styles.boxfontsbody}>{res.email}</Text>
                     <Text style={styles.boxfontsbody}>
                       Member Number: {res.key}
                     </Text>
                     <Text style={styles.boxfontsbody}>
                       User Phone Number: {res.phone}
                     </Text>
-                  </View>
+                    </View>
                 );
               })}
 
@@ -249,32 +251,9 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
-              <View style={styles.loginview}>
-                <Button
-                  title="Logout"
-                  color="white"
-                  onPress={this.handleSignOut}
-                />
-              </View>
-              <View style={styles.paybutton}>
-                <Button
-                  title="View Admin Page"
-                  color="white"
-                  onPress={() => this.props.navigation.navigate("Admin")}
-                />
-              </View>
+              
             </View>
 
-            {/* <View style={Logoutstyles.button}>       
-                      <Button title="< == "color="black" onPress={() => navigation.navigate('HomePage')}/>
-                      <Text style={styles.addrfontshead}>* Default Billing Address</Text>
-                      <View style={Logoutstyles.button}>       
-                        <Button title="==>" color="black" onPress={() => navigation.navigate('Login')}/> 
-                      </View>      */}
-            {/* <Text style={styles.mem2fontsbody}>Monthly Membership: 3/1/2022</Text>    
-                      <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
-                      <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
-            {/* </View> */}
           </SafeAreaView>
         </ImageBackground>
       </View>

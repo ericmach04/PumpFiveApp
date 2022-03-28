@@ -143,8 +143,19 @@ export default function Login({ navigation }) {
             style={[styles.button, styles.buttonOutline]}
           >
             <Text style={styles.buttonOutlineText}>Register</Text>
-          </TouchableOpacity>
-        </View>
+
+        </TouchableOpacity>
+        <TouchableOpacity
+          // onPress={handleSignUp}
+          onPress={() => navigation.navigate('ForgotPassword')}
+          // onPress={() => navigation.navigate('Registration')}
+          // style={[styles.button, styles.buttonOutline]}
+          >
+            <Text style={styles.buttonOutlineText}>Forgot Password?</Text>
+
+        </TouchableOpacity>
+
+      </View>
       </ImageBackground>
     </KeyboardAvoidingView>
 
@@ -330,103 +341,7 @@ const styles = StyleSheet.create({
     top: "10%",
     //     textAlign: "left",
   },
-  //   signup: {
-  //     top: 300,
-  //     color: "white",
-  //     fontFamily: "Times New Roman",
-  //     fontSize: 30,
-  //     lineHeight: 44,
-  //     fontWeight: "bold",
-  //     textAlign: "left",
-  //   },
-
-  //   services:{
-  //       flexDirection: "column",
-  //       justifyContent: "space-around"
-  //   },
-
-  //   gasservice: {
-  //     position: 'absolute',
-  //     width: 350,
-  //     height: 175,
-  //     left: 21,
-  //     top: -275,
-  //     backgroundColor: '#CDCABF',
-  //     borderWidth: 2,
-  //     borderColor: '#000000',
-  //     borderRadius: 10,
-  // },
-
-  //   tireservice:{
-  //     position: 'absolute',
-  //     width: 350,
-  //     height: 175,
-  //     left: 21,
-  //     top: -80,
-  //     backgroundColor: '#CDCABF',
-  //     borderWidth: 2,
-  //     borderColor: '#000000',
-  //     borderRadius: 10,
-  //   },
-
-  //   detailingservice:{
-  //     position: 'absolute',
-  //     width: 350,
-  //     height: 175,
-  //     left: 21,
-  //     top: 115,
-  //     backgroundColor: '#CDCABF',
-  //     borderWidth: 2,
-  //     borderColor: '#000000',
-  //     borderRadius: 10,
-  //   },
-
-  //   boxfontshead:{
-  //     color: "black",
-  //     fontSize: 24,
-  //     lineHeight: 30,
-  //     fontWeight: "bold",
-  //     textAlign: "left",
-  //     top: 5,
-  //     left: 5,
-  //   },
-
-  //   boxfontsbody:{
-  //     color: "black",
-  //     fontSize: 18,
-  //     lineHeight: 30,
-  //     textAlign: "left",
-  //     top: 5,
-  //     left: 5,
-  //   },
-  //   input1: {
-  //     height: 40,
-  //     // width: 100,
-  //     margin: 5,
-  //     borderWidth: 1,
-  //     padding: 5,
-  //     backgroundColor: "white",
-  //     top: 175,
-  //   },
-  //   input2: {
-  //     height: 40,
-  //     margin: 5,
-  //     borderWidth: 1,
-  //     padding: 5,
-  //     backgroundColor: "white",
-  //     top: 175,
-  //   },
-  //   loginview: {
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //     borderWidth: 1,
-  //     width: 100,
-  //     height: 40,
-  //     top: 175,
-  //     right: 10,
-  //     left: 5,
-  //     backgroundColor:"#DAAC3F",
-  //   },
+  
 });
 
 const buttonstyles = StyleSheet.create({

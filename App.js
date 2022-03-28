@@ -20,6 +20,9 @@ import BookingTimes from './CustomerApp/BookingTimes';
 import AddCard from './CustomerApp/AcctSettingsPages/AddCard'
 import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
 import AddCarInfo from './CustomerApp/AcctSettingsPages/AddCarInfo';
+import EditCarInfo from './CustomerApp/AcctSettingsPages/EditCarInfo';
+import EditAddress from './CustomerApp/AcctSettingsPages/EditAddress';
+
 
 
 import { NavigationContainer, Screen } from '@react-navigation/native';
@@ -39,6 +42,7 @@ import DriverInfo from './DriverApp/DriverAccountPages/DriverInfo';
 import JobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
 
 import Admin from './CustomerApp/Admin'
+import ForgotPassword from './CustomerApp/ForgotPassword';
 
 
 // export default function App() {
@@ -91,6 +95,9 @@ const App = () => {
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />
           <Stack.Screen name="AddCarInfo" component={AddCarInfo} />
+          <Stack.Screen name="EditCarInfo" component={EditCarInfo} />
+          <Stack.Screen name="EditAddress" component={EditAddress} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
           <Stack.Screen name="Admin" component={Admin} />
 

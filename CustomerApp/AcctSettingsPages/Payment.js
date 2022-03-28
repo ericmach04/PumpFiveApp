@@ -169,7 +169,7 @@ export default class Payment extends Component {
                     color="black"
                     onPress={() => this.props.navigation.navigate("AddCard")}
                   />
-                  <Button title="Get Cards" color="black" onPress={getCards} />
+                  {/* <Button title="Get Cards" color="black" onPress={getCards} /> */}
                 </View>
               </View>
             </View>
