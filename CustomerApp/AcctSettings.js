@@ -101,121 +101,17 @@ export default class AcctSettings extends Component {
                           onPress={this.handleSignOut}
                         />
                       </View>
-                    </View>
-<<<<<<< HEAD
 
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        left: 5,
-                        top: 100,
-                      }}
-                    >
-                      <View>
-                        <Image source={require("../icons/car.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Car Information</Text>
-                      </View>
-                      <View>
-                        <TouchableHighlight
-                          onPress={() => this.props.navigation.navigate('CarInfo')}
-                        >
-                          <Image source={require("../icons/arrow.png")} />
-                        </TouchableHighlight>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        left: 5,
-                        top: 130,
-                      }}
-                    >
-                      <View>
-                        <Image source={require("../icons/card.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Payment</Text>
-                      </View>
-                      <View>
-                        <TouchableHighlight
-                          onPress={() => this.props.navigation.navigate('Payment')}
-                        >
-                          <Image source={require("../icons/arrow.png")} />
-                        </TouchableHighlight>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        left: 5,
-                        top: 160,
-                      }}
-                    >
-                      <View>
-                        <Image source={require("../icons/bag.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Order History</Text>
-                      </View>
-                      <View>
-                        <TouchableOpacity
-                          onPress={() => this.props.navigation.navigate('OrderHistory')}
-                        >
-                          <Image source={require("../icons/arrow.png")} />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        left: 5,
-                        top: 190,
-                      }}
-                    >
-                      <View>
-                        <Image source={require("../icons/bell.png")} />
-                      </View>
-                      <View>
-                        <Text style={styles.boxfontshead2}>Notifications</Text>
-                      </View>
-                      <View>
-                        <Image source={require("../icons/off.png")} />
-                      </View>
-                    </View>
-
-                    {/* <View style={styles.loginview}>
-                                  <Button
-                                    title="Logout"
-                                    color="white"
-                                    onPress={this.handleSignOut}
-                                  />
-                                </View> */}
-                    {/* <View style={styles.paybutton}>
-                                  <Button
-                                    title="View Admin Page"
-                                    color="white"
-                                    onPress={() => this.props.navigation.navigate('Admin')}
-                                  />
-                    </View> */}
-=======
-                    <Text style={styles.boxfontsbody}>{res.email}</Text>
+                    
+                  </View>
+                  <Text style={styles.boxfontsbody}>{res.email}</Text>
                     <Text style={styles.boxfontsbody}>
                       Member Number: {res.key}
                     </Text>
                     <Text style={styles.boxfontsbody}>
                       User Phone Number: {res.phone}
                     </Text>
->>>>>>> 229c73ab52708f883746961f8427135334e3165b
-                  </View>
+                    </View>
                 );
               })}
 
@@ -355,32 +251,9 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
-              <View style={styles.loginview}>
-                <Button
-                  title="Logout"
-                  color="white"
-                  onPress={this.handleSignOut}
-                />
-              </View>
-              <View style={styles.paybutton}>
-                <Button
-                  title="View Admin Page"
-                  color="white"
-                  onPress={() => this.props.navigation.navigate("Admin")}
-                />
-              </View>
+              
             </View>
 
-            {/* <View style={Logoutstyles.button}>       
-                      <Button title="< == "color="black" onPress={() => navigation.navigate('HomePage')}/>
-                      <Text style={styles.addrfontshead}>* Default Billing Address</Text>
-                      <View style={Logoutstyles.button}>       
-                        <Button title="==>" color="black" onPress={() => navigation.navigate('Login')}/> 
-                      </View>      */}
-            {/* <Text style={styles.mem2fontsbody}>Monthly Membership: 3/1/2022</Text>    
-                      <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
-                      <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
-            {/* </View> */}
           </SafeAreaView>
         </ImageBackground>
       </View>
