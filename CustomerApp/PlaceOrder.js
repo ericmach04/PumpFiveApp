@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ScrollView} from 'react-native'
 import { useHistory } from "react-router-dom";
-import React from 'react'
+import React, { Component } from 'react'
 import GasService from './GasService';
 import GasButton from '../CustomerApp/buttons/GasButton'
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,7 +12,8 @@ const image = { uri: "https://reactjs.org/logo-og.png" };
 
 const GasStack = createStackNavigator();
 
-export default function PlaceOrder({ navigation }) {
+export default class PlaceOrder extends Component{
+  render(){
   return (
     <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -21,7 +22,12 @@ export default function PlaceOrder({ navigation }) {
                 <Text style={styles.text}>
                     Services
                 </Text>
-                <ScrollView style={styles.scroll} alwaysBounceHorizontal={false}>
+                <ScrollView 
+                  style={styles.scroll}
+                  ref={ref => {this.scrollView = ref}}
+                  onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
+                  // bounces={false}
+                >
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
@@ -30,7 +36,7 @@ export default function PlaceOrder({ navigation }) {
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => navigation.navigate('CalendarScreen')}
+                            onPress={() => this.props.navigation.navigate('CalendarScreen')}
                           />
                             
                         </View>
@@ -44,7 +50,7 @@ export default function PlaceOrder({ navigation }) {
                         <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => navigation.navigate('TireService')}
+                            onPress={() => this.props.navigation.navigate('TireService')}
                           />
                         </View>
                     </View>
@@ -56,7 +62,7 @@ export default function PlaceOrder({ navigation }) {
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => navigation.navigate('DetailingService')}
+                              onPress={() => this.props.navigation.navigate('DetailingService')}
                             />
                             </View>
                         </View>
@@ -68,7 +74,7 @@ export default function PlaceOrder({ navigation }) {
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => navigation.navigate('DetailingService')}
+                              onPress={() => this.props.navigation.navigate('DetailingService')}
                             />
                             </View>
                         </View>
@@ -77,6 +83,7 @@ export default function PlaceOrder({ navigation }) {
         </ImageBackground>
     </View>
   )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -162,7 +169,7 @@ const styles = StyleSheet.create({
         width: "90%",
         left: "5%",
         right: "5%",
-        
+        resizeMode:"repeat",
       },
 })
 

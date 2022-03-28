@@ -1,36 +1,86 @@
-import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, Keyboard} from 'react-native'
+import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, Keyboard, ActivityIndicator} from 'react-native'
 import React, {Component, useEffect, useState} from 'react';
+import firebase from "firebase";
 import { auth } from "../../firebase";
 import {addAddress} from '../../firebasefunctions'
 
-export default function AddCard({ navigation }) {
-    const [email, setEmail] = useState('')
-    const [streetnumber, setStreetnumber] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [zip, setZip] = useState('')
+export default class AddAddress extends Component{
+  constructor() {
+    super();
+    this.dbRef = firebase.firestore().collection('Addresses');
+    this.state = {
+      email: '',
+      streetnumber: '',
+      city: '',
+      state: '',
+      zip: '',
+      isLoading: false
+    };
+  }
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
 
-        // addCard({
-        //     email: auth.currentUser?.email,
-        //     number: dataobject["values"]["number"],
-        //     type: dataobject["values"]["type"],
-        //     cvv: dataobject["values"]["cvc"],
-        //     expiry: dataobject["values"]["expiry"],
-        // })
-
-        
-    // _onChange => form => console.log(form);
-
-    const addAddressToDB = () => {
-        addAddress({
-            email: auth.currentUser?.email,
-            streetnumber: streetnumber,
-            city: city,
-            state: state,
-            zip: zip,
-        })
-
+  addAddress() {
+    if(this.state.streetnumber === '' || this.state.city === '' || this.state.state === '' || this.state.zip === ''){
+     alert('Please fill out all fields')
+    } else {
+      this.setState({
+        isLoading: true,
+      });      
+      this.dbRef.add({
+        email: auth.currentUser?.email,
+        streetnumber: this.state.streetnumber,
+        city: this.state.city,
+        state: this.state.state,
+        zip: this.state.zip,
+      }).then((res) => {
+        this.setState({
+          email: '',
+          streetnumber: '',
+          city: '',
+          state: '',
+          zip: '',
+          isLoading: false,
+        });
+        this.props.navigation.navigate('Addresses')
+      })
+      .catch((err) => {
+        console.error("Error found: ", err);
+        this.setState({
+          isLoading: false,
+        });
+      });
     }
+  }
+
+    // const [email, setEmail] = useState('')
+    // const [streetnumber, setStreetnumber] = useState('')
+    // const [city, setCity] = useState('')
+    // const [state, setState] = useState('')
+    // const [zip, setZip] = useState('')
+
+
+    // const addAddressToDB = () => {
+    //     addAddress({
+    //         email: auth.currentUser?.email,
+    //         streetnumber: streetnumber,
+    //         city: city,
+    //         state: state,
+    //         zip: zip,
+    //     })
+
+    // }
+    render(){
+      if(this.state.isLoading){
+        return(
+          <View style={styles.preloader}>
+            <ActivityIndicator size="large" color="#9E9E9E"/>
+          </View>
+        )
+      }
     return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -44,36 +94,48 @@ export default function AddCard({ navigation }) {
                 <Text style={styles.email}>Street Address: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {streetnumber}
-                        onChangeText={text => setStreetnumber(text)}
-                        placeholder="Enter Street Address"
-                        keyboardType="default"
+                        placeholder={'Enter Street Address'}
+                        value={this.state.streetnumber}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'streetnumber')}
+                        // value = {streetnumber}
+                        // onChangeText={text => setStreetnumber(text)}
+                        // placeholder="Enter Street Address"
+                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>City: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {city}
-                        onChangeText={text => setCity(text)}
-                        placeholder="Enter City"
-                        keyboardType="default"
+                        placeholder={'Enter City'}
+                        value={this.state.city}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'city')}
+                        // value = {city}
+                        // onChangeText={text => setCity(text)}
+                        // placeholder="Enter City"
+                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>State: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {state}
-                        onChangeText={text => setState(text)}
-                        placeholder="Enter State"
-                        keyboardType="default"
+                        placeholder={'Enter State'}
+                        value={this.state.state}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'state')}
+                        // value = {state}
+                        // onChangeText={text => setState(text)}
+                        // placeholder="Enter State"
+                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>Zip Code: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {zip}
-                        onChangeText={text => setZip(text)}
-                        placeholder="Enter Zip Code"
+                        placeholder={'Enter Zip Code'}
+                        value={this.state.zip}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'zip')}
+                        // value = {zip}
+                        // onChangeText={text => setZip(text)}
+                        // placeholder="Enter Zip Code"
                         keyboardType="numeric"
                 />
 
@@ -83,14 +145,14 @@ export default function AddCard({ navigation }) {
                 <Button
                   title="Add Address"
                   color="black"
-                  onPress={addAddressToDB}
+                  onPress={() => this.addAddress()}
                 //   onPress={() => navigation.navigate("AddCard")}
                 />
               </View>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-  )}
+  )}}
  
   const styles = StyleSheet.create({
     container: {
@@ -193,5 +255,14 @@ export default function AddCard({ navigation }) {
         backgroundColor: "white",
         top: "20%",
         left: "2%",
+      },
+      preloader: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
   })

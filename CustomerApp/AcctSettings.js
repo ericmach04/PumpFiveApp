@@ -249,20 +249,20 @@ export default class AcctSettings extends Component{
                       </View>
                     </View>
 
-                    <View style={styles.loginview}>
+                    {/* <View style={styles.loginview}>
                                   <Button
                                     title="Logout"
                                     color="white"
                                     onPress={this.handleSignOut}
                                   />
-                                </View>
-                    <View style={styles.paybutton}>
+                                </View> */}
+                    {/* <View style={styles.paybutton}>
                                   <Button
                                     title="View Admin Page"
                                     color="white"
                                     onPress={() => this.props.navigation.navigate('Admin')}
                                   />
-                    </View>
+                    </View> */}
                   </View>
 
               {/* <View style={Logoutstyles.button}>       

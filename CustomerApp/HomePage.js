@@ -1,5 +1,6 @@
 import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
-import React, { useCallback } from 'react'
+import React, { Component, useCallback } from 'react'
+import firebase from "firebase";
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
@@ -22,7 +23,44 @@ const OpenURLButton = ({ url, children }) => {
   return <Button title={children} onPress={handlePress} />;
 };
 
-export default function HomePage() {
+export default class HomePage extends Component {
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection("Gas_Prices");
+    this.state = {
+      isLoading: true,
+      prices: [],
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getPriceData);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getPriceData = (querySnapshot) => {
+    const prices = [];
+    querySnapshot.forEach((res) => {
+      const { regular, premium, diesel } = res.data();
+      // console.log("Email1: ", email)
+      // console.log("Email2: ", auth.currentUser?.email)
+        prices.push({
+          key: res.id,
+          regular,
+          premium,
+          diesel,
+        });
+    });
+    // console.log(cars);
+    this.setState({
+      prices,
+      isLoading: false,
+    });
+  };
+  render(){
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
@@ -31,8 +69,18 @@ export default function HomePage() {
         source={require('../images/pumpfivelogo.png')}
       />
       <View style={styles.rect1}/>
-      
-      <View style={styles.rect2}/>
+        {
+            this.state.prices.map((res, i) => {
+            return (
+                <View style={styles.rect2}>
+                    <Text style={styles.gastext2}>Current Regular Price: {res.regular}</Text>
+                    <Text style={styles.gastext2}>Current Premium Price: {res.premium}</Text>
+                    <Text style={styles.gastext2}>Current Diesel Price: {res.diesel}</Text>
+                </View>
+            );
+            })
+        }
+
       <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
@@ -42,6 +90,7 @@ export default function HomePage() {
       </ImageBackground>
     </View>
   )
+  }
 }
 
 const styles = StyleSheet.create({

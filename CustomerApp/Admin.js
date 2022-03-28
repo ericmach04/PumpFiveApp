@@ -193,18 +193,6 @@ import {
                             <Text style={styles.gastext2}>Current Premium Price: {res.premium}</Text>
                             <Text style={styles.gastext2}>Current Diesel Price: {res.diesel}</Text>
                         </View>
-                        
-                        // <ListItem
-                        // key={i}
-                        // chevron
-                        // bottomDivider
-                        // title={item.name}
-                        // subtitle={item.email}
-                        // onPress={() => {
-                        //     this.props.navigation.navigate('UserDetailScreen', {
-                        //     userkey: item.key
-                        //     });
-                        // }}/>
                     );
                     })
                 }

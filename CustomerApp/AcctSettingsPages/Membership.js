@@ -21,6 +21,9 @@ export default function Membership({navigation}) {
                     <View style={styles.Memberships}>
                         <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
                             <Text style={styles.text}>Membership</Text>
+                            {/* {
+
+                            } */}
                             <View style={buttonstyles.backbutton}>
                                 <Button
                                 title="Back"

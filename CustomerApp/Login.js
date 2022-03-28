@@ -143,6 +143,15 @@ export default function Login({ navigation }) {
             <Text style={styles.buttonOutlineText}>Register</Text>
 
         </TouchableOpacity>
+        <TouchableOpacity
+          // onPress={handleSignUp}
+          onPress={() => navigation.navigate('ForgotPassword')}
+          // onPress={() => navigation.navigate('Registration')}
+          // style={[styles.button, styles.buttonOutline]}
+          >
+            <Text style={styles.buttonOutlineText}>Forgot Password?</Text>
+
+        </TouchableOpacity>
 
       </View>
       </ImageBackground>

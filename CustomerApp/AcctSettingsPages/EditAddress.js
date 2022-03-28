@@ -4,18 +4,38 @@ import firebase from "firebase";
 import { auth } from "../../firebase";
 import {addCarInfo} from '../../firebasefunctions'
 
-export default class AddCarInfo extends Component {
+export default class EditAddress extends Component {
   constructor() {
     super();
-    this.dbRef = firebase.firestore().collection('Car_Info');
+    this.dbRef = firebase.firestore().collection('Addresses');
     this.state = {
-      email: '',
-      make: '',
-      model: '',
-      year: '',
-      license: '',
+      email: auth.currentUser?.email,
+      streetnumber: '',
+      city: '',
+      state: '',
+      zip: '',
       isLoading: false
     };
+  }
+
+  componentDidMount() {
+    const dbRef = firebase.firestore().collection('Addresses').doc(this.props.route.params.userkey)
+    dbRef.get().then((res) => {
+      if (res.exists) {
+        const address = res.data();
+        this.setState({
+          key: res.id,
+          email: auth.currentUser?.email,
+          streetnumber: address.streetnumber,
+          city: address.city,
+          state: address.state,
+          zip: address.zip,
+          isLoading: false
+        });
+      } else {
+        console.log("Document does not exist!");
+      }
+    });
   }
   inputValueUpdate = (val, prop) => {
     const state = this.state;
@@ -23,37 +43,35 @@ export default class AddCarInfo extends Component {
     this.setState(state);
   }
 
-  addCar() {
-    if(this.state.make === '' || this.state.model === '' || this.state.year === '' || this.state.license === ''){
-     alert('Please fill out all fields')
-    } else {
+  updateAddress() {
+    this.setState({
+      isLoading: true,
+    });
+    const updateDBRef = firebase.firestore().collection('Addresses').doc(this.state.key);
+    updateDBRef.set({
+      email: auth.currentUser?.email,
+      streetnumber: this.state.streetnumber,
+      city: this.state.city,
+      state: this.state.state,
+      zip: this.state.zip,
+    }).then((docRef) => {
       this.setState({
-        isLoading: true,
-      });      
-      this.dbRef.add({
         email: auth.currentUser?.email,
-        make: this.state.make,
-        model: this.state.model,
-        year: this.state.year,
-        license: this.state.license,
-      }).then((res) => {
-        this.setState({
-          email: '',
-          make: '',
-          model: '',
-          year: '',
-          license: '',
-          isLoading: false,
-        });
-        this.props.navigation.navigate('CarInfo')
-      })
-      .catch((err) => {
-        console.error("Error found: ", err);
-        this.setState({
-          isLoading: false,
-        });
+        key: '',
+        streetnumber: '',
+        city: '',
+        state: '',
+        zip: '',
+        isLoading: false,
       });
-    }
+      this.props.navigation.navigate('Addresses');
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      this.setState({
+        isLoading: false,
+      });
+    });
   }
 
     // const [email, setEmail] = useState('')
@@ -85,53 +103,53 @@ export default class AddCarInfo extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
-            <Text style={styles.h1}>Add Car Info</Text>
+            <Text style={styles.h1}>Edit Address</Text>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => navigation.navigate('CarInfo')}/>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('Addresses')}/>
             </View>
             
-                <Text style={styles.email}>Car Make: *</Text>
+                <Text style={styles.email}>Street Number: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Make'}
-                        value={this.state.make}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'make')}
+                        placeholder={'Enter Street Numner'}
+                        value={this.state.streetnumber}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'streetnumber')}
                         // value = {make}
                         // onChangeText={text => setMake(text)}
                         // placeholder="Enter Car Make"
                         // keyboardType="default"
                 />
 
-                <Text style={styles.email}>Car Model: *</Text>
+                <Text style={styles.email}>City: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Model'}
-                        value={this.state.model}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'model')}
+                        placeholder={'Enter City'}
+                        value={this.state.city}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'city')}
                         // value = {model}
                         // onChangeText={text => setModel(text)}
                         // placeholder="Enter Car Model"
                         // keyboardType="default"
                 />
 
-                <Text style={styles.email}>Car Year: *</Text>
+                <Text style={styles.email}>State: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Year'}
-                        value={this.state.year}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                        placeholder={'Enter State'}
+                        value={this.state.state}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'state')}
                         // value = {year}
                         // onChangeText={text => setYear(text)}
                         // placeholder="Enter Car Year"
                         // keyboardType="numeric"
                 />
 
-                <Text style={styles.email}>License Plate: *</Text>
+                <Text style={styles.email}>Zip Code: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter License Plate'}
-                        value={this.state.license}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                        placeholder={'Enter Zip Code'}
+                        value={this.state.zip}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'zip')}
                         // value = {license}
                         // onChangeText={text => setLicense(text)}
                         // placeholder="Enter License Plate"
@@ -142,9 +160,9 @@ export default class AddCarInfo extends Component {
           </View>
           <View style={styles.paybutton}>
                 <Button
-                  title="Add Car"
+                  title="Edit Address"
                   color="black"
-                  onPress={() => this.addCar()}
+                  onPress={() => this.updateAddress()}
                 //   onPress={() => navigation.navigate("AddCard")}
                 />
               </View>
