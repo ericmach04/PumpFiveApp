@@ -1,26 +1,47 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, SafeAreaView, Button } from 'react-native'
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { 
+  StyleSheet,View, 
+  SafeAreaView, 
+  Button, 
+} from 'react-native'
+import { React,Component} from 'react'
+import { DateTimePicker} from '@react-native-community/datetimepicker';
 
 
-import moment from 'moment'
+export default class CalendarScreen extends Component {
+  constructor() {
+    super();
+    var currentDate = new Date()
+    console.log(currentDate)
+  }
+  
 
+  render(navigation){
+    return (
+      <SafeAreaView>
+  
+        <View style={buttonstyles.backbutton}>
+          <Button
+            title="Back"
+            color="black"
+            onPress={() => navigation.goBack()}
+          />
+        </View>
+  
+        <DateTimePicker>
+          value={new Date(1950, 0, 1)}
+        
+  
+        </DateTimePicker>
 
+      </SafeAreaView>
+    
+  
 
-export default function CalendarScreen({ navigation }) {
-  let current = new(Date)
+  
+ 
+      
 
-
-  return (
-    <SafeAreaView>
-      <View style={buttonstyles.backbutton}>
-        <Button
-          title="Back"
-          color="black"
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-      <Calendar
+      /* <Calendar
         minDate={current}
         onDayPress={day => {navigation.navigate('BookingTimes', {day})}}
 
@@ -32,12 +53,11 @@ export default function CalendarScreen({ navigation }) {
         }
         }
 
-      />
+      /> */
 
+    )};
+  
 
-
-    </SafeAreaView>
-  )
 }
 
 const styles = StyleSheet.create({
