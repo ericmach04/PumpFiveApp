@@ -101,17 +101,15 @@ export default class AcctSettings extends Component {
                           onPress={this.handleSignOut}
                         />
                       </View>
-
-                    
-                  </View>
-                  <Text style={styles.boxfontsbody}>{res.email}</Text>
+                    </View>
+                    <Text style={styles.boxfontsbody}>{res.email}</Text>
                     <Text style={styles.boxfontsbody}>
                       Member Number: {res.key}
                     </Text>
                     <Text style={styles.boxfontsbody}>
                       User Phone Number: {res.phone}
                     </Text>
-                    </View>
+                  </View>
                 );
               })}
 
@@ -250,10 +248,7 @@ export default class AcctSettings extends Component {
                   <Image source={require("../icons/off.png")} />
                 </View>
               </View>
-
-              
             </View>
-
           </SafeAreaView>
         </ImageBackground>
       </View>
@@ -386,7 +381,7 @@ const styles = StyleSheet.create({
     top: 5,
     left: 5,
   },
-a
+
   boxfontsbody: {
     color: "black",
     fontSize: 18,
