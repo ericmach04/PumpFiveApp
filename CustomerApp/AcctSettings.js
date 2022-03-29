@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     top: 5,
     left: 5,
   },
-
+a
   boxfontsbody: {
     color: "black",
     fontSize: 18,
