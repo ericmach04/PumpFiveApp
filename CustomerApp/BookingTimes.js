@@ -57,6 +57,7 @@ export default class BookingTimes extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
+<<<<<<< HEAD
           <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
             <Text style={styles.text}>Pick a Time</Text>
             <FlatList style={{ width: '100%' }}
@@ -70,6 +71,30 @@ export default class BookingTimes extends Component {
                   </View>)
               }} />
           </ImageBackground>
+=======
+        <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
+          <Text style={styles.text}>Pick a Time</Text>
+          <View style={styles.backbutton}>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('Tabs')}/>
+          </View>
+          {
+            this.state.bookingTimes.map((slots, i) => {
+              
+              console.log(slots.slot1)
+              return (
+                //<View style={{ top: 20, left: "20%", }}>
+                  <View >
+                    <Text style={styles.slot}>{slots.slot1}</Text>
+                  </View>
+                //</View>
+
+              );
+
+            })
+
+          }
+        </ImageBackground>
+>>>>>>> ac975e215f7eaa4f03aa8b2e337223b6f1dab8f8
         </SafeAreaView>
       </View>
 
@@ -108,6 +133,14 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 40,
   },
+  backbutton: {
+    width: '18%', 
+    height: 40,
+    // top: 65,
+    right: 0,
+    backgroundColor:"#DAAC3F", 
+    position: "absolute"
+},
 
   slot: {
     marginTop: 0,
@@ -124,4 +157,26 @@ const styles = StyleSheet.create({
 
   }
 
+<<<<<<< HEAD
 });
+=======
+    // if (loading) {
+    //     return <ActivityIndicator/>
+    // }
+//     render(){
+//     return(
+      
+//         <FlatList
+//             data={bookingTimes}
+//             renderItem={({item}) => (
+//                 <View style={{height:50, flex:1, alignItems:'center', justifyContent:'center'}}>
+//                     {/* <Text>Booking Times: {item.id}</Text> */}
+//                     <Text>Booking Times: {item.value}</Text>
+//                 </View>
+//             )} 
+//         />
+      
+//     );  
+// }
+})
+>>>>>>> ac975e215f7eaa4f03aa8b2e337223b6f1dab8f8

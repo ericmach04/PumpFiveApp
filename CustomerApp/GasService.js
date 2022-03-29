@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Picker } from 'react-native'
 import React from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';

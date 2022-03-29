@@ -1,5 +1,6 @@
 import {
   StyleSheet,
+  Alert,
   Text,
   View,
   SafeAreaView,
@@ -10,6 +11,7 @@ import {
   TextInput,
   UselessTextInput,
   Image,
+  TouchableOpacity
 } from "react-native";
 import React, { Component } from "react";
 import firebase from "firebase";
@@ -25,6 +27,7 @@ export default class Addresses extends Component {
       isLoading: true,
       addresses: [],
     };
+    this.deleteAddress = this.deleteAddress.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +36,26 @@ export default class Addresses extends Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  deleteAddress(deletekey) {
+    const dbRef = firebase.firestore().collection('Addresses').doc(deletekey)
+
+    Alert.alert(
+      'Delete ',
+      'Are you sure you want to delete this car?',
+      [
+        {text: 'Yes', onPress: () => {
+          dbRef.delete().then((res) => {
+            console.log('Item removed from database')
+        })
+        }},
+        {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+      ],
+      { 
+        cancelable: true 
+      }
+    );
   }
 
   getAddressData = (querySnapshot) => {
@@ -112,26 +135,16 @@ export default class Addresses extends Component {
                       {res.city}, {res.state}, {res.zip}
                     </Text>
                   </View>
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                      textAlign: "center",
-                      bottom: "25%",
-                      left: "40%",
-                    }}
-                  >
-                    Edit
-                  </Text>
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                      bottom: "25%",
-                      left: "40%",
-                      textAlign: "center",
-                    }}
-                  >
-                    Delete
-                  </Text>
+                  <TouchableOpacity onPress={() => {
+                                this.props.navigation.navigate('EditAddress', {
+                                  userkey: res.key
+                                });
+                              }}>
+                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.deleteAddress(res.key)}>
+                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Delete</Text>
+                  </TouchableOpacity>
                 </View>
               );
             })}

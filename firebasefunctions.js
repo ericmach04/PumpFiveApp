@@ -10,10 +10,6 @@ export function addUser(user, addComplete){
         fname: user.fname,
         lname: user.lname,
         phone: user.phone,
-        cMake: user.cMake,
-        cModel: user.cModel,
-        cYear: user.cYear,
-        paid: "no",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
     .catch((error) => console.log(error))
