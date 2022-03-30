@@ -57,7 +57,7 @@ export default class BookingTimes extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
-<<<<<<< HEAD
+
           <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
             <Text style={styles.text}>Pick a Time</Text>
             <FlatList style={{ width: '100%' }}
@@ -71,7 +71,7 @@ export default class BookingTimes extends Component {
                   </View>)
               }} />
           </ImageBackground>
-=======
+
         <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
           <Text style={styles.text}>Pick a Time</Text>
           <View style={styles.backbutton}>
@@ -94,7 +94,7 @@ export default class BookingTimes extends Component {
 
           }
         </ImageBackground>
->>>>>>> ac975e215f7eaa4f03aa8b2e337223b6f1dab8f8
+
         </SafeAreaView>
       </View>
 
@@ -157,9 +157,9 @@ const styles = StyleSheet.create({
 
   }
 
-<<<<<<< HEAD
+
 });
-=======
+
     // if (loading) {
     //     return <ActivityIndicator/>
     // }
@@ -178,5 +178,5 @@ const styles = StyleSheet.create({
       
 //     );  
 // }
-})
->>>>>>> ac975e215f7eaa4f03aa8b2e337223b6f1dab8f8
+
+
