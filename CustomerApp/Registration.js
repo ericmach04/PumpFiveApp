@@ -1,244 +1,188 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, TouchableHighlight, ImageBackground, TextInput, KeyboardAvoidingView, ScrollView, Picker} from 'react-native'
-// import Picker from '@react-native-picker/picker'
-import React, { Component, useEffect, useState } from 'react'
-import firebase from "firebase";
-import { auth } from '../firebase'
-import { addUser } from '../firebasefunctions'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Button,
+  TouchableHighlight,
+  ImageBackground,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { auth } from "../firebase";
+import { addUser } from "../firebasefunctions";
 
-import PhoneInput from 'react-native-phone-input'
+import PhoneInput from "react-native-phone-input";
 
-export default class Registration extends Component{
-  constructor() {
-    super();
-    this.dbRef = firebase.firestore().collection('Users');
-    this.state = {
-      email: '',
-      password: '',
-      fname: '',
-      lname: '',
-      phone: '',
-      paid: '',
-      driver: '',
-      createdAt: '',
-      isLoading: false
-    };
-  }
-  updatedd = (choice) => {
-    this.setState({ driver: choice })
- }
-  inputValueUpdate = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  }
-
-  addUser() {
-    if(this.state.email === '' || this.state.password === '' || this.state.fname === '' || this.state.lname === ''
-    || this.state.phone === '' || this.state.driver === ''){
-     alert('Please fill out all fields')
-    } else {
-      this.setState({
-        isLoading: true,
-      });      
-      this.dbRef.add({
-        email: auth.currentUser?.email,
-        password: this.state.password,
-        fname: this.state.fname,
-        lname: this.state.lname,
-        phone: this.state.phone,
-        paid: "no",
-        driver: this.state.driver,
-        license: this.state.license,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then((res) => {
-        this.setState({
-          email: '',
-          password: '',
-          fname: '',
-          lname: '',
-          phone: '',
-          paid: "no",
-          driver: '',
-          isLoading: false,
-        });
-        
-        if(this.state.driver == "no")
-          this.props.navigation.navigate('Tabs')
-        else{
-          this.props.navigation.navigate('DriverTabs')
-        }
-      })
-      .catch((err) => {
-        console.error("Error found: ", err);
-        this.setState({
-          isLoading: false,
-        });
-      });
-    }
-  }
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-  // const [fname, setFname] = useState('')
-  // const [lname, setLname] = useState('')
-  // const [phone, setPhone] = useState('')
+export default function Registration({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [phone, setPhone] = useState("");
   // const [cMake, setcMake] = useState('')
   // const [cModel, setcModel] = useState('')
   // const [cYear, setcYear] = useState('')
 
-  useEffect=() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user){
-        this.props.navigation.replace("Tabs")
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Tabs");
       }
     });
 
-    return unsubscribe
-  }
+    return unsubscribe;
+  }, []);
 
-  // const handleSignUp = () => {
-  //   auth
-  //   .createUserWithEmailAndPassword(email, password)
-  //   .then(userCredentials => {
-  //     const user = userCredentials.user;
-  //     console.log("Registered with: ",user.email);
-  //     console.log("pass ",password);
-  //     console.log("fname: ",fname);
-  //     console.log("lname: ",lname);
-  //     console.log("phone: ",phone);
-      
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Registered with: ", user.email);
+        console.log("pass ", password);
+        console.log("fname: ", fname);
+        console.log("lname: ", lname);
+        console.log("phone: ", phone);
 
-  //     addUser({
-  //       email: email,
-  //       password: password,
-  //       fname: fname,
-  //       lname: lname,
-  //       phone: phone,
-  //     })
-  //     .catch(error => alert(error.message))
-  // })}
+        addUser({
+          email: email,
+          password: password,
+          fname: fname,
+          lname: lname,
+          phone: phone,
+        }).catch((error) => alert(error.message));
+      });
+  };
 
-  render() {
-  return ( 
-  <View style={styles.container}>
-    
-    <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
-      <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        // style={{ flex: 1 }}
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../images/pumpfivebackground.jpeg")}
+        style={styles.image}
       >
-      <View style={styles.inner}>
-      <View style={buttonstyles.backbutton}>
-                              <Button
-                              title="Back"
-                              color="white"
-                              onPress={() =>this.props.navigation.goBack()}
-                            />
-                            </View>
-        
-          <Text style={styles.text1}>PumpFive</Text>          
-          <Text style={styles.text2}>Fuel Delivery Service</Text>
-       
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : null}
+          >
+            <View style={styles.inner}>
+              <View style={buttonstyles.backbutton}>
+                <Button
+                  title="Back"
+                  color="white"
+                  onPress={() => navigation.goBack()}
+                />
+              </View>
 
-        {/* <Text style={styles.signup}>Sign Up</Text> */}
+              <Text style={styles.text1}>PumpFive</Text>
+              <Text style={styles.text2}>Fuel Delivery Service</Text>
 
-        <ScrollView
-          ref={ref => {this.scrollView = ref}}
-          onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
-          bounces={false}
-        >
-        
-        <Text style={styles.email}>Email: *</Text>
-        <TextInput
-                      style={styles.input}
-                      placeholder={'Enter Email'}
-                      value={this.state.email}
-                      onChangeText={(val) => this.inputValueUpdate(val, 'email')}
-                      // value = {email}
-                      // onChangeText={text => setEmail(text)}
-                      // placeholder="enter Email"
-                      // keyboardType="default"
-        />
+              {/* <Text style={styles.signup}>Sign Up</Text> */}
+              <ScrollView
+              // bounces={false}
+              // ref={ref => {this.scrollView = ref}}
+              // onContentSizeChange={() => scrollToEnd({animated: true})}
+              >
+                {/* This Controls enterEmail text box */}
+                <Text style={styles.email}>Email: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  placeholder="enter Email"
+                  keyboardType="default"
+                  top="4%"
+                  borderRadius="10"
+                />
 
-          <Text style={styles.email}>Password: *</Text>
-                  <TextInput
-                                style={styles.input}
-                                placeholder="Create Password"
-                                keyboardType="default"
-                  />
+                <Text style={styles.email}>Password: *</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="create password"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-                  <Text style={styles.email}>Re-enter Password:</Text>
-                  <TextInput
-                                style={styles.input}
-                                placeholder={'Retype Password'}
-                                value={this.state.password}
-                                onChangeText={(val) => this.inputValueUpdate(val, 'password')}
-                                // value = {password}
-                                // onChangeText={text => setPassword(text)}
-                                // placeholder="Retype Password"
-                                // keyboardType="default"
-                  />
+                <Text style={styles.email}>Re-enter Password:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  placeholder="Retype Password"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-          <Text style={styles.email}>First name: *</Text>
-          <TextInput
-                        style={styles.input}
-                        placeholder={'Enter First Name'}
-                        value={this.state.fname}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'fname')}
-                        // value = {fname}
-                        // onChangeText={text => setFname(text)}
-                        // placeholder="Enter First name"
-                        keyboardType="default"
-          />
+                <Text style={styles.email}>First name: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={fname}
+                  onChangeText={(text) => setFname(text)}
+                  placeholder="Enter First name"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-          <Text style={styles.email}>Last name: *</Text>
-          <TextInput
-                        style={styles.input}
-                        placeholder={'Enter Last Name'}
-                        value={this.state.lname}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'lname')}
-                        // value = {lname}
-                        // onChangeText={text => setLname(text)}
-                        // placeholder="enter Last name"
-                        keyboardType="default"
-          />
-        
-       
-        <Text style={styles.email}>Phone Number: *</Text>
-        <TextInput
-                      style={styles.input}
-                      placeholder={'***-***-****'}
-                      value={this.state.phone}
-                      onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
-                      // value = {phone}
-                      // onChangeText={text => setPhone(text)}
-                      // placeholder="***-***-****"
-                      keyboardType="default"
-        />
-        <Text style={styles.email}>Are you registering as a driver? *</Text>
-        <Picker selectedValue = {this.state.driver} onValueChange = {this.updatedd}>
-          <Picker.Item label="yes" value="yes" />
-          <Picker.Item label="no" value="no" />
-        </Picker>
-       
+                <Text style={styles.email}>Last name: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={lname}
+                  onChangeText={(text) => setLname(text)}
+                  placeholder="enter Last name"
+                  keyboardType="default"
+                  borderRadius="10"
+                />
 
-        {/* <View style={styles.loginview}> */}
-            <Button title="Sign up" 
-                    color="white" 
-                    onPress={this.addUser}
-                    style={{top: "2%"}}
+                <Text style={styles.email}>Phone Number: *</Text>
+                <TextInput
+                  style={styles.input}
+                  value={phone}
+                  onChangeText={(text) => setPhone(text)}
+                  placeholder="***-***-****"
+                  keyboardType="default"
+                  top="2%"
+
+                  //top = "10%"
+                />
+                {/* <PhoneInput
+          style={styles.input}
+          value = {phone}
+          onChangeText={text => setPhone(text)}
+          placeholder="enter Last name"
+        /> */}
+
+                <View style={styles.loginview}>
+                  <Button
+                    title="Sign up"
+                    color="white"
+                    onPress={handleSignUp}
                     // onPress={() => navigation.navigate('Tabs')}
-                    ></Button>
-        {/* </View> */}
-    </ScrollView>
-    </View> 
-    </KeyboardAvoidingView>
-    </SafeAreaView>
-    </ImageBackground>
-    
+                  ></Button>
+                </View>
+
+                {/* <Text> Please sign in to continue</Text>
+
+        <Text>Email:</Text>
+
+        <Text>Password:</Text>
+
+        <Button title='LOGIN' onPress={() => console.log("button works")}/>
+
+        <Text>New User?</Text> 
+        <TouchableHighlight onPress={() => console.log("Touchable works")}>
+
+          <Text>Sign up</Text>
+        </TouchableHighlight> */}
+              </ScrollView>
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </ImageBackground>
     </View>
-)
-}}
+  );
+}
 
 // ==================== CSS Styling ==================== //
 
@@ -388,7 +332,7 @@ const styles = StyleSheet.create({
     left: 5,
   },
   input: {
-    height: "4.5%",
+    height: "5.5%",
     margin: "1%",
     borderWidth: 1,
     padding: "1%",

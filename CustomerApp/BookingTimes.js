@@ -8,12 +8,10 @@ import {
   ImageBackground,
   Button,
   TextInput,
-  UselessTextInput,
+  FlatList,
 } from "react-native";
 import React, { Component } from "react";
 import firebase from 'firebase';
-import { auth } from '../firebase'
-
 
 
 export default class BookingTimes extends Component {
@@ -28,33 +26,24 @@ export default class BookingTimes extends Component {
     //this.getTimeSlots = this.getTimeSlots.bind(this);
   }
 
-
-
   componentDidMount() {
-    this.unsubscribe = this.docs.onSnapshot(this.getTimeSlots)
+    firebase.database().ref().on('value', (snapshot) =>{
+      var slots = []
+      snapshot.forEach((child) => {
+        slots.push({
+          key: child.key,
+          slot1: child.val().slot1,
+          slot2: child.val().slot2
+        })
+      })
+      this.setState({
+        bookingTimes: slots,
+        isLoading: false
+      })
+    })
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
 
-  getTimeSlots = (querySnapshot) => {
-    const bookingTimes = [];
-    querySnapshot.forEach((slot) => {
-      const { slot1 } = slot.data();
-      bookingTimes.push({
-        key: slot.id,
-        slot1
-      });
-    });
-
-    console.log(bookingTimes)
-
-    this.setState({
-      bookingTimes,
-      isLoading: false
-    });
-  }
 
   render() {
     if (this.state.isLoading) {
@@ -68,6 +57,21 @@ export default class BookingTimes extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
+
+          <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
+            <Text style={styles.text}>Pick a Time</Text>
+            <FlatList style={{ width: '100%' }}
+              data={this.state.bookingTimes}
+              keyExtractor={(item) => item.key}
+              renderItem={({ item }) => {
+                return (
+                  <View>
+                    <Text>{item.slot1}</Text>
+                    <Text>{item.slot2}</Text>
+                  </View>)
+              }} />
+          </ImageBackground>
+
         <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
           <Text style={styles.text}>Pick a Time</Text>
           <View style={styles.backbutton}>
@@ -90,6 +94,7 @@ export default class BookingTimes extends Component {
 
           }
         </ImageBackground>
+
         </SafeAreaView>
       </View>
 
@@ -148,9 +153,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
     fontWeight: "bold"
-    
-    
+
+
   }
+
+
+});
 
     // if (loading) {
     //     return <ActivityIndicator/>
@@ -170,4 +178,5 @@ const styles = StyleSheet.create({
       
 //     );  
 // }
-})
+
+
