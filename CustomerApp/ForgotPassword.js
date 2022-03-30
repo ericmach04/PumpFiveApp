@@ -13,53 +13,48 @@ export default class ForgotPassword extends Component{
     this.state = {
       email: '',
       password: '',
-      status: '0',
-      isLoading: false
+      isLoading: false,
+      status: false,
+      users:[],
     };
   }
 //   updatedd = (choice) => {
 //     this.setState({ driver: choice })
 //  }
 
-renderRest() {
-    if(this.state.status == '1'){
-        Alert.alert(
-            'Error',
-            'Email not recognized. Please try another email',
-            [
-              {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
-            ],
-            { 
-              cancelable: true 
-            }
-          );
-    }
-    else if(this.state.status == '2'){
-        return(
-            <View>
-            <Text style={styles.email}>Password: *</Text>
-            <TextInput
-                    style={styles.input}
-                    placeholder="Create Password"
-                    keyboardType="default"
-            />
+rest() { 
+    console.log("Users arr: ", this.state.users)   
+    for(var i=0; i < this.state.users.length; i++)
+    {
 
-        <Text style={styles.email}>Re-enter Password:</Text>
-        <TextInput
-                style={styles.input}
-                placeholder={'Retype Password'}
-                value={this.state.password}
-                onChangeText={(val) => this.inputValueUpdate(val, 'password')}
-        />
-        </View>
-        )
+      if(this.state.email == this.state.users[i]){
+        this.setState({
+          status: true,
+        });
+      }
     }
+
+        Alert.alert(
+          'Error',
+          'Email not recognized. Please try another email',
+          [
+            {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
+          ],
+          { 
+            cancelable: true 
+          }
+        );
+    
+    
 }
 
-// componentDidMount() {
-//     if(this.state.status != '0')
-//         this.unsubscribe = this.docs.onSnapshot(this.getUserData);
-//   }
+  componentDidMount() {
+        this.unsubscribe = this.docs.onSnapshot(this.getUserData);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   inputValueUpdate = (val, prop) => {
     const state = this.state;
@@ -90,44 +85,28 @@ renderRest() {
     });
   }
 
+  handleEnter() {
+      this.rest()
+  }
+
   getUserData = (querySnapshot) => {
-    // const user = [];
+    const users = [];
     querySnapshot.forEach((res) => {
-      console.log("res data: ", res.data())
       const { email } = res.data();
-      // console.log("Email1: ", email)
-      // console.log("Email2: ", auth.currentUser?.email)
-      console.log("email: ", email)
-      console.log("email2: ", this.state.email)
-      if (email == this.state.email) {
-          this.setState({
-              status: '2'
-          })
-        // user.push({
-        //   email,
-        // });
-      }
-      else{
-        this.setState({
-            status: '1'
-        })
-      }
+          
+        users.push(
+          email,
+        );
+      
     });
-    console.log("State: ", this.state.status)
+    // console.log("State: ", this.state.status)
 
-    // console.log(cars);
-    // this.setState({
-    //   cars,
-    //   isLoading: false,
-    // });
+    
+    this.setState({
+      users,
+      isLoading: false,
+    });
 
-    // if (arr.length === 0)
-    // {
-    //     return 0;
-    // }
-    // else{
-    //     return 1;
-    // }
   };
 
   render() {
@@ -170,26 +149,14 @@ renderRest() {
                         value={this.state.email}
                         onChangeText={(val) => this.inputValueUpdate(val, 'email')}
             />
-            
-            <Button title="Enter" color="white" onPress={this.docs.onSnapshot(this.getUserData)} style={buttonstyles.button}></Button>
+            <View style={buttonstyles.button}>
+              <Button title="Enter" color="white" onPress={() => this.handleEnter()}></Button>
+            </View>
+            {/* {
+              if(this.state.status == true){
 
-         {
-             <View>
-                { this.renderRest() }
-             </View>
-         }
-
-       
-
-        {/* <View style={styles.loginview}> */}
-            <Button title="Sign up" 
-                    color="white" 
-                    onPress={this.addUser}
-                    style={{top: "2%"}}
-                    // onPress={() => navigation.navigate('Tabs')}
-                    ></Button>
-        {/* </View> */}
-    {/* </ScrollView> */}
+              }
+            } */}
     </View> 
     </KeyboardAvoidingView>
     </SafeAreaView>
@@ -346,7 +313,7 @@ const styles = StyleSheet.create({
       left: 5,
     },
     input: {
-      height: "4.5%",
+      height: "15.5%",
       margin: "1%",
       borderWidth: 1,
       padding: "1%",
@@ -367,28 +334,21 @@ const styles = StyleSheet.create({
   });
   
   const buttonstyles = StyleSheet.create({
-    button: {
-      width: "30%",
-      height: 40,
-      bottom: 5,
-      left: 230,
-      // top: 270,
-      borderWidth: 1,
-      //backgroundColor:"#DAAC3F",
-      position: "absolute",
-  
-      backgroundColor: "#f9c107",
-      //width: '100%',
-      //padding: 15,
-      borderRadius: 10,
-      //alignItems: 'center',
-      //left: "30%",
-    },
+    button: { 
+      width: '30%', 
+      height: '15%',
+      left: '2%',
+      top: '105%',
+      // top: '60%',
+      // borderWidth: 1, 
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
+  },
   
     // backbutton Completed
     backbutton: {
       width: "15%",
-      height: "7%",
+      height: "10%",
       top: "5%",
       right: "5%",
       backgroundColor: "#DAAC3F",

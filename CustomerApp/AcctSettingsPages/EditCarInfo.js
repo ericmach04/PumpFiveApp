@@ -74,22 +74,6 @@ export default class EditCarInfo extends Component {
     });
   }
 
-    // const [email, setEmail] = useState('')
-    // const [make, setMake] = useState('')
-    // const [model, setModel] = useState('')
-    // const [year, setYear] = useState('')
-    // const [license, setLicense] = useState('')
-
-    // const addCarInfoToDB = () => {
-    //     addCarInfo({
-    //         email: auth.currentUser?.email,
-    //         make: make,
-    //         model: model,
-    //         year: year,
-    //         license: license
-    //     })
-
-    // }
     render() {
       if(this.state.isLoading){
         return(
