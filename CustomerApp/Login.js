@@ -78,27 +78,6 @@ export default function Login({ navigation }) {
       .catch((error) => alert(error.message));
   };
 
-  // var state = {
-  //   userList: [],
-  //   currentUser: null,
-  // }
-
-  // onFoodAdded = (user) => {
-  //   console.log("User Added");
-  //   console.log(user);
-  // }
-
-  // onUserReceived = (userList) => {
-  //   console.log(userList);
-  //   this.setState(prevState  => ({
-  //     userList: prevState.userList = userList
-  //   }));
-  // }
-
-  // componentDidMount = () => {
-  //   getUsers(onUserReceived)
-  // }
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground
