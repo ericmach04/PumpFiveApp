@@ -54,10 +54,6 @@ export default class PlaceOrder extends Component{
     const users=[]
     querySnapshot.forEach((res) => {
       const { email, phone, fname, lname, paid } = res.data();
-      // console.log(email);
-      // console.log(phone)
-      // console.log(fname)
-      // console.log(lname)
       if (email.toLowerCase() == auth.currentUser?.email) {
         users.push({
           key: res.id,
