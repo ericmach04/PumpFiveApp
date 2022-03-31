@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { React, Component } from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import firestore from '@react-native-firebase/firestore';
+
 
 
 
@@ -64,35 +64,7 @@ export default class BookAppointment extends Component {
   };
 
   //firebase functions
-  inputValueUpdate = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  }
-
-  setDeliveryTime() {
-    this.setState({
-      isLoading: true,
-    });
-    const updateDBRef = firebase.firestore().collection('Orders').doc(this.state.key);
-    updateDBRef.set({
-      deliverytime: this.state.deliverytime,
-    }).then((docRef) => {
-      this.setState({
-        key: '',
-        deliverytime: '',
-        isLoading: false,
-      });
-      this.props.navigation.navigate('OrderSummary');
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-      this.setState({
-        isLoading: false,
-      });
-    });
-  }
-
+  
 
   //rendering view 
   render() {
