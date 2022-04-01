@@ -21,6 +21,10 @@ export default class PlaceOrder extends Component{
       users:[],
     };
     // this.deleteUser = this.deleteUser.bind(this);
+
+    //Final Variables
+    const GAS = 1;
+
   }
 
   componentDidMount() {
@@ -79,8 +83,8 @@ export default class PlaceOrder extends Component{
               
                 <Text style={styles.text}>
                     Services
-                </Text>
-<<<<<<< HEAD
+               </Text>
+
                 <ScrollView 
                   style={styles.scroll}
                   ref={ref => {this.scrollView = ref}}
@@ -95,7 +99,7 @@ export default class PlaceOrder extends Component{
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => this.props.navigation.navigate('BookAppointment')}
+                            onPress={() => this.props.navigation.navigate('BookAppointment', {GAS})}
                           />
                             
                         </View>
@@ -138,86 +142,7 @@ export default class PlaceOrder extends Component{
                             </View>
                         </View>
                     </ScrollView>
-=======
-                
-                
-                            <ScrollView 
-                              style={styles.scroll}
-                              ref={ref => {this.scrollView = ref}}
-                              onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
-                              // bounces={false}
-                            >
-                              
-                                <View style={styles.gasservice}>
-                                    <Text style={styles.boxfontshead}>Gas Services</Text>
-                                    <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
-                                    <View style={buttonstyles.button}>
-                                      {/* <Text>Home Screen</Text> */}
-                                      <Button
-                                        title="Book Now"
-                                        color="white"
-                                        onPress = {() => this.handleGasBook()}
-                                        // onPress={() => {
-                                        //   if(res.paid == "no")
-                                        //   {
-                                        //     Alert.alert(
-                                        //       'You do not currently have a membership. You need a membership to use our services. Would you like to purchase a membership?',
-                                        //       [
-                                        //         {text: 'Yes', onPress: () => this.props.navigation.navigate('Membership')},
-                                        //         {text: 'Maybe Later', onPress: () => console.log('Cancelled'), style: 'cancel'},
-                                        //       ],
-                                        //       { 
-                                        //         cancelable: true 
-                                        //       }
-                                        //     );
-                                        //   };
-                                        // }}
-                                        // onPress={() => this.props.navigation.navigate('CalendarScreen')}
-                                      />
-                                        
-                                    </View>
-                                    
-                                </View>
-                                <View style={styles.tireservice}>
-                                    <Text style={styles.boxfontshead}>Tire Services</Text>
-                                    <Text style={styles.boxfontsbody}>PumpFive can provide you with quick tire service. Book your service and we
-                                    will get back to you in 24 hours.</Text>
-                                    <View style={buttonstyles.button}>
-                                    <Button
-                                        title="Book Now"
-                                        color="white"
-                                        onPress={() => this.props.navigation.navigate('TireService')}
-                                      />
-                                    </View>
-                                </View>
-                                <View style={styles.detailingservice}>
-                                    <Text style={styles.boxfontshead}>Detailing Services</Text>
-                                        <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
-                                        will get back to you in 24 hours.</Text>
-                                        <View style={buttonstyles.button}>
-                                          <Button
-                                          title="Book Now"
-                                          color="white"
-                                          onPress={() => this.props.navigation.navigate('DetailingService')}
-                                        />
-                                        </View>
-                                    </View>
-                                    <View style={styles.tintingservice}>
-                                    <Text style={styles.boxfontshead}>Tinting Services</Text>
-                                        <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
-                                        will get back to you in 24 hours.</Text>
-                                        <View style={buttonstyles.button}>
-                                          <Button
-                                          title="Book Now"
-                                          color="white"
-                                          onPress={() => this.props.navigation.navigate('DetailingService')}
-                                        />
-                                        </View>
-                                    </View>
-                                </ScrollView>
-                   
-                                      
->>>>>>> eaac2173e200081d52c719788deeb691255ec7d1
+
             </SafeAreaView>
         </ImageBackground>
     </View>
