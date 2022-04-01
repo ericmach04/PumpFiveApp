@@ -18,10 +18,19 @@ export default class PaymentDropdown extends Component{
     this.docs = firebase.firestore().collection("Credit_Cards");
     this.state = {
       cards: [],
-      isLoading: false,
+      isLoading: true,
       text: "Other",
       data:[],
-      keyvals: {},
+      keyvals: {
+        "Other": {
+          name:'L',
+          number: '',
+          type: '',
+          expiry: '',
+          cvv: ''
+          // cvv: cvv
+        }
+      },
     };
   }
 //   updatedd = (choice) => {
@@ -44,11 +53,19 @@ export default class PaymentDropdown extends Component{
   getCardData = (querySnapshot) => {
     const cards = [];
     const data = [];
-    var keyvals = {};
+    var keyvals = {
+      "Other": {
+        name:'',
+        number: '',
+        type: '',
+        expiry: '',
+        cvv: ''
+        // cvv: cvv
+    }};
     var emptyarr = []
     data.push(emptyarr)
     // console.log("2D Data: ", data)
-    if(this.state.data.length != 0 && Object.keys(this.state.keyvals).length != 0){
+    
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
       if (email == auth.currentUser?.email) {
@@ -65,9 +82,11 @@ export default class PaymentDropdown extends Component{
         data[0].push(string)
 
         keyvals[string] = {
+          name:'placeholder',
           number: number,
           type: type,
           expiry: expiry,
+          cvv: '000'
           // cvv: cvv
         }
 
@@ -84,10 +103,10 @@ export default class PaymentDropdown extends Component{
     console.log("epic before werid Data: ", this.state.data)
     console.log("KeyVals(state)", this.state.keyvals)
 
-    data[0].push("Other")
+    // data[0].push("Other")
 
     
-  }
+  
 };
 
 // renderWhenNotEmpty(){
@@ -97,13 +116,7 @@ export default class PaymentDropdown extends Component{
 // }
   
   render(){
-      var data = this.state.data;
-      var keys = this.state.keyvals
-    
-    // console.log("Data: ", data)
-    // var data = [["visa enting in 5029", "master-card ending in 4324"]]
-    // var newdata = this.state.data
-    console.log("New Data: ", data)
+     
     
     if(this.state.isLoading){
       return(
@@ -112,12 +125,19 @@ export default class PaymentDropdown extends Component{
         </View>
       )
     }
-    console.log("Keys empty: ",Object.keys(keys).length == 0)
-    console.log("text: ",this.state.text)
-    // console.log("Data empty: ",data.length != 0)
-    if(data.length != 0 && Object.keys(keys).length != 0){
-      // console.log("WHat is text?: ",this.state.text)
-      // console.log("WHat is name?: ",this.state.keyvals[this.state.text])
+    // console.log("Keys empty: ",Object.keys(keys).length == 0)
+    // console.log("text: ",this.state.text)
+    else{
+      var data = this.state.data;
+      var keys = this.state.keyvals
+    
+    console.log("Keys in render: ", keys)
+    console.log("Text: ", this.state.text)
+    // console.log(typeof this.state.text)
+    console.log("Text Object: ", this.state.keyvals)
+    // var data = [["visa enting in 5029", "master-card ending in 4324"]]
+    // var newdata = this.state.data
+    console.log("New Data: ", data)
       return (
         <View style={{flex: 1}}>
         <View style={{height: "10%"}} />
@@ -176,6 +196,8 @@ export default class PaymentDropdown extends Component{
         </View>
       );
         }
+      
+        // }
 
         // else{
         //   return <Text>Not supposed to be here</Text>
