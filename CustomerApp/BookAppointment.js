@@ -22,6 +22,9 @@ export default class BookAppointment extends Component {
       isLoading: true
     };
 
+    //Const variables 
+    const GAS =  this.props.navigation.getParam('GAS', 'nothing sent')
+
     //class variables 
     let currentDate
     let dateTimeString
@@ -56,11 +59,18 @@ export default class BookAppointment extends Component {
 
   };
 
+
   handleDatePicked = date => {
     this.setState({ deliverytime: this.FormatDate(date) })
+    this.hideDateTimePicker()
 
     console.log("A date has been picked: ", this.deliverytime)
-    this.hideDateTimePicker()
+
+    switch(service){
+      case GAS:
+        
+    }
+    
   };
 
   //firebase functions

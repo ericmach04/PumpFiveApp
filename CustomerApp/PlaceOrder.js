@@ -21,6 +21,10 @@ export default class PlaceOrder extends Component{
       users:[],
     };
     // this.deleteUser = this.deleteUser.bind(this);
+
+    //Final Variables
+    const GAS = 1;
+
   }
 
   componentDidMount() {
@@ -79,7 +83,7 @@ export default class PlaceOrder extends Component{
               
                 <Text style={styles.text}>
                     Services
-                </Text>
+               </Text>
 
                 <ScrollView 
                   style={styles.scroll}
@@ -95,7 +99,7 @@ export default class PlaceOrder extends Component{
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => this.props.navigation.navigate('BookAppointment')}
+                            onPress={() => this.props.navigation.navigate('BookAppointment', {GAS})}
                           />
                             
                         </View>
