@@ -152,7 +152,8 @@ export default class PaymentDropdown extends Component{
           >
           </DropdownMenu>
           {
-          <View>
+          <View style={{top: "100%"}}>
+          
           <Text style={styles.email}>Name on Card: *</Text>
                 <TextInput
                         style={styles.input}
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
       left: "2%",
     },
     input: {
-      height: "4%",
+      height: "10%",
       margin: "1%",
       width: "90%",
       borderWidth: 1,
