@@ -18,7 +18,7 @@ export default class PaymentDropdown extends Component{
     this.docs = firebase.firestore().collection("Credit_Cards");
     this.state = {
       cards: [],
-      isLoading: false,
+      isLoading: true,
       text: "Other",
       data:[],
       keyvals: {},
