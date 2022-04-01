@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator } from 'react-native'
 // import {Dropdown } from 'react-native-material-dropdown';
 
 import firebase from 'firebase';
@@ -19,8 +19,9 @@ export default class PaymentDropdown extends Component{
     this.state = {
       cards: [],
       isLoading: false,
-      text: "",
+      text: "Other",
       data:[],
+      keyvals: {},
     };
   }
 //   updatedd = (choice) => {
@@ -36,16 +37,18 @@ export default class PaymentDropdown extends Component{
 
   inputValueUpdate = (val, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state.keyvals[this.state.text][prop] = val;
     this.setState(state);
   }
 
   getCardData = (querySnapshot) => {
     const cards = [];
     const data = [];
+    var keyvals = {};
     var emptyarr = []
     data.push(emptyarr)
     // console.log("2D Data: ", data)
+    if(this.state.data.length != 0 && Object.keys(this.state.keyvals).length != 0){
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
       if (email == auth.currentUser?.email) {
@@ -61,19 +64,41 @@ export default class PaymentDropdown extends Component{
         console.log("String", string)
         data[0].push(string)
 
+        keyvals[string] = {
+          number: number,
+          type: type,
+          expiry: expiry,
+          // cvv: cvv
+        }
+
       }
-    });
+    })
+  ;
+    console.log("KeyVals", keyvals)
     this.setState({
       cards,
       data,
+      keyvals,
       isLoading: false,
     });
+    console.log("epic before werid Data: ", this.state.data)
+    console.log("KeyVals(state)", this.state.keyvals)
 
-    console.log("Data: ", this.state.data)
-  };
+    data[0].push("Other")
+
+    
+  }
+};
+
+// renderWhenNotEmpty(){
+//   if(data.length != 0 && Object.keys(keys).length != 0){
+//     this.render()
+//   }
+// }
   
   render(){
       var data = this.state.data;
+      var keys = this.state.keyvals
     
     // console.log("Data: ", data)
     // var data = [["visa enting in 5029", "master-card ending in 4324"]]
@@ -87,12 +112,16 @@ export default class PaymentDropdown extends Component{
         </View>
       )
     }
-    console.log(data == [])
-    if(data.length != 0){
+    console.log("Keys empty: ",Object.keys(keys).length == 0)
+    console.log("text: ",this.state.text)
+    // console.log("Data empty: ",data.length != 0)
+    if(data.length != 0 && Object.keys(keys).length != 0){
+      // console.log("WHat is text?: ",this.state.text)
+      // console.log("WHat is name?: ",this.state.keyvals[this.state.text])
       return (
         <View style={{flex: 1}}>
-        <View style={{height: 52}} />
-        <Text style={{}}>Choose Payment Method</Text>
+        <View style={{height: "10%"}} />
+        {/* <Text style={{}}>Choose Payment Method</Text> */}
           <DropdownMenu
             style={{flex: 0.5}}
             bgColor={'white'}
@@ -102,13 +131,55 @@ export default class PaymentDropdown extends Component{
             data={data}
           >
           </DropdownMenu>
+          {
+          <View>
+          <Text style={styles.email}>Name on Card: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Name on the Card'}
+                        value={this.state.keyvals[this.state.text].name}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'name')}
+                />
+
+                <Text style={styles.email}>Card Type: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Card Type (Visa, Mastercard, etc)'}
+                        value={this.state.keyvals[this.state.text].type}
+                        // onChangeText={(val) => this.inputValueUpdate(val, 'model')}
+                />
+
+                <Text style={styles.email}>Card Number: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Card Number (****-****-****-****)'}
+                        value={this.state.keyvals[this.state.text].number}
+                        // onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                />
+
+                <Text style={styles.email}>Expiration Date: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Expiration Date (MM/YY)'}
+                        value={this.state.keyvals[this.state.text].expiry}
+                        // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                />
+                <Text style={styles.email}>CVC: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter CVC'}
+                        value={this.state.keyvals[this.state.text].cvv}
+                        // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                />
+                </View>
+          }
         </View>
       );
         }
 
-        else{
-          return null
-        }
+        // else{
+        //   return <Text>Not supposed to be here</Text>
+        // }
     
   }
 }
@@ -126,6 +197,27 @@ const styles = StyleSheet.create({
       position: 'absolute',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    email: {
+      top: "20%",
+      color: "black",
+     
+      fontSize: 20,
+      lineHeight: 44,
+      fontWeight: "bold",
+      textAlign: "left",
+  
+      left: "2%",
+    },
+    input: {
+      height: "4%",
+      margin: "1%",
+      width: "90%",
+      borderWidth: 1,
+      padding: "1%",
+      backgroundColor: "white",
+      top: "20%",
+      left: "2%",
     },
 })
   

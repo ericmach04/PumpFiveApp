@@ -27,6 +27,7 @@ export default class Membership extends Component{
   constructor(props) {
     super(props);
     this.docs = firebase.firestore().collection("Users");
+    this.ccdocs = firebase.firestore().collection("Credit_Cards");
     this.state = {
       isLoading: true,
       key: '',
@@ -36,12 +37,19 @@ export default class Membership extends Component{
       data:[],
       buttononepressed: 'false',
       buttontwopressed: 'false',
+      selectedCard : {
+        name: '',
+        number: '',
+        expiry: '',
+        cvv: ''
+      }
     };
     // this.deleteUser = this.deleteUser.bind(this);
   }
 
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.getifpaid);
+    this.ccdocs.onSnapshot(this.getCardData);
   }
 
   componentWillUnmount() {
@@ -49,8 +57,32 @@ export default class Membership extends Component{
   }
 
   handleButtonOnePress() {
-    this.setState({buttononepressed: "false"});
+    console.log("In button 1 pressed")
+    this.setState({buttononepressed: "true"});
   }
+
+  getCardData = (querySnapshot) => {
+    const cards = [];
+    querySnapshot.forEach((res) => {
+      const { createdAt, cvv, email, expiry, number, type } = res.data();
+      if (email == auth.currentUser?.email) {
+        cards.push({
+          key: res.id,
+          createdAt,
+          cvv,
+          email,
+          expiry,
+          number,
+          type,
+        });
+      }
+    });
+    this.setState({
+      cards,
+      isLoading: false,
+    });
+    console.log("My credit cards: ", cards)
+  };
 
 
   getifpaid = (querySnapshot) => {
@@ -92,6 +124,33 @@ export default class Membership extends Component{
         </View>
       )
     }
+
+    var buttononepressed = this.state.buttononepressed;
+    let dropdown;
+    if (buttononepressed == "true") {
+      console.log("Button 1 pressed")
+      dropdown = 
+      <View style={{justifyContent:"center"}}>
+        <Text style={{top:"400%", left: "25%"}}>Please Select Payment Method</Text>
+        <PaymentDropdown/>
+      </View>
+      console.log(this.state.text)
+    }
+    else{
+      dropdown = 
+      <View>
+        <Text>You currently do not have a membership</Text>
+        <Text>Memberships are $19.99/month</Text>
+        <View style={styles.paybutton}>
+          
+            <Button
+              title="Add Membership"
+              color="white"
+              onPress={() => this.handleButtonOnePress()}
+            />
+        </View>
+      </View>
+    } 
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -121,19 +180,8 @@ export default class Membership extends Component{
                         <View style={{bottom:"70%", justifyContent:"center"}}>
                           
                           <View>
-                        <Text>You currently do not have a membership</Text>
-                        <Text>Memberships are $19.99/month</Text>
-                        <View style={styles.paybutton}>
-                            <Button
-                              title="Add Membership"
-                              color="white"
-                              onPress={() => {
-                                  this.setState({
-                                    button1pressed: 'true'
-                                  })
-                              }}
-                            />
-                        </View>
+                       
+                        {dropdown}
                       </View>
                           {/* <PaymentDropdown></PaymentDropdown> */}
                           
