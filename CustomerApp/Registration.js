@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   inner: {
     // flex: 1,
     justifyContent: "flex-end",
+    
   },
 
   image: {
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
 
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    //paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
     left: "0%",
@@ -337,18 +338,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: "1%",
     backgroundColor: "white",
-    top: "4%",
+    top: "7%",
   },
   loginview: {
     // justifyContent: 'center',
     // alignItems: 'center',
     borderWidth: 1,
-    width: 100,
-    height: 40,
-    top: 30,
+    width: '15%',
+    height: '45%',
+    top: '6%',
     // right: 10,
     backgroundColor: "#DAAC3F",
-    left: 5,
+    left: '5%',
   },
 });
 
@@ -375,7 +376,7 @@ const buttonstyles = StyleSheet.create({
   backbutton: {
     width: "15%",
     height: "7%",
-    top: "5%",
+    top: "7%",
     right: "5%",
     backgroundColor: "#DAAC3F",
     padding: "10%",
