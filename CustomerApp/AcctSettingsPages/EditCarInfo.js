@@ -98,10 +98,6 @@ export default class EditCarInfo extends Component {
                         placeholder={'Enter Car Make'}
                         value={this.state.make}
                         onChangeText={(val) => this.inputValueUpdate(val, 'make')}
-                        // value = {make}
-                        // onChangeText={text => setMake(text)}
-                        // placeholder="Enter Car Make"
-                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>Car Model: *</Text>
@@ -110,10 +106,6 @@ export default class EditCarInfo extends Component {
                         placeholder={'Enter Car Model'}
                         value={this.state.model}
                         onChangeText={(val) => this.inputValueUpdate(val, 'model')}
-                        // value = {model}
-                        // onChangeText={text => setModel(text)}
-                        // placeholder="Enter Car Model"
-                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>Car Year: *</Text>
@@ -122,10 +114,6 @@ export default class EditCarInfo extends Component {
                         placeholder={'Enter Car Year'}
                         value={this.state.year}
                         onChangeText={(val) => this.inputValueUpdate(val, 'year')}
-                        // value = {year}
-                        // onChangeText={text => setYear(text)}
-                        // placeholder="Enter Car Year"
-                        // keyboardType="numeric"
                 />
 
                 <Text style={styles.email}>License Plate: *</Text>
@@ -134,10 +122,6 @@ export default class EditCarInfo extends Component {
                         placeholder={'Enter License Plate'}
                         value={this.state.license}
                         onChangeText={(val) => this.inputValueUpdate(val, 'license')}
-                        // value = {license}
-                        // onChangeText={text => setLicense(text)}
-                        // placeholder="Enter License Plate"
-                        // keyboardType="default"
                 />
 
             
