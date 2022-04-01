@@ -164,7 +164,7 @@ export default class PaymentDropdown extends Component{
                 <Text style={styles.email}>Card Type: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Card Type (Visa, Mastercard, etc)'}
+                        placeholder='Enter Card Type (Visa, Mastercard, etc)'
                         value={this.state.keyvals[this.state.text].type}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'model')}
                 />
@@ -232,11 +232,11 @@ const styles = StyleSheet.create({
       left: "2%",
     },
     input: {
-      height: "4%",
-      margin: "1%",
+      height: "10%",
+      margin: "3%",
       width: "90%",
       borderWidth: 1,
-      padding: "1%",
+      padding: "5%",
       backgroundColor: "white",
       top: "20%",
       left: "2%",
