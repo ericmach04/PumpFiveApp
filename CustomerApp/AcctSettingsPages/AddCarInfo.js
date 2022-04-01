@@ -1,36 +1,68 @@
-import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, Keyboard} from 'react-native'
+import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, Keyboard, ActivityIndicator} from 'react-native'
 import React, {Component, useEffect, useState} from 'react';
+import firebase from "firebase";
 import { auth } from "../../firebase";
 import {addCarInfo} from '../../firebasefunctions'
 
-export default function AddCarInfo({ navigation }) {
-    const [email, setEmail] = useState('')
-    const [make, setMake] = useState('')
-    const [model, setModel] = useState('')
-    const [year, setYear] = useState('')
-    const [license, setLicense] = useState('')
+export default class AddCarInfo extends Component {
+  constructor() {
+    super();
+    this.dbRef = firebase.firestore().collection('Car_Info');
+    this.state = {
+      email: '',
+      make: '',
+      model: '',
+      year: '',
+      license: '',
+      isLoading: false
+    };
+  }
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
 
-        // addCard({
-        //     email: auth.currentUser?.email,
-        //     number: dataobject["values"]["number"],
-        //     type: dataobject["values"]["type"],
-        //     cvv: dataobject["values"]["cvc"],
-        //     expiry: dataobject["values"]["expiry"],
-        // })
-
-        
-    // _onChange => form => console.log(form);
-
-    const addCarInfoToDB = () => {
-        addCarInfo({
-            email: auth.currentUser?.email,
-            make: make,
-            model: model,
-            year: year,
-            license: license
-        })
-
+  addCar() {
+    if(this.state.make === '' || this.state.model === '' || this.state.year === '' || this.state.license === ''){
+     alert('Please fill out all fields')
+    } else {
+      this.setState({
+        isLoading: true,
+      });      
+      this.dbRef.add({
+        email: auth.currentUser?.email,
+        make: this.state.make,
+        model: this.state.model,
+        year: this.state.year,
+        license: this.state.license,
+      }).then((res) => {
+        this.setState({
+          email: '',
+          make: '',
+          model: '',
+          year: '',
+          license: '',
+          isLoading: false,
+        });
+        this.props.navigation.navigate('CarInfo')
+      })
+      .catch((err) => {
+        console.error("Error found: ", err);
+        this.setState({
+          isLoading: false,
+        });
+      });
     }
+  }
+    render() {
+      if(this.state.isLoading){
+        return(
+          <View style={styles.preloader}>
+            <ActivityIndicator size="large" color="#9E9E9E"/>
+          </View>
+        )
+      }
     return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -44,37 +76,49 @@ export default function AddCarInfo({ navigation }) {
                 <Text style={styles.email}>Car Make: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {make}
-                        onChangeText={text => setMake(text)}
-                        placeholder="Enter Car Make"
-                        keyboardType="default"
+                        placeholder={'Enter Car Make'}
+                        value={this.state.make}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'make')}
+                        // value = {make}
+                        // onChangeText={text => setMake(text)}
+                        // placeholder="Enter Car Make"
+                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>Car Model: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {model}
-                        onChangeText={text => setModel(text)}
-                        placeholder="Enter Car Model"
-                        keyboardType="default"
+                        placeholder={'Enter Car Model'}
+                        value={this.state.model}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'model')}
+                        // value = {model}
+                        // onChangeText={text => setModel(text)}
+                        // placeholder="Enter Car Model"
+                        // keyboardType="default"
                 />
 
                 <Text style={styles.email}>Car Year: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {year}
-                        onChangeText={text => setYear(text)}
-                        placeholder="Enter Car Year"
-                        keyboardType="numeric"
+                        placeholder={'Enter Car Year'}
+                        value={this.state.year}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                        // value = {year}
+                        // onChangeText={text => setYear(text)}
+                        // placeholder="Enter Car Year"
+                        // keyboardType="numeric"
                 />
 
                 <Text style={styles.email}>License Plate: *</Text>
                 <TextInput
                         style={styles.input}
-                        value = {license}
-                        onChangeText={text => setLicense(text)}
-                        placeholder="Enter License Plate"
-                        keyboardType="default"
+                        placeholder={'Enter License Plate'}
+                        value={this.state.license}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                        // value = {license}
+                        // onChangeText={text => setLicense(text)}
+                        // placeholder="Enter License Plate"
+                        // keyboardType="default"
                 />
 
             
@@ -83,14 +127,14 @@ export default function AddCarInfo({ navigation }) {
                 <Button
                   title="Add Car"
                   color="black"
-                  onPress={addCarInfoToDB}
+                  onPress={() => this.addCar()}
                 //   onPress={() => navigation.navigate("AddCard")}
                 />
               </View>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
-  )}
+  )}}
  
   const styles = StyleSheet.create({
     container: {
@@ -193,5 +237,14 @@ export default function AddCarInfo({ navigation }) {
         backgroundColor: "white",
         top: "20%",
         left: "2%",
+      },
+      preloader: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
   })

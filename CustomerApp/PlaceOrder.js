@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ScrollView, Alert} from 'react-native'
 import { useHistory } from "react-router-dom";
-import React from 'react'
+import firebase from 'firebase';
+import { auth } from "../firebase";
+import React, { Component } from 'react'
 import GasService from './GasService';
 import GasButton from '../CustomerApp/buttons/GasButton'
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,9 +12,66 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const image = { uri: "https://reactjs.org/logo-og.png" };
 
-const GasStack = createStackNavigator();
+export default class PlaceOrder extends Component{
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection("Users");
+    this.state = {
+      isLoading: true,
+      users:[],
+    };
+    // this.deleteUser = this.deleteUser.bind(this);
+  }
 
-export default function PlaceOrder({ navigation }) {
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getUserData);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  handleGasBook () {
+    // console.log(this.state.users[0].paid)
+    if(this.state.users[0].paid == "no"){
+      Alert.alert(
+        'You do not currently have a membership.',
+        'You need a membership to use our services. Would you like to purchase a membership?',
+        [
+          // {text: 'Yes', onPress: () => this.props.navigation.navigate('Membership')},
+          {text: 'Yes', onPress: () => this.props.navigation.navigate('Membership')},
+          {text: 'Maybe Later', onPress: () => console.log('Cancelled'), style: 'cancel'},
+        ],
+        { 
+          cancelable: true 
+        }
+      );
+          
+    }
+  }
+  
+  getUserData = (querySnapshot) => {
+    const users=[]
+    querySnapshot.forEach((res) => {
+      const { email, phone, fname, lname, paid } = res.data();
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        users.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+          paid,
+        });
+      }
+      // console.log(users)
+    });
+    this.setState({
+      users,
+      isLoading: false,
+    });
+  };
+  render(){
   return (
     <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -21,7 +80,13 @@ export default function PlaceOrder({ navigation }) {
                 <Text style={styles.text}>
                     Services
                 </Text>
-                <ScrollView style={styles.scroll} alwaysBounceHorizontal={false}>
+<<<<<<< HEAD
+                <ScrollView 
+                  style={styles.scroll}
+                  ref={ref => {this.scrollView = ref}}
+                  onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
+                  // bounces={false}
+                >
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
@@ -30,7 +95,7 @@ export default function PlaceOrder({ navigation }) {
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => navigation.navigate('CalendarScreen')}
+                            onPress={() => this.props.navigation.navigate('BookAppointment')}
                           />
                             
                         </View>
@@ -44,7 +109,7 @@ export default function PlaceOrder({ navigation }) {
                         <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => navigation.navigate('TireService')}
+                            onPress={() => this.props.navigation.navigate('BookAppointment')}
                           />
                         </View>
                     </View>
@@ -56,7 +121,7 @@ export default function PlaceOrder({ navigation }) {
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => navigation.navigate('DetailingService')}
+                              onPress={() => this.props.navigation.navigate('BookAppointment')}
                             />
                             </View>
                         </View>
@@ -68,15 +133,96 @@ export default function PlaceOrder({ navigation }) {
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => navigation.navigate('DetailingService')}
+                              onPress={() => this.props.navigation.navigate('BookAppointment')}
                             />
                             </View>
                         </View>
                     </ScrollView>
+=======
+                
+                
+                            <ScrollView 
+                              style={styles.scroll}
+                              ref={ref => {this.scrollView = ref}}
+                              onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
+                              // bounces={false}
+                            >
+                              
+                                <View style={styles.gasservice}>
+                                    <Text style={styles.boxfontshead}>Gas Services</Text>
+                                    <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
+                                    <View style={buttonstyles.button}>
+                                      {/* <Text>Home Screen</Text> */}
+                                      <Button
+                                        title="Book Now"
+                                        color="white"
+                                        onPress = {() => this.handleGasBook()}
+                                        // onPress={() => {
+                                        //   if(res.paid == "no")
+                                        //   {
+                                        //     Alert.alert(
+                                        //       'You do not currently have a membership. You need a membership to use our services. Would you like to purchase a membership?',
+                                        //       [
+                                        //         {text: 'Yes', onPress: () => this.props.navigation.navigate('Membership')},
+                                        //         {text: 'Maybe Later', onPress: () => console.log('Cancelled'), style: 'cancel'},
+                                        //       ],
+                                        //       { 
+                                        //         cancelable: true 
+                                        //       }
+                                        //     );
+                                        //   };
+                                        // }}
+                                        // onPress={() => this.props.navigation.navigate('CalendarScreen')}
+                                      />
+                                        
+                                    </View>
+                                    
+                                </View>
+                                <View style={styles.tireservice}>
+                                    <Text style={styles.boxfontshead}>Tire Services</Text>
+                                    <Text style={styles.boxfontsbody}>PumpFive can provide you with quick tire service. Book your service and we
+                                    will get back to you in 24 hours.</Text>
+                                    <View style={buttonstyles.button}>
+                                    <Button
+                                        title="Book Now"
+                                        color="white"
+                                        onPress={() => this.props.navigation.navigate('TireService')}
+                                      />
+                                    </View>
+                                </View>
+                                <View style={styles.detailingservice}>
+                                    <Text style={styles.boxfontshead}>Detailing Services</Text>
+                                        <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
+                                        will get back to you in 24 hours.</Text>
+                                        <View style={buttonstyles.button}>
+                                          <Button
+                                          title="Book Now"
+                                          color="white"
+                                          onPress={() => this.props.navigation.navigate('DetailingService')}
+                                        />
+                                        </View>
+                                    </View>
+                                    <View style={styles.tintingservice}>
+                                    <Text style={styles.boxfontshead}>Tinting Services</Text>
+                                        <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
+                                        will get back to you in 24 hours.</Text>
+                                        <View style={buttonstyles.button}>
+                                          <Button
+                                          title="Book Now"
+                                          color="white"
+                                          onPress={() => this.props.navigation.navigate('DetailingService')}
+                                        />
+                                        </View>
+                                    </View>
+                                </ScrollView>
+                   
+                                      
+>>>>>>> eaac2173e200081d52c719788deeb691255ec7d1
             </SafeAreaView>
         </ImageBackground>
     </View>
   )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -162,7 +308,7 @@ const styles = StyleSheet.create({
         width: "90%",
         left: "5%",
         right: "5%",
-        
+        resizeMode:"repeat",
       },
 })
 

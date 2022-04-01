@@ -66,7 +66,6 @@ export default function Registration({ navigation }) {
         <SafeAreaView style={styles.container}>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : null}
-            // style={{ flex: 1 }}
           >
             <View style={styles.inner}>
               <View style={buttonstyles.backbutton}>

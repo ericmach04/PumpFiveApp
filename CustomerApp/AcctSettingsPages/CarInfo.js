@@ -1,5 +1,6 @@
 import {
   StyleSheet,
+  Alert,
   Text,
   View,
   SafeAreaView,
@@ -10,6 +11,7 @@ import {
   TextInput,
   UselessTextInput,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { Component } from "react";
 import firebase from "firebase";
@@ -29,6 +31,7 @@ export default class CarInfo extends Component {
       isLoading: true,
       addresses: [],
     };
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +41,45 @@ export default class CarInfo extends Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+  deleteUser(deletekey) {
+    const dbRef = firebase.firestore().collection('Car_Info').doc(deletekey)
+
+    Alert.alert(
+      'Delete ',
+      'Are you sure you want to delete this car?',
+      [
+        {text: 'Yes', onPress: () => {
+          dbRef.delete().then((res) => {
+            console.log('Item removed from database')
+        })
+        }},
+        {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+      ],
+      { 
+        cancelable: true 
+      }
+    );
+  }
+
+  // openTwoButtonAlert(deletekey){
+  //   Alert.alert(
+  //     'Delete ',
+  //     'Are you sure you want to delete this car?',
+  //     [
+  //       {text: 'Yes', onPress: () => this.deleteUser(deletekey)},
+  //       {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+  //     ],
+  //     { 
+  //       cancelable: true 
+  //     }
+  //   );
+  // }
+
+  // onPress(txt) {
+  //   // console.log(txt);
+  //   return txt
+  // }
 
   getCarData = (querySnapshot) => {
     const cars = [];
@@ -56,7 +98,7 @@ export default class CarInfo extends Component {
         });
       }
     });
-    console.log(cars);
+    // console.log(cars);
     this.setState({
       cars,
       isLoading: false,
@@ -118,7 +160,23 @@ export default class CarInfo extends Component {
                       <Text style={styles.bofadeeznuts}>
                         License Plate: {res.license}
                       </Text>
-                      <Text style={styles.bofadeeznuts}>Photo:</Text>
+                      {/* <Text style={styles.bofadeeznuts}>Photo:</Text> */}
+                      <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
+                        <TouchableOpacity onPress={() => {
+                                this.props.navigation.navigate('EditCarInfo', {
+                                  userkey: res.key
+                                });
+                              }}
+                        >
+                          <Text style={styles.bofadeeznutsunderline}>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.deleteUser(res.key)}>
+                          <Text style={styles.bofadeeznutsunderline}>Delete</Text>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity onPress={() => this.deleteUser(res.key)}>
+                          <Text style={styles.bofadeeznutsunderline}>Delete</Text>
+                        </TouchableOpacity> */}
+                      </View>
                     </View>
                   </View>
                 );
@@ -187,6 +245,14 @@ const styles = StyleSheet.create({
     // lineHeight: 20,
     //fontWeight: "bold",
     textAlign: "center",
+  },
+  bofadeeznutsunderline: {
+    color: "black",
+    fontSize: 25,
+    // lineHeight: 20,
+    //fontWeight: "bold",
+    textAlign: "center",
+    textDecorationLine: 'underline',
   },
   bofadeeznutsbold: {
     color: "black",

@@ -1,13 +1,97 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ActivityIndicator } from 'react-native'
+import React, { Component } from 'react'
+// import DropdownMenu from 'react-native-dropdown-menu';
+import firebase from 'firebase';
+import { auth } from "../../firebase";
 import {useState} from "react";
-import DropDownPicker from 'react-native-dropdown-picker';
+import PaymentDropdown from '../dropdowns/PaymentDropdown';
+// import DropDownPicker from 'react-native-dropdown-picker';
 // import TimeDropdown from "../dropdowns/TimeDropdown";
 // import DayDropdown from "../dropdowns/DayDropdown";
 // import GasDropdown from "../dropdowns/GasDropdown";
 // import PaymentDropdown from '../dropdowns/PaymentDropdown';
 
-export default function Membership({navigation}) {
+function ButtonOne(props) {
+  return (
+    <View style={styles.paybutton}>
+        <Button
+          title="Add Membership"
+          color="white"
+          onPress={props.onClick}
+        />
+    </View>
+  );
+}
+
+export default class Membership extends Component{
+  constructor(props) {
+    super(props);
+    this.docs = firebase.firestore().collection("Users");
+    this.state = {
+      isLoading: true,
+      key: '',
+      paid: '',
+      cards: [],
+      text: '',
+      data:[],
+      buttononepressed: 'false',
+      buttontwopressed: 'false',
+    };
+    // this.deleteUser = this.deleteUser.bind(this);
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getifpaid);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  handleButtonOnePress() {
+    this.setState({buttononepressed: "false"});
+  }
+
+
+  getifpaid = (querySnapshot) => {
+    
+    querySnapshot.forEach((res) => {
+      const {email, paid } = res.data();
+      // console.log(email);
+      // console.log(phone)
+      // console.log(fname)
+      // console.log(lname)
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        if(paid == "no"){
+          this.setState({
+            paid: "no",
+            isLoading: false,
+          });
+        }
+        else
+        {
+          this.setState({
+            key: res.id,
+            isLoading: false,
+          });
+        }
+      }
+      
+    });
+    this.setState({
+      isLoading: false,
+    });
+    console.log("this.state.paid: ", this.state.paid)
+  };
+
+  render (){
+    if(this.state.isLoading){
+      return(
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E"/>
+        </View>
+      )
+    }
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -21,28 +105,39 @@ export default function Membership({navigation}) {
                     <View style={styles.Memberships}>
                         <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
                             <Text style={styles.text}>Membership</Text>
+                            {/* {
+
+                            } */}
                             <View style={buttonstyles.backbutton}>
                                 <Button
                                 title="Back"
                                 color="white"
                                 //   onPress={() => console.log('Clicked')}
-                                onPress={() => navigation.goBack()}
+                                onPress={() => this.props.navigation.goBack()}
                                 />
                             </View>
                         </View>
-                        <View style={{top: -350, left: 20}}>
-                            <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
-                            <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
-                            <Text style={styles.boxfontsbody}>414-***-****</Text>
-                        </View>
 
-                        <View style={{top: -300, left: 20}}>
-                        <Text style={styles.boxfontsbody}>Monthly Membership</Text>
-                        <Text style={styles.boxfontsbody}>(2021.11.01)</Text>
+                        <View style={{bottom:"70%", justifyContent:"center"}}>
+                          
+                          <View>
+                        <Text>You currently do not have a membership</Text>
+                        <Text>Memberships are $19.99/month</Text>
+                        <View style={styles.paybutton}>
+                            <Button
+                              title="Add Membership"
+                              color="white"
+                              onPress={() => {
+                                  this.setState({
+                                    button1pressed: 'true'
+                                  })
+                              }}
+                            />
                         </View>
-
-                        <View style={{top: -250, left: 20}}>
-                            <Text style={{textDecorationLine: 'underline'}}>Cancel Membership</Text>
+                      </View>
+                          {/* <PaymentDropdown></PaymentDropdown> */}
+                          
+                          {/* <PaymentDropdown></PaymentDropdown> */}
                         </View>
                         
                     </View>    
@@ -52,19 +147,8 @@ export default function Membership({navigation}) {
          </ImageBackground>   
     </View>
   )
+                          }
 }
-
-// function GasScreen({ navigation }) {
-//   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       {/* <Text>Home Screen</Text> */}
-//       <Button
-//         title="BookNow"
-//         onPress={() => navigation.navigate('Details')}
-//       />
-//     </View>
-//   );
-// }
 
   const buttonstyles = StyleSheet.create({
     button: { 
@@ -108,6 +192,15 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#000000',
       borderRadius: 10,
+  },
+  paybutton: {
+    // width: "77%",
+    // height: "7%",
+    top: "110%",
+    left: "30%",
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
+    justifyContent: "center",
   },
   
   text: {
@@ -282,6 +375,15 @@ const styles = StyleSheet.create({
         right: 10,
         left: 5,
         backgroundColor:"#DAAC3F", 
+      },
+      preloader: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
       
   
