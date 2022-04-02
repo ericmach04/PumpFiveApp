@@ -161,7 +161,9 @@ export default class Membership extends Component{
               
             
                 <View style={styles.container}>
-                    <View style={styles.Memberships}>
+                    <View 
+                    style={styles.Memberships}
+                    >
                         <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
                             <Text style={styles.text}>Membership</Text>
                             {/* {
@@ -188,7 +190,15 @@ export default class Membership extends Component{
                           {/* <PaymentDropdown></PaymentDropdown> */}
                         </View>
                         
-                    </View>    
+                    </View> 
+                    <View style={buttonstyles.backbutton2}>
+                                <Button
+                                title="Back"
+                                color="white"
+                                //   onPress={() => console.log('Clicked')}
+                                onPress={() => this.props.navigation.goBack()}
+                                />
+                            </View>   
                         
                 </View>
             </SafeAreaView>
@@ -216,7 +226,16 @@ export default class Membership extends Component{
         right: 0,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
-    }
+    },
+    backbutton2: {
+      width: '18%', 
+      height: 40,
+      // top: 65,
+      right: 0,
+      bottom: "2%",
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
+  },
 })
 
 const styles = StyleSheet.create({
@@ -232,10 +251,10 @@ const styles = StyleSheet.create({
   
     Memberships: {
       position: 'absolute',
-      width: 350,
-      height: 620,
-      left: 21,
-      top: 90,
+      width: "98%",
+      height: "85%",
+      left: "2%",
+      top: "5%",
       backgroundColor: '#CDCABF',
       borderWidth: 2,
       borderColor: '#000000',

@@ -43,6 +43,8 @@ import JobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
 import Admin from './CustomerApp/Admin'
 import ForgotPassword from './CustomerApp/ForgotPassword';
 
+import PaymentDropdown from './CustomerApp/dropdowns/PaymentDropdown';
+
 
 // export default function App() {
 //   // return (
@@ -98,6 +100,7 @@ const App = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
           <Stack.Screen name="Admin" component={Admin} />
+          <Stack.Screen name="PaymentDropdown" component={PaymentDropdown} />
 
 
 

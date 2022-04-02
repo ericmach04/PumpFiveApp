@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard } from 'react-native'
 // import {Dropdown } from 'react-native-material-dropdown';
 
 import firebase from 'firebase';
@@ -139,11 +139,14 @@ export default class PaymentDropdown extends Component{
     // var newdata = this.state.data
     console.log("New Data: ", data)
       return (
-        <View style={{flex: 1}}>
-        <View style={{height: "10%"}} />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View 
+        style={styles.container}
+        >
         {/* <Text style={{}}>Choose Payment Method</Text> */}
+        <View>
           <DropdownMenu
-            style={{flex: 0.5}}
+            // style={{top: "100%"}}
             bgColor={'white'}
             tintColor={'#000000'}
             activityTintColor={'red'}
@@ -151,50 +154,74 @@ export default class PaymentDropdown extends Component{
             data={data}
           >
           </DropdownMenu>
-          {
-          <View style={{top: "100%"}}>
+          </View>
           
+          
+          <View>
           <Text style={styles.email}>Name on Card: *</Text>
+          <View style={styles.input}>
                 <TextInput
-                        style={styles.input}
-                        placeholder={'Enter Name on the Card'}
+                        // style={styles.input}
+                        placeholder="Enter Name on the Card"
+                        placeholderTextColor="#000"
                         value={this.state.keyvals[this.state.text].name}
                         onChangeText={(val) => this.inputValueUpdate(val, 'name')}
                 />
+                </View>
 
                 <Text style={styles.email}>Card Type: *</Text>
+                <View style={styles.input}>
                 <TextInput
-                        style={styles.input}
+                        // style={styles.input}
                         placeholder='Enter Card Type (Visa, Mastercard, etc)'
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].type}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'model')}
                 />
+                </View>
 
                 <Text style={styles.email}>Card Number: *</Text>
+                <View style={styles.input}>
                 <TextInput
-                        style={styles.input}
+                        // style={styles.input}
                         placeholder={'Enter Card Number (****-****-****-****)'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].number}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'year')}
                 />
+                </View>
 
                 <Text style={styles.email}>Expiration Date: *</Text>
+                <View style={styles.input}>
                 <TextInput
-                        style={styles.input}
+                        // style={styles.input}
                         placeholder={'Enter Expiration Date (MM/YY)'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].expiry}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
                 />
+                </View>
                 <Text style={styles.email}>CVC: *</Text>
+                <View style={styles.input}>
                 <TextInput
-                        style={styles.input}
+                        // style={styles.input}
                         placeholder={'Enter CVC'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].cvv}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
                 />
                 </View>
-          }
+                </View>
+                {/* <View style={styles.backbutton2}>
+                                <Button
+                                title="Back"
+                                color="white"
+                                //   onPress={() => console.log('Clicked')}
+                                onPress={() => this.props.navigation.goBack()}
+                                />
+                            </View> */}
         </View>
+        </TouchableWithoutFeedback>
       );
         }
       
@@ -208,10 +235,18 @@ export default class PaymentDropdown extends Component{
 }
 
 const styles = StyleSheet.create({
-    containerStyle: {
-        left: 0,
-        top: 5,
-    },
+  container: {
+    flex: 1,
+  },
+    backbutton2: {
+      width: '18%', 
+      height: 40,
+      // top: 65,
+      right: 0,
+      bottom: "2%",
+      backgroundColor:"#DAAC3F", 
+      position: "absolute"
+  },
     preloader: {
       left: 0,
       right: 0,
@@ -222,29 +257,33 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "20%",
+      // top: "100%",
       color: "black",
      
-      fontSize: 20,
+      fontSize: 15,
       lineHeight: 44,
       fontWeight: "bold",
       textAlign: "left",
   
-      left: "2%",
+      // left: "2%",
     },
     input: {
-      height: "10%",
-<<<<<<< HEAD
+      height: "6%",
       margin: "1%",
-=======
-      margin: "3%",
->>>>>>> f209d6ae06910e79c8acc04d26c6321d696e4ee5
       width: "90%",
       borderWidth: 1,
-      padding: "5%",
+      padding: "1%",
       backgroundColor: "white",
-      top: "20%",
-      left: "2%",
+      // top: "100%",
+      // left: "2%",
+    },
+    inputGroup: {
+      // flex: 1,
+      // top:"100%",
+      padding: 0,
+      // marginBottom: 15,
+      borderBottomWidth: 1,
+      borderBottomColor: '#cccccc',
     },
 })
   

@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     //  textAlign: "left",
     //   flex: 1,
-    top: 40,
+    // top: 40,
 
     left: "10%",
     top: "-20%",
