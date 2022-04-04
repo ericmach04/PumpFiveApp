@@ -82,11 +82,11 @@ export default class PaymentDropdown extends Component{
         data[0].push(string)
 
         keyvals[string] = {
-          name:'placeholder',
+          // name:'placeholder',
           number: number,
           type: type,
           expiry: expiry,
-          cvv: '000'
+          // cvv: '000'
           // cvv: cvv
         }
 
@@ -108,12 +108,6 @@ export default class PaymentDropdown extends Component{
     
   
 };
-
-// renderWhenNotEmpty(){
-//   if(data.length != 0 && Object.keys(keys).length != 0){
-//     this.render()
-//   }
-// }
   
   render(){
      
@@ -125,28 +119,25 @@ export default class PaymentDropdown extends Component{
         </View>
       )
     }
-    // console.log("Keys empty: ",Object.keys(keys).length == 0)
-    // console.log("text: ",this.state.text)
+    
     else{
       var data = this.state.data;
       var keys = this.state.keyvals
+      var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];2
     
     console.log("Keys in render: ", keys)
     console.log("Text: ", this.state.text)
     // console.log(typeof this.state.text)
     console.log("Text Object: ", this.state.keyvals)
-    // var data = [["visa enting in 5029", "master-card ending in 4324"]]
-    // var newdata = this.state.data
     console.log("New Data: ", data)
       return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View 
-        style={styles.container}
-        >
-        {/* <Text style={{}}>Choose Payment Method</Text> */}
-        <View>
+          
+          <View>
           <DropdownMenu
-            // style={{top: "100%"}}
+            // style={{top: "20%"}}
+            // useNativeDriver={true}
+            label={"Select Payment Method"}
             bgColor={'white'}
             tintColor={'#000000'}
             activityTintColor={'red'}
@@ -154,16 +145,22 @@ export default class PaymentDropdown extends Component{
             data={data}
           >
           </DropdownMenu>
-          </View>
-          
-          
+
+          {/* <DropdownMenu
+            style={{flex: 0.5}}
+            bgColor={'grey'}
+            tintColor={'#000000'}
+            activityTintColor={'red'}
+            handler={(selection, row) => this.setState({text: data2[selection][row]})}
+            data={data2}
+          ></DropdownMenu> */}
           <View>
           <Text style={styles.email}>Name on Card: *</Text>
           <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
                         placeholder="Enter Name on the Card"
-                        placeholderTextColor="#000"
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].name}
                         onChangeText={(val) => this.inputValueUpdate(val, 'name')}
                 />
@@ -210,17 +207,19 @@ export default class PaymentDropdown extends Component{
                         value={this.state.keyvals[this.state.text].cvv}
                         // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
                 />
+                <View style={styles.paybutton}>
+                              <Button
+                              title="Confirm Payment"
+                              color="white"
+                              // onPress={() => this.handleButtonOnePress()}
+                            /> 
+                          
+                            
+                        </View>  
                 </View>
                 </View>
-                {/* <View style={styles.backbutton2}>
-                                <Button
-                                title="Back"
-                                color="white"
-                                //   onPress={() => console.log('Clicked')}
-                                onPress={() => this.props.navigation.goBack()}
-                                />
-                            </View> */}
-        </View>
+                </View>
+                
         </TouchableWithoutFeedback>
       );
         }
@@ -257,7 +256,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      // top: "100%",
+      top: "30%",
       color: "black",
      
       fontSize: 15,
@@ -274,7 +273,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      // top: "100%",
+      top: "30%",
       // left: "2%",
     },
     inputGroup: {
@@ -284,6 +283,15 @@ const styles = StyleSheet.create({
       // marginBottom: 15,
       borderBottomWidth: 1,
       borderBottomColor: '#cccccc',
+    },
+    paybutton: {
+      // width: "77%",
+      // height: "7%",
+      top: "300%",
+      // left: "30%",
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+      // justifyContent: "center",
     },
 })
   

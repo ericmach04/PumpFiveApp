@@ -52,7 +52,7 @@ rest() {
       // console.log("New State: ", this.state)
     }
     console.log("Statu state: ",this.state.status)
-    if(this.state.status  == "false"){
+    if(this.state.status == false){
         Alert.alert(
           'Error',
           'Email not recognized. Please try another email',

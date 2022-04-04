@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ActivityIndicator, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { Component } from 'react'
 // import DropdownMenu from 'react-native-dropdown-menu';
 import firebase from 'firebase';
@@ -126,45 +126,76 @@ export default class Membership extends Component{
     }
 
     var buttononepressed = this.state.buttononepressed;
-    let dropdown;
+    // let dropdown;
     if (buttononepressed == "true") {
       console.log("Button 1 pressed")
-      dropdown = 
-      <View style={{justifyContent:"center"}}>
-        <Text style={{top:"400%", left: "25%"}}>Please Select Payment Method</Text>
-        <PaymentDropdown/>
-      </View>
-      console.log(this.state.text)
+      // dropdown = 
+      // <View style={{justifyContent:"center"}}>
+      //   <Text style={{top:"400%", left: "25%"}}>Please Select Payment Method</Text>
+      //   <PaymentDropdown/>
+      // </View>
+      return (
+        
+        <View style={styles.container}>
+             <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
+                        <View 
+                        style={styles.Memberships}
+                        >
+                            <View style={{flexDirection:'row', justifyContent: 'space-around',}}>
+                                <Text style={styles.text}>Membership</Text>
+                                {/* {
+    
+                                } */}
+                                <View style={buttonstyles.backbutton}>
+                                    <Button
+                                    title="Back"
+                                    color="white"
+                                    //   onPress={() => console.log('Clicked')}
+                                    onPress={() => this.props.navigation.goBack()}
+                                    />
+                                </View>
+                            </View>
+                              <Text style={{top:"10%", left: "25%"}}>Please Select Payment Method</Text>
+                              <PaymentDropdown/>
+                              
+                            
+                        </View> 
+                        
+                        <View style={buttonstyles.backbutton2}>
+                                    <Button
+                                    title="Back"
+                                    color="white"
+                                    //   onPress={() => console.log('Clicked')}
+                                    onPress={() => this.props.navigation.goBack()}
+                                    />
+                                </View>   
+             </ImageBackground>   
+        </View>
+      )
     }
     else{
-      dropdown = 
-      <View>
-        <Text>You currently do not have a membership</Text>
-        <Text>Memberships are $19.99/month</Text>
-        <View style={styles.paybutton}>
+      // dropdown = 
+      // <View style={{top: "10%"}}>
+        // <Text>You currently do not have a membership</Text>
+        // <Text>Memberships are $19.99/month</Text>
+        // <View style={styles.paybutton}>
           
-            <Button
-              title="Add Membership"
-              color="white"
-              onPress={() => this.handleButtonOnePress()}
-            />
-        </View>
-      </View>
-    } 
-  return (
+        //     <Button
+        //       title="Add Membership"
+        //       color="white"
+        //       onPress={() => this.handleButtonOnePress()}
+        //     />
+        // </View>
+      // </View>
+      return (
     <View style={styles.container}>
          <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
-            <SafeAreaView style={styles.container}>
-              
-            
-                
-              
-            
-                <View style={styles.container}>
                     <View 
                     style={styles.Memberships}
                     >
-                        <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
+                        <View 
+                        style={{flexDirection:'row', justifyContent: 'space-around',}}
+                        >
                             <Text style={styles.text}>Membership</Text>
                             {/* {
 
@@ -178,16 +209,15 @@ export default class Membership extends Component{
                                 />
                             </View>
                         </View>
-
-                        <View style={{bottom:"70%", justifyContent:"center"}}>
+                        <Text style={styles.email}>You currently do not have a membership</Text>
+                        <Text style={styles.email}>Memberships are $19.99/month</Text>
+                        <View style={styles.paybutton}>
                           
-                          <View>
-                       
-                        {dropdown}
-                      </View>
-                          {/* <PaymentDropdown></PaymentDropdown> */}
-                          
-                          {/* <PaymentDropdown></PaymentDropdown> */}
+                            <Button
+                              title="Add Membership"
+                              color="white"
+                              onPress={() => this.handleButtonOnePress()}
+                            />
                         </View>
                         
                     </View> 
@@ -199,22 +229,55 @@ export default class Membership extends Component{
                                 onPress={() => this.props.navigation.goBack()}
                                 />
                             </View>   
-                        
-                </View>
-            </SafeAreaView>
-         </ImageBackground>   
+         </ImageBackground>
+           
     </View>
   )
+    } 
+  // return (
+  //   <View style={styles.container}>
+  //        <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
+  //                   <View 
+  //                   style={styles.Memberships}
+  //                   >
+  //                       <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
+  //                           <Text style={styles.text}>Membership</Text>
+  //                           {/* {
+
+  //                           } */}
+  //                           <View style={buttonstyles.backbutton}>
+  //                               <Button
+  //                               title="Back"
+  //                               color="white"
+  //                               //   onPress={() => console.log('Clicked')}
+  //                               onPress={() => this.props.navigation.goBack()}
+  //                               />
+  //                           </View>
+  //                       </View>
+                        
+  //                   </View> 
+  //                   <View style={buttonstyles.backbutton2}>
+  //                               <Button
+  //                               title="Back"
+  //                               color="white"
+  //                               //   onPress={() => console.log('Clicked')}
+  //                               onPress={() => this.props.navigation.goBack()}
+  //                               />
+  //                           </View>   
+  //        </ImageBackground>
+           
+  //   </View>
+  // )
                           }
 }
 
   const buttonstyles = StyleSheet.create({
     button: { 
         width: '30%', 
-        height: 40,
-        bottom: 5,
-        left: 230,
-        // top: 270,
+        // height: 40,
+        // bottom: 5,
+        // left: 230,
+        top: "10%",
         borderWidth: 1, 
         backgroundColor:"#DAAC3F", 
         position: "absolute"
@@ -236,6 +299,15 @@ export default class Membership extends Component{
       backgroundColor:"#DAAC3F", 
       position: "absolute"
   },
+  paybutton: {
+    // width: "77%",
+    // height: "7%",
+    top: "30%",
+    left: "30%",
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
+    justifyContent: "center",
+  },
 })
 
 const styles = StyleSheet.create({
@@ -254,16 +326,27 @@ const styles = StyleSheet.create({
       width: "98%",
       height: "85%",
       left: "2%",
-      top: "5%",
+      top: "8%",
       backgroundColor: '#CDCABF',
       borderWidth: 2,
       borderColor: '#000000',
       borderRadius: 10,
   },
+  email: {
+    top: "10%",
+    color: "black",
+   
+    fontSize: 15,
+    lineHeight: 44,
+    // fontWeight: "bold",
+    textAlign: "left",
+
+    // left: "2%",
+  },
   paybutton: {
     // width: "77%",
     // height: "7%",
-    top: "110%",
+    top: "30%",
     left: "30%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
@@ -277,7 +360,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    top: 40,
+    top: "10%",
   },
   
   

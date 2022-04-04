@@ -58,15 +58,15 @@ export default function Registration({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground
         source={require("../images/pumpfivebackground.jpeg")}
         style={styles.image}
       >
         <SafeAreaView style={styles.container}>
-          <KeyboardAvoidingView
+          {/* <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : null}
-          >
+          > */}
             <View style={styles.inner}>
               <View style={buttonstyles.backbutton}>
                 <Button
@@ -80,11 +80,11 @@ export default function Registration({ navigation }) {
               <Text style={styles.text2}>Fuel Delivery Service</Text>
 
               {/* <Text style={styles.signup}>Sign Up</Text> */}
-              <ScrollView
+              {/* <ScrollView
               // bounces={false}
               // ref={ref => {this.scrollView = ref}}
               // onContentSizeChange={() => scrollToEnd({animated: true})}
-              >
+              > */}
                 {/* This Controls enterEmail text box */}
                 <Text style={styles.email}>Email: *</Text>
                 <TextInput
@@ -175,12 +175,12 @@ export default function Registration({ navigation }) {
 
           <Text>Sign up</Text>
         </TouchableHighlight> */}
-              </ScrollView>
+              {/* </ScrollView> */}
             </View>
-          </KeyboardAvoidingView>
+          {/* </KeyboardAvoidingView> */}
         </SafeAreaView>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
