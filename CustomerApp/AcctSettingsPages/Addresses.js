@@ -104,6 +104,7 @@ export default class Addresses extends Component {
                 onPress={() => this.props.navigation.goBack()}
               />
             </View>
+            
             {this.state.addresses.map((res, i) => {
               count += 1;
 

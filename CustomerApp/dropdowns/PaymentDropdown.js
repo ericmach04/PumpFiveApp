@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 // import {Dropdown } from 'react-native-material-dropdown';
 
 import firebase from 'firebase';
@@ -16,9 +16,14 @@ export default class PaymentDropdown extends Component{
   constructor(props) {
     super(props);
     this.docs = firebase.firestore().collection("Credit_Cards");
+    this.userdocs = firebase.firestore().collection("Users");
     this.state = {
-      cards: [],
+      // cards: [],
+      cards:{
+        
+      },
       isLoading: true,
+      key:'',
       text: "Other",
       data:[],
       keyvals: {
@@ -38,10 +43,12 @@ export default class PaymentDropdown extends Component{
 //  }
   componentDidMount() {
         this.unsubscribe = this.docs.onSnapshot(this.getCardData);
+        this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
   }
 
   componentWillUnmount() {
     this.unsubscribe();
+    this.unsubscribe2();
   }
 
   inputValueUpdate = (val, prop) => {
@@ -50,8 +57,74 @@ export default class PaymentDropdown extends Component{
     this.setState(state);
   }
 
+  checkCards() {
+    if(this.state.cards[this.state.text].cvv != this.state.keyvals[this.state.text].cvv)
+    {
+      Alert.alert(
+        'Sorry, the fields for this card do not match',
+        'Please try again',
+        [
+          {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
+        ],
+        { 
+          cancelable: true 
+        }
+      );
+    }
+    else{
+      // Alert.alert(
+      //   'Fields match',
+      //   'LFG',
+      //   [
+      //     {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
+      //   ],
+      //   { 
+      //     cancelable: true 
+      //   }
+      // );
+      this.updatePaidYes()
+    }
+  }
+
+  updatePaidYes() {
+    // this.setState({
+    //   isLoading: true,
+    // });
+    const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
+    
+    updateDBRef.update("paid", "yes")
+    // .then((docRef) => {
+    //   this.setState({
+    //     email: '',
+    //     password: '',
+    //     isLoading: false,
+    //   });
+    //   // this.props.navigation.navigate('Login');
+    // })
+    .catch((error) => {
+      console.error("Error: ", error);
+      this.setState({
+        isLoading: false,
+      });
+    });
+  }
+
+  getUserKey = (querySnapshot) => {
+    querySnapshot.forEach((res) => {
+      const { createdAt, cvv, email, expiry, number, type } = res.data();
+      if (email == auth.currentUser?.email) {
+        const state = this.state;
+        state.key = res.id;
+        this.setState(state);
+      }
+    }
+
+    )
+    console.log("Epic key: ", this.state.key)
+  }
+
   getCardData = (querySnapshot) => {
-    const cards = [];
+    const cards = {};
     const data = [];
     var keyvals = {
       "Other": {
@@ -69,17 +142,21 @@ export default class PaymentDropdown extends Component{
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
       if (email == auth.currentUser?.email) {
-        cards.push({
-          cvv,
-          expiry,
-          number,
-          type,
-        });
+        // cards.push({
+        //   cvv,
+        //   expiry,
+        //   number,
+        //   type,
+        // });
         var cardarr = number.split(' ')
         var lastfour = cardarr[3]
         var string = type + " ending in " + lastfour
         console.log("String", string)
         data[0].push(string)
+
+        const state = this.state;
+        state.key = res.id;
+        this.setState(state);
 
         keyvals[string] = {
           // name:'placeholder',
@@ -88,6 +165,10 @@ export default class PaymentDropdown extends Component{
           expiry: expiry,
           // cvv: '000'
           // cvv: cvv
+        }
+
+        cards[string] = {
+          cvv: cvv
         }
 
       }
@@ -100,8 +181,10 @@ export default class PaymentDropdown extends Component{
       keyvals,
       isLoading: false,
     });
+    console.log("Cards: ", this.state.cards)
     console.log("epic before werid Data: ", this.state.data)
     console.log("KeyVals(state)", this.state.keyvals)
+    console.log("uid: ", this.state.key)
 
     // data[0].push("Other")
 
@@ -123,7 +206,7 @@ export default class PaymentDropdown extends Component{
     else{
       var data = this.state.data;
       var keys = this.state.keyvals
-      var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];2
+      var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     
     console.log("Keys in render: ", keys)
     console.log("Text: ", this.state.text)
@@ -173,7 +256,7 @@ export default class PaymentDropdown extends Component{
                         placeholder='Enter Card Type (Visa, Mastercard, etc)'
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].type}
-                        // onChangeText={(val) => this.inputValueUpdate(val, 'model')}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'type')}
                 />
                 </View>
 
@@ -184,7 +267,7 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter Card Number (****-****-****-****)'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].number}
-                        // onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'number')}
                 />
                 </View>
 
@@ -195,7 +278,7 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter Expiration Date (MM/YY)'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].expiry}
-                        // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'expiry')}
                 />
                 </View>
                 <Text style={styles.email}>CVC: *</Text>
@@ -205,13 +288,14 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter CVC'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].cvv}
-                        // onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'cvv')}
+                        keyboardType="numeric"
                 />
                 <View style={styles.paybutton}>
                               <Button
                               title="Confirm Payment"
                               color="white"
-                              // onPress={() => this.handleButtonOnePress()}
+                              onPress={() => this.checkCards()}
                             /> 
                           
                             
