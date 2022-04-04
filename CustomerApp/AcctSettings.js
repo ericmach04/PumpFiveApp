@@ -83,12 +83,14 @@ export default class AcctSettings extends Component {
                 console.log(res.email);
 
                 return (
+                  //Logout Button
                   <View>
                     <View
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-around",
                         left: 5,
+                        //borderRadius: 10,
                       }}
                     >
                       <Text style={styles.boxfontshead}>
@@ -113,6 +115,7 @@ export default class AcctSettings extends Component {
                 );
               })}
 
+              {/* Addresses Styling */}
               <View
                 style={{
                   flexDirection: "row",
@@ -136,6 +139,7 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
+              {/* Membership Styling */}
               <View
                 style={{
                   flexDirection: "row",
@@ -159,6 +163,7 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
+              {/* Car Information Styling */}
               <View
                 style={{
                   flexDirection: "row",
@@ -182,6 +187,7 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
+              {/* Payment Styling */}
               <View
                 style={{
                   flexDirection: "row",
@@ -205,6 +211,7 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
+              {/* Order History Styling */}
               <View
                 style={{
                   flexDirection: "row",
@@ -230,6 +237,7 @@ export default class AcctSettings extends Component {
                 </View>
               </View>
 
+              {/* Notifications Styling */}
               <View
                 style={{
                   flexDirection: "row",

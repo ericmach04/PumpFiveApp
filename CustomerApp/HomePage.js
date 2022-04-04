@@ -1,10 +1,20 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
-import React, { Component, useCallback } from 'react'
+import {
+  ImageBackground,
+  Image,
+  StyleSheet,
+  Button,
+  Text,
+  View,
+  Linking,
+} from "react-native";
+import React, { Component, useCallback } from "react";
 import firebase from "firebase";
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
-const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
+const map = {
+  uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp",
+};
 
 const OpenURLButton = ({ url, children }) => {
   const handlePress = useCallback(async () => {
@@ -47,12 +57,12 @@ export default class HomePage extends Component {
       const { regular, premium, diesel } = res.data();
       // console.log("Email1: ", email)
       // console.log("Email2: ", auth.currentUser?.email)
-        prices.push({
-          key: res.id,
-          regular,
-          premium,
-          diesel,
-        });
+      prices.push({
+        key: res.id,
+        regular,
+        premium,
+        diesel,
+      });
     });
     // console.log(cars);
     this.setState({
@@ -60,36 +70,48 @@ export default class HomePage extends Component {
       isLoading: false,
     });
   };
-  render(){
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
-      <Image
-        style={styles.Logo}
-        source={require('../images/pumpfivelogo.png')}
-      />
-      <View style={styles.rect1}/>
-        {
-            this.state.prices.map((res, i) => {
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../images/pumpfivebackground.jpeg")}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <Image
+            style={styles.Logo}
+            source={require("../images/pumpfivelogo.png")}
+          />
+          <View style={styles.rect1} />
+          {this.state.prices.map((res, i) => {
             return (
-                <View style={styles.rect2}>
-                    <Text style={styles.gastext2}>Current Regular Price: {res.regular}</Text>
-                    <Text style={styles.gastext2}>Current Premium Price: {res.premium}</Text>
-                    <Text style={styles.gastext2}>Current Diesel Price: {res.diesel}</Text>
-                </View>
+              <View style={styles.rect2}>
+                <Text style={styles.gastext2}>
+                  Current Regular Price: {res.regular}
+                </Text>
+                <Text style={styles.gastext2}>
+                  Current Premium Price: {res.premium}
+                </Text>
+                <Text style={styles.gastext2}>
+                  Current Diesel Price: {res.diesel}
+                </Text>
+              </View>
             );
-            })
-        }
+          })}
 
-      <View style={styles.button1}>
-      <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
+          <View style={styles.button1}>
+            <OpenURLButton color="white" url={supportedURL}>
+              Terms and Conditions
+            </OpenURLButton>
+          </View>
+          <View style={styles.button2}>
+            <OpenURLButton color="white" url={supportedURL2}>
+              Contact Us
+            </OpenURLButton>
+          </View>
+        </ImageBackground>
       </View>
-      <View style={styles.button2}>
-      <OpenURLButton color="white" url={supportedURL2}>Contact Us</OpenURLButton>
-      </View>
-      </ImageBackground>
-    </View>
-  )
+    );
   }
 }
 
@@ -99,7 +121,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   Logo: {
     position: "absolute",
@@ -110,71 +132,78 @@ const styles = StyleSheet.create({
     top: "8%",
   },
   rect1: {
-    position: 'absolute',
+    position: "absolute",
     width: "90%",
     height: "30%",
     left: "5%",
     right: "5%",
     top: "35%",
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 3,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
   rect2: {
-    position: 'absolute',
+    position: "absolute",
     width: "90%",
     height: "15%",
     left: "5%",
     right: "5%",
     top: "68%",
-    backgroundColor: '#CDCABF',
+    backgroundColor: "#CDCABF",
     borderWidth: 3,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderRadius: 10,
   },
+
+  //paddingLeft positioned text L/R within shape
   button1: {
-    position: 'absolute',
-    width: "50%",
+    position: "absolute",
+    width: "30%",
     height: "5%",
     left: "5%",
     top: "89%",
-    backgroundColor: '#B96835',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: "#B96835",
+    flexDirection: "row",
+    justifyContent: "space-between",
     borderRadius: 20,
-    textAlign: "center",
+    //textAlign: "center",
+    padding: 8,
+    paddingLeft: "10%",
   },
   button2: {
-    position: 'absolute',
-    width: "28%",
+    position: "absolute",
+    width: "30%",
     height: "5%",
     right: "5%",
     top: "89%",
-    backgroundColor: '#B96835',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: "#B96835",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 8,
+    paddingLeft: "25%",
     borderRadius: 20,
   },
   text1: {
-    position: 'absolute',
-    fontWeight: '500',
+    position: "absolute",
+    fontWeight: "500",
     fontSize: 18,
     lineHeight: 21,
     top: 555,
-    alignSelf: 'center',
-  },text2: {
-    position: 'absolute',
+    alignSelf: "center",
+  },
+  text2: {
+    position: "absolute",
     fontSize: 18,
     lineHeight: 21,
     top: 585,
     left: 105,
-  },text3: {
-    position: 'absolute',
+  },
+  text3: {
+    position: "absolute",
     fontSize: 18,
     lineHeight: 21,
     top: 620,
     left: 105,
   },
-})
-
+});

@@ -135,7 +135,7 @@ export default function Registration({ navigation }) {
                   borderRadius="10"
                 />
 
-                <Text style={styles.email}>Phone Number: *</Text>
+                <Text style={styles.fcknphonenumber}>Phone Number: *</Text>
                 <TextInput
                   style={styles.input}
                   value={phone}
@@ -143,6 +143,7 @@ export default function Registration({ navigation }) {
                   placeholder="***-***-****"
                   keyboardType="default"
                   top="2%"
+                  borderRadius="10"
 
                   //top = "10%"
                 />
@@ -262,6 +263,24 @@ const styles = StyleSheet.create({
     marginTop: 5,
     left: "0%",
   },
+
+  // Phone Number Header Text
+  fcknphonenumber: {
+    top: "6%",
+    color: "white",
+
+    fontSize: 20,
+    lineHeight: 44,
+    fontWeight: "bold",
+    textAlign: "left",
+
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    left: "0%",
+  },
+
   signup: {
     top: 30,
     color: "white",
@@ -349,6 +368,7 @@ const styles = StyleSheet.create({
     // right: 10,
     backgroundColor: "#DAAC3F",
     left: 5,
+    borderRadius: 10,
   },
 });
 
