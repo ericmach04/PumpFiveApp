@@ -103,9 +103,9 @@ export default class AcctSettings extends Component {
                       </View>
                     </View>
                     <Text style={styles.boxfontsbody}>{res.email}</Text>
-                    <Text style={styles.boxfontsbody}>
+                    {/* <Text style={styles.boxfontsbody}>
                       Member Number: {res.key}
-                    </Text>
+                    </Text> */}
                     <Text style={styles.boxfontsbody}>
                       User Phone Number: {res.phone}
                     </Text>
