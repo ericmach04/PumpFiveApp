@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import { React, Component } from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import firebase from 'firebase';
+import { auth } from '../firebase';
 
 
 
@@ -23,9 +25,16 @@ export default class BookAppointment extends Component {
     };
 
     //Const variables 
-    const GAS =  this.props.navigation.getParam('GAS', 'nothing sent')
-
+    const GAS = 1;
+    const TIRE = 2;
+    const DETAIL = 3; 
+    
     //class variables 
+    const user = auth.currentUser;
+    const uid = user.uid;
+    const db = firebase.firestore().collection('Orders').;
+    const service =  this.props.navigation.getParam('service')
+
     let currentDate
     let dateTimeString
     var day
@@ -33,6 +42,7 @@ export default class BookAppointment extends Component {
     var year
     var hours
     var minutes
+
 
   }
 
@@ -59,21 +69,41 @@ export default class BookAppointment extends Component {
 
   };
 
+  //set correct service to update
+  setService = (type,deliverytime) =>{
+    switch(type){
+      case this.GAS:
+
+
+        break;
+
+      case this.TIRE:
+        break;
+
+      case this.DETAIL:
+        break;
+
+      default:
+        console.log("No service selected")
+  }
+
 
   handleDatePicked = date => {
     this.setState({ deliverytime: this.FormatDate(date) })
+
     this.hideDateTimePicker()
 
     console.log("A date has been picked: ", this.deliverytime)
 
-    switch(service){
-      case GAS:
-        
+    
+
+
     }
     
   };
 
   //firebase functions
+  
   
 
   //rendering view 
