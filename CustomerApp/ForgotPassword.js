@@ -55,7 +55,7 @@ rest() {
     if(this.state.status == false){
         Alert.alert(
           'Error',
-          'Email not recognized. Please try another email',
+          'Invalid email or no this email is not registered with our database. Please try another email',
           [
             {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
           ],
@@ -63,6 +63,10 @@ rest() {
             cancelable: true 
           }
         );
+    }
+    else{
+      this.updatePassword()
+      console.log("Enterpressed: ", this.state.enterpressed)
     }
     
     
@@ -90,23 +94,23 @@ rest() {
     this.setState({
       isLoading: true,
     });
-    const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
+    // const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
     
-    updateDBRef.update("password", this.state.password)
-    .then((docRef) => {
-      this.setState({
-        email: '',
-        password: '',
-        isLoading: false,
-      });
-      // this.props.navigation.navigate('Login');
-    })
-    .catch((error) => {
-      console.error("Error: ", error);
-      this.setState({
-        isLoading: false,
-      });
-    });
+    // updateDBRef.update("password", this.state.password)
+    // .then((docRef) => {
+    //   this.setState({
+    //     email: '',
+    //     password: '',
+    //     isLoading: false,
+    //   });
+    //   // this.props.navigation.navigate('Login');
+    // })
+    // .catch((error) => {
+    //   console.error("Error: ", error);
+    //   this.setState({
+    //     isLoading: false,
+    //   });
+    // });
     
     auth.sendPasswordResetEmail(this.state.email)
     .then(()  => {
@@ -115,6 +119,10 @@ rest() {
     .catch(error => {
       console.error(error);
     })
+
+    this.setState({
+      isLoading: false,
+    });
 
     
     // user.updatePassword(this.state.password)
@@ -181,57 +189,8 @@ rest() {
         </View>
       )
     }
+    console.log("THis.enterpressed right before render: ", this.state.enterpressed)
     if (this.state.enterpressed){
-      return (
-      
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <ImageBackground
-          source={require("../images/pumpfivebackground.jpeg")}
-          style={styles.image}
-        >
-          <SafeAreaView>
-          <View style={styles.inputContainer}>
-          <Text style={styles.text1}>Forgot Password</Text>
-          <Text style={styles.text2}>Please enter and re-enter your new password for {this.state.email}</Text>
-    
-            <Text style={styles.email}>Password:</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={'Enter New Password'}
-              value={this.state.password}
-              onChangeText={(val) => this.inputValueUpdate(val, 'password')}
-              secureTextEntry
-            ></TextInput>
-
-            <Text style={styles.email}>Re-enter Password:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Re-Enter New Password'}
-                    value={this.state.newpassword}
-                    onChangeText={(val) => this.inputValueUpdate(val, 'newpassword')}
-                    secureTextEntry
-              ></TextInput>
-          </View>
-    
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              // onPress={() => { }}
-              onPress={() => this.handleReset()}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Reset Password</Text>
-            </TouchableOpacity>
-    
-        </View>
-        </SafeAreaView>
-        </ImageBackground>
-      </KeyboardAvoidingView> 
-      </TouchableWithoutFeedback>
-        )
-      
-    }
-    else if (this.state.resetpressed){
       return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -259,8 +218,84 @@ rest() {
         </ImageBackground>
       </KeyboardAvoidingView> 
       </TouchableWithoutFeedback>
-      )
+      
+      //   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      //   <KeyboardAvoidingView style={styles.container} behavior="padding">
+      //   <ImageBackground
+      //     source={require("../images/pumpfivebackground.jpeg")}
+      //     style={styles.image}
+      //   >
+      //     <SafeAreaView>
+      //     <View style={styles.inputContainer}>
+      //     <Text style={styles.text1}>Forgot Password</Text>
+      //     <Text style={styles.text2}>Please enter and re-enter your new password for {this.state.email}</Text>
+    
+      //       <Text style={styles.email}>Password:</Text>
+      //       <TextInput
+      //         style={styles.input}
+      //         placeholder={'Enter New Password'}
+      //         value={this.state.password}
+      //         onChangeText={(val) => this.inputValueUpdate(val, 'password')}
+      //         secureTextEntry
+      //       ></TextInput>
+
+      //       <Text style={styles.email}>Re-enter Password:</Text>
+      //           <TextInput
+      //               style={styles.input}
+      //               placeholder={'Re-Enter New Password'}
+      //               value={this.state.newpassword}
+      //               onChangeText={(val) => this.inputValueUpdate(val, 'newpassword')}
+      //               secureTextEntry
+      //         ></TextInput>
+      //     </View>
+    
+      //     <View style={styles.buttonContainer}>
+      //       <TouchableOpacity
+      //         // onPress={() => { }}
+      //         onPress={() => this.handleReset()}
+      //         style={styles.button}
+      //       >
+      //         <Text style={styles.buttonText}>Reset Password</Text>
+      //       </TouchableOpacity>
+    
+      //   </View>
+      //   </SafeAreaView>
+      //   </ImageBackground>
+      // </KeyboardAvoidingView> 
+      // </TouchableWithoutFeedback>
+        )
+      
     }
+    // else if (this.state.resetpressed){
+    //   return (
+    //     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    //     <KeyboardAvoidingView style={styles.container} behavior="padding">
+    //     <ImageBackground
+    //       source={require("../images/pumpfivebackground.jpeg")}
+    //       style={styles.image}
+    //     >
+    //       <SafeAreaView>
+    //       <View style={styles.inputContainer}>
+    //       <Text style={styles.text1}>An email has been sent to {this.state.email}!</Text>
+    //       <Text style={styles.text2}>Please re enter your new password using the link sent in the email</Text>
+    //       </View>
+    
+    //       <View style={styles.buttonContainer}>
+    //         <TouchableOpacity
+    //           // onPress={() => { }}
+    //           onPress={() => this.props.navigation.navigate("Login")}
+    //           style={styles.button}
+    //         >
+    //           <Text style={styles.buttonText}>Return to Login</Text>
+    //         </TouchableOpacity>
+    
+    //     </View>
+    //     </SafeAreaView>
+    //     </ImageBackground>
+    //   </KeyboardAvoidingView> 
+    //   </TouchableWithoutFeedback>
+    //   )
+    // }
     else{
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
