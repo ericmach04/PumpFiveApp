@@ -22,8 +22,8 @@ export default class PlaceOrder extends Component{
     };
     // this.deleteUser = this.deleteUser.bind(this);
 
-    //Final Variables
-    const GAS = 1;
+   
+    
 
   }
 
@@ -99,7 +99,7 @@ export default class PlaceOrder extends Component{
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => this.props.navigation.navigate('BookAppointment', {GAS})}
+                            onPress={() => this.props.navigation.navigate('BookAppointment', {service: 1})}
                           />
                             
                         </View>
@@ -125,7 +125,7 @@ export default class PlaceOrder extends Component{
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => this.props.navigation.navigate('BookAppointment')}
+                              onPress={() => this.props.navigation.navigate('BookAppointment', )}
                             />
                             </View>
                         </View>
