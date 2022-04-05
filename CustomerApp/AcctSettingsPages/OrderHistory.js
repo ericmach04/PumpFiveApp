@@ -12,7 +12,7 @@ export default function OrderHistory({ navigation }) {
             <View>
                 <Text style={styles.h1}>Order History</Text>
             </View>
-            <View style={styles.section1}>
+            {/* <View style={styles.section1}>
                 <Text style={styles.texth1}>Fuel Delivery Service</Text>
                 <View style= {styles.textp}>
                 <Text>2021-06-17</Text>
@@ -32,7 +32,7 @@ export default function OrderHistory({ navigation }) {
                     <Button title="View Receipt"/>
                 </View>
 
-            </View>
+            </View> */}
           </View>
         </ImageBackground>
       </View>

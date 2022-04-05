@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { auth } from "../../firebase";
 import {useState} from "react";
 import PaymentDropdown from '../dropdowns/PaymentDropdown';
+import DropdownMenu from 'react-native-dropdown-menu';
 // import DropDownPicker from 'react-native-dropdown-picker';
 // import TimeDropdown from "../dropdowns/TimeDropdown";
 // import DayDropdown from "../dropdowns/DayDropdown";
@@ -165,6 +166,7 @@ export default class Membership extends Component{
   };
 
   render (){
+    var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     if(this.state.isLoading){
       return(
         <View style={styles.preloader}>
@@ -186,8 +188,9 @@ export default class Membership extends Component{
         //   <PaymentDropdown/>
         // </View>
         return (
-          
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
+            
               <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
                           <View 
                           style={styles.Memberships}
@@ -206,14 +209,29 @@ export default class Membership extends Component{
                                       />
                                   </View>
                               </View>
-                                <Text style={{top:"10%", left: "25%"}}>Please Select Payment Method</Text>
+                                <Text style={{top:"5%", left: "25%"}}>Please Select Payment Method</Text>
                                 <PaymentDropdown/>
+                                {/* <View style={{top: "50%"}}>
+                                <DropdownMenu
+                                  // style={{top: "10%"}}
+                                  // useNativeDriver={true}
+                                  label={"Select Payment Method"}
+                                  bgColor={'white'}
+                                  tintColor={'#000000'}
+                                  activityTintColor={'red'}
+                                  handler={(selection,row) => this.setState({text: data2[selection][row]})}
+                                  data={data2}
+                                >
+                                </DropdownMenu>
+                                </View> */}
                                 
                               
                           </View> 
                           
-              </ImageBackground>   
+              </ImageBackground> 
+              
           </View>
+          </TouchableWithoutFeedback>  
         )
       }
       else{
@@ -227,9 +245,7 @@ export default class Membership extends Component{
                         style={{flexDirection:'row', justifyContent: 'space-around',}}
                         >
                             <Text style={styles.text}>Membership</Text>
-                            {/* {
-
-                            } */}
+                            
                             <View style={buttonstyles.backbutton}>
                                 <Button
                                 title="Back"

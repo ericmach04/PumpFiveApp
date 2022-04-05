@@ -18,6 +18,7 @@ import firebase from "firebase";
 import { useState } from "react";
 import { getCards } from "../../firebasefunctions";
 import { auth } from "../../firebase";
+import DropdownMenu from 'react-native-dropdown-menu';
 
 export default class Addresses extends Component {
   constructor() {
@@ -80,6 +81,7 @@ export default class Addresses extends Component {
   };
 
   render() {
+    var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     if (this.state.isLoading) {
       return (
         <View style={styles.loader}>
@@ -104,6 +106,19 @@ export default class Addresses extends Component {
                 onPress={() => this.props.navigation.goBack()}
               />
             </View>
+            {/* <View style={{top: "50%"}}>
+            <DropdownMenu
+                                  // style={{top: "50%"}}
+                                  // useNativeDriver={true}
+                                  label={"Select Payment Method"}
+                                  bgColor={'white'}
+                                  tintColor={'#000000'}
+                                  activityTintColor={'red'}
+                                  handler={(selection,row) => this.setState({text: data2[selection][row]})}
+                                  data={data2}
+                                >
+                                </DropdownMenu>
+                                </View> */}
             
             {this.state.addresses.map((res, i) => {
               count += 1;

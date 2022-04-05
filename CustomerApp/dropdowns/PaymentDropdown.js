@@ -214,9 +214,9 @@ export default class PaymentDropdown extends Component{
     console.log("Text Object: ", this.state.keyvals)
     console.log("New Data: ", data)
       return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
-          <View>
+        <View style={{top: "7%"}}> 
           <DropdownMenu
             // style={{top: "20%"}}
             // useNativeDriver={true}
@@ -229,15 +229,7 @@ export default class PaymentDropdown extends Component{
           >
           </DropdownMenu>
 
-          {/* <DropdownMenu
-            style={{flex: 0.5}}
-            bgColor={'grey'}
-            tintColor={'#000000'}
-            activityTintColor={'red'}
-            handler={(selection, row) => this.setState({text: data2[selection][row]})}
-            data={data2}
-          ></DropdownMenu> */}
-          <View>
+          
           <Text style={styles.email}>Name on Card: *</Text>
           <View style={styles.input}>
                 <TextInput
@@ -302,9 +294,10 @@ export default class PaymentDropdown extends Component{
                         </View>  
                 </View>
                 </View>
-                </View>
                 
-        </TouchableWithoutFeedback>
+                
+                
+        // </TouchableWithoutFeedback>
       );
         }
       
@@ -340,7 +333,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "30%",
+      top: "9%",
       color: "black",
      
       fontSize: 15,
@@ -357,7 +350,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "30%",
+      top: "9%",
       // left: "2%",
     },
     inputGroup: {
