@@ -137,15 +137,15 @@ import {
             source={require("../images/pumpfivebackground.jpeg")}
             style={styles.image}
           >
-            <SafeAreaView style={styles.container}>
+            {/* <SafeAreaView style={styles.container}> */}
               <View style={styles.Memberships}>
-                <View
+                {/* <View
                   style={{
                     flex: 1,
                     flexDirection: "row",
                     justifyContent: "space-around",
                   }}
-                >
+                > */}
                   <Text style={styles.text}>Welcome, Talethea!</Text>
                   {/* <View style={buttonstyles.backbutton}>
                     <Button
@@ -164,6 +164,7 @@ import {
                             value={this.state.regular}
                             onChangeText={(val) => this.inputValueUpdate(val, 'regular')}
                             keyboardType="numeric"
+                            borderRadius="10"
                 />
 
                 <Text style={styles.gastext}>Enter Today's Premium Gas Price: *</Text>
@@ -173,6 +174,7 @@ import {
                             value={this.state.premium}
                             onChangeText={(val) => this.inputValueUpdate(val, 'premium')}
                             keyboardType="numeric"
+                            borderRadius="10"
                 />
 
                 <Text style={styles.gastext}>Enter Today's Diesel Gas Price: *</Text>
@@ -182,6 +184,7 @@ import {
                             value={this.state.diesel}
                             onChangeText={(val) => this.inputValueUpdate(val, 'diesel')}
                             keyboardType="numeric"
+                            borderRadius="10"
                 />
                 
   
@@ -210,8 +213,8 @@ import {
                                     onPress={this.handleSignOut}
                                   />
                                 </View>
-              </View>
-            </SafeAreaView>
+              {/* </View> */}
+            {/* </SafeAreaView> */}
           </ImageBackground>
         </View>
         </TouchableWithoutFeedback>
@@ -241,8 +244,8 @@ import {
     },
     paybutton: {
       width: "77%",
-      height: "7%",
-      top: "62%",
+      height: "5%",
+      top: "59%",
       right: "10%",
       backgroundColor: "#DAAC3F",
       position: "absolute",
@@ -276,7 +279,7 @@ import {
     Memberships: {
       position: "absolute",
       width: 350,
-      height: 620,
+      height: "80%",
       left: 21,
       top: 90,
       backgroundColor: "#CDCABF",
@@ -285,7 +288,7 @@ import {
       borderRadius: 10,
     },
     gastext: {
-        top: "-40%",
+        top: "1%",
         color: "black",
        
         fontSize: 20,
@@ -293,7 +296,7 @@ import {
         fontWeight: "bold",
         textAlign: "left",
     
-        left: "1%",
+        left: "7%",
       },
       gastext2: {
         // bottom: "90%",
@@ -303,8 +306,8 @@ import {
         lineHeight: 44,
         fontWeight: "bold",
         textAlign: "left",
-    
-        left: "1%",
+        top: "70%",
+        left: "8%",
       },
       input: {
         height: "4.5%",
@@ -313,8 +316,8 @@ import {
         width: "40%",
         padding: "1%",
         backgroundColor: "white",
-        top: "-40%",
-        left: "1%",
+        top: "1%",
+        left: "7%",
       },
   
     //Car Information Bold Header
@@ -325,7 +328,7 @@ import {
       fontWeight: "bold",
       textAlign: "center",
       flex: 1,
-      top: "12%",
+      top: "2%",
     },
   
     //Bounding Box
@@ -487,9 +490,9 @@ import {
       borderWidth: 1,
       width: 100,
       height: 40,
-      top: 5,
-      right: 10,
-      left: 5,
+      top: "12%",
+      // right: 10,
+      left: "8%",
       backgroundColor: "#DAAC3F",
     },
     loader: {

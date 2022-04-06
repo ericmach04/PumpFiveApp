@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../firebase";
 // import { addUser, getUsers } from '../firebase'
 import { addUser } from "../firebasefunctions";
+import firebase from "firebase"
 
 // var data = require('./localdb/localdb.json')
 
@@ -37,6 +38,7 @@ export default function Login({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log("user id: ", user.uid)
       if (user) {
         // console.log("user: ", user.email)
         if (
@@ -44,8 +46,19 @@ export default function Login({ navigation }) {
           user.email == "talethea@gmail.com"
         ) {
           navigation.replace("Admin");
-        } else {
-          navigation.replace("Tabs");
+        } 
+        
+        else {
+          console.log("Should be no: ", firebase.firestore().collection('Users').doc(user.uid).driver)
+          if(firebase.firestore().collection('Users').doc(user.id).driver == "no")
+          {
+            navigation.replace("DriverTabs");
+            
+          }
+          else{
+            navigation.replace("Tabs");
+          }
+          
         }
       }
     });

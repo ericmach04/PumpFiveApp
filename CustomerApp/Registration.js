@@ -14,6 +14,7 @@ import React, { Component, useEffect, useState } from "react";
 import firebase from 'firebase';
 import { auth } from "../firebase";
 import { addUser } from "../firebasefunctions";
+import DropdownMenu from 'react-native-dropdown-menu';
 
 import PhoneInput from "react-native-phone-input";
 
@@ -36,6 +37,8 @@ export default class Registration extends Component {
       fname: '',
       lname: '',
       phone: '',
+      driver: '',
+      paid: 'no',
       isLoading: false
     };
   }
@@ -47,8 +50,17 @@ export default class Registration extends Component {
 
   useEffect(){
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log("driver?: ", this.state.driver)
       if (user) {
-        this.props.navigation.replace("Tabs");
+        if(this.state.driver == "no")
+        {
+          this.props.navigation.replace("Tabs");
+        }
+        else
+        {
+          this.props.navigation.replace("DriverTabs");
+        }
+        
       }
     });
 
@@ -56,8 +68,15 @@ export default class Registration extends Component {
   }
 
   handleSignUp(){
+    console.log("Registered with: ", this.state.email);
+              console.log("pass ", this.state.password);
+              console.log("fname: ", this.state.fname);
+              console.log("lname: ", this.state.lname);
+              console.log("phone: ", this.state.phone);
+              console.log("driver: ", this.state.driver)
+              console.log("paid: ", this.state.paid)
     if(this.state.email === '' || this.state.password === '' || this.state.reenterpassword === '' 
-    || this.state.fname === '' || this.state.lname === '' || this.state.phone === ''){
+    || this.state.fname === '' || this.state.lname === '' || this.state.phone === '' || this.state.driver === ''){
       alert('Please fill out all fields')
      } else {
        this.setState({
@@ -69,6 +88,8 @@ export default class Registration extends Component {
          fname: this.state.fname,
          lname: this.state.lname,
          phone: this.state.phone,
+         driver: this.state.driver,
+         paid: 'no'
        })
       //  .then((res) => {
       //    this.setState({
@@ -89,6 +110,8 @@ export default class Registration extends Component {
               console.log("fname: ", fname);
               console.log("lname: ", lname);
               console.log("phone: ", phone);
+              console.log("driver: ", driver)
+              console.log("paid: ", paid)
             })
         //  this.props.navigation.navigate('Addresses')
         .catch((err) => {
@@ -108,6 +131,7 @@ export default class Registration extends Component {
         // }).catch((error) => alert(error.message));
   };
 render(){
+  var data = [["yes", "no"]];
   return (
     // <SafeAreaView >
     <ScrollView 
@@ -146,6 +170,7 @@ render(){
                   // onChangeText={(text) => setEmail(text)}
                   // placeholder="enter Email"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Enter Email'}
                   value={this.state.email}
                   onChangeText={(val) => this.inputValueUpdate(val, 'email')}
@@ -161,6 +186,7 @@ render(){
                   // keyboardType="default"
                   // borderRadius="10"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Enter Password'}
                   value={this.state.password}
                   onChangeText={(val) => this.inputValueUpdate(val, 'password')}
@@ -177,6 +203,7 @@ render(){
                   // onChangeText={(text) => setPassword(text)}
                   // placeholder="Retype Password"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Re-enter Password'}
                   value={this.state.reenterpassword}
                   onChangeText={(val) => this.inputValueUpdate(val, 'reenterpassword')}
@@ -193,6 +220,7 @@ render(){
                   // onChangeText={(text) => setFname(text)}
                   // placeholder="Enter First name"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Enter First Name'}
                   value={this.state.fname}
                   onChangeText={(val) => this.inputValueUpdate(val, 'fname')}
@@ -208,6 +236,7 @@ render(){
                   // onChangeText={(text) => setLname(text)}
                   // placeholder="enter Last name"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Enter Last Name'}
                   value={this.state.lname}
                   onChangeText={(val) => this.inputValueUpdate(val, 'lname')}
@@ -223,6 +252,7 @@ render(){
                   // onChangeText={(text) => setPhone(text)}
                   // placeholder="***-***-****"
                   style={styles.input}
+                  placeholderTextColor="#D3D3D3"
                   placeholder={'Enter Phone Number'}
                   value={this.state.phone}
                   onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
@@ -232,22 +262,24 @@ render(){
 
                   //top = "10%"
                 />
-                {/* <Text style={styles.email}>Are you registering as a driver: *</Text>
-                <TextInput
-                  // style={styles.input}
-                  // value={phone}
-                  // onChangeText={(text) => setPhone(text)}
-                  // placeholder="***-***-****"
-                  style={styles.input}
-                  placeholder={'Enter Phone Number'}
-                  value={this.state.phone}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
-                  keyboardType="default"
-                  top="4%"
-                  borderRadius="10"
-
-                  //top = "10%"
-                /> */}
+                <View 
+                style={{flexDirection:'row', justifyContent: 'space-around',}}
+              >
+                  <Text style={styles.email}>Are you registering as a driver?: *</Text>
+                  <View style={{left: "10%",top: "7%", width: "20%"}}> 
+                    <DropdownMenu
+                      // style={{top: "20%"}}
+                      // useNativeDriver={true}
+                      // label={"Select Payment Method"}
+                      bgColor={'white'}
+                      tintColor={'#000000'}
+                      activityTintColor={'red'}
+                      handler={(selection,row) => this.setState({driver: data[selection][row]})}
+                      data={data}
+                    >
+                    </DropdownMenu>
+                    </View>
+                  </View>
                 <View style={styles.loginview}>
                   <Button
                     title="Sign up"
@@ -256,24 +288,6 @@ render(){
                     // onPress={() => navigation.navigate('Tabs')}
                   ></Button>
                 </View>
-
-                {/* <Text> Please sign in to continue</Text>
-
-        <Text>Email:</Text>
-
-        <Text>Password:</Text>
-
-        <Button title='LOGIN' onPress={() => console.log("button works")}/>
-
-        <Text>New User?</Text> 
-        <TouchableHighlight onPress={() => console.log("Touchable works")}>
-
-          <Text>Sign up</Text>
-        </TouchableHighlight> */}
-              {/* </ScrollView> */}
-            {/* </View> */}
-          {/* </KeyboardAvoidingView> */}
-        {/* </SafeAreaView> */}
       
         </ImageBackground>
         </KeyboardAvoidingView>
@@ -446,7 +460,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '20%',
     height: '5%',
-    top: '6%',
+    top: '2%',
     // right: 10,
     backgroundColor: "#DAAC3F",
     // left: '5%',

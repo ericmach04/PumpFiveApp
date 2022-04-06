@@ -36,8 +36,8 @@ rest() {
       // console.log("Current State: ", this.state)
       // console.log("Email1: ", this.state.email)
       // console.log("Email2: ", this.state.users[i])
-      // console.log(this.state.email == this.state.users[i])
-      if(this.state.email == this.state.users[i][1]){
+      console.log("Email lowercase: ",this.state.email.toLowerCase)
+      if(this.state.email.toLowerCase() == this.state.users[i][1]){
         console.log("Setting state")
         state["status"]=true
         state["enterpressed"] = true
@@ -112,7 +112,7 @@ rest() {
     //   });
     // });
     
-    auth.sendPasswordResetEmail(this.state.email)
+    auth.sendPasswordResetEmail(this.state.email.toLowerCase())
     .then(()  => {
       console.log("Password Reset Email Sent Successfully!")
     })
