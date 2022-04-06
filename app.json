@@ -18,7 +18,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.PumpFiveApp",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDK6BoT0qxjpzuNCzGkD_M3fZb-wBGZtf8"
+      }
+
     },
     "android": {
       "adaptiveIcon": {

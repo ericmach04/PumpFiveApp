@@ -1,6 +1,7 @@
 import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
 import React, { Component, useCallback } from 'react'
 import firebase from "firebase";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
@@ -68,7 +69,15 @@ export default class HomePage extends Component {
         style={styles.Logo}
         source={require('../images/pumpfivelogo.png')}
       />
-      <View style={styles.rect1}/>
+      <View style={styles.rect1}>
+        <MapView style={{height: '100%', width: '100%'}} provider={PROVIDER_GOOGLE} showsUserLocation={true}
+        initialRegion={{
+          latitude: 43.0385,
+          longitude: -87.9311,
+          longitudeDelta: 0.0421,
+          latitudeDelta: 0.0622,
+        }}/>
+      </View>
         {
             this.state.prices.map((res, i) => {
             return (
@@ -119,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
-    borderRadius: 10,
+    //borderRadius: 10,
   },
   rect2: {
     position: 'absolute',
@@ -181,7 +190,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     // lineHeight: 35,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "left",
+    paddingLeft: 5,
   },
   embeddedText: {
     color: "green",
