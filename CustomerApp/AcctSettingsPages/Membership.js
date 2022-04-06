@@ -297,8 +297,8 @@ export default class Membership extends Component{
                                       />
                                   </View>
                               </View>
-                              <Text style={styles.email}>Current Membership: Monthly</Text>
-                              <Text style={styles.email}>Member Number: {this.state.key}</Text>
+                              <Text style={styles.email}>Current Membership: <Text style={{fontWeight: "bold",}}>$19.99 Monthly</Text></Text>
+                              <Text style={styles.email}>Member Number: <Text style={{fontWeight: "bold",}}>{this.state.key}</Text></Text>
                               <View style={styles.paybutton}>
                                 
                                   <Button

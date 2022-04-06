@@ -32,8 +32,8 @@ export default class BookAppointment extends Component {
     //class variables 
     const user = auth.currentUser;
     const uid = user.uid;
-    const db = firebase.firestore().collection('Orders').;
-    const service =  this.props.navigation.getParam('service')
+    const db = firebase.firestore().collection('Orders');
+    // const service =  this.props.navigation.getParams('service')
 
     let currentDate
     let dateTimeString

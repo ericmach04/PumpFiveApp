@@ -52,6 +52,9 @@ export default class PlaceOrder extends Component{
       );
           
     }
+    else{
+      this.props.navigation.navigate('BookAppointment', {service: 1})
+    }
   }
   
   getUserData = (querySnapshot) => {
@@ -99,7 +102,7 @@ export default class PlaceOrder extends Component{
                           <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => this.props.navigation.navigate('BookAppointment', {service: 1})}
+                            onPress={() => this.handleGasBook()}
                           />
                             
                         </View>

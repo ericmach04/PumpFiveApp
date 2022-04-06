@@ -165,6 +165,7 @@ render(){
                   value={this.state.password}
                   onChangeText={(val) => this.inputValueUpdate(val, 'password')}
                   keyboardType="default"
+                  secureTextEntry
                   top="4%"
                   borderRadius="10"
                 />
@@ -180,6 +181,7 @@ render(){
                   value={this.state.reenterpassword}
                   onChangeText={(val) => this.inputValueUpdate(val, 'reenterpassword')}
                   keyboardType="default"
+                  secureTextEntry
                   top="4%"
                   borderRadius="10"
                 />
@@ -230,7 +232,7 @@ render(){
 
                   //top = "10%"
                 />
-                <Text style={styles.email}>Are you registering as a driver: *</Text>
+                {/* <Text style={styles.email}>Are you registering as a driver: *</Text>
                 <TextInput
                   // style={styles.input}
                   // value={phone}
@@ -245,7 +247,7 @@ render(){
                   borderRadius="10"
 
                   //top = "10%"
-                />
+                /> */}
                 <View style={styles.loginview}>
                   <Button
                     title="Sign up"
@@ -444,7 +446,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '20%',
     height: '5%',
-    // top: '6%',
+    top: '6%',
     // right: 10,
     backgroundColor: "#DAAC3F",
     // left: '5%',
