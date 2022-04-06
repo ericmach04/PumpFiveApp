@@ -73,9 +73,9 @@ export default class HomePage extends Component {
             this.state.prices.map((res, i) => {
             return (
                 <View style={styles.rect2}>
-                    <Text style={styles.gastext2}>Current Regular Price: {res.regular}</Text>
-                    <Text style={styles.gastext2}>Current Premium Price: {res.premium}</Text>
-                    <Text style={styles.gastext2}>Current Diesel Price: {res.diesel}</Text>
+                    <Text style={styles.bofadeeznutsbold}>Current Regular Price: <Text style={styles.embeddedText}>${res.regular}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Current Premium Price: <Text style={styles.embeddedText}>${res.premium}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Current Diesel Price: <Text style={styles.embeddedText}>${res.diesel}</Text></Text>
                 </View>
             );
             })
@@ -176,5 +176,15 @@ const styles = StyleSheet.create({
     top: 620,
     left: 105,
   },
+  bofadeeznutsbold: {
+    color: "black",
+    fontSize: 23,
+    // lineHeight: 35,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  embeddedText: {
+    color: "green",
+  }
 })
 

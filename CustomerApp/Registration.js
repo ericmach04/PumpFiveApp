@@ -10,154 +10,247 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
+import firebase from 'firebase';
 import { auth } from "../firebase";
 import { addUser } from "../firebasefunctions";
 
 import PhoneInput from "react-native-phone-input";
 
-export default function Registration({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [phone, setPhone] = useState("");
+export default class Registration extends Component {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [fname, setFname] = useState("");
+  // const [lname, setLname] = useState("");
+  // const [phone, setPhone] = useState("");
   // const [cMake, setcMake] = useState('')
   // const [cModel, setcModel] = useState('')
   // const [cYear, setcYear] = useState('')
+  constructor() {
+    super();
+    this.dbRef = firebase.firestore().collection('Users');
+    this.state = {
+      email: '',
+      password: '',
+      reenterpassword: '',
+      fname: '',
+      lname: '',
+      phone: '',
+      isLoading: false
+    };
+  }
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
 
-  useEffect(() => {
+  useEffect(){
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace("Tabs");
+        this.props.navigation.replace("Tabs");
       }
     });
 
     return unsubscribe;
-  }, []);
+  }
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with: ", user.email);
-        console.log("pass ", password);
-        console.log("fname: ", fname);
-        console.log("lname: ", lname);
-        console.log("phone: ", phone);
-
-        addUser({
-          email: email,
-          password: password,
-          fname: fname,
-          lname: lname,
-          phone: phone,
-        }).catch((error) => alert(error.message));
-      });
+  handleSignUp(){
+    if(this.state.email === '' || this.state.password === '' || this.state.reenterpassword === '' 
+    || this.state.fname === '' || this.state.lname === '' || this.state.phone === ''){
+      alert('Please fill out all fields')
+     } else {
+       this.setState({
+         isLoading: true,
+       });      
+       this.dbRef.add({
+         email: this.state.email,
+         password: this.state.password,
+         fname: this.state.fname,
+         lname: this.state.lname,
+         phone: this.state.phone,
+       })
+      //  .then((res) => {
+      //    this.setState({
+      //      email: '',
+      //      password: '',
+      //      fname: '',
+      //      lname: '',
+      //      phone: '',
+      //      isLoading: false,
+      //    });
+      //  })
+      auth
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then((userCredentials) => {
+              const user = userCredentials.user;
+              console.log("Registered with: ", user.email);
+              console.log("pass ", password);
+              console.log("fname: ", fname);
+              console.log("lname: ", lname);
+              console.log("phone: ", phone);
+            })
+        //  this.props.navigation.navigate('Addresses')
+        .catch((err) => {
+         console.error("Error found: ", err);
+         this.setState({
+           isLoading: false,
+         });
+       });
+     }
+    
+      // addUser({
+        //   email: email,
+        //   password: password,
+        //   fname: fname,
+        //   lname: lname,
+        //   phone: phone,
+        // }).catch((error) => alert(error.message));
   };
-
+render(){
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    // <SafeAreaView >
+    <ScrollView 
+    style={{flex: 1}}
+    ref={ref => {this.scrollView = ref}}
+    onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})} >
+      <KeyboardAvoidingView>
+    
       <ImageBackground
         source={require("../images/pumpfivebackground.jpeg")}
-        style={styles.image}
+        // style={styles.image}
+        style={{width: "100%", height: "100%"}}
       >
-        <SafeAreaView style={styles.container}>
-          {/* <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : null}
-          > */}
-            <View style={styles.inner}>
-              <View style={buttonstyles.backbutton}>
-                <Button
-                  title="Back"
-                  color="white"
-                  onPress={() => navigation.goBack()}
-                />
-              </View>
-
-              <Text style={styles.text1}>PumpFive</Text>
-              <Text style={styles.text2}>Fuel Delivery Service</Text>
-
-              {/* <Text style={styles.signup}>Sign Up</Text> */}
-              {/* <ScrollView
-              // bounces={false}
-              // ref={ref => {this.scrollView = ref}}
-              // onContentSizeChange={() => scrollToEnd({animated: true})}
+              {/* <View 
+                style={{flexDirection:'row', justifyContent: 'space-around',}}
               > */}
-                {/* This Controls enterEmail text box */}
+              {/* <View style={styles.inputContainer}> */}
+              
+                <Text style={styles.text1}>PumpFive</Text>
+                <Text style={styles.text2}>Fuel Delivery Service</Text>
+                
+                <View style={buttonstyles.backbutton}>
+                  <Button
+                    title="Back"
+                    color="white"
+                    onPress={() => this.props.navigation.goBack()}
+                  />
+                </View>
+              {/* </View> */}
+              {/* </View> */}
+              {/* <View style={{top: "10%"}}> */}
                 <Text style={styles.email}>Email: *</Text>
                 <TextInput
+                  // style={styles.input}
+                  // value={email}
+                  // onChangeText={(text) => setEmail(text)}
+                  // placeholder="enter Email"
                   style={styles.input}
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                  placeholder="enter Email"
+                  placeholder={'Enter Email'}
+                  value={this.state.email}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'email')}
+                  keyboardType="default"
+                  top="4%"
+                  borderRadius="10"
+                />
+                {/* </View> */}
+                <Text style={styles.email}>Password: *</Text>
+                <TextInput
+                  // style={styles.input}
+                  // placeholder="create password"
+                  // keyboardType="default"
+                  // borderRadius="10"
+                  style={styles.input}
+                  placeholder={'Enter Password'}
+                  value={this.state.password}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'password')}
                   keyboardType="default"
                   top="4%"
                   borderRadius="10"
                 />
 
-                <Text style={styles.email}>Password: *</Text>
+                <Text style={styles.email}>Re-enter Password: *</Text>
                 <TextInput
+                  // style={styles.input}
+                  // value={password}
+                  // onChangeText={(text) => setPassword(text)}
+                  // placeholder="Retype Password"
                   style={styles.input}
-                  placeholder="create password"
+                  placeholder={'Re-enter Password'}
+                  value={this.state.reenterpassword}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'reenterpassword')}
                   keyboardType="default"
-                  borderRadius="10"
-                />
-
-                <Text style={styles.email}>Re-enter Password:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                  placeholder="Retype Password"
-                  keyboardType="default"
+                  top="4%"
                   borderRadius="10"
                 />
 
                 <Text style={styles.email}>First name: *</Text>
                 <TextInput
+                  // style={styles.input}
+                  // value={fname}
+                  // onChangeText={(text) => setFname(text)}
+                  // placeholder="Enter First name"
                   style={styles.input}
-                  value={fname}
-                  onChangeText={(text) => setFname(text)}
-                  placeholder="Enter First name"
+                  placeholder={'Enter First Name'}
+                  value={this.state.fname}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'fname')}
                   keyboardType="default"
+                  top="4%"
                   borderRadius="10"
                 />
 
                 <Text style={styles.email}>Last name: *</Text>
                 <TextInput
+                  // style={styles.input}
+                  // value={lname}
+                  // onChangeText={(text) => setLname(text)}
+                  // placeholder="enter Last name"
                   style={styles.input}
-                  value={lname}
-                  onChangeText={(text) => setLname(text)}
-                  placeholder="enter Last name"
+                  placeholder={'Enter Last Name'}
+                  value={this.state.lname}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'lname')}
                   keyboardType="default"
+                  top="4%"
                   borderRadius="10"
                 />
 
                 <Text style={styles.email}>Phone Number: *</Text>
                 <TextInput
+                  // style={styles.input}
+                  // value={phone}
+                  // onChangeText={(text) => setPhone(text)}
+                  // placeholder="***-***-****"
                   style={styles.input}
-                  value={phone}
-                  onChangeText={(text) => setPhone(text)}
-                  placeholder="***-***-****"
+                  placeholder={'Enter Phone Number'}
+                  value={this.state.phone}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
                   keyboardType="default"
-                  top="2%"
+                  top="4%"
+                  borderRadius="10"
 
                   //top = "10%"
                 />
-                {/* <PhoneInput
-          style={styles.input}
-          value = {phone}
-          onChangeText={text => setPhone(text)}
-          placeholder="enter Last name"
-        /> */}
+                <Text style={styles.email}>Are you registering as a driver: *</Text>
+                <TextInput
+                  // style={styles.input}
+                  // value={phone}
+                  // onChangeText={(text) => setPhone(text)}
+                  // placeholder="***-***-****"
+                  style={styles.input}
+                  placeholder={'Enter Phone Number'}
+                  value={this.state.phone}
+                  onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
+                  keyboardType="default"
+                  top="4%"
+                  borderRadius="10"
 
+                  //top = "10%"
+                />
                 <View style={styles.loginview}>
                   <Button
                     title="Sign up"
                     color="white"
-                    onPress={handleSignUp}
+                    onPress={() => this.handleSignUp()}
                     // onPress={() => navigation.navigate('Tabs')}
                   ></Button>
                 </View>
@@ -176,12 +269,16 @@ export default function Registration({ navigation }) {
           <Text>Sign up</Text>
         </TouchableHighlight> */}
               {/* </ScrollView> */}
-            </View>
+            {/* </View> */}
           {/* </KeyboardAvoidingView> */}
-        </SafeAreaView>
-      </ImageBackground>
-    </KeyboardAvoidingView>
+        {/* </SafeAreaView> */}
+      
+        </ImageBackground>
+        </KeyboardAvoidingView>
+    </ScrollView>
+    // </SafeAreaView>
   );
+      }
 }
 
 // ==================== CSS Styling ==================== //
@@ -210,7 +307,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     left: "2%",
-    top: "8%",
+    top: "3%",
   },
 
   text2: {
@@ -220,7 +317,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     left: "2%",
-    top: "8%",
+    top: "3%",
   },
 
   //Effects Nothing On This Page
@@ -249,7 +346,7 @@ const styles = StyleSheet.create({
 
   // Email Header
   email: {
-    top: "8%",
+    top: "5%",
     color: "white",
 
     fontSize: 20,
@@ -262,6 +359,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
     left: "0%",
+  },
+  input: {
+    height: "4%",
+    margin: "2%",
+    borderWidth: 1,
+    padding: "2%",
+    backgroundColor: "white",
+    top: "5%",
   },
   signup: {
     top: 30,
@@ -332,24 +437,17 @@ const styles = StyleSheet.create({
     top: 5,
     left: 5,
   },
-  input: {
-    height: "5.5%",
-    margin: "1%",
-    borderWidth: 1,
-    padding: "1%",
-    backgroundColor: "white",
-    top: "7%",
-  },
+  
   loginview: {
     // justifyContent: 'center',
     // alignItems: 'center',
     borderWidth: 1,
-    width: '15%',
-    height: '45%',
-    top: '6%',
+    width: '20%',
+    height: '5%',
+    // top: '6%',
     // right: 10,
     backgroundColor: "#DAAC3F",
-    left: '5%',
+    // left: '5%',
   },
 });
 
@@ -371,16 +469,24 @@ const buttonstyles = StyleSheet.create({
     //alignItems: 'center',
     //left: "30%",
   },
+  backbutton: {
+    width: '18%', 
+    height: 40,
+    top: "10%",
+    right: 0,
+    backgroundColor:"#DAAC3F", 
+    position: "absolute"
+},
 
   // backbutton Completed
-  backbutton: {
-    width: "15%",
-    height: "7%",
-    top: "7%",
-    right: "5%",
-    backgroundColor: "#DAAC3F",
-    padding: "10%",
-    borderRadius: 10,
-    position: "absolute",
-  },
+  // backbutton: {
+  //   width: "15%",
+  //   height: "7%",
+  //   top: "7%",
+  //   right: "5%",
+  //   backgroundColor: "#DAAC3F",
+  //   padding: "10%",
+  //   borderRadius: 10,
+  //   position: "absolute",
+  // },
 });
