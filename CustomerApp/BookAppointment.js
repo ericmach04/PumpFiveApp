@@ -6,7 +6,7 @@ import {
   Text,
   ImageBackground,
 } from 'react-native'
-import { React, Component } from 'react'
+import { React, Component} from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import firebase from 'firebase';
 import { auth } from '../firebase';
@@ -31,9 +31,9 @@ export default class BookAppointment extends Component {
     
     //class variables 
     const user = auth.currentUser;
-    const uid = user.uid;
-    const db = firebase.firestore().collection('Orders').;
-    const service =  this.props.navigation.getParam('service')
+    const uid = "Bz9HwzemQsLby5PBZ0n4";
+    const updateDBRef = firebase.firestore().collection('Orders').doc(this.uid)
+    const service =  this.props.route.params;
 
     let currentDate
     let dateTimeString
@@ -70,11 +70,22 @@ export default class BookAppointment extends Component {
   };
 
   //set correct service to update
-  setService = (type,deliverytime) =>{
+  updateService = (type,deliverytime) =>{
     switch(type){
       case this.GAS:
-
-
+        updateDBRef.update({"deliverytime": this.state.deliverytime})
+        .then(() => {
+          this.setState({
+            isLoading: false,
+          });
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          this.setState({
+            isLoading: false,
+          });
+        });
+       
         break;
 
       case this.TIRE:
@@ -90,14 +101,12 @@ export default class BookAppointment extends Component {
 
   handleDatePicked = date => {
     this.setState({ deliverytime: this.FormatDate(date) })
-
     this.hideDateTimePicker()
+    this.updateService(this.service,this.state.deliverytime)
 
-    console.log("A date has been picked: ", this.deliverytime)
+    console.log("A date has been picked: ", this.state.deliverytime)
 
-    
-
-
+  
     }
     
   };
