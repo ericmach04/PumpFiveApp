@@ -6,7 +6,7 @@ import {
   Text,
   ImageBackground,
 } from 'react-native'
-import { React, Component} from 'react'
+import { React, Component } from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import firebase from 'firebase';
 import { auth } from '../firebase';
@@ -20,20 +20,22 @@ export default class BookAppointment extends Component {
     super(props);
     this.state = {
       isDateTimePickerVisible: false,
-      deliverytime: "",
+      deliveryTime: "No delivery time set",
       isLoading: true
     };
 
     //Const variables 
     const GAS = 1;
     const TIRE = 2;
-    const DETAIL = 3; 
-    
+    const DETAIL = 3;
+
     //class variables 
     const user = auth.currentUser;
-    const uid = user.uid;
-    const db = firebase.firestore().collection('Orders');
-    const service =  this.props.navigation.getParam('service')
+    const uid = "Bz9HwzemQsLby5PBZ0n4";
+
+    const service = 1;
+
+
 
     let currentDate
     let dateTimeString
@@ -49,75 +51,77 @@ export default class BookAppointment extends Component {
   //class methods 
   showDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: true });
-  };
+  }
 
   hideDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: false });
-  };
+  }
 
-  FormatDate = (data) => {
+
+  formatDate = (data) => {
     this.day = data.getDate();
     this.month = (data.getMonth() + 1);
     this.year = data.getFullYear();
     this.hours = data.getHours();
     this.minutes = data.getMinutes();
-  
+
     this.ampm = this.hours >= 12 ? 'PM' : 'AM';
     this.hours = this.hours % 12;
-    this.dateTimeString = this.month+ '-' + this.day + '-' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
-    return this.deliverytime;
+    this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
 
-  };
+    this.setState({ deliveryTime: this.deliveryTime })
 
-  //set correct service to update
-  updateService = (type,deliverytime) =>{
-    switch(type){
-      case this.GAS:
-        updateDBRef.update({"deliverytime": this.state.deliverytime})
-        .then(() => {
-          this.setState({
-            isLoading: false,
-          });
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-          this.setState({
-            isLoading: false,
-          });
-        });
-       
-        break;
 
-      case this.TIRE:
-        break;
-
-      case this.DETAIL:
-        break;
-
-      default:
-        console.log("No service selected")
   }
 
 
-  handleDatePicked = (date) => {
-    this.setState({ deliverytime: this.FormatDate(date) })
+
+
+
+  //set correct service to update
+  updateService = () => {
+    const user = auth.currentUser;
+    const uid = "Bz9HwzemQsLby5PBZ0n4";
+    const updateDBRef = firebase.firestore().collection('Orders').doc(uid)
+    updateDBRef.update({ "deliverytime": this.state.deliveryTime })
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        this.setState({
+          isLoading: false,
+        });
+      });
+
+
+  }
+
+
+
+
+  handleDatePicked = date => {
+    this.formatDate(date)
+    console.log("A date has been picked: ", this.state.deliveryTime)
     this.hideDateTimePicker()
-    this.updateService(this.service,this.state.deliverytime)
+    this.updateService()
 
-    console.log("A date has been picked: ", this.state.deliverytime)
+  }
 
-  
-    }
-    
-  };
+
+
 
   //firebase functions
-  
-  
+
+
 
   //rendering view 
   render() {
     this.currentDate = new Date()
+    //const service =  this.props.route.params;
+
 
     return (
       <SafeAreaView style={styles.container}>
@@ -143,7 +147,7 @@ export default class BookAppointment extends Component {
               onConfirm={this.handleDatePicked(this.date)}
               onCancel={this.hideDateTimePicker}
             />
-              
+
           </View>
 
         </ImageBackground>
