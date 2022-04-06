@@ -99,7 +99,7 @@ export default class BookAppointment extends Component {
   }
 
 
-  handleDatePicked = date => {
+  handleDatePicked = (date) => {
     this.setState({ deliverytime: this.FormatDate(date) })
     this.hideDateTimePicker()
     this.updateService(this.service,this.state.deliverytime)
@@ -140,7 +140,7 @@ export default class BookAppointment extends Component {
               isVisible={this.state.isDateTimePickerVisible}
               mode="datetime"
               minimumDate={this.currentDate}
-              onConfirm={this.handleDatePicked}
+              onConfirm={this.handleDatePicked(this.date)}
               onCancel={this.hideDateTimePicker}
             />
               
