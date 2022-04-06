@@ -140,7 +140,7 @@ export default class BookAppointment extends Component {
               isVisible={this.state.isDateTimePickerVisible}
               mode="datetime"
               minimumDate={this.currentDate}
-              onConfirm={this.handleDatePicked}
+              onConfirm={this.handleDatePicked(date)}
               onCancel={this.hideDateTimePicker}
             />
               
