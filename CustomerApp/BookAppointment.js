@@ -57,6 +57,10 @@ export default class BookAppointment extends Component {
     this.setState({ isDateTimePickerVisible: false });
   }
 
+  setDeliveryTime = () => {
+    this.setState({deliveryTime: this.deliveryTime})
+  }
+
 
   formatDate = (data) => {
     this.day = data.getDate();
@@ -69,9 +73,6 @@ export default class BookAppointment extends Component {
     this.hours = this.hours % 12;
     this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
 
-    this.setState({ deliveryTime: this.deliveryTime })
-
-
   }
 
 
@@ -81,9 +82,9 @@ export default class BookAppointment extends Component {
   //set correct service to update
   updateService = () => {
     const user = auth.currentUser;
-    const uid = "Bz9HwzemQsLby5PBZ0n4";
+    const uid =  user.uid
     const updateDBRef = firebase.firestore().collection('Orders').doc(uid)
-    updateDBRef.update({ "deliverytime": this.state.deliveryTime })
+    updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
       .then(() => {
         this.setState({
           isLoading: false,
@@ -104,6 +105,7 @@ export default class BookAppointment extends Component {
 
   handleDatePicked = date => {
     this.formatDate(date)
+    this.setDeliveryTime()
     console.log("A date has been picked: ", this.state.deliveryTime)
     this.hideDateTimePicker()
     this.updateService()
@@ -144,7 +146,7 @@ export default class BookAppointment extends Component {
               isVisible={this.state.isDateTimePickerVisible}
               mode="datetime"
               minimumDate={this.currentDate}
-              onConfirm={this.handleDatePicked}
+              onConfirm={(this.handleDatePicked)}
               onCancel={this.hideDateTimePicker}
             />
 
