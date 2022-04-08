@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     paddingLeft: 5,
+    paddingTop: 5,
   },
   embeddedText: {
     color: "green",
