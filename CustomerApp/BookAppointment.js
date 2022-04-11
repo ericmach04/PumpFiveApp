@@ -66,7 +66,7 @@ export default class BookAppointment extends Component {
     this.minutes = data.getMinutes();
 
     this.ampm = this.hours >= 12 ? 'PM' : 'AM';
-    this.hours = this.hours % 12;
+    this.hours = this.hours % 12;i
     this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
 
     this.setState({ deliveryTime: this.deliveryTime })
@@ -144,7 +144,7 @@ export default class BookAppointment extends Component {
               isVisible={this.state.isDateTimePickerVisible}
               mode="datetime"
               minimumDate={this.currentDate}
-              onConfirm={this.handleDatePicked(this.date)}
+              onConfirm={this.handleDatePicked}
               onCancel={this.hideDateTimePicker}
             />
 
@@ -219,7 +219,6 @@ const buttonStyles = StyleSheet.create({
 
   }
 })
-
 
 
 

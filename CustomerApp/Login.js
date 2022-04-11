@@ -10,86 +10,225 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { auth } from "../firebase";
 // import { addUser, getUsers } from '../firebase'
 import { addUser } from "../firebasefunctions";
 import firebase from "firebase"
+// import { objectTraps } from "immer/dist/internal";
 
-// var data = require('./localdb/localdb.json')
+export default class Login extends Component{
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection('Users');
+    this.state = {
+      email: '',
+      password: '',
+      keyvals: {},
+    };
+  }
 
-// function loginAttempt(db) {
-//   // var dataparse = JSON.parse(db);
-//   // console.log(db);
-
-//   for(var x in db)
-//   {
-//     // console.log(db[x]["email"]);
-
-//   }
-
-// }
-
-//export default function Login({ navigation })
-
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log("user id: ", user.uid)
-      if (user) {
-        // console.log("user: ", user.email)
-        if (
-          user.email == "info@pumpfive.com" ||
-          user.email == "talethea@gmail.com"
-        ) {
-          navigation.replace("Admin");
-        } 
+  useEffect(){
+    console.log("in useeffect")
+    // auth.onAuthStateChanged((user) => {
+    //   // console.log("user id: ", user.uid)
+    //   if (user) {
+    //     console.log("user: ", user.email)
+    //     if (
+    //       user.email == "info@pumpfive.com" ||
+    //       user.email == "talethea@gmail.com"
+    //     ) {
+    //       console.log("In admin LFGGG")
+    //       this.props.navigation.replace("Admin");
+    //     } 
         
-        else {
-          console.log("Should be no: ", firebase.firestore().collection('Users').doc(user.uid).driver)
-          if(firebase.firestore().collection('Users').doc(user.id).driver == "no")
-          {
-            navigation.replace("DriverTabs");
+    //     else {
+    //       let keysarr = Object.keys(this.state.keyvals)
+    //       for(let i=0; i < Object.keys(this.state.keyvals).length; i++)
+    //       {
+    //         if(user.email == keysarr[i]){
+    //           console.log("What is the email? ", user.email)
+    //           if(this.state.keyvals[user.email] == "no")
+    //           {
+    //             this.props.navigation.replace("Tabs");
+    //             this.state.driver == "no"
+    //           }
+    //           if(this.state.keyvals[user.email] == "yes")
+    //           {
+    //             this.props.navigation.replace("DriverTabs");
+    //             this.state.driver = "yes"
+    //           }
+    //         }
+    //       }
+    //       // console.log("Should be no: ", this.state.driver)
+    //       // if(this.state.driver == "no")
+    //       // {
+    //       //   this.props.navigation.replace("DriverTabs");
             
-          }
-          else{
-            navigation.replace("Tabs");
-          }
+    //       // }
+    //       // else{
+    //       //   this.props.navigation.replace("Tabs");
+    //       // }
           
+    //     }
+    //   }
+    // });
+
+
+    // auth.onAuthStateChanged((user) => {
+    //   // console.log("user id: ", user.uid)
+    //   if (user) {
+    //     // console.log("user: ", user.email)
+    //     if (
+    //       user.email == "info@pumpfive.com" ||
+    //       user.email == "talethea@gmail.com"
+    //     ) {
+    //       this.props.navigation.replace("Admin");
+    //     } 
+        
+    //     else {
+    //       console.log("Should be blahblahblah: ", this.state.driver)
+    //       if(this.state.driver == "no")
+    //       {
+    //         console.log("in")
+    //         this.props.navigation.replace("Tabs");
+            
+    //       }
+    //       else{
+    //         this.props.navigation.replace("DriverTabs");
+    //       }
+          
+    //     }
+    //   }
+    // });
+
+    
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getifdriver);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
+
+  getifdriver = (querySnapshot) => {
+    // const user = userCredentials.user;
+    console.log("In getifdriver")
+    console.log("this email: ", this.state.email)
+    
+    var keyvalues = {}
+    querySnapshot.forEach((res) => {
+      const {email, driver } = res.data();
+      keyvalues[email.toLowerCase()] = driver
+      console.log("Epic email: ",email);
+      // console.log(phone)
+      // console.log(fname)
+      console.log("Email? ", this.state.email)
+      if (email.toLowerCase() == this.state.email) {
+        // console.log("UserKeyID: ", res.id)
+        if(driver == "no"){
+          this.setState({
+            paid: "no",
+            isLoading: false,
+          });
         }
-      }
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Registered with: ", user.email);
-
-        addUser({
-          email: email,
-          password: password,
+        else
+        {
+          this.setState({
+            // key: res.id,
+            driver: "yes",
+            isLoading: false,
+          });
+        }
+        this.setState({
+          key: res.id,
+          // isLoading: false,
         });
-      })
-      .catch((error) => alert(error.message));
+        
+      }
+      
+    });
+    console.log("UserKeyID: ", this.state.key)
+    this.setState({
+      keyvals: keyvalues,
+      isLoading: false,
+    });
+    console.log("this.state.paid: ", this.state.paid)
+    console.log("Driver states: ", this.state.keyvals)
   };
 
-  const handleLogin = () => {
+  handleLogin = () => {
+    console.log("Login email: ", this.state.email)
+    console.log("Login password: ", this.state.password)
+
     auth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
       })
       .catch((error) => alert(error.message));
+
+     auth.onAuthStateChanged((user) => {
+        // console.log("user id: ", user.uid)
+        if (user) {
+          console.log("user: ", user.email)
+          if (
+            user.email == "info@pumpfive.com" ||
+            user.email == "talethea@gmail.com"
+          ) {
+            console.log("In admin LFGGG")
+            this.props.navigation.replace("Admin");
+          } 
+          
+          else {
+            let keysarr = Object.keys(this.state.keyvals)
+            for(let i=0; i < Object.keys(this.state.keyvals).length; i++)
+            {
+              if(user.email == keysarr[i]){
+                console.log("What is the email? ", user.email)
+                console.log("What is the driver state? ", this.state.keyvals[user.email])
+                if(this.state.keyvals[user.email] == "no")
+                {
+                  this.props.navigation.replace("Tabs");
+                  this.state.driver == "no"
+                }
+                else
+                {
+                  this.state.driver = "yes"
+                  this.props.navigation.replace("DriverTabs");
+                }
+              }
+            }
+            // console.log("Should be no: ", this.state.driver)
+            // if(this.state.driver == "no")
+            // {
+            //   this.props.navigation.replace("DriverTabs");
+              
+            // }
+            // else{
+            //   this.props.navigation.replace("Tabs");
+            // }
+            
+          }
+        }
+      });
   };
+  
+
+    
+
+  render(){
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -103,26 +242,42 @@ export default function Login({ navigation }) {
 
           <Text style={styles.email}>Email:</Text>
           <TextInput
-            placeholder="Email ID"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            style={styles.input}
+          style={styles.input}
+          placeholderTextColor="#D3D3D3"
+          placeholder={'Enter Email'}
+          value={this.state.email}
+          onChangeText={(val) => this.inputValueUpdate(val, 'email')}
+          keyboardType="default"
+          top="4%"
+          borderRadius="10"
+            // placeholder="Email ID"
+            // value={email}
+            // onChangeText={(text) => setEmail(text)}
+            // style={styles.input}
           ></TextInput>
 
           <Text style={styles.email}>Password:</Text>
           <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            style={styles.input}
+            // placeholder="Password"
+            // value={password}
+            // onChangeText={(text) => setPassword(text)}
+            // style={styles.input}
             secureTextEntry
+            style={styles.input}
+            placeholderTextColor="#D3D3D3"
+            placeholder={'Enter Password'}
+            value={this.state.password}
+            onChangeText={(val) => this.inputValueUpdate(val, 'password')}
+            keyboardType="default"
+            top="4%"
+            borderRadius="10"
           ></TextInput>
         </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             // onPress={() => { }}
-            onPress={handleLogin}
+            onPress={() => this.handleLogin()}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Login</Text>
@@ -130,7 +285,7 @@ export default function Login({ navigation }) {
 
           <TouchableOpacity
             // onPress={handleSignUp}
-            onPress={() => navigation.navigate("Registration")}
+            onPress={() => this.props.navigation.navigate("Registration")}
             // onPress={() => navigation.navigate('Registration')}
             style={[styles.button, styles.buttonOutline]}
           >
@@ -139,7 +294,7 @@ export default function Login({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           // onPress={handleSignUp}
-          onPress={() => navigation.navigate('ForgotPassword')}
+          onPress={() => this.props.navigation.navigate('ForgotPassword')}
           // onPress={() => navigation.navigate('Registration')}
           // style={[styles.button, styles.buttonOutline]}
           >
@@ -195,7 +350,7 @@ export default function Login({ navigation }) {
     // </ImageBackground>
     // </View>
   );
-}
+}}
 
 // export default LoginScreen
 

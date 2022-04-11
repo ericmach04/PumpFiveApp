@@ -104,6 +104,7 @@ export default class Membership extends Component{
 
   getCardData = (querySnapshot) => {
     const cards = [];
+    console.log("In card data")
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
       if (email == auth.currentUser?.email) {
