@@ -83,21 +83,20 @@ export default class PlaceOrder extends Component{
     <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
-              
                 <Text style={styles.text}>
                     Services
                </Text>
 
-                <ScrollView 
-                  style={styles.scroll}
-                  ref={ref => {this.scrollView = ref}}
-                  onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
+                <ScrollView style={styles.scroll}
+                  //style={styles.scroll}
+                  //ref={ref => {this.scrollView = ref}}
+                  //onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
                   // bounces={false}
                 >
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
-                        <View style={buttonstyles.button}>
+                        <View style={styles.button}>
                           {/* <Text>Home Screen</Text> */}
                           <Button
                             title="Book Now"
@@ -108,11 +107,11 @@ export default class PlaceOrder extends Component{
                         </View>
                         
                     </View>
-                    <View style={styles.tireservice}>
+                    <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Tire Services</Text>
                         <Text style={styles.boxfontsbody}>PumpFive can provide you with quick tire service. Book your service and we
                         will get back to you in 24 hours.</Text>
-                        <View style={buttonstyles.button}>
+                        <View style={styles.button}>
                         <Button
                             title="Book Now"
                             color="white"
@@ -120,11 +119,11 @@ export default class PlaceOrder extends Component{
                           />
                         </View>
                     </View>
-                    <View style={styles.detailingservice}>
+                    <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Detailing Services</Text>
                             <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
                             will get back to you in 24 hours.</Text>
-                            <View style={buttonstyles.button}>
+                            <View style={styles.button}>
                               <Button
                               title="Book Now"
                               color="white"
@@ -132,11 +131,11 @@ export default class PlaceOrder extends Component{
                             />
                             </View>
                         </View>
-                        <View style={styles.tintingservice}>
+                        <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Tinting Services</Text>
-                            <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
+                            <Text style={styles.boxfontsbody}>PumpFive can provide you with a quick tinting service. Book your service and we
                             will get back to you in 24 hours.</Text>
-                            <View style={buttonstyles.button}>
+                            <View style={styles.button}>
                               <Button
                               title="Book Now"
                               color="white"
@@ -145,8 +144,7 @@ export default class PlaceOrder extends Component{
                             </View>
                         </View>
                     </ScrollView>
-
-            </SafeAreaView>
+          </SafeAreaView>
         </ImageBackground>
     </View>
   )
@@ -164,6 +162,7 @@ const styles = StyleSheet.create({
       },
 
       text: {
+        //flex: 1,
         color: "white",
         fontSize: 48,
         lineHeight: 70,
@@ -174,45 +173,21 @@ const styles = StyleSheet.create({
       },
 
       gasservice: {
-        width: "100%",
-        height: "50%",
+        flex: 1,
+        width: "90%",
+        height: 200,
+        left: "5%",
+        right: "5%",
         //top: "0%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 10,
+        marginBottom: 20,
     },
 
-      tireservice:{
-        width: "100%",
-        height: "50%",
-        //top: "5%",
-        backgroundColor: '#CDCABF',
-        borderWidth: 2,
-        borderColor: '#000000',
-        borderRadius: 10,
-      },
-
-      detailingservice:{
-        width: "100%",
-        height: "50%",
-        //top: "10%",
-        backgroundColor: '#CDCABF',
-        borderWidth: 2,
-        borderColor: '#000000',
-        borderRadius: 10,
-      },
-      tintingservice:{
-        width: "100%",
-        height: "50%",
-        //top: "15%",
-        backgroundColor: '#CDCABF',
-        borderWidth: 2,
-        borderColor: '#000000',
-        borderRadius: 10,
-      },
-
       boxfontshead:{
+        //flex: 1,
         color: "black",
         fontSize: 24,
         lineHeight: 30,
@@ -223,6 +198,7 @@ const styles = StyleSheet.create({
       },
 
       boxfontsbody:{
+        //flex: 1,
         color: "black",
         fontSize: 18,
         lineHeight: 30,
@@ -232,22 +208,18 @@ const styles = StyleSheet.create({
         right: "2%",
         width: "95%",
       },
-      scroll: {
-        width: "90%",
-        left: "5%",
-        right: "5%",
-        resizeMode:"repeat",
-      },
-})
-
-const buttonstyles = StyleSheet.create({
-    button: { 
-        width: "30%", 
-        height: "21%",
+      button: { 
+        flex: 1,
+        width: "30%",
+        height: 40,
         bottom: "5%",
         right: "5%",
         borderRadius: 20,
         backgroundColor:"#DAAC3F", 
         position: "absolute"
     },
+    scroll: {
+      flex: 1,
+    },
 })
+
