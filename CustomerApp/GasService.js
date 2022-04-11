@@ -13,7 +13,11 @@ export default function GasService({navigation}) {
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
             {/* <SafeAreaView style={styles.container}> */}
               
-              <View style={buttonstyles.backbutton}>
+                <SafeAreaView style={styles.container}>
+                  <Text style={styles.text}>
+                      Checkout
+                  </Text>
+                  <View style={buttonstyles.backbutton}>
                               <Button
                               title="Back"
                               color="white"
@@ -21,10 +25,6 @@ export default function GasService({navigation}) {
                               onPress={() => navigation.goBack()}
                             />
                             </View>
-                <SafeAreaView style={styles.container}>
-                  <Text style={styles.text}>
-                      Checkout
-                  </Text>
               
             
                 
