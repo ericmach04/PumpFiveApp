@@ -53,7 +53,8 @@ export default class PlaceOrder extends Component{
           
     }
     else{
-      this.props.navigation.navigate('BookAppointment', {service: 1})
+      // this.props.navigation.navigate('BookAppointment', {service: 1})
+      this.props.navigation.navigate('GasService')
     }
   }
   
