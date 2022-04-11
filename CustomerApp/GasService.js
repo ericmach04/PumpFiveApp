@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Picker } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Picker, ScrollView } from 'react-native'
 import React from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -11,7 +11,7 @@ export default function GasService({navigation}) {
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
-            <SafeAreaView style={styles.container}>
+            {/* <SafeAreaView style={styles.container}> */}
               
               <View style={buttonstyles.backbutton}>
                               <Button
@@ -21,13 +21,16 @@ export default function GasService({navigation}) {
                               onPress={() => navigation.goBack()}
                             />
                             </View>
-                <Text style={styles.text}>
-                    Checkout
-                </Text>
+                <SafeAreaView style={styles.container}>
+                  <Text style={styles.text}>
+                      Checkout
+                  </Text>
               
             
-                <View style={styles.container}>
+                
+                  <ScrollView style={styles.scroll}>
                     <View style={styles.gasservice}>
+                      
                         <Text style={styles.boxfontshead}>Gas Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
                         <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
@@ -62,7 +65,7 @@ export default function GasService({navigation}) {
                         </View>
                     </View>
                     
-                    <View style={styles.personalinfo}>
+                    <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Personal Info</Text>
 
                             <TextInput
@@ -86,7 +89,7 @@ export default function GasService({navigation}) {
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View>
-                    <View style={styles.promobutton}>
+                    {/* <View style={styles.promobutton}>
                       <TextInput
                         style={styles.promoinput}
                         placeholder="Promo Code"
@@ -95,24 +98,15 @@ export default function GasService({navigation}) {
                           <View style={buttonstyles.button}>
                                 <Button title="Order" color="white" onPress={() => navigation.navigate('OrderSummary')}></Button>
                           </View>
-                    </View>
-                </View>
+                          
+                    </View> */}
+                    </ScrollView>
+                
+            {/* </SafeAreaView> */}
             </SafeAreaView>
          </ImageBackground>   
     </View>
   )
-}
-
-function GasScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {/* <Text>Home Screen</Text> */}
-      <Button
-        title="BookNow"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
 }
 
   const buttonstyles = StyleSheet.create({
@@ -149,11 +143,11 @@ const styles = StyleSheet.create({
       text: {
         color: "white",
         fontSize: 48,
-        lineHeight: 44,
+        lineHeight: 70,
         fontWeight: "bold",
         textAlign: "center",
-        flex: 1,
-        top: 40,
+        // flex: 1,
+        top: 0,
       },
 
       services:{
@@ -162,39 +156,44 @@ const styles = StyleSheet.create({
       },
 
       gasservice: {
-        position: 'absolute',
-        width: 350,
-        height: 280,
-        left: 21,
-        top: -300,
+        flex: 1,
+        width: "90%",
+        height: 300,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 10,
+        marginBottom: 20,
     },
 
       personalinfo:{
         position: 'absolute',
-        width: 350,
-        height: 190,
-        left: 21,
-        top: -10,
+        width: "95%",
+        height: 200,
+        left: "2%",
+        top: "8%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 10,
+        flex: 1,
       },
 
       paymentinfo:{
-        position: 'absolute',
-        width: 350,
-        height: 100,
-        left: 21,
-        top: 185,
+        flex: 1,
+        width: "90%",
+        height: 650,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 10,
+        marginBottom: 20,
       },
 
       boxfontshead:{
