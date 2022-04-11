@@ -102,6 +102,8 @@ const App = () => {
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="PaymentDropdown" component={PaymentDropdown} />
 
+          
+
 
 
       </Stack.Navigator>
