@@ -88,12 +88,7 @@ export default class PlaceOrder extends Component{
                     Services
                </Text>
 
-                <ScrollView style={styles.scroll}
-                  //style={styles.scroll}
-                  //ref={ref => {this.scrollView = ref}}
-                  //onContentSizeChange={() => this.scrollView.scrollToEnd({animated: false})}
-                  // bounces={false}
-                >
+                <ScrollView style={styles.scroll}>
                     <View style={styles.gasservice}>
                         <Text style={styles.boxfontshead}>Gas Services</Text>
                         <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
