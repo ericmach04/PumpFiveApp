@@ -22,13 +22,13 @@ export default class AddressDropdown extends Component{
       text: 'Other',
       data:[],
       keyvals: {
-        "Other": {
-          email: '',  
-          streetnumber:'',
-          city: '',
-          state: '',
-          zip: '',
-        }
+        // "Other": {
+        //   email: '',  
+        //   streetnumber:'',
+        //   city: '',
+        //   state: '',
+        //   zip: '',
+        // }
       },
     };
   }
@@ -99,17 +99,26 @@ export default class AddressDropdown extends Component{
     const addresses = [];
     const data=[]
     var keyvals = {
-    "Other": {
-        name:'',
-        number: '',
-        type: '',
-        expiry: '',
-        cvv: ''
-        // cvv: cvv
-    }}
+    // "Other": 
+    // {
+    //     name:'',
+    //     number: '',
+    //     type: '',
+    //     expiry: '',
+    //     cvv: ''
+    //     // cvv: cvv
+    // }
+  }
     var emptyarr = []
     data.push(emptyarr)
-
+    // data[0].push("Please select an address")
+    // keyvals["Please select and address"] = {
+    // email: '',  
+    // streetnumber:'',
+    // city: '',
+    // state: '',
+    // zip: '',
+    // }
     querySnapshot.forEach((res) => {
       const { email, streetnumber, city, state, zip } = res.data();
       if (email == auth.currentUser?.email) {
@@ -138,23 +147,15 @@ export default class AddressDropdown extends Component{
       
     });
 
-    // var string 
-    // for(let i=0; i < addresses.length; i++)
-    // {
-    //     string= addresses[i].streetnumber
-    //     console.log("String", string)
-    //     data[0].push(string)
+    keyvals["Other"] = {
+        email: '',  
+        streetnumber:'',
+        city: '',
+        state: '',
+        zip: '',
+      }
+      data[0].push("Other")
 
-        // keyvals[string] = {
-        //     // name:'placeholder',
-        //     streetnumber: streetnumber,
-        //     city: city,
-        //     state: state,
-        //     zip: zip
-        //     // cvv: '000'
-        //     // cvv: cvv
-        //   }
-    // }
     this.setState({
         keyvals,
       addresses,
@@ -168,76 +169,6 @@ export default class AddressDropdown extends Component{
       console.log("My addys: ", this.state.keyvals)
     
   };
-
-//   getAddressData = (querySnapshot) => {
-//     const cards = {};
-//     const data = [];
-//     var keyvals = {
-//       "Other": {
-//         email:'',
-//         streetnumber: '',
-//         city: '',
-//         state: '',
-//         zip: ''
-//         // cvv: cvv
-//     }};
-//     var emptyarr = []
-//     data.push(emptyarr)
-//     // console.log("2D Data: ", data)
-    
-//     querySnapshot.forEach((res) => {
-//       const { email, streetnumber, city, state, zip } = res.data();
-//       if (email == auth.currentUser?.email) {
-//         // cards.push({
-//         //   cvv,
-//         //   expiry,
-//         //   number,
-//         //   type,
-//         // });
-//         // var cardarr = streetnumber.split(' ')
-//         // var lastfour = cardarr[3]
-
-//         console.log("My street: ", streetnumber)
-//         console.log("My city: ", city)
-//         console.log("My state: ", state)
-//         console.log("My zip: ", zip)
-        // var string = streetnumber
-        // console.log("String", string)
-        // data[0].push(string)
-
-//         const state = this.state;
-//         state.key = res.id;
-//         this.setState(state);
-
-//         keyvals[string] = {
-//           // name:'placeholder',
-//           city: city,
-//           state: state,
-//           zip: zip,
-//           // cvv: '000'
-//           // cvv: cvv
-//         }
-
-//       }
-//     })
-//   ;
-//     // console.log("KeyVals", keyvals)
-//     this.setState({
-//       cards,
-//       data,
-//       keyvals,
-//       isLoading: false,
-//     });
-//     // console.log("Cards: ", this.state.cards)
-//     // console.log("epic before werid Data: ", this.state.data)
-//     // console.log("KeyVals(state)", this.state.keyvals)
-//     // console.log("uid: ", this.state.key)
-
-//     // data[0].push("Other")
-
-    
-  
-// };
   
   render(){
      
@@ -324,6 +255,7 @@ export default class AddressDropdown extends Component{
                 </View>
                 
                 
+                
                
                 </View>
                 
@@ -365,7 +297,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "9%",
+      top: "40%",
       color: "black",
      
       fontSize: 20,
@@ -382,7 +314,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "9%",
+      top: "40%",
       // left: "2%",
     },
     inputGroup: {

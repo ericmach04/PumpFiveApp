@@ -175,6 +175,14 @@ export default class PaymentDropdown extends Component{
     })
   ;
     console.log("KeyVals", keyvals)
+    keyvals["Other"] = {
+      email: '',  
+      streetnumber:'',
+      city: '',
+      state: '',
+      zip: '',
+    }
+    data[0].push("Other")
     this.setState({
       cards,
       data,
@@ -216,7 +224,7 @@ export default class PaymentDropdown extends Component{
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
-        <View style={{top: "7%"}}> 
+        <View style={{top: "1%"}}> 
           <DropdownMenu
             // style={{top: "20%"}}
             // useNativeDriver={true}
@@ -333,7 +341,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "9%",
+      top: "30%",
       color: "black",
      
       fontSize: 15,
@@ -350,7 +358,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "9%",
+      top: "30%",
       // left: "2%",
     },
     inputGroup: {

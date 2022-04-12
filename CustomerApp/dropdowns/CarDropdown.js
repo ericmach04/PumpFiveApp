@@ -10,7 +10,7 @@ export default class AddressDropdown extends Component{
   
   constructor(props) {
     super(props);
-    this.docs = firebase.firestore().collection("Addresses");
+    this.docs = firebase.firestore().collection("Car_Info");
     this.userdocs = firebase.firestore().collection("Users");
     this.state = {
       // cards: [],
@@ -22,13 +22,13 @@ export default class AddressDropdown extends Component{
       text: 'Other',
       data:[],
       keyvals: {
-        "Other": {
-          email: '',  
-          streetnumber:'',
-          city: '',
-          state: '',
-          zip: '',
-        }
+        // "Other": {
+        //   email: '',  
+        //   streetnumber:'',
+        //   city: '',
+        //   state: '',
+        //   zip: '',
+        // }
       },
     };
   }
@@ -36,7 +36,7 @@ export default class AddressDropdown extends Component{
 //     this.setState({ driver: choice })
 //  }
   componentDidMount() {
-        this.unsubscribe = this.docs.onSnapshot(this.getAddressData);
+        this.unsubscribe = this.docs.onSnapshot(this.getCarData);
         this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
   }
 
@@ -51,37 +51,6 @@ export default class AddressDropdown extends Component{
     this.setState(state);
   }
 
-  checkCards() {
-    if(this.state.cards[this.state.text].cvv != this.state.keyvals[this.state.text].cvv)
-    {
-      Alert.alert(
-        'Sorry, the fields for this card do not match',
-        'Please try again',
-        [
-          {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
-        ],
-        { 
-          cancelable: true 
-        }
-      );
-    }
-    else{
-      // Alert.alert(
-      //   'Fields match',
-      //   'LFG',
-      //   [
-      //     {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
-      //   ],
-      //   { 
-      //     cancelable: true 
-      //   }
-      // );
-    //   this.updatePaidYes()
-    }
-  }
-
-
-
   getUserKey = (querySnapshot) => {
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
@@ -95,42 +64,43 @@ export default class AddressDropdown extends Component{
     )
     console.log("Epic key: ", this.state.key)
   }
-  getAddressData = (querySnapshot) => {
-    const addresses = [];
+  getCarData = (querySnapshot) => {
+    const carinfo = [];
     const data=[]
     var keyvals = {
-    "Other": {
-        name:'',
-        number: '',
-        type: '',
-        expiry: '',
-        cvv: ''
-        // cvv: cvv
-    }}
+    // "Other": {
+    //     name:'',
+    //     number: '',
+    //     type: '',
+    //     expiry: '',
+    //     cvv: ''
+    //     // cvv: cvv
+    // }
+  }
     var emptyarr = []
     data.push(emptyarr)
 
     querySnapshot.forEach((res) => {
-      const { email, streetnumber, city, state, zip } = res.data();
+      const { email, license, make, model, year } = res.data();
       if (email == auth.currentUser?.email) {
-        addresses.push({
+        carinfo.push({
           key: res.id,
           email,
-          streetnumber,
-          city,
-          state,
-          zip,
+          license,
+          make,
+          model,
+          year,
         });
 
-        var string = streetnumber
+        var string = year + " " + make + " " + model
         data[0].push(string)
 
         keyvals[string] = {
             // name:'placeholder',
-            streetnumber: streetnumber,
-            city: city,
-            state: state,
-            zip: zip
+            license: license,
+            make: make,
+            model: model,
+            year: year
             // cvv: '000'
             // cvv: cvv
           }
@@ -138,26 +108,18 @@ export default class AddressDropdown extends Component{
       
     });
 
-    // var string 
-    // for(let i=0; i < addresses.length; i++)
-    // {
-    //     string= addresses[i].streetnumber
-    //     console.log("String", string)
-    //     data[0].push(string)
+    keyvals["Other"] = {
+      email: '',  
+      license:'',
+      make: '',
+      model: '',
+      year: '',
+    }
+    data[0].push("Other")
 
-        // keyvals[string] = {
-        //     // name:'placeholder',
-        //     streetnumber: streetnumber,
-        //     city: city,
-        //     state: state,
-        //     zip: zip
-        //     // cvv: '000'
-        //     // cvv: cvv
-        //   }
-    // }
     this.setState({
         keyvals,
-      addresses,
+      carinfo,
     });
     
     this.setState({
@@ -168,76 +130,6 @@ export default class AddressDropdown extends Component{
       console.log("My addys: ", this.state.keyvals)
     
   };
-
-//   getAddressData = (querySnapshot) => {
-//     const cards = {};
-//     const data = [];
-//     var keyvals = {
-//       "Other": {
-//         email:'',
-//         streetnumber: '',
-//         city: '',
-//         state: '',
-//         zip: ''
-//         // cvv: cvv
-//     }};
-//     var emptyarr = []
-//     data.push(emptyarr)
-//     // console.log("2D Data: ", data)
-    
-//     querySnapshot.forEach((res) => {
-//       const { email, streetnumber, city, state, zip } = res.data();
-//       if (email == auth.currentUser?.email) {
-//         // cards.push({
-//         //   cvv,
-//         //   expiry,
-//         //   number,
-//         //   type,
-//         // });
-//         // var cardarr = streetnumber.split(' ')
-//         // var lastfour = cardarr[3]
-
-//         console.log("My street: ", streetnumber)
-//         console.log("My city: ", city)
-//         console.log("My state: ", state)
-//         console.log("My zip: ", zip)
-        // var string = streetnumber
-        // console.log("String", string)
-        // data[0].push(string)
-
-//         const state = this.state;
-//         state.key = res.id;
-//         this.setState(state);
-
-//         keyvals[string] = {
-//           // name:'placeholder',
-//           city: city,
-//           state: state,
-//           zip: zip,
-//           // cvv: '000'
-//           // cvv: cvv
-//         }
-
-//       }
-//     })
-//   ;
-//     // console.log("KeyVals", keyvals)
-//     this.setState({
-//       cards,
-//       data,
-//       keyvals,
-//       isLoading: false,
-//     });
-//     // console.log("Cards: ", this.state.cards)
-//     // console.log("epic before werid Data: ", this.state.data)
-//     // console.log("KeyVals(state)", this.state.keyvals)
-//     // console.log("uid: ", this.state.key)
-
-//     // data[0].push("Other")
-
-    
-  
-// };
   
   render(){
      
@@ -283,10 +175,10 @@ export default class AddressDropdown extends Component{
           <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder="Enter Name on the Card"
+                        placeholder="Enter Car Make"
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].streetnumber}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'streetnumber')}
+                        value={this.state.keyvals[this.state.text].make}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'make')}
                 />
                 </View>
 
@@ -294,10 +186,10 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder='Enter Card Type (Visa, Mastercard, etc)'
+                        placeholder='Enter Car Model'
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].city}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'city')}
+                        value={this.state.keyvals[this.state.text].model}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'model')}
                 />
                 </View>
 
@@ -305,10 +197,10 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter Card Number (****-****-****-****)'}
+                        placeholder={'Enter Car Year'}
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].state}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'state')}
+                        value={this.state.keyvals[this.state.text].year}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'year')}
                 />
                 </View>
 
@@ -316,10 +208,10 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter Expiration Date (MM/YY)'}
+                        placeholder={'Enter License Plate'}
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].zip}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'zip')}
+                        value={this.state.keyvals[this.state.text].license}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'license')}
                 />
                 </View>
                 
@@ -365,7 +257,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "9%",
+      top: "40%",
       color: "black",
      
       fontSize: 20,
@@ -382,7 +274,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "9%",
+      top: "40%",
       // left: "2%",
     },
     inputGroup: {

@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
       address:{
         flex: 1,
         width: "90%",
-        height: 550,
+        height: 700,
         left: "5%",
         right: "5%",
         //top: "0%",
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
       carInfo:{
         flex: 1,
         width: "90%",
-        height: 550,
+        height: 750,
         left: "5%",
         right: "5%",
         //top: "0%",
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
       paymentinfo:{
         flex: 1,
         width: "90%",
-        height: 650,
+        height: 750,
         left: "5%",
         right: "5%",
         //top: "0%",
