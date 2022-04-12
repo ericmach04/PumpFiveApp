@@ -279,7 +279,7 @@ export default class AddressDropdown extends Component{
           </DropdownMenu>
 
           
-          <Text style={styles.email}>Street Name and Number: *</Text>
+          <Text style={styles.email}>Car Make: *</Text>
           <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
@@ -290,7 +290,7 @@ export default class AddressDropdown extends Component{
                 />
                 </View>
 
-                <Text style={styles.email}>City: *</Text>
+                <Text style={styles.email}>Car Model: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
@@ -301,7 +301,7 @@ export default class AddressDropdown extends Component{
                 />
                 </View>
 
-                <Text style={styles.email}>State: *</Text>
+                <Text style={styles.email}>Car Year: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
@@ -312,7 +312,7 @@ export default class AddressDropdown extends Component{
                 />
                 </View>
 
-                <Text style={styles.email}>Zip Code: *</Text>
+                <Text style={styles.email}>License Plate: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}

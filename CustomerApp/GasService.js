@@ -6,6 +6,8 @@ import TimeDropdown from "./dropdowns/TimeDropdown";
 import DayDropdown from "./dropdowns/DayDropdown";
 import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from './dropdowns/PaymentDropdown';
+import AddressDropdown from './dropdowns/AddressDropdown';
+import CarDropdown from './dropdowns/CarDropdown';
 
 export default function GasService({navigation}) {
   return (
@@ -65,41 +67,27 @@ export default function GasService({navigation}) {
                         </View>
                     </View>
                     
-                    <View style={styles.gasservice}>
-                        <Text style={styles.boxfontshead}>Personal Info</Text>
+                    <View style={styles.address}>
+                        <Text style={styles.boxfontshead}>Address</Text>
+                        <Text style={styles.boxfontsbody}>Please Select an Address</Text>
+                        <AddressDropdown></AddressDropdown>
 
-                            <TextInput
-                              style={styles.input}
-                              placeholder="First Name"
-                              keyboardType="default"
-                            />
-                            <TextInput
-                              style={styles.input}
-                              placeholder="Last Name"
-                              keyboardType="default"
-                            />
-                            <TextInput
-                              style={styles.input}
-                              placeholder="Address"
-                              keyboardType="default"
-                            />
                           
                     </View>
+
+                    <View style={styles.carInfo}>
+                        <Text style={styles.boxfontshead}>Car Information</Text>
+                        <Text style={styles.boxfontsbody}>Please Select a Car</Text>
+                        <CarDropdown></CarDropdown>
+
+                          
+                    </View>
+
                     <View style={styles.paymentinfo}>
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View>
-                    {/* <View style={styles.promobutton}>
-                      <TextInput
-                        style={styles.promoinput}
-                        placeholder="Promo Code"
-                        keyboardType="default"
-                          />
-                          <View style={buttonstyles.button}>
-                                <Button title="Order" color="white" onPress={() => navigation.navigate('OrderSummary')}></Button>
-                          </View>
-                          
-                    </View> */}
+                    
                     </ScrollView>
                 
             {/* </SafeAreaView> */}
@@ -169,17 +157,31 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 
-      personalinfo:{
-        position: 'absolute',
-        width: "95%",
-        height: 200,
-        left: "2%",
-        top: "8%",
+      address:{
+        flex: 1,
+        width: "90%",
+        height: 550,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
         backgroundColor: '#CDCABF',
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 10,
+        marginBottom: 20,
+      },
+      carInfo:{
         flex: 1,
+        width: "90%",
+        height: 550,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
       },
 
       paymentinfo:{
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 18,
         lineHeight: 30,
-        textAlign: "left",
+        textAlign: "center",
         top: 5,
         left: 5,
       },
