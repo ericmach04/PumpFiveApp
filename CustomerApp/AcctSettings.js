@@ -88,19 +88,11 @@ export default class AcctSettings extends Component {
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-around",
-                        left: 5,
                       }}
                     >
                       <Text style={styles.boxfontshead}>
                         {res.fname} {res.lname}
                       </Text>
-                      <View style={styles.loginview}>
-                        <Button
-                          title="Logout"
-                          color="white"
-                          onPress={this.handleSignOut}
-                        />
-                      </View>
                     </View>
                     <Text style={styles.boxfontsbody}>{res.email}</Text>
                     {/* <Text style={styles.boxfontsbody}>
@@ -223,6 +215,13 @@ export default class AcctSettings extends Component {
                   <Image source={require("../icons/off.png")} />
                 </View>
               </View>
+              <View style={styles.loginview}>
+                        <Button
+                          title="Logout"
+                          color="white"
+                          onPress={this.handleSignOut}
+                        />
+              </View>
             </View>
           </SafeAreaView>
         </ImageBackground>
@@ -282,12 +281,12 @@ const styles = StyleSheet.create({
 
   text: {
     color: "white",
-    fontSize: 48,
-    lineHeight: 44,
+    fontSize: 44,
+    lineHeight: 46,
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    top: 30,
+    top: 20,
   },
 
   // Addresses
@@ -347,25 +346,6 @@ const styles = StyleSheet.create({
     right: -15,
   },
 
-  boxfontshead: {
-    color: "black",
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: "bold",
-    textAlign: "left",
-    top: 5,
-    left: 5,
-  },
-
-  boxfontsbody: {
-    color: "black",
-    fontSize: 18,
-    lineHeight: 30,
-    textAlign: "left",
-    top: 5,
-    left: 5,
-  },
-
   boxfontshead2: {
     color: "black",
     fontSize: 24,
@@ -384,42 +364,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
 
-  gasservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: -275,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
-  tireservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: -80,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
-  detailingservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: 115,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
   boxfontshead: {
     color: "black",
     fontSize: 24,
@@ -427,7 +371,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     top: 5,
-    left: 5,
   },
 
   boxfontsbody: {
@@ -436,17 +379,16 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     textAlign: "left",
     top: 5,
-    left: 5,
+    left: "5%",
   },
   loginview: {
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    width: 100,
+    width: "50%",
+    top: 30,
     height: 40,
-    top: 5,
-    right: 10,
-    left: 5,
+    left: "25%",
+    borderRadius: 30,
     backgroundColor: "#DAAC3F",
   },
 });
