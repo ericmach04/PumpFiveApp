@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
   //     top: 150,
   //   },
   email: {
-    // top: 174,
+    //top: 174,
     color: "white",
 
     fontSize: 30,
@@ -468,6 +468,7 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 15,
     paddingVertical: 10,
+    paddingBottom: 20,
     borderRadius: 10,
     marginTop: 5,
     left: "5%",
