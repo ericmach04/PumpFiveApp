@@ -88,7 +88,11 @@ export default class AddAddress extends Component{
           <View style={styles.box1}>
             <Text style={styles.h1}>Add Address</Text>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => navigation.navigate('Addresses')}/>
+            <Button
+                title="Back"
+                color="white"
+                onPress={() => this.props.navigation.goBack()}
+              />
             </View>
             
                 <Text style={styles.email}>Street Address: *</Text>
