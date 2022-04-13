@@ -44,7 +44,7 @@ export default class Addresses extends Component {
 
     Alert.alert(
       'Delete ',
-      'Are you sure you want to delete this car?',
+      'Are you sure you want to delete this card?',
       [
         {text: 'Yes', onPress: () => {
           dbRef.delete().then((res) => {
