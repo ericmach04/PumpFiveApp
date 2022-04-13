@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, Picker, ScrollView } from 'react-native'
-import React from 'react'
+import React, { Component } from 'react'
 import {useState} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
 import TimeDropdown from "./dropdowns/TimeDropdown";
@@ -9,7 +9,40 @@ import PaymentDropdown from './dropdowns/PaymentDropdown';
 import AddressDropdown from './dropdowns/AddressDropdown';
 import CarDropdown from './dropdowns/CarDropdown';
 
-export default function GasService({navigation}) {
+import returnKeyVals from './dropdowns/AddressDropdown';
+
+export default class GasService extends Component{
+
+  constructor(props) {
+    super(props);
+    // this.docs = firebase.firestore().collection("Addresses");
+    // this.userdocs = firebase.firestore().collection("Users");
+    this.state = {
+      reviewpressed: false,
+      
+    };
+  }
+  childToParent(){
+    console.log("This is an alert from the Child Component")
+  }
+
+  setAddressData(){
+
+  }
+
+  changePages() {
+    const state = this.state;
+    // console.log("State: ", state)
+    state["reviewpressed"] = true;
+    this.setState(state)
+
+    // console.log(returnKeyVals)
+  }
+
+  render(){
+
+  console.log("reviewpressed?: ", this.state.reviewpressed)
+  if(this.state.reviewpressed == false) {
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
@@ -24,7 +57,7 @@ export default function GasService({navigation}) {
                               title="Back"
                               color="white"
                               // onPress={() => console.log('Clicked')}
-                              onPress={() => navigation.goBack()}
+                              onPress={() => this.props.navigation.goBack()}
                             />
                             </View>
               
@@ -87,6 +120,16 @@ export default function GasService({navigation}) {
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View>
+
+                    <View style={styles.paybutton}>
+                              <Button
+                              title="Review Order"
+                              color="white"
+                              onPress={() => this.changePages()}
+                            /> 
+                          
+                            
+                        </View> 
                     
                     </ScrollView>
                 
@@ -95,6 +138,66 @@ export default function GasService({navigation}) {
          </ImageBackground>   
     </View>
   )
+  }
+  else{
+    return(
+    <View style={styles.container}>
+    <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+       {/* <SafeAreaView style={styles.container}> */}
+         
+           <SafeAreaView style={styles.container}>
+             <Text style={styles.text}>
+                 Review Order
+             </Text>
+             <View style={buttonstyles.backbutton}>
+                         <Button
+                         title="Back"
+                         color="white"
+                         // onPress={() => console.log('Clicked')}
+                         onPress={() => this.props.navigation.goBack()}
+                       />
+                       </View>
+         
+       
+           
+             <ScrollView style={styles.scroll}>
+               <View style={styles.gasservice}>
+                 
+                   <Text style={styles.boxfontshead}>A Review of Your Order</Text>
+                   {/* <Text style={styles.subheadings}>Schedule</Text> */}
+                    <View style={styles.revieworder}>
+
+                    </View>
+                  
+                   
+               </View>
+               
+               
+
+               
+
+               
+
+               <View style={styles.paybutton2}>
+                         <Button
+                         title="Checkout"
+                         color="white"
+                        //  onPress={() => this.checkCards()}
+                       /> 
+                     
+                       
+                   </View> 
+               
+               </ScrollView>
+           
+       {/* </SafeAreaView> */}
+       </SafeAreaView>
+    </ImageBackground>   
+</View>
+    )
+  }
+}
+
 }
 
   const buttonstyles = StyleSheet.create({
@@ -122,6 +225,26 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
       },
+      paybutton: {
+        // width: "77%",
+        // height: "7%",
+        bottom: "2%",
+        left: "35%",
+        borderRadius: 30,
+        backgroundColor: "#DAAC3F",
+        position: "absolute",
+        // justifyContent: "center",
+      },
+      paybutton2: {
+        // width: "77%",
+        // height: "7%",
+        bottom: "5.5%",
+        left: "38%",
+        borderRadius: 30,
+        backgroundColor: "#DAAC3F",
+        position: "absolute",
+        // alignItems: "center",
+      },
 
       image: {
         flex: 1,
@@ -130,7 +253,7 @@ const styles = StyleSheet.create({
 
       text: {
         color: "white",
-        fontSize: 48,
+        fontSize: 35,
         lineHeight: 70,
         fontWeight: "bold",
         textAlign: "center",
@@ -146,7 +269,7 @@ const styles = StyleSheet.create({
       gasservice: {
         flex: 1,
         width: "90%",
-        height: 300,
+        height: 450,
         left: "5%",
         right: "5%",
         //top: "0%",
@@ -156,6 +279,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
     },
+    revieworder: {
+      // flex: 1,
+      width: "100%",
+      height: 350,
+      // left: "1%",
+      // right: "1%",
+      top: "5%",
+      backgroundColor: '#FFFFFF',
+      borderWidth: 2,
+      borderColor: '#000000',
+      borderRadius: 10,
+      marginBottom: 20,
+  },
 
       address:{
         flex: 1,

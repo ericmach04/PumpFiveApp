@@ -7,6 +7,11 @@ import {Component, useState} from "react";
 import DropdownMenu from 'react-native-dropdown-menu';
 
 export default class AddressDropdown extends Component{
+
+  returnKeyVals() {
+    console.log(this.state.keyvals)
+    return ("Here")
+  }
   
   constructor(props) {
     super(props);
@@ -50,6 +55,9 @@ export default class AddressDropdown extends Component{
     state.keyvals[this.state.text][prop] = val;
     this.setState(state);
   }
+  // childToParent(){
+  //   console.log("This is an alert from the Child Component")
+  // }
 
   checkCards() {
     if(this.state.cards[this.state.text].cvv != this.state.keyvals[this.state.text].cvv)
@@ -93,7 +101,7 @@ export default class AddressDropdown extends Component{
     }
 
     )
-    console.log("Epic key: ", this.state.key)
+    // console.log("Epic key: ", this.state.key)
   }
   getAddressData = (querySnapshot) => {
     const addresses = [];
@@ -166,7 +174,7 @@ export default class AddressDropdown extends Component{
         isLoading: false,
       });
 
-      console.log("My addys: ", this.state.keyvals)
+      // console.log("My addys: ", this.state.keyvals)
     
   };
   
@@ -191,8 +199,8 @@ export default class AddressDropdown extends Component{
     // // console.log(typeof this.state.text)
     // console.log("Text Object: ", this.state.keyvals)
     // console.log("New Data: ", data)
-    console.log("Text: ", this.state.text)
-    console.log("Object State: ", this.state.keyvals)
+    // console.log("Text: ", this.state.text)
+    // console.log("Object State: ", this.state.keyvals)
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
@@ -217,7 +225,11 @@ export default class AddressDropdown extends Component{
                         placeholder="Enter Name on the Card"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].streetnumber}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'streetnumber')}
+                        onChangeText={(val) => 
+                          {
+                            this.inputValueUpdate(val, 'streetnumber')
+                            
+                        }}
                 />
                 </View>
 
@@ -253,6 +265,15 @@ export default class AddressDropdown extends Component{
                         onChangeText={(val) => this.inputValueUpdate(val, 'zip')}
                 />
                 </View>
+                <View style={styles.paybutton}>
+                              <Button
+                              title="Test"
+                              color="white"
+                              onPress={() => this.props.childToParent}
+                            /> 
+                          
+                            
+                        </View> 
                 
                 
                 
@@ -328,7 +349,7 @@ const styles = StyleSheet.create({
     paybutton: {
       // width: "77%",
       // height: "7%",
-      top: "300%",
+      top: "145%",
       // left: "30%",
       backgroundColor: "#DAAC3F",
       position: "absolute",

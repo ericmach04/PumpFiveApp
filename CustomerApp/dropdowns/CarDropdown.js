@@ -35,6 +35,8 @@ export default class AddressDropdown extends Component{
 //   updatedd = (choice) => {
 //     this.setState({ driver: choice })
 //  }
+
+
   componentDidMount() {
         this.unsubscribe = this.docs.onSnapshot(this.getCarData);
         this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
@@ -62,7 +64,7 @@ export default class AddressDropdown extends Component{
     }
 
     )
-    console.log("Epic key: ", this.state.key)
+    // console.log("Epic key: ", this.state.key)
   }
   getCarData = (querySnapshot) => {
     const carinfo = [];
@@ -127,7 +129,7 @@ export default class AddressDropdown extends Component{
         isLoading: false,
       });
 
-      console.log("My addys: ", this.state.keyvals)
+      // console.log("My addys: ", this.state.keyvals)
     
   };
   
@@ -152,8 +154,8 @@ export default class AddressDropdown extends Component{
     // // console.log(typeof this.state.text)
     // console.log("Text Object: ", this.state.keyvals)
     // console.log("New Data: ", data)
-    console.log("Text: ", this.state.text)
-    console.log("Object State: ", this.state.keyvals)
+    // console.log("Text: ", this.state.text)
+    // console.log("Object State: ", this.state.keyvals)
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           

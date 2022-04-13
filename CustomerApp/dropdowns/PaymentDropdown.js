@@ -120,7 +120,7 @@ export default class PaymentDropdown extends Component{
     }
 
     )
-    console.log("Epic key: ", this.state.key)
+    // console.log("Epic key: ", this.state.key)
   }
 
   getCardData = (querySnapshot) => {
@@ -151,7 +151,7 @@ export default class PaymentDropdown extends Component{
         var cardarr = number.split(' ')
         var lastfour = cardarr[3]
         var string = type + " ending in " + lastfour
-        console.log("String", string)
+        // console.log("String", string)
         data[0].push(string)
 
         const state = this.state;
@@ -174,7 +174,7 @@ export default class PaymentDropdown extends Component{
       }
     })
   ;
-    console.log("KeyVals", keyvals)
+    // console.log("KeyVals", keyvals)
     keyvals["Other"] = {
       email: '',  
       streetnumber:'',
@@ -189,10 +189,10 @@ export default class PaymentDropdown extends Component{
       keyvals,
       isLoading: false,
     });
-    console.log("Cards: ", this.state.cards)
-    console.log("epic before werid Data: ", this.state.data)
-    console.log("KeyVals(state)", this.state.keyvals)
-    console.log("uid: ", this.state.key)
+    // console.log("Cards: ", this.state.cards)
+    // console.log("epic before werid Data: ", this.state.data)
+    // console.log("KeyVals(state)", this.state.keyvals)
+    // console.log("uid: ", this.state.key)
 
     // data[0].push("Other")
 
@@ -216,11 +216,11 @@ export default class PaymentDropdown extends Component{
       var keys = this.state.keyvals
       var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     
-    console.log("Keys in render: ", keys)
-    console.log("Text: ", this.state.text)
+    // console.log("Keys in render: ", keys)
+    // console.log("Text: ", this.state.text)
     // console.log(typeof this.state.text)
-    console.log("Text Object: ", this.state.keyvals)
-    console.log("New Data: ", data)
+    // console.log("Text Object: ", this.state.keyvals)
+    // console.log("New Data: ", data)
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
@@ -245,7 +245,10 @@ export default class PaymentDropdown extends Component{
                         placeholder="Enter Name on the Card"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].name}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'name')}
+                        onChangeText={(val) => {
+                          this.inputValueUpdate(val, 'name')
+                          
+                        }}
                 />
                 </View>
 
@@ -291,15 +294,7 @@ export default class PaymentDropdown extends Component{
                         onChangeText={(val) => this.inputValueUpdate(val, 'cvv')}
                         keyboardType="numeric"
                 />
-                <View style={styles.paybutton}>
-                              <Button
-                              title="Confirm Payment"
-                              color="white"
-                              onPress={() => this.checkCards()}
-                            /> 
-                          
-                            
-                        </View>  
+                
                 </View>
                 </View>
                 
