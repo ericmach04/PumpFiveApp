@@ -17,6 +17,10 @@ export default class AddressDropdown extends Component{
     super(props);
     this.docs = firebase.firestore().collection("Addresses");
     this.userdocs = firebase.firestore().collection("Users");
+    this.handleStreetChange  = this.handleStreetChange.bind(this)
+    this.handleCityChange  = this.handleCityChange.bind(this)
+    this.handleStateChange  = this.handleStateChange.bind(this)
+    this.handleZipChange  = this.handleZipChange.bind(this)
     this.state = {
       // cards: [],
       addresses:{
@@ -27,19 +31,37 @@ export default class AddressDropdown extends Component{
       text: 'Other',
       data:[],
       keyvals: {
-        // "Other": {
-        //   email: '',  
-        //   streetnumber:'',
-        //   city: '',
-        //   state: '',
-        //   zip: '',
-        // }
+  
       },
     };
   }
-//   updatedd = (choice) => {
-//     this.setState({ driver: choice })
-//  }
+
+  handleStreetChange(e) {
+    // console.log("e: ", e)
+    this.inputValueUpdate(e, 'streetnumber')
+    this.props.onSNValChange(e)
+    // console.log("value: ", e)
+  }
+  handleCityChange(e) {
+    // console.log("e: ", e)
+    this.inputValueUpdate(e, 'city')
+    this.props.onCityValChange(e)
+    // console.log("value: ", e)
+  }
+  handleStateChange(e) {
+    // console.log("e: ", e)
+    this.inputValueUpdate(e, 'state')
+    this.props.onStateValChange(e)
+    // console.log("value: ", e)
+  }
+  handleZipChange(e) {
+    // console.log("e: ", e)
+    this.inputValueUpdate(e, 'zip')
+    this.props.onZipValChange(e)
+    // console.log("value: ", e)
+  }
+
+
   componentDidMount() {
         this.unsubscribe = this.docs.onSnapshot(this.getAddressData);
         this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
@@ -51,44 +73,12 @@ export default class AddressDropdown extends Component{
   }
 
   inputValueUpdate = (val, prop) => {
+    console.log("in value update")
     const state = this.state;
     state.keyvals[this.state.text][prop] = val;
     this.setState(state);
   }
-  // childToParent(){
-  //   console.log("This is an alert from the Child Component")
-  // }
-
-  checkCards() {
-    if(this.state.cards[this.state.text].cvv != this.state.keyvals[this.state.text].cvv)
-    {
-      Alert.alert(
-        'Sorry, the fields for this card do not match',
-        'Please try again',
-        [
-          {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
-        ],
-        { 
-          cancelable: true 
-        }
-      );
-    }
-    else{
-      // Alert.alert(
-      //   'Fields match',
-      //   'LFG',
-      //   [
-      //     {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
-      //   ],
-      //   { 
-      //     cancelable: true 
-      //   }
-      // );
-    //   this.updatePaidYes()
-    }
-  }
-
-
+  
 
   getUserKey = (querySnapshot) => {
     querySnapshot.forEach((res) => {
@@ -193,7 +183,12 @@ export default class AddressDropdown extends Component{
       var data = this.state.data;
       var keys = this.state.keyvals
       var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
-    
+      // Before: const streetnumber = this.state.keyvals["streetnumber"]
+      const streetnumber = this.props.streetnumber
+      // this.props.streetnumber = this.state.keyvals["streetnumber"]
+      // var streetnumner = this.props.streetnumber
+
+
     // console.log("Keys in render: ", keys)
     // console.log("Text: ", this.state.text)
     // // console.log(typeof this.state.text)
@@ -222,14 +217,11 @@ export default class AddressDropdown extends Component{
           <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder="Enter Name on the Card"
+                        placeholder="Enter Street Address"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].streetnumber}
-                        onChangeText={(val) => 
-                          {
-                            this.inputValueUpdate(val, 'streetnumber')
-                            
-                        }}
+                        onChangeText={this.handleStreetChange}
+                       
                 />
                 </View>
 
@@ -237,10 +229,10 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder='Enter Card Type (Visa, Mastercard, etc)'
+                        placeholder='Enter City'
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].city}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'city')}
+                        onChangeText={this.handleCityChange}
                 />
                 </View>
 
@@ -248,10 +240,10 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter Card Number (****-****-****-****)'}
+                        placeholder={'Enter State'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].state}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'state')}
+                        onChangeText={this.handleStateChange}
                 />
                 </View>
 
@@ -259,21 +251,13 @@ export default class AddressDropdown extends Component{
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter Expiration Date (MM/YY)'}
+                        placeholder={'Enter Zip Code'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].zip}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'zip')}
+                        onChangeText={this.handleZipChange}
                 />
                 </View>
-                <View style={styles.paybutton}>
-                              <Button
-                              title="Test"
-                              color="white"
-                              onPress={() => this.props.childToParent}
-                            /> 
-                          
-                            
-                        </View> 
+               
                 
                 
                 
@@ -285,12 +269,6 @@ export default class AddressDropdown extends Component{
         // </TouchableWithoutFeedback>
       );
         }
-      
-        // }
-
-        // else{
-        //   return <Text>Not supposed to be here</Text>
-        // }
     
   }
 }

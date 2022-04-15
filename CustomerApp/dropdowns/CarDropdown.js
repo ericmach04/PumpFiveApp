@@ -12,6 +12,10 @@ export default class AddressDropdown extends Component{
     super(props);
     this.docs = firebase.firestore().collection("Car_Info");
     this.userdocs = firebase.firestore().collection("Users");
+    this.handleModelChange  = this.handleModelChange.bind(this)
+    this.handleMakeChange  = this.handleMakeChange.bind(this)
+    this.handleYearChange  = this.handleYearChange.bind(this)
+    this.handleLicenseChange  = this.handleLicenseChange.bind(this)
     this.state = {
       // cards: [],
       addresses:{
@@ -35,6 +39,32 @@ export default class AddressDropdown extends Component{
 //   updatedd = (choice) => {
 //     this.setState({ driver: choice })
 //  }
+
+
+handleMakeChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'make')
+  this.props.onMakeValChange(e)
+  // console.log("value: ", e)
+}
+handleModelChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'model')
+  this.props.onModelValChange(e)
+  // console.log("value: ", e)
+}
+handleYearChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'year')
+  this.props.onYearValChange(e)
+  // console.log("value: ", e)
+}
+handleLicenseChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'license')
+  this.props.onLicenseValChange(e)
+  // console.log("value: ", e)
+}
 
 
   componentDidMount() {
@@ -180,7 +210,7 @@ export default class AddressDropdown extends Component{
                         placeholder="Enter Car Make"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].make}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'make')}
+                        onChangeText={this.handleMakeChange}
                 />
                 </View>
 
@@ -191,7 +221,7 @@ export default class AddressDropdown extends Component{
                         placeholder='Enter Car Model'
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].model}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'model')}
+                        onChangeText={this.handleModelChange}
                 />
                 </View>
 
@@ -202,7 +232,7 @@ export default class AddressDropdown extends Component{
                         placeholder={'Enter Car Year'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].year}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                        onChangeText={this.handleYearChange}
                 />
                 </View>
 
@@ -213,7 +243,7 @@ export default class AddressDropdown extends Component{
                         placeholder={'Enter License Plate'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].license}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'license')}
+                        onChangeText={this.handleLicenseChange}
                 />
                 </View>
                 
