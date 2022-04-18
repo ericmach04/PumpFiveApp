@@ -10,6 +10,7 @@ import PaymentDropdown from './dropdowns/PaymentDropdown';
 import AddressDropdown from './dropdowns/AddressDropdown';
 import CarDropdown from './dropdowns/CarDropdown';
 import firebase from 'firebase'
+import { auth } from "../firebase";
 // import DropDownPicker from 'react-native-dropdown-picker';
 
 import returnKeyVals from './dropdowns/AddressDropdown';
@@ -21,6 +22,7 @@ export default class GasService extends Component{
     // this.docs = firebase.firestore().collection("Addresses");
     // this.userdocs = firebase.firestore().collection("Users");
     this.docs = firebase.firestore().collection("Gas_Prices");
+    this.dbRef = firebase.firestore().collection('Orders');
 
     this.handleSNChange = this.handleSNChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
@@ -75,19 +77,82 @@ export default class GasService extends Component{
         expiry: '',
         cvv: '',
       },
+      isLoading: false
       
     };
   }
+
+  addOrderToDB() {
+      this.setState({
+        isLoading: true,
+      });      
+      this.dbRef.add({
+        email: auth.currentUser?.email,
+
+        streetnumber: this.state.addressinfo.streetnumber,
+        city: this.state.addressinfo.city,
+        state: this.state.addressinfo.state,
+        zip: this.state.addressinfo.zip,
+
+        service: 'gas',
+        type: this.state.gastype,
+        price: this.state.gasprice,
+        quantity: this.state.quantity,
+        subtotal: this.state.total,
+
+        make: this.state.carinfo.make,
+        model: this.state.carinfo.model,
+        year: this.state.carinfo.year,
+        license: this.state.carinfo.license,
+
+        card: this.state.cardinfo.type,
+
+        deliverytime: "TBD",
+        deliverydate: "TBD",
+        drivername: "TBD",
+        drivercar: "TBD",
+        taxes: "TBD",
+        discount: "TBD",
+
+        ordernumber: '',
+        fulfilled: "no",
+
+      }).then((res) => {
+        console.log("Res id: ", res.id)
+        const updateDBRef = firebase.firestore().collection('Orders').doc(res.id)
+        updateDBRef.update("ordernumber", res.id)
+        this.setState({
+          email: '',
+          streetnumber: '',
+          city: '',
+          state: '',
+          zip: '',
+          isLoading: false,
+        });
+        this.props.navigation.navigate('OrderSummary', {
+          userkey: res.id
+        })
+      })
+      .catch((err) => {
+        console.error("Error found: ", err);
+        this.setState({
+          isLoading: false,
+        });
+      });
+    
+  }
+
+
   showType = option =>{
     // console.log("option: ", option)
     const state = this.state
     // console.log("State: ", state)
     state["gastype"]= option
-    if(option == "regular"){
+    if(option.toLowerCase() == "regular"){
       state["gasprice"] = this.state.prices[0]["regular"]
     }
 
-    else if(option == "premium"){
+    else if(option.toLowerCase() == "premium"){
       state["gasprice"] = this.state.prices[0]["premium"]
     }
 
@@ -96,7 +161,7 @@ export default class GasService extends Component{
     }
     this.setState(state)
 
-    
+    console.log("option: ", option)
     console.log("State: ", this.state.gasprice)
   }
   
@@ -147,6 +212,7 @@ export default class GasService extends Component{
   }
 
   handleSNChange(streetnumber){
+    // console.log("in SN change")
     
     const state = this.state
     state.addressinfo["streetnumber"] = streetnumber
@@ -206,6 +272,7 @@ export default class GasService extends Component{
 
 //Credit Card
   handleNameChange(name){
+    console.log("In name change")
     const state = this.state
     state.cardinfo["name"] = name
     this.setState(state)
@@ -265,6 +332,8 @@ export default class GasService extends Component{
     const state = this.state;
     // console.log("State: ", state)
     var total = parseFloat(state["gasprice"]) * parseFloat(state["quantity"])
+    total = total.toFixed(2)
+    console.log("Total: ", total)
     state["reviewpressed"] = true;
     state["total"] = total
     this.setState(state)
@@ -273,32 +342,11 @@ export default class GasService extends Component{
     console.log("Final gas price: ", this.state.price)
     console.log("Final addy state: ", this.state.addressinfo)
     console.log("Final car state: ", this.state.carinfo)
+    // console.log("Final card info: ", this.state.cardinfo)
 
     // console.log(returnKeyVals)
     // }
   }
-
-  changeCountry(item) {
-    let city = null;
-    let cities;
-    switch (item.value) {
-        case 'fr':
-            cities = [
-                {label: 'Paris', value: 'paris'}
-            ];
-        break;
-        case 'es':
-            cities = [
-                {label: 'Madrid', value: 'madrid'}
-            ];
-        break;
-    }
-
-    this.setState({
-        city,
-        cities
-    });
-}
 
   render(){
 
@@ -465,6 +513,7 @@ export default class GasService extends Component{
                               <Button
                               title="Review Order"
                               color="white"
+                              // onPress={() => this.addOrderToDB()}
                               onPress={() => {
                                 // console.log("SN: ", this.state.streetnumber)
                                 this.changePages()
@@ -595,11 +644,11 @@ export default class GasService extends Component{
                         expiry={expiry}
                         cvv={cvv}
                         carddata={carddata}
-                        onNameValChange = {this.handleSNChange}
-                        onNumberValChange = {this.handleCityChange}
-                        onTypeValChange = {this.handleStateChange}
-                        onExpiryValChange = {this.handleZipChange}
-                        onCvvValChange = {this.handleZipChange}
+                        onNameValChange = {this.handleNameChange}
+                        onNumberValChange = {this.handleNumberChange}
+                        onTypeValChange = {this.handleTypeChange}
+                        onExpiryValChange = {this.handleExpiryChange}
+                        onCvvValChange = {this.handleCvvChange}
                         onExportCard = {this.importCard}
                         />
                     </View>
@@ -609,16 +658,17 @@ export default class GasService extends Component{
 
                
                
-                {/* <View style={styles.paybutton3}>
+                <View style={styles.paybutton3}>
                           <Button
                           title="Checkout"
                           color="white"
-                          onPress={() => console.log("Card info: ", this.state.cardinfo)}
+                          onPress={() => this.addOrderToDB()}
+                          // onPress={() => console.log("Card info: ", this.state.cardinfo)}
                           // onPress={() => this.checkCards()}
                         /> 
                      
                        
-                   </View>  */}
+                   </View> 
                    
                   
                

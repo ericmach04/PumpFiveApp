@@ -45,6 +45,8 @@ import ForgotPassword from './CustomerApp/ForgotPassword';
 
 import PaymentDropdown from './CustomerApp/dropdowns/PaymentDropdown';
 
+import Receipt from './CustomerApp/AcctSettingsPages/Receipt';
+
 
 // export default function App() {
 //   // return (
@@ -101,6 +103,7 @@ const App = () => {
 
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="PaymentDropdown" component={PaymentDropdown} />
+          <Stack.Screen name="Receipt" component={Receipt} />
 
           
 

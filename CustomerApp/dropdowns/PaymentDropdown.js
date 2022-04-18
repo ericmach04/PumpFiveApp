@@ -52,7 +52,7 @@ export default class PaymentDropdown extends Component{
 //     this.setState({ driver: choice })
 //  }
 handleNameChange(e) {
-  // console.log("e: ", e)
+  console.log("e: ", e)
   this.inputValueUpdate(e, 'name')
   this.props.onNameValChange(e)
   // console.log("value: ", e)
@@ -343,7 +343,7 @@ exportCardData(card){
                 />
                 
                 </View>
-                <View style={styles.paybutton3}>
+                {/* <View style={styles.paybutton3}>
                           <Button
                           title="Checkout"
                           color="white"
@@ -352,7 +352,7 @@ exportCardData(card){
                         /> 
                      
                        
-                   </View> 
+                   </View>  */}
                 </View>
                 
                 
