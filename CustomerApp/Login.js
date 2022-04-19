@@ -32,79 +32,6 @@ export default class Login extends Component{
 
   useEffect(){
     console.log("in useeffect")
-    // auth.onAuthStateChanged((user) => {
-    //   // console.log("user id: ", user.uid)
-    //   if (user) {
-    //     console.log("user: ", user.email)
-    //     if (
-    //       user.email == "info@pumpfive.com" ||
-    //       user.email == "talethea@gmail.com"
-    //     ) {
-    //       console.log("In admin LFGGG")
-    //       this.props.navigation.replace("Admin");
-    //     } 
-        
-    //     else {
-    //       let keysarr = Object.keys(this.state.keyvals)
-    //       for(let i=0; i < Object.keys(this.state.keyvals).length; i++)
-    //       {
-    //         if(user.email == keysarr[i]){
-    //           console.log("What is the email? ", user.email)
-    //           if(this.state.keyvals[user.email] == "no")
-    //           {
-    //             this.props.navigation.replace("Tabs");
-    //             this.state.driver == "no"
-    //           }
-    //           if(this.state.keyvals[user.email] == "yes")
-    //           {
-    //             this.props.navigation.replace("DriverTabs");
-    //             this.state.driver = "yes"
-    //           }
-    //         }
-    //       }
-    //       // console.log("Should be no: ", this.state.driver)
-    //       // if(this.state.driver == "no")
-    //       // {
-    //       //   this.props.navigation.replace("DriverTabs");
-            
-    //       // }
-    //       // else{
-    //       //   this.props.navigation.replace("Tabs");
-    //       // }
-          
-    //     }
-    //   }
-    // });
-
-
-    // auth.onAuthStateChanged((user) => {
-    //   // console.log("user id: ", user.uid)
-    //   if (user) {
-    //     // console.log("user: ", user.email)
-    //     if (
-    //       user.email == "info@pumpfive.com" ||
-    //       user.email == "talethea@gmail.com"
-    //     ) {
-    //       this.props.navigation.replace("Admin");
-    //     } 
-        
-    //     else {
-    //       console.log("Should be blahblahblah: ", this.state.driver)
-    //       if(this.state.driver == "no")
-    //       {
-    //         console.log("in")
-    //         this.props.navigation.replace("Tabs");
-            
-    //       }
-    //       else{
-    //         this.props.navigation.replace("DriverTabs");
-    //       }
-          
-    //     }
-    //   }
-    // });
-
-    
   }
 
   componentDidMount() {
@@ -188,7 +115,7 @@ export default class Login extends Component{
             user.email == "talethea@gmail.com"
           ) {
             console.log("In admin LFGGG")
-            this.props.navigation.replace("Admin");
+            this.props.navigation.replace("AdminTabs");
           } 
           
           else {

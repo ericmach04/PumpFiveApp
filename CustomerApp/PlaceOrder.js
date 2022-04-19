@@ -113,7 +113,8 @@ export default class PlaceOrder extends Component{
                         <Button
                             title="Book Now"
                             color="white"
-                            onPress={() => this.props.navigation.navigate('BookAppointment')}
+                            // onPress={() => this.props.navigation.navigate('BookAppointment')}
+                            onPress={() => this.props.navigation.navigate('TireService')}
                           />
                         </View>
                     </View>
@@ -125,7 +126,8 @@ export default class PlaceOrder extends Component{
                               <Button
                               title="Book Now"
                               color="white"
-                              onPress={() => this.props.navigation.navigate('BookAppointment', )}
+                              // onPress={() => this.props.navigation.navigate('BookAppointment', )}
+                              onPress={() => this.props.navigation.navigate('DetailingService')}
                             />
                             </View>
                         </View>
