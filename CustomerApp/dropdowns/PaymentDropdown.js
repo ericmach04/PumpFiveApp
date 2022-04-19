@@ -25,6 +25,7 @@ export default class PaymentDropdown extends Component{
     this.handleCvvChange  = this.handleCvvChange.bind(this)
 
     this.exportCardData  = this.exportCardData.bind(this)
+    this.exportText  = this.exportText.bind(this)
 
 
     this.state = {
@@ -52,7 +53,7 @@ export default class PaymentDropdown extends Component{
 //     this.setState({ driver: choice })
 //  }
 handleNameChange(e) {
-  console.log("e: ", e)
+  // console.log("e: ", e)
   this.inputValueUpdate(e, 'name')
   this.props.onNameValChange(e)
   // console.log("value: ", e)
@@ -134,20 +135,11 @@ exportCardData(card){
   }
 
   updatePaidYes() {
-    // this.setState({
-    //   isLoading: true,
-    // });
+    
     const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
     
     updateDBRef.update("paid", "yes")
-    // .then((docRef) => {
-    //   this.setState({
-    //     email: '',
-    //     password: '',
-    //     isLoading: false,
-    //   });
-    //   // this.props.navigation.navigate('Login');
-    // })
+    
     .catch((error) => {
       console.error("Error: ", error);
       this.setState({
@@ -168,6 +160,19 @@ exportCardData(card){
 
     )
     // console.log("Epic key: ", this.state.key)
+  }
+
+  exportText = (selection, row, data) => {
+    console.log("selection: ", selection)
+    console.log("row: ", row)
+    console.log("data", this.state.data)
+    const state = this.state;
+    state.text = data[selection][row];
+    this.setState(state);
+    // this.setState({text: data[selection][row]})
+    console.log("Text in export text: ", this.state.text)
+
+    this.props.onTextValChange(this.state.text)
   }
 
   getCardData = (querySnapshot) => {
@@ -282,8 +287,10 @@ exportCardData(card){
             bgColor={'white'}
             tintColor={'#000000'}
             activityTintColor={'red'}
-            handler={(selection,row) => this.setState({text: data[selection][row]})}
             data={data}
+            handler={(selection,row,data) => this.exportText(selection, row, this.state.data)}
+            // handler={(selection,row) => this.setState({text: data[selection][row]})}
+            
           >
           </DropdownMenu>
 
