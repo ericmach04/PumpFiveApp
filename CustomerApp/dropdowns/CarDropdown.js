@@ -7,20 +7,15 @@ import {Component, useState} from "react";
 import DropdownMenu from 'react-native-dropdown-menu';
 
 export default class AddressDropdown extends Component{
-
-  returnKeyVals() {
-    console.log(this.state.keyvals)
-    return ("Here")
-  }
   
   constructor(props) {
     super(props);
-    this.docs = firebase.firestore().collection("Addresses");
+    this.docs = firebase.firestore().collection("Car_Info");
     this.userdocs = firebase.firestore().collection("Users");
-    this.handleStreetChange  = this.handleStreetChange.bind(this)
-    this.handleCityChange  = this.handleCityChange.bind(this)
-    this.handleStateChange  = this.handleStateChange.bind(this)
-    this.handleZipChange  = this.handleZipChange.bind(this)
+    this.handleModelChange  = this.handleModelChange.bind(this)
+    this.handleMakeChange  = this.handleMakeChange.bind(this)
+    this.handleYearChange  = this.handleYearChange.bind(this)
+    this.handleLicenseChange  = this.handleLicenseChange.bind(this)
     this.state = {
       // cards: [],
       addresses:{
@@ -31,39 +26,49 @@ export default class AddressDropdown extends Component{
       text: 'Other',
       data:[],
       keyvals: {
-  
+        // "Other": {
+        //   email: '',  
+        //   streetnumber:'',
+        //   city: '',
+        //   state: '',
+        //   zip: '',
+        // }
       },
     };
   }
+//   updatedd = (choice) => {
+//     this.setState({ driver: choice })
+//  }
 
-  handleStreetChange(e) {
-    // console.log("e: ", e)
-    this.inputValueUpdate(e, 'streetnumber')
-    this.props.onSNValChange(e)
-    // console.log("value: ", e)
-  }
-  handleCityChange(e) {
-    // console.log("e: ", e)
-    this.inputValueUpdate(e, 'city')
-    this.props.onCityValChange(e)
-    // console.log("value: ", e)
-  }
-  handleStateChange(e) {
-    // console.log("e: ", e)
-    this.inputValueUpdate(e, 'state')
-    this.props.onStateValChange(e)
-    // console.log("value: ", e)
-  }
-  handleZipChange(e) {
-    // console.log("e: ", e)
-    this.inputValueUpdate(e, 'zip')
-    this.props.onZipValChange(e)
-    // console.log("value: ", e)
-  }
+
+handleMakeChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'make')
+  this.props.onMakeValChange(e)
+  // console.log("value: ", e)
+}
+handleModelChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'model')
+  this.props.onModelValChange(e)
+  // console.log("value: ", e)
+}
+handleYearChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'year')
+  this.props.onYearValChange(e)
+  // console.log("value: ", e)
+}
+handleLicenseChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'license')
+  this.props.onLicenseValChange(e)
+  // console.log("value: ", e)
+}
 
 
   componentDidMount() {
-        this.unsubscribe = this.docs.onSnapshot(this.getAddressData);
+        this.unsubscribe = this.docs.onSnapshot(this.getCarData);
         this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
   }
 
@@ -73,12 +78,10 @@ export default class AddressDropdown extends Component{
   }
 
   inputValueUpdate = (val, prop) => {
-    console.log("in value update")
     const state = this.state;
     state.keyvals[this.state.text][prop] = val;
     this.setState(state);
   }
-  
 
   getUserKey = (querySnapshot) => {
     querySnapshot.forEach((res) => {
@@ -93,12 +96,11 @@ export default class AddressDropdown extends Component{
     )
     // console.log("Epic key: ", this.state.key)
   }
-  getAddressData = (querySnapshot) => {
-    const addresses = [];
+  getCarData = (querySnapshot) => {
+    const carinfo = [];
     const data=[]
     var keyvals = {
-    // "Other": 
-    // {
+    // "Other": {
     //     name:'',
     //     number: '',
     //     type: '',
@@ -109,35 +111,28 @@ export default class AddressDropdown extends Component{
   }
     var emptyarr = []
     data.push(emptyarr)
-    // data[0].push("Please select an address")
-    // keyvals["Please select and address"] = {
-    // email: '',  
-    // streetnumber:'',
-    // city: '',
-    // state: '',
-    // zip: '',
-    // }
+
     querySnapshot.forEach((res) => {
-      const { email, streetnumber, city, state, zip } = res.data();
+      const { email, license, make, model, year } = res.data();
       if (email == auth.currentUser?.email) {
-        addresses.push({
+        carinfo.push({
           key: res.id,
           email,
-          streetnumber,
-          city,
-          state,
-          zip,
+          license,
+          make,
+          model,
+          year,
         });
 
-        var string = streetnumber
+        var string = year + " " + make + " " + model
         data[0].push(string)
 
         keyvals[string] = {
             // name:'placeholder',
-            streetnumber: streetnumber,
-            city: city,
-            state: state,
-            zip: zip
+            license: license,
+            make: make,
+            model: model,
+            year: year
             // cvv: '000'
             // cvv: cvv
           }
@@ -146,17 +141,17 @@ export default class AddressDropdown extends Component{
     });
 
     keyvals["Other"] = {
-        email: '',  
-        streetnumber:'',
-        city: '',
-        state: '',
-        zip: '',
-      }
-      data[0].push("Other")
+      email: '',  
+      license:'',
+      make: '',
+      model: '',
+      year: '',
+    }
+    data[0].push("Other")
 
     this.setState({
         keyvals,
-      addresses,
+      carinfo,
     });
     
     this.setState({
@@ -183,12 +178,7 @@ export default class AddressDropdown extends Component{
       var data = this.state.data;
       var keys = this.state.keyvals
       var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
-      // Before: const streetnumber = this.state.keyvals["streetnumber"]
-      const streetnumber = this.props.streetnumber
-      // this.props.streetnumber = this.state.keyvals["streetnumber"]
-      // var streetnumner = this.props.streetnumber
-
-
+    
     // console.log("Keys in render: ", keys)
     // console.log("Text: ", this.state.text)
     // // console.log(typeof this.state.text)
@@ -213,52 +203,49 @@ export default class AddressDropdown extends Component{
           </DropdownMenu>
 
           
-          <Text style={styles.email}>Street Name and Number: *</Text>
+          <Text style={styles.email}>Car Make: *</Text>
           <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder="Enter Street Address"
+                        placeholder="Enter Car Make"
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].streetnumber}
-                        onChangeText={this.handleStreetChange}
-                       
+                        value={this.state.keyvals[this.state.text].make}
+                        onChangeText={this.handleMakeChange}
                 />
                 </View>
 
-                <Text style={styles.email}>City: *</Text>
+                <Text style={styles.email}>Car Model: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder='Enter City'
+                        placeholder='Enter Car Model'
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].city}
-                        onChangeText={this.handleCityChange}
+                        value={this.state.keyvals[this.state.text].model}
+                        onChangeText={this.handleModelChange}
                 />
                 </View>
 
-                <Text style={styles.email}>State: *</Text>
+                <Text style={styles.email}>Car Year: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter State'}
+                        placeholder={'Enter Car Year'}
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].state}
-                        onChangeText={this.handleStateChange}
+                        value={this.state.keyvals[this.state.text].year}
+                        onChangeText={this.handleYearChange}
                 />
                 </View>
 
-                <Text style={styles.email}>Zip Code: *</Text>
+                <Text style={styles.email}>License Plate: *</Text>
                 <View style={styles.input}>
                 <TextInput
                         // style={styles.input}
-                        placeholder={'Enter Zip Code'}
+                        placeholder={'Enter License Plate'}
                         placeholderTextColor="#D3D3D3"
-                        value={this.state.keyvals[this.state.text].zip}
-                        onChangeText={this.handleZipChange}
+                        value={this.state.keyvals[this.state.text].license}
+                        onChangeText={this.handleLicenseChange}
                 />
                 </View>
-               
-                
                 
                 
                
@@ -269,6 +256,12 @@ export default class AddressDropdown extends Component{
         // </TouchableWithoutFeedback>
       );
         }
+      
+        // }
+
+        // else{
+        //   return <Text>Not supposed to be here</Text>
+        // }
     
   }
 }
@@ -327,7 +320,7 @@ const styles = StyleSheet.create({
     paybutton: {
       // width: "77%",
       // height: "7%",
-      top: "145%",
+      top: "300%",
       // left: "30%",
       backgroundColor: "#DAAC3F",
       position: "absolute",

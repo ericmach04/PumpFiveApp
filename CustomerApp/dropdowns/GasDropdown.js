@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button } from 'r
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useState} from "react";
 
-const GasDropdown = () => {
+export default function GasDropdown({childToParent}){
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -19,6 +19,7 @@ const GasDropdown = () => {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      onChangeItem={item => console.log(item.label, item.value)}
     />
   );
 }
@@ -29,5 +30,3 @@ const styles = StyleSheet.create({
         left: 5,
     }
 })
-
-export default GasDropdown;

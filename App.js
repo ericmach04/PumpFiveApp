@@ -28,6 +28,11 @@ import { NavigationContainer, Screen } from '@react-navigation/native';
 import Tabs from './navigation/tabs';
 import DriverTabs from './navigation/DriverTabs';
 
+import AdminTabs from './navigation/AdminTabs'
+import AdminGas from './CustomerApp/AdminGas'
+import AdminTires from './CustomerApp/AdminTires'
+import AdminDetailing from './CustomerApp/AdminDetailing'
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './CustomerApp/Login';
 
@@ -44,6 +49,8 @@ import Admin from './CustomerApp/Admin'
 import ForgotPassword from './CustomerApp/ForgotPassword';
 
 import PaymentDropdown from './CustomerApp/dropdowns/PaymentDropdown';
+
+import Receipt from './CustomerApp/AcctSettingsPages/Receipt';
 
 
 // export default function App() {
@@ -101,6 +108,12 @@ const App = () => {
 
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="PaymentDropdown" component={PaymentDropdown} />
+          <Stack.Screen name="Receipt" component={Receipt} />
+
+          <Stack.Screen name="AdminTabs" component={AdminTabs} />
+          <Stack.Screen name="AdminGas" component={AdminGas} />
+          <Stack.Screen name="AdminTires" component={AdminTires} />
+          <Stack.Screen name="AdminDetailing" component={AdminDetailing} />
 
           
 

@@ -1,7 +1,8 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
+import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator } from 'react-native'
 import React, { Component, useCallback } from 'react'
 import firebase from "firebase";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
@@ -27,7 +28,7 @@ const OpenURLButton = ({ url, children }) => {
 export default class HomePage extends Component {
   constructor() {
     super();
-    this.docs = firebase.firestore().collection("Gas_Prices");
+    this.docs = firebase.firestore().collection("Prices");
     this.state = {
       isLoading: true,
       prices: [],
@@ -44,17 +45,50 @@ export default class HomePage extends Component {
 
   getPriceData = (querySnapshot) => {
     const prices = [];
+    var regular=''
+    var premiumgas = ''
+    var diesel= ''
+    
+    var small=''
+    var medium=''
+    var large=''
+
+    var basic=''
+    var premiumdetailing=''
     querySnapshot.forEach((res) => {
-      const { regular, premium, diesel } = res.data();
-      // console.log("Email1: ", email)
-      // console.log("Email2: ", auth.currentUser?.email)
-        prices.push({
-          key: res.id,
-          regular,
-          premium,
-          diesel,
-        });
+
+      if(res.id=="Gas_Prices")
+      {     
+        regular = res.data().regular
+        premiumgas = res.data().premium
+        diesel = res.data().diesel
+      }
+      else if(res.id=="Tire_Prices")
+      {
+        small = res.data().small
+        medium = res.data().medium
+        large = res.data().large
+      }
+      else if(res.id=="Detailing_Prices")
+      {
+        basic = res.data().basic
+        premiumdetailing = res.data().premium
+      }
+
+      
     });
+    prices.push({
+      regular,
+      premiumgas,
+      diesel,
+      small,
+      medium,
+      large,
+      basic,
+      premiumdetailing
+    });
+    console.log("All prices: ", prices)
+  
     // console.log(cars);
     this.setState({
       prices,
@@ -62,6 +96,14 @@ export default class HomePage extends Component {
     });
   };
   render(){
+    console.log("Regular gas: ", this.state.prices)
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="red" />
+        </View>
+      );
+    }
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
@@ -78,24 +120,33 @@ export default class HomePage extends Component {
           latitudeDelta: 0.0622,
         }}/>
       </View>
-        {
-            this.state.prices.map((res, i) => {
-            return (
+        
+              <View style={styles.scrollbox}>
+              <ScrollView style={styles.scroll1}>
                 <View style={styles.rect2}>
-                    <Text style={styles.bofadeeznutsbold}>Current Regular Price: <Text style={styles.embeddedText}>${res.regular}</Text></Text>
-                    <Text style={styles.bofadeeznutsbold}>Current Premium Price: <Text style={styles.embeddedText}>${res.premium}</Text></Text>
-                    <Text style={styles.bofadeeznutsbold}>Current Diesel Price: <Text style={styles.embeddedText}>${res.diesel}</Text></Text>
-                </View>
-            );
-            })
-        }
+                    <Text style={styles.bofadeeznutsbold}>Regular Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].regular}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Premium Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].premiumgas}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Diesel Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].diesel}</Text></Text>
 
-      <View style={styles.button1}>
+                    <Text style={styles.bofadeeznutsbold}>Small Tire Price: <Text style={styles.embeddedText}>${this.state.prices[0].small}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Medium Tire Price: <Text style={styles.embeddedText}>${this.state.prices[0].medium}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Large Tire Price: <Text style={styles.embeddedText}>${this.state.prices[0].large}</Text></Text>
+
+                    <Text style={styles.bofadeeznutsbold}>Basic Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].basic}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Premium Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].premiumdetailing}</Text></Text>
+                    
+                </View>
+              </ScrollView>
+              </View>
+            
+        
+
+      {/* <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
       <View style={styles.button2}>
       <OpenURLButton color="white" url={supportedURL2}>Contact Us</OpenURLButton>
-      </View>
+      </View> */}
       </ImageBackground>
     </View>
   )
@@ -131,16 +182,22 @@ const styles = StyleSheet.create({
     //borderRadius: 10,
   },
   rect2: {
-    position: 'absolute',
-    width: "90%",
-    height: "15%",
-    left: "5%",
-    right: "5%",
-    top: "68%",
-    backgroundColor: '#CDCABF',
-    borderWidth: 3,
-    borderColor: '#000000',
-    borderRadius: 10,
+    backgroundColor: "#CDCABF",
+    //borderWidth: 2,
+    borderColor: "#000000",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    marginBottom: 5,
+    // position: 'absolute',
+    // width: "90%",
+    // height: "15%",
+    // left: "5%",
+    // right: "5%",
+    // top: "68%",
+    // backgroundColor: '#CDCABF',
+    // borderWidth: 3,
+    // borderColor: '#000000',
+    // borderRadius: 10,
   },
   button1: {
     position: 'absolute',
@@ -196,6 +253,15 @@ const styles = StyleSheet.create({
   },
   embeddedText: {
     color: "green",
-  }
+  },
+  scroll1: {
+    flex: 1,
+  },
+  scrollbox: {
+    flex: 0.7,
+    width: "90%",
+    left: "5%",
+    top: "50%",
+  },
 })
 

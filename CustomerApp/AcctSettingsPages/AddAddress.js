@@ -56,23 +56,6 @@ export default class AddAddress extends Component{
     }
   }
 
-    // const [email, setEmail] = useState('')
-    // const [streetnumber, setStreetnumber] = useState('')
-    // const [city, setCity] = useState('')
-    // const [state, setState] = useState('')
-    // const [zip, setZip] = useState('')
-
-
-    // const addAddressToDB = () => {
-    //     addAddress({
-    //         email: auth.currentUser?.email,
-    //         streetnumber: streetnumber,
-    //         city: city,
-    //         state: state,
-    //         zip: zip,
-    //     })
-
-    // }
     render(){
       if(this.state.isLoading){
         return(

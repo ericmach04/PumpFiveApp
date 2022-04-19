@@ -88,10 +88,10 @@ export default function GasService({ navigation }) {
         </View>
 
 
-        <View style={styles.paymentinfo}>
+        {/* <View style={styles.paymentinfo}>
           <Text style={styles.boxfontshead}>Payment Information</Text>
           <PaymentDropdown />
-        </View>
+        </View> */}
 
         <View style={styles.promobutton}>
           <TextInput
