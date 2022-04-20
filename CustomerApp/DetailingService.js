@@ -47,7 +47,7 @@ export default class DetailingService extends Component{
 
     this.state = {
       reviewpressed: false,
-      quantity: 0,
+      quantity: 1,
       detailingtype: '',
       detailingprice: '',
       prices: [],
@@ -103,7 +103,7 @@ export default class DetailingService extends Component{
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
-        service: 'tire',
+        service: 'detailing',
         type: this.state.detailingtype,
         price: this.state.detailingprice,
         quantity: this.state.quantity,
@@ -157,11 +157,11 @@ export default class DetailingService extends Component{
     const state = this.state
     // console.log("State: ", state);;/.
     state["detailingtype"]= option
-    if(option.toLowerCase() == "small"){
+    if(option.toLowerCase() == "basic"){
       state["detailingprice"] = this.state.prices[0]["basic"]
     }
 
-    else if(option.toLowerCase() == "medium"){
+    else if(option.toLowerCase() == "premium"){
       state["detailingprice"] = this.state.prices[0]["premium"]
     }
 
@@ -171,7 +171,8 @@ export default class DetailingService extends Component{
     this.setState(state)
 
     console.log("option: ", option)
-    console.log("State: ", this.state.tireprice)
+    console.log("Type State: ", this.state.detailingtype)
+    console.log("State: ", this.state.detailingprice)
   }
   
 
@@ -345,13 +346,13 @@ export default class DetailingService extends Component{
     // else{
     const state = this.state;
     // console.log("State: ", state)
-    var total = parseFloat(state["tireprice"]) * parseFloat(state["quantity"])
+    var total = parseFloat(state["detailingprice"]) * parseFloat(state["quantity"])
     total = total.toFixed(2)
     console.log("Total: ", total)
     state["reviewpressed"] = true;
     state["total"] = total
     this.setState(state)
-    console.log("Final gas type: ", this.state.tiretype)
+    console.log("Final gas type: ", this.state.detailingtype)
     console.log("Final gas quantity: ", this.state.quantity)
     console.log("Final gas price: ", this.state.price)
     console.log("Final addy state: ", this.state.addressinfo)
@@ -435,7 +436,7 @@ export default class DetailingService extends Component{
                             <View>
                               <Picker
                                 onValueChange={this.showType}
-                                selectedValue={this.state.tiretype}
+                                selectedValue={this.state.detailingtype}
                               >
                                 <Picker.Item label="Please Select" value="disabled" color="#aaa"/>
                                 <Picker.Item label="Basic" value="Basic" />
@@ -586,8 +587,8 @@ export default class DetailingService extends Component{
 
                       <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
                         <View>
-                          <Text>{this.state.detailingtype} tire price: $</Text>
-                          <Text>Number of tires: </Text>
+                          <Text>{this.state.detailingtype} Detailing price: $</Text>
+                          <Text>Detailing: </Text>
                         </View>
 
                         <View>

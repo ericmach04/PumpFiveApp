@@ -31,7 +31,7 @@ export default class Receipt extends Component{
       console.log("auth email: ", auth.currentUser?.email)
       console.log("ordernumber: ", ordernumber)
       console.log("params: ", this.props.route.params.userkey)
-      if (email == auth.currentUser?.email && ordernumber==this.props.route.params.userkey) {
+      if (ordernumber==this.props.route.params.userkey) {
         orders.push({
             card, 
             city, 
@@ -115,7 +115,7 @@ export default class Receipt extends Component{
                                       title="Back"
                                       color="white"
                                       //   onPress={() => console.log('Clicked')}
-                                      onPress={() => this.props.navigation.navigate('Tabs')}
+                                      onPress={() => this.props.navigation.goBack()}
                                       />
                                   </View>
                               </View>
