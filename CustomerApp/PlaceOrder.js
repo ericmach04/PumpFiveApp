@@ -63,12 +63,8 @@ export default class PlaceOrder extends Component {
       );
     } else {
       // this.props.navigation.navigate('BookAppointment', {service: 1})
-<<<<<<< HEAD
       this.props.navigation.navigate("GasService");
-=======
-      this.props.navigation.navigate('GasService')
       // this.props.navigation.navigate('OrderSummary')
->>>>>>> 3932c7b32bacf5a2fe230400985dbf61913f1aef
     }
   }
 
@@ -103,7 +99,6 @@ export default class PlaceOrder extends Component {
           <SafeAreaView style={styles.container}>
             <Text style={styles.text}>Services</Text>
 
-<<<<<<< HEAD
             <ScrollView style={styles.scroll}>
               <View style={styles.gasservice}>
                 <Text style={styles.boxfontshead}>Gas Services</Text>
@@ -116,8 +111,8 @@ export default class PlaceOrder extends Component {
                   <Button
                     title="Book Now"
                     color="white"
-                    // onPress={() => this.handleGasBook()}
-                    onPress={() => this.props.navigation.navigate("GasService")}
+                    // onPress={() => this.props.navigation.navigate("OrderSummary")}
+                    onPress={() => this.handleGasBook()}
                   />
                 </View>
               </View>
@@ -131,8 +126,9 @@ export default class PlaceOrder extends Component {
                   <Button
                     title="Book Now"
                     color="white"
+                    // onPress={() => this.props.navigation.navigate('BookAppointment')}
                     onPress={() =>
-                      this.props.navigation.navigate("BookAppointment")
+                      this.props.navigation.navigate("TireService")
                     }
                   />
                 </View>
@@ -147,8 +143,9 @@ export default class PlaceOrder extends Component {
                   <Button
                     title="Book Now"
                     color="white"
+                    // onPress={() => this.props.navigation.navigate('BookAppointment', )}
                     onPress={() =>
-                      this.props.navigation.navigate("BookAppointment")
+                      this.props.navigation.navigate("DetailingService")
                     }
                   />
                 </View>
@@ -170,63 +167,6 @@ export default class PlaceOrder extends Component {
                 </View>
               </View>
             </ScrollView>
-=======
-                <ScrollView style={styles.scroll}>
-                    <View style={styles.gasservice}>
-                        <Text style={styles.boxfontshead}>Gas Services</Text>
-                        <Text style={styles.boxfontsbody}>Because you hate going to the gas station! Because those extra 20 minutes in the morning matter.</Text>
-                        <View style={styles.button}>
-                          {/* <Text>Home Screen</Text> */}
-                          <Button
-                            title="Book Now"
-                            color="white"
-                            // onPress={() => this.props.navigation.navigate("OrderSummary")}
-                            onPress={() => this.handleGasBook()}
-                          />
-                            
-                        </View>
-                        
-                    </View>
-                    <View style={styles.gasservice}>
-                        <Text style={styles.boxfontshead}>Tire Services</Text>
-                        <Text style={styles.boxfontsbody}>PumpFive can provide you with quick tire service. Book your service and we
-                        will get back to you in 24 hours.</Text>
-                        <View style={styles.button}>
-                        <Button
-                            title="Book Now"
-                            color="white"
-                            // onPress={() => this.props.navigation.navigate('BookAppointment')}
-                            onPress={() => this.props.navigation.navigate('TireService')}
-                          />
-                        </View>
-                    </View>
-                    <View style={styles.gasservice}>
-                        <Text style={styles.boxfontshead}>Detailing Services</Text>
-                            <Text style={styles.boxfontsbody}>PumpFive can provide you with quick detailing service. Book your service and we
-                            will get back to you in 24 hours.</Text>
-                            <View style={styles.button}>
-                              <Button
-                              title="Book Now"
-                              color="white"
-                              // onPress={() => this.props.navigation.navigate('BookAppointment', )}
-                              onPress={() => this.props.navigation.navigate('DetailingService')}
-                            />
-                            </View>
-                        </View>
-                        <View style={styles.gasservice}>
-                        <Text style={styles.boxfontshead}>Tinting Services</Text>
-                            <Text style={styles.boxfontsbody}>PumpFive can provide you with a quick tinting service. Book your service and we
-                            will get back to you in 24 hours.</Text>
-                            <View style={styles.button}>
-                              <Button
-                              title="Book Now"
-                              color="white"
-                              onPress={() => this.props.navigation.navigate('BookAppointment')}
-                            />
-                            </View>
-                        </View>
-                    </ScrollView>
->>>>>>> 3932c7b32bacf5a2fe230400985dbf61913f1aef
           </SafeAreaView>
         </ImageBackground>
       </View>
