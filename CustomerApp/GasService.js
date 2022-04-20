@@ -21,7 +21,7 @@ export default class GasService extends Component{
     super(props);
     // this.docs = firebase.firestore().collection("Addresses");
     // this.userdocs = firebase.firestore().collection("Users");
-    this.docs = firebase.firestore().collection("Gas_Prices");
+    this.docs = firebase.firestore().collection("Prices");
     this.dbRef = firebase.firestore().collection('Orders');
 
     this.handleSNChange = this.handleSNChange.bind(this)
@@ -41,6 +41,7 @@ export default class GasService extends Component{
     this.handleCvvChange = this.handleCvvChange.bind(this)
 
     this.importCard = this.importCard.bind(this)
+    this.importText = this.importText.bind(this)
 
     // this.setValue = this.setValue.bind(this)
 
@@ -49,6 +50,7 @@ export default class GasService extends Component{
       quantity: 0,
       gastype: '',
       gasprice: '',
+      text: '',
       prices: [],
       total: 0,
       addressinfo:{
@@ -80,6 +82,14 @@ export default class GasService extends Component{
       isLoading: false
       
     };
+  }
+
+  importText(text){
+    const state = this.state
+    state.text = text
+    this.setState(state)
+    console.log("Imported Text: ", this.state.text)
+
   }
 
   addOrderToDB() {
@@ -184,7 +194,11 @@ export default class GasService extends Component{
 
   getPriceData = (querySnapshot) => {
     const prices = [];
-    querySnapshot.forEach((res) => {
+    const dbRef = firebase
+    .firestore()
+    .collection("Prices")
+    .doc("Gas_Prices");
+  dbRef.get().then((res) => {
       const { regular, premium, diesel } = res.data();
       console.log("regular: ", regular)
       console.log("premium: ", premium)
@@ -539,6 +553,7 @@ export default class GasService extends Component{
     const cvv = this.props.cvv
 
     const carddata = this.props.carddata
+    const text = this.props.text
 
     return(
     <View style={styles.container}>
@@ -644,12 +659,14 @@ export default class GasService extends Component{
                         expiry={expiry}
                         cvv={cvv}
                         carddata={carddata}
+                        text={text}
                         onNameValChange = {this.handleNameChange}
                         onNumberValChange = {this.handleNumberChange}
                         onTypeValChange = {this.handleTypeChange}
                         onExpiryValChange = {this.handleExpiryChange}
                         onCvvValChange = {this.handleCvvChange}
                         onExportCard = {this.importCard}
+                        onTextValChange = {this.importText}
                         />
                     </View>
                
