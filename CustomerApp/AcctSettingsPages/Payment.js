@@ -143,6 +143,7 @@ export default class Payment extends Component {
                         <View
                           style={{
                             justifyContent: "center",
+                            //top: "10%",
                             alignItems: "center",
                           }}
                         >
@@ -203,20 +204,24 @@ const buttonstyles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
+
+  //BackButton Payment Management
   backbutton: {
     width: "18%",
     height: 40,
     // top: 65,
     right: 0,
+    borderRadius: 4,
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
-  // + Add Payment Button
+  // + Add Payment Button - Payment Management
   paybutton: {
     width: "77%",
     height: "7%",
-    top: "85%",
+    top: "88%",
     right: "10%",
+    borderRadius: 4,
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
@@ -271,7 +276,8 @@ const styles = StyleSheet.create({
     //If overlay occurs with cars, delete position: absolute,
     width: "100%",
     height: "30%",
-    bottom: "30%",
+    bottom: "15%",
+    marginTop: "5%",
     backgroundColor: "#CDCABF",
     borderWidth: 2,
     borderColor: "#000000",
