@@ -1,4 +1,4 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator } from 'react-native'
+import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator, Alert } from 'react-native'
 import React, { Component, useCallback } from 'react'
 import { TouchableOpacity } from 'react-native-web';
 import firebase from "firebase"
@@ -28,11 +28,38 @@ export default class DriverOrder extends Component {
     this.unsubscribe();
   }
 
+  updateQuantity(quantity, id){
+    const updateDBRef = firebase.firestore().collection('Orders').doc(id)
+    updateDBRef.update("quantity", quantity)
+
+  }
+
+  onButtonPress(id){
+    Alert.prompt(
+      "Gas Delivery",
+      "Enter number of gallons you filled",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Submit",
+          onPress: quantity => this.updateQuantity(quantity, id)
+        }
+      ],
+      
+    );
+  };
+
+
   getOrderData = (querySnapshot) => {
     const allorders = [];
     var units=''
     querySnapshot.forEach((res) => {
-      const { email, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber} = res.data();
+      const { fname, lname, phone, email, color, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, 
+        streetnumber, city, state, zip, license} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
       if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
@@ -44,6 +71,10 @@ export default class DriverOrder extends Component {
         }
         allorders.push({
           key: res.id,
+          fname,
+          lname,
+          phone,
+          color,
           fulfilled,
           deliverydate,
           quantity,
@@ -53,6 +84,11 @@ export default class DriverOrder extends Component {
           type,
           service,
           ordernumber,
+          streetnumber,
+          city,
+          state,
+          zip,
+          license,
           units: units
         });
       }
@@ -71,23 +107,26 @@ export default class DriverOrder extends Component {
         </View>
       );
     }
-
-    var currorder = this.state.allorders.shift()
-    console.log("Current order: ", currorder)
+    if(this.state.allorders != [])
+    {
+      var currorder = this.state.allorders.shift()
+      console.log("Current order: ", currorder)
+    }
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>Current Order: (Order Type) </Text>
+      <Text style={styles.text}>Current Order: {currorder.service} </Text>
       <View style={styles.rect1}>
         {/* <Text style={styles.boxfontshead}>Company Updates</Text> */}
 
         <Image style={styles.Logo} source={require('../images/placeholdermap.png')}/>
-        <Text style={styles.boxfontshead}>Customer Name: </Text>
-        <Text style={styles.boxfontshead}>Customer Location: </Text>
-        <Text style={styles.boxfontshead}>Customer Phone: </Text>
-        <Text style={styles.boxfontshead}>Car Model: </Text>
-        <Text style={styles.boxfontshead}>Car Make: </Text>
-        <Text style={styles.boxfontshead}>License Plate: </Text>
+        {/* <Text style={styles.boxfontshead}>Customer Name: </Text> */}
+        <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
+        <Text style={styles.boxfontshead}>Customer Phone: <Text style={{color: "green"}}>{currorder.phone}</Text></Text>
+        <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text>
+        <Text style={styles.boxfontshead}>Location: <Text style={{color: "green"}}>{currorder.streetnumber} {currorder.city} {currorder.state} {currorder.zip}</Text></Text>
+        <Text style={styles.boxfontshead}>Vehicle: <Text style={{color: "green"}}>{currorder.year} {currorder.color} {currorder.make} {currorder.model}</Text></Text>
+        <Text style={styles.boxfontshead}>License Plate: <Text style={{color: "green"}}>{currorder.license}</Text></Text>
       </View>
 
       <View style={styles.button}>
@@ -95,6 +134,7 @@ export default class DriverOrder extends Component {
         <Button
             title="Job Completed"
             color="white"
+            onPress={onButtonPress(currorder.ordernumber)}
             // onPress={() => navigation.navigate('CalendarScreen')}
         />
       </View>

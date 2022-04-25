@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ScrollView, ActivityIndicator } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import React, { Component } from 'react'
 import {useState} from "react";
@@ -24,6 +24,8 @@ export default class GasService extends Component{
     this.docs = firebase.firestore().collection("Prices");
     this.dbRef = firebase.firestore().collection('Orders');
 
+    this.dbusers = firebase.firestore().collection('Users');
+
     this.handleSNChange = this.handleSNChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
@@ -48,6 +50,10 @@ export default class GasService extends Component{
 
     this.state = {
       reviewpressed: false,
+      fname: '',
+      lname: '',
+      phone: '',
+      email: '',
       quantity: 0,
       gastype: '',
       gasprice: '',
@@ -86,6 +92,47 @@ export default class GasService extends Component{
     };
   }
 
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getPriceData);
+    this.dbusers.onSnapshot(this.getUserData);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getUserData = (querySnapshot) => {
+    // const user = userCredentials.user;
+    // console.log("In getifdriver")
+    // console.log("this email: ", this.state.email)
+    
+    // var keyvalues = {}
+    // console.log("this.state.email: ", this.state.email)
+    querySnapshot.forEach((res) => {
+      const {email, fname, lname, phone } = res.data();
+      // console.log("email: ", email)
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        // console.log("email: ", email)
+        const state = this.state
+        state.email = email
+        state.fname = fname
+        state.lname = lname
+        state.phone = phone
+        this.setState(state)
+        
+      }
+      
+    });
+    this.setState({
+      // keyvals: keyvalues,
+      isLoading: false,
+    });
+    // console.log("epicemail: ", this.state.email)
+    // console.log("epicfname: ", this.state.fname)
+    // console.log("epiclname: ", this.state.lname)
+    // console.log("epicephone: ", this.state.phone)
+  };
+
   importText(text){
     const state = this.state
     state.text = text
@@ -94,12 +141,22 @@ export default class GasService extends Component{
 
   }
 
+
   addOrderToDB() {
       this.setState({
         isLoading: true,
-      });      
+      });
+      // const dbRef = firebase.firestore().collection("Users")
+      // dbRef.get().then((res) => {
+
+      // })
+      
+
       this.dbRef.add({
         email: auth.currentUser?.email,
+        fname: this.state.fname,
+        lname: this.state.lname,
+        phone: this.state.phone,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,
@@ -161,11 +218,11 @@ export default class GasService extends Component{
     const state = this.state
     // console.log("State: ", state)
     state["gastype"]= option
-    if(option.toLowerCase() == "regular"){
+    if(option == "Regular Gasoline"){
       state["gasprice"] = this.state.prices[0]["regular"]
     }
 
-    else if(option.toLowerCase() == "premium"){
+    else if(option == "Premium Gasoline"){
       state["gasprice"] = this.state.prices[0]["premium"]
     }
 
@@ -187,13 +244,7 @@ export default class GasService extends Component{
 
   }
 
-  componentDidMount() {
-    this.unsubscribe = this.docs.onSnapshot(this.getPriceData);
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
+  
 
   getPriceData = (querySnapshot) => {
     const prices = [];
@@ -375,6 +426,12 @@ export default class GasService extends Component{
 
   // console.log("reviewpressed?: ", this.state.reviewpressed)
 
+  // const dbRef = firebase.firestore().collection("Users")
+  //     dbRef.get().then((res) => {
+  //       const { email} = res.data();
+  //       console.log("emails: ", email)
+  //     })
+
   const streetnumber = this.props.streetnumber
   const city = this.props.city
   const state = this.props.state
@@ -387,6 +444,13 @@ export default class GasService extends Component{
   const license = this.props.license
 
   const { open, value, items } = this.state;
+  if (this.state.isLoading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="red" />
+      </View>
+    );
+  }
   if(this.state.reviewpressed == false) {
   return (
     <View style={styles.container}>
@@ -448,9 +512,9 @@ export default class GasService extends Component{
                                 selectedValue={this.state.gastype}
                               >
                                 <Picker.Item label="Please Select" value="disabled" color="#aaa"/>
-                                <Picker.Item label="Regular" value="Regular" />
-                                <Picker.Item label="Premium" value="Premium" />
-                                <Picker.Item label="Diesel" value="Diesel" />
+                                <Picker.Item label="Regular" value="Regular Gasoline" />
+                                <Picker.Item label="Premium" value="Premium Gasoline" />
+                                <Picker.Item label="Diesel" value="Diesel Gasoline" />
                                 
                               </Picker>
                               

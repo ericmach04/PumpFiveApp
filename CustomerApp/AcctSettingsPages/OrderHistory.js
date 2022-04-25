@@ -95,7 +95,7 @@ export default class OrderHistory extends Component {
                 <View style={styles.section}>
                   <View>
                     <Text style={styles.bofadeeznutsbold}>
-                    {res.service.toUpperCase()} Delivery Service
+                    {res.service}
                     </Text>
                   </View>
 
