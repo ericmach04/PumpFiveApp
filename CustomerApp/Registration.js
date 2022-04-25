@@ -11,10 +11,10 @@ import {
   ScrollView,
 } from "react-native";
 import React, { Component, useEffect, useState } from "react";
-import firebase from 'firebase';
+import firebase from "firebase";
 import { auth } from "../firebase";
 import { addUser } from "../firebasefunctions";
-import DropdownMenu from 'react-native-dropdown-menu';
+import DropdownMenu from "react-native-dropdown-menu";
 
 import PhoneInput from "react-native-phone-input";
 
@@ -29,68 +29,71 @@ export default class Registration extends Component {
   // const [cYear, setcYear] = useState('')
   constructor() {
     super();
-    this.dbRef = firebase.firestore().collection('Users');
+    this.dbRef = firebase.firestore().collection("Users");
     this.state = {
-      email: '',
-      password: '',
-      reenterpassword: '',
-      fname: '',
-      lname: '',
-      phone: '',
-      driver: '',
-      paid: 'no',
-      isLoading: false
+      email: "",
+      password: "",
+      reenterpassword: "",
+      fname: "",
+      lname: "",
+      phone: "",
+      driver: "",
+      paid: "no",
+      isLoading: false,
     };
   }
   inputValueUpdate = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-  }
+  };
 
-  useEffect(){
+  useEffect() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log("driver?: ", this.state.driver)
+      console.log("driver?: ", this.state.driver);
       if (user) {
-        if(this.state.driver == "no")
-        {
+        if (this.state.driver == "no") {
           this.props.navigation.replace("Tabs");
-        }
-        else
-        {
+        } else {
           this.props.navigation.replace("DriverTabs");
         }
-        
       }
     });
 
     return unsubscribe;
   }
 
-  handleSignUp(){
+  handleSignUp() {
     console.log("Registered with: ", this.state.email);
-              console.log("pass ", this.state.password);
-              console.log("fname: ", this.state.fname);
-              console.log("lname: ", this.state.lname);
-              console.log("phone: ", this.state.phone);
-              console.log("driver: ", this.state.driver)
-              console.log("paid: ", this.state.paid)
-    if(this.state.email === '' || this.state.password === '' || this.state.reenterpassword === '' 
-    || this.state.fname === '' || this.state.lname === '' || this.state.phone === '' || this.state.driver === ''){
-      alert('Please fill out all fields')
-     } else {
-       this.setState({
-         isLoading: true,
-       });      
-       this.dbRef.add({
-         email: this.state.email,
-         password: this.state.password,
-         fname: this.state.fname,
-         lname: this.state.lname,
-         phone: this.state.phone,
-         driver: this.state.driver,
-         paid: 'no'
-       })
+    console.log("pass ", this.state.password);
+    console.log("fname: ", this.state.fname);
+    console.log("lname: ", this.state.lname);
+    console.log("phone: ", this.state.phone);
+    console.log("driver: ", this.state.driver);
+    console.log("paid: ", this.state.paid);
+    if (
+      this.state.email === "" ||
+      this.state.password === "" ||
+      this.state.reenterpassword === "" ||
+      this.state.fname === "" ||
+      this.state.lname === "" ||
+      this.state.phone === "" ||
+      this.state.driver === ""
+    ) {
+      alert("Please fill out all fields");
+    } else {
+      this.setState({
+        isLoading: true,
+      });
+      this.dbRef.add({
+        email: this.state.email,
+        password: this.state.password,
+        fname: this.state.fname,
+        lname: this.state.lname,
+        phone: this.state.phone,
+        driver: this.state.driver,
+        paid: "no",
+      });
       //  .then((res) => {
       //    this.setState({
       //      email: '',
@@ -102,65 +105,64 @@ export default class Registration extends Component {
       //    });
       //  })
       auth
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then((userCredentials) => {
-              const user = userCredentials.user;
-              console.log("Registered with: ", user.email);
-              console.log("pass ", password);
-              console.log("fname: ", fname);
-              console.log("lname: ", lname);
-              console.log("phone: ", phone);
-              console.log("driver: ", driver)
-              console.log("paid: ", paid)
-            })
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((userCredentials) => {
+          const user = userCredentials.user;
+          console.log("Registered with: ", user.email);
+          console.log("pass ", password);
+          console.log("fname: ", fname);
+          console.log("lname: ", lname);
+          console.log("phone: ", phone);
+          console.log("driver: ", driver);
+          console.log("paid: ", paid);
+        })
         //  this.props.navigation.navigate('Addresses')
         .catch((err) => {
-         console.error("Error found: ", err);
-         this.setState({
-           isLoading: false,
-         });
-       });
-     }
-    
-      // addUser({
-        //   email: email,
-        //   password: password,
-        //   fname: fname,
-        //   lname: lname,
-        //   phone: phone,
-        // }).catch((error) => alert(error.message));
-  };
-render(){
-  var data = [["yes", "no"]];
-  return (
+          console.error("Error found: ", err);
+          this.setState({
+            isLoading: false,
+          });
+        });
+    }
+
+    // addUser({
+    //   email: email,
+    //   password: password,
+    //   fname: fname,
+    //   lname: lname,
+    //   phone: phone,
+    // }).catch((error) => alert(error.message));
+  }
+  render() {
+    var data = [["yes", "no"]];
+    return (
       <KeyboardAvoidingView style={styles2.container}>
-    
-      <ImageBackground
-        source={require("../images/pumpfivebackground.jpeg")}
-        style={styles2.image}
-      >
-        <SafeAreaView style={styles2.container}>
-          <View style={styles2.head}>
-                <Text style={styles2.text1}>PumpFive</Text>
-                <Text style={styles2.text2}>Fuel Delivery Service</Text>
-                
-                <View style={styles2.backbutton}>
-                  <Button
-                    title="Back"
-                    color="white"
-                    onPress={() => this.props.navigation.goBack()}
-                  />
-                </View>
-          </View>
-          <ScrollView>
-          <View style={styles2.sect}>
+        <ImageBackground
+          source={require("../images/pumpfivebackground.jpeg")}
+          style={styles2.image}
+        >
+          <SafeAreaView style={styles2.container}>
+            <View style={styles2.head}>
+              <Text style={styles2.text1}>PumpFive</Text>
+              <Text style={styles2.text2}>Fuel Delivery Service</Text>
+
+              <View style={styles2.backbutton}>
+                <Button
+                  title="Back"
+                  color="white"
+                  onPress={() => this.props.navigation.goBack()}
+                />
+              </View>
+            </View>
+            <ScrollView>
+              <View style={styles2.sect}>
                 <Text style={styles2.email}>Email: *</Text>
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Enter Email'}
+                  placeholder={"Enter Email"}
                   value={this.state.email}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'email')}
+                  onChangeText={(val) => this.inputValueUpdate(val, "email")}
                   keyboardType="default"
                   borderRadius="10"
                 />
@@ -168,9 +170,9 @@ render(){
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Enter Password'}
+                  placeholder={"Enter Password"}
                   value={this.state.password}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'password')}
+                  onChangeText={(val) => this.inputValueUpdate(val, "password")}
                   keyboardType="default"
                   secureTextEntry
                   borderRadius="10"
@@ -180,9 +182,11 @@ render(){
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Re-enter Password'}
+                  placeholder={"Re-enter Password"}
                   value={this.state.reenterpassword}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'reenterpassword')}
+                  onChangeText={(val) =>
+                    this.inputValueUpdate(val, "reenterpassword")
+                  }
                   keyboardType="default"
                   secureTextEntry
                   borderRadius="10"
@@ -192,9 +196,9 @@ render(){
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Enter First Name'}
+                  placeholder={"Enter First Name"}
                   value={this.state.fname}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'fname')}
+                  onChangeText={(val) => this.inputValueUpdate(val, "fname")}
                   keyboardType="default"
                   borderRadius="10"
                 />
@@ -203,9 +207,9 @@ render(){
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Enter Last Name'}
+                  placeholder={"Enter Last Name"}
                   value={this.state.lname}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'lname')}
+                  onChangeText={(val) => this.inputValueUpdate(val, "lname")}
                   keyboardType="default"
                   borderRadius="10"
                 />
@@ -214,25 +218,28 @@ render(){
                 <TextInput
                   style={styles2.input}
                   placeholderTextColor="#D3D3D3"
-                  placeholder={'Enter Phone Number'}
+                  placeholder={"Enter Phone Number"}
                   value={this.state.phone}
-                  onChangeText={(val) => this.inputValueUpdate(val, 'phone')}
+                  onChangeText={(val) => this.inputValueUpdate(val, "phone")}
                   keyboardType="default"
                   borderRadius="10"
                 />
                 <View>
-                  <Text style={styles2.email}>Are you registering as a driver?: *</Text>
-                  <View> 
+                  <Text style={styles2.email}>
+                    Are you registering as a driver?: *
+                  </Text>
+                  <View>
                     <DropdownMenu
-                      bgColor={'white'}
-                      tintColor={'#000000'}
-                      activityTintColor={'red'}
-                      handler={(selection,row) => this.setState({driver: data[selection][row]})}
+                      bgColor={"white"}
+                      tintColor={"#000000"}
+                      activityTintColor={"red"}
+                      handler={(selection, row) =>
+                        this.setState({ driver: data[selection][row] })
+                      }
                       data={data}
-                    >
-                    </DropdownMenu>
-                    </View>
+                    ></DropdownMenu>
                   </View>
+                </View>
                 <View style={styles2.loginview}>
                   <Button
                     title="Sign up"
@@ -241,14 +248,14 @@ render(){
                     // onPress={() => navigation.navigate('Tabs')}
                   ></Button>
                 </View>
-            </View>
+              </View>
             </ScrollView>
-        </SafeAreaView>
+          </SafeAreaView>
         </ImageBackground>
-        </KeyboardAvoidingView>
-    // </SafeAreaView>
-  );
-      }
+      </KeyboardAvoidingView>
+      // </SafeAreaView>
+    );
+  }
 }
 // // ==================== CSS Styling (Ryan's stuff) ==================== //
 
@@ -267,8 +274,7 @@ const styles2 = StyleSheet.create({
     left: "2.5%",
     right: "2.5%",
     top: "3%",
-    height: "10%"
-
+    height: "10%",
   },
   scroll: {
     flex: 1,
@@ -341,12 +347,12 @@ const styles2 = StyleSheet.create({
     backgroundColor: "#DAAC3F",
     left: 5,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   backbutton: {
-    width: "30%",
-    height: "40%",
+    width: "20%",
+    height: "20%",
     top: "5%",
     right: "5%",
     backgroundColor: "#DAAC3F",

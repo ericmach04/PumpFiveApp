@@ -11,7 +11,7 @@ import {
   UselessTextInput,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import React, { Component } from "react";
 import firebase from "firebase";
@@ -43,21 +43,31 @@ export default class Payment extends Component {
   }
 
   deleteCard(deletekey) {
-    const dbRef = firebase.firestore().collection('Credit_Cards').doc(deletekey)
+    const dbRef = firebase
+      .firestore()
+      .collection("Credit_Cards")
+      .doc(deletekey);
 
     Alert.alert(
-      'Delete ',
-      'Are you sure you want to remove this card?',
+      "Delete ",
+      "Are you sure you want to remove this card?",
       [
-        {text: 'Yes', onPress: () => {
-          dbRef.delete().then((res) => {
-            console.log('Item removed from database')
-        })
-        }},
-        {text: 'No', onPress: () => console.log('No item was removed'), style: 'cancel'},
+        {
+          text: "Yes",
+          onPress: () => {
+            dbRef.delete().then((res) => {
+              console.log("Item removed from database");
+            });
+          },
+        },
+        {
+          text: "No",
+          onPress: () => console.log("No item was removed"),
+          style: "cancel",
+        },
       ],
-      { 
-        cancelable: true 
+      {
+        cancelable: true,
       }
     );
   }
@@ -100,9 +110,9 @@ export default class Payment extends Component {
           style={styles.image}
         >
           {/* <SafeAreaView style={styles.container}> */}
-            {/* <View style={styles.container}> */}
-              <View style={styles.box1}>
-                {/* <View
+          {/* <View style={styles.container}> */}
+          <View style={styles.box1}>
+            {/* <View
                   style={{
                     top: -0,
                     flex: 1,
@@ -110,25 +120,25 @@ export default class Payment extends Component {
                     justifyContent: "space-around",
                   }}
                 > */}
-                  <Text style={styles.h1}>Payment Management</Text>
-                  <View style={buttonstyles.backbutton}>
-                    <Button
-                      title="Back"
-                      color="white"
-                      onPress={() => this.props.navigation.goBack()}
-                    />
-                  </View>
-                {/* </View> */}
-                {/* <View style={{ bottom: "45%", left: "5%" }}>
+            <Text style={styles.h1}>Payment Management</Text>
+            <View style={buttonstyles.backbutton}>
+              <Button
+                title="Back"
+                color="white"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+            {/* </View> */}
+            {/* <View style={{ bottom: "45%", left: "5%" }}>
                 <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
                 <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
               </View> */}
 
-                {/* <View style={{ bottom: "55%",}}>
+            {/* <View style={{ bottom: "55%",}}>
                 <Text style={styles.creditdebit}>Credit/Debit Card (Add up to 3)</Text>
               </View>  */}
-              <View style={styles.scrollbox}>
+            <View style={styles.scrollbox}>
               <ScrollView style={styles.scroll1}>
                 {this.state.cards.map((res, i) => {
                   var image;
@@ -167,6 +177,7 @@ export default class Payment extends Component {
                         <View
                           style={{
                             justifyContent: "center",
+                            //top: "10%",
                             alignItems: "center",
                           }}
                         >
@@ -182,26 +193,30 @@ export default class Payment extends Component {
                             Exp: {res.expiry}
                           </Text>
                         </View>
-                        <TouchableOpacity onPress={() => this.deleteCard(res.key)}>
-                          <Text style={styles.bofadeeznutsunderline}>Remove</Text>
+                        <TouchableOpacity
+                          onPress={() => this.deleteCard(res.key)}
+                        >
+                          <Text style={styles.bofadeeznutsunderline}>
+                            Remove
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   );
                 })}
-                </ScrollView>
-                </View>
+              </ScrollView>
+            </View>
 
-                <View style={buttonstyles.paybutton}>
-                  <Button
-                    title="+ Add Payment Method"
-                    color="black"
-                    onPress={() => this.props.navigation.navigate("AddCard")}
-                  />
-                  {/* <Button title="Get Cards" color="black" onPress={getCards} /> */}
-                </View>
-              </View>
-            {/* </View> */}
+            <View style={buttonstyles.paybutton}>
+              <Button
+                title="+ Add Payment Method"
+                color="black"
+                onPress={() => this.props.navigation.navigate("AddCard")}
+              />
+              {/* <Button title="Get Cards" color="black" onPress={getCards} /> */}
+            </View>
+          </View>
+          {/* </View> */}
           {/* </SafeAreaView> */}
         </ImageBackground>
       </View>
@@ -232,20 +247,24 @@ const buttonstyles = StyleSheet.create({
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
+
+  //BackButton Payment Management
   backbutton: {
     width: "18%",
     height: 40,
     // top: 65,
     right: 0,
+    borderRadius: 4,
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
-  // + Add Payment Button
+  // + Add Payment Button - Payment Management
   paybutton: {
     width: "77%",
     height: "7%",
-    top: "85%",
+    top: "88%",
     right: "10%",
+    borderRadius: 4,
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
@@ -499,6 +518,6 @@ const styles = StyleSheet.create({
     // lineHeight: 20,
     //fontWeight: "bold",
     textAlign: "center",
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });
