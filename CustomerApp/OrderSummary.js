@@ -16,6 +16,7 @@ export default class OrderSummary extends Component {
   constructor() {
     super();
     this.state = {
+<<<<<<< HEAD
       card: "",
       city: "",
       deliverydate: "",
@@ -30,6 +31,23 @@ export default class OrderSummary extends Component {
       model: "",
       ordernumber: "",
       price: "",
+=======
+      card: '',
+      city: '',
+      color: '',
+      deliverydate: '',
+      deliverytime: '',
+      discount: '',
+      drivercar: '',
+      drivername: '',
+      email: '',
+      fulfilled: '',
+      license: '',
+      make: '',
+      model: '',
+      ordernumber: '',
+      price: '',
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
       quantity: 0,
       service: "",
       state: "",
@@ -55,6 +73,7 @@ export default class OrderSummary extends Component {
         this.setState({
           card: order.card,
           city: order.city,
+          color: order.color,
           deliverydate: order.deliverydate,
           deliverytime: order.deliverytime,
           discount: order.discount,
@@ -245,6 +264,7 @@ export default class OrderSummary extends Component {
                   <Text style={styles.boxfontshead}>{this.state.card}</Text>
                 </Text>
                 <View
+<<<<<<< HEAD
                   style={{
                     borderBottomColor: "black",
                     borderBottomWidth: 2,
@@ -260,6 +280,15 @@ export default class OrderSummary extends Component {
                   License Plate:{" "}
                   <Text style={styles.boxfontshead}>{this.state.license}</Text>
                 </Text>
+=======
+                        style={{
+                          borderBottomColor: 'black',
+                          borderBottomWidth: 2,
+                        }}
+                      />
+                <Text style={styles.boxfontsbody}>Deliver To: <Text style={styles.boxfontshead}>{this.state.year} {this.state.color} {this.state.make} {this.state.model}</Text></Text>
+                <Text style={styles.boxfontsbody}>License Plate: <Text style={styles.boxfontshead}>{this.state.license}</Text></Text>
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
                 <Text style={styles.boxfontsbody}>at</Text>
                 <Text style={styles.boxfontshead}>
                   {this.state.streetnumber}

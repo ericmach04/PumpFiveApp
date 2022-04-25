@@ -29,6 +29,7 @@ import {addCard} from '../../firebasefunctions'
             cvv: dataobject["values"]["cvc"],
             expiry: dataobject["values"]["expiry"],
         })
+        this.props.navigation.navigate('Payment')
 
         
 

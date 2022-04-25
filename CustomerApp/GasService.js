@@ -38,10 +38,18 @@ export default class GasService extends Component {
     this.handleStateChange = this.handleStateChange.bind(this);
     this.handleZipChange = this.handleZipChange.bind(this);
 
+<<<<<<< HEAD
     this.handleMakeChange = this.handleMakeChange.bind(this);
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
+=======
+    this.handleMakeChange = this.handleMakeChange.bind(this)
+    this.handleModelChange = this.handleModelChange.bind(this)
+    this.handleYearChange = this.handleYearChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
+    this.handleLicenseChange = this.handleLicenseChange.bind(this)
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -68,11 +76,20 @@ export default class GasService extends Component {
         state: "",
         zip: "",
       },
+<<<<<<< HEAD
       carinfo: {
         make: "",
         model: "",
         year: "",
         license: "",
+=======
+      carinfo:{
+        make: '',
+        model: '',
+        year: '',
+        color: '',
+        license: ''
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
       },
       cardinfo: {
         name: "",
@@ -112,7 +129,11 @@ export default class GasService extends Component {
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
+<<<<<<< HEAD
         service: "gas",
+=======
+        service: 'Gas Delivery Service',
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
         type: this.state.gastype,
         price: this.state.gasprice,
         quantity: this.state.quantity,
@@ -121,6 +142,7 @@ export default class GasService extends Component {
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
+        color: this.state.carinfo.color,
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
@@ -263,10 +285,24 @@ export default class GasService extends Component {
     state.carinfo["year"] = year;
     this.setState(state);
   }
+<<<<<<< HEAD
   handleLicenseChange(license) {
     const state = this.state;
     state.carinfo["license"] = license;
     this.setState(state);
+=======
+  handleColorChange(color){
+    const state = this.state
+    state.carinfo["color"] = color
+    this.setState(state)
+    
+  }
+  handleLicenseChange(license){
+    const state = this.state
+    state.carinfo["license"] = license
+    this.setState(state)
+   
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
   }
 
   //Credit Card
@@ -351,6 +387,7 @@ export default class GasService extends Component {
     const year = this.props.year;
     const license = this.props.license;
 
+<<<<<<< HEAD
     const { open, value, items } = this.state;
     if (this.state.reviewpressed == false) {
       return (
@@ -359,6 +396,19 @@ export default class GasService extends Component {
             source={require("../images/pumpfivebackground.jpeg")}
             style={styles.image}
           >
+=======
+  const make = this.props.make
+  const model = this.props.model
+  const year = this.props.year
+  const color = this.props.color
+  const license = this.props.license
+
+  const { open, value, items } = this.state;
+  if(this.state.reviewpressed == false) {
+  return (
+    <View style={styles.container}>
+         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
             {/* <SafeAreaView style={styles.container}> */}
 
             <SafeAreaView style={styles.container}>
@@ -410,6 +460,7 @@ export default class GasService extends Component {
                         style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}} 
                         > */}
 
+<<<<<<< HEAD
                   <View>
                     <Picker
                       onValueChange={this.showType}
@@ -448,6 +499,39 @@ export default class GasService extends Component {
                   </View>
                 </View>
                 {/* </View> */}
+=======
+                            <View>
+                              <Picker
+                                onValueChange={this.showType}
+                                selectedValue={this.state.gastype}
+                              >
+                                <Picker.Item label="Please Select" value="disabled" color="#aaa"/>
+                                <Picker.Item label="Regular" value="Regular" />
+                                <Picker.Item label="Premium" value="Premium" />
+                                <Picker.Item label="Diesel" value="Diesel" />
+                                
+                              </Picker>
+                              
+                              </View>
+                            
+                           
+                        </View>
+                    {/* </View> */}
+                    
+                    <View style={styles.address}>
+                        <Text style={styles.boxfontshead}>Address</Text>
+                        <Text style={styles.boxfontsbody}>Please Select an Address</Text>
+                        <AddressDropdown
+                          streetnumber={streetnumber}
+                          city={city}
+                          state={state}
+                          zip={zip}
+                          onSNValChange = {this.handleSNChange}
+                          onCityValChange = {this.handleCityChange}
+                          onStateValChange = {this.handleStateChange}
+                          onZipValChange = {this.handleZipChange}
+                        >
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
                 <View style={styles.address}>
                   <Text style={styles.boxfontshead}>Address</Text>
@@ -490,7 +574,33 @@ export default class GasService extends Component {
                   ></CarDropdown>
                 </View>
 
+<<<<<<< HEAD
                 {/* <View style={styles.paymentinfo}>
+=======
+
+                    <View style={styles.carInfo}>
+                        <Text style={styles.boxfontshead}>Car Information</Text>
+                        <Text style={styles.boxfontsbody}>Please Select a Car</Text>
+                        <CarDropdown
+                          make={make}
+                          model={model}
+                          year={year}
+                          license={license}
+                          color={color}
+                          onMakeValChange = {this.handleMakeChange}
+                          onModelValChange = {this.handleModelChange}
+                          onYearValChange = {this.handleYearChange}
+                          onColorValChange = {this.handleColorChange}
+                          onLicenseValChange = {this.handleLicenseChange}
+                        >
+
+                        </CarDropdown>
+
+                          
+                    </View>
+
+                    {/* <View style={styles.paymentinfo}>
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View> */}
@@ -523,6 +633,7 @@ export default class GasService extends Component {
       const carddata = this.props.carddata;
       const text = this.props.text;
 
+<<<<<<< HEAD
       // ============ Review Order =========== //
       return (
         <View style={styles.container}>
@@ -531,6 +642,56 @@ export default class GasService extends Component {
             style={styles.image}
           >
             {/* <SafeAreaView style={styles.container}> */}
+=======
+    return(
+    <View style={styles.container}>
+    <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+       {/* <SafeAreaView style={styles.container}> */}
+         
+           <SafeAreaView style={styles.container}>
+             <Text style={styles.text}>
+                 Review Order
+             </Text>
+             <View style={buttonstyles.backbutton}>
+                         <Button
+                         title="Back"
+                         color="white"
+                         // onPress={() => console.log('Clicked')}
+                         onPress={() => this.props.navigation.goBack()}
+                       />
+                       </View>
+         
+       
+           
+             <ScrollView style={styles.scroll}>
+               <View style={styles.gasservice}>
+                 
+                   <Text style={styles.boxfontshead}>A Review of Your Order</Text>
+                   {/* <Text style={styles.subheadings}>Schedule</Text> */}
+                    <View style={styles.revieworder}>
+                      <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
+                          
+                          <View>
+                              <Text>Address:</Text>
+                              <Text>{this.state.addressinfo.streetnumber}</Text>
+                              <Text>{this.state.addressinfo.city} {this.state.addressinfo.state} {this.state.addressinfo.zip}</Text>    
+                          </View>
+                          
+                          <View style={{justifyContent: "right"}}>
+                          <Text></Text>
+                              <Text>Car Information: </Text>
+                              <Text>{this.state.carinfo.year} {this.state.carinfo.color} {this.state.carinfo.make} {this.state.carinfo.model}</Text>
+                              <Text>Licence Plate: {this.state.carinfo.license}</Text>
+                          </View>  
+                                                  
+                      </View>
+                      <View
+                        style={{
+                          borderBottomColor: 'black',
+                          borderBottomWidth: 1,
+                        }}
+                      />
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
             <SafeAreaView style={styles.container}>
               <Text style={styles.text}>Review Order</Text>
@@ -736,10 +897,39 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
 
+<<<<<<< HEAD
   image: {
     flex: 1,
     justifyContent: "center",
   },
+=======
+      address:{
+        flex: 1,
+        width: "90%",
+        height: 700,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+      carInfo:{
+        flex: 1,
+        width: "90%",
+        height: 850,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
   text: {
     color: "white",

@@ -38,10 +38,18 @@ export default class TireService extends Component {
     this.handleStateChange = this.handleStateChange.bind(this);
     this.handleZipChange = this.handleZipChange.bind(this);
 
+<<<<<<< HEAD
     this.handleMakeChange = this.handleMakeChange.bind(this);
     this.handleModelChange = this.handleModelChange.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleLicenseChange = this.handleLicenseChange.bind(this);
+=======
+    this.handleMakeChange = this.handleMakeChange.bind(this)
+    this.handleModelChange = this.handleModelChange.bind(this)
+    this.handleYearChange = this.handleYearChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
+    this.handleLicenseChange = this.handleLicenseChange.bind(this)
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -67,11 +75,20 @@ export default class TireService extends Component {
         state: "",
         zip: "",
       },
+<<<<<<< HEAD
       carinfo: {
         make: "",
         model: "",
         year: "",
         license: "",
+=======
+      carinfo:{
+        make: '',
+        model: '',
+        year: '',
+        color: '',
+        license: ''
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
       },
       cardinfo: {
         name: "",
@@ -111,7 +128,11 @@ export default class TireService extends Component {
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
+<<<<<<< HEAD
         service: "tire",
+=======
+        service: 'Tire Delivery Service',
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
         type: this.state.tiretype,
         price: this.state.tireprice,
         quantity: this.state.quantity,
@@ -120,6 +141,7 @@ export default class TireService extends Component {
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
+        color: this.state.carinfo.color,
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
@@ -262,10 +284,24 @@ export default class TireService extends Component {
     state.carinfo["year"] = year;
     this.setState(state);
   }
+<<<<<<< HEAD
   handleLicenseChange(license) {
     const state = this.state;
     state.carinfo["license"] = license;
     this.setState(state);
+=======
+  handleColorChange(color){
+    const state = this.state
+    state.carinfo["color"] = color
+    this.setState(state)
+    
+  }
+  handleLicenseChange(license){
+    const state = this.state
+    state.carinfo["license"] = license
+    this.setState(state)
+   
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
   }
 
   //Credit Card
@@ -350,6 +386,7 @@ export default class TireService extends Component {
     const year = this.props.year;
     const license = this.props.license;
 
+<<<<<<< HEAD
     const { open, value, items } = this.state;
     if (this.state.reviewpressed == false) {
       return (
@@ -358,6 +395,19 @@ export default class TireService extends Component {
             source={require("../images/pumpfivebackground.jpeg")}
             style={styles.image}
           >
+=======
+  const make = this.props.make
+  const model = this.props.model
+  const year = this.props.year
+  const color = this.props.color
+  const license = this.props.license
+
+  const { open, value, items } = this.state;
+  if(this.state.reviewpressed == false) {
+  return (
+    <View style={styles.container}>
+         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
             {/* <SafeAreaView style={styles.container}> */}
 
             <SafeAreaView style={styles.container}>
@@ -470,7 +520,33 @@ export default class TireService extends Component {
                   ></CarDropdown>
                 </View>
 
+<<<<<<< HEAD
                 {/* <View style={styles.paymentinfo}>
+=======
+
+                    <View style={styles.carInfo}>
+                        <Text style={styles.boxfontshead}>Car Information</Text>
+                        <Text style={styles.boxfontsbody}>Please Select a Car</Text>
+                        <CarDropdown
+                          make={make}
+                          model={model}
+                          year={year}
+                          license={license}
+                          color={color}
+                          onMakeValChange = {this.handleMakeChange}
+                          onModelValChange = {this.handleModelChange}
+                          onYearValChange = {this.handleYearChange}
+                          onColorValChange = {this.handleColorChange}
+                          onLicenseValChange = {this.handleLicenseChange}
+                        >
+
+                        </CarDropdown>
+
+                          
+                    </View>
+
+                    {/* <View style={styles.paymentinfo}>
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View> */}
@@ -713,10 +789,116 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
 
+<<<<<<< HEAD
   image: {
     flex: 1,
     justifyContent: "center",
   },
+=======
+      address:{
+        flex: 1,
+        width: "90%",
+        height: 700,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+      carInfo:{
+        flex: 1,
+        width: "90%",
+        height: 850,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+
+      paymentinfo:{
+        flex: 1,
+        width: "90%",
+        height: 750,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: '#CDCABF',
+        borderWidth: 2,
+        borderColor: '#000000',
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+
+      boxfontshead:{
+        color: "black",
+        fontSize: 24,
+        lineHeight: 30,
+        fontWeight: "bold",
+        textAlign: "center",
+        top: 5,
+        left: 5,
+      },
+
+      boxfontsbody:{
+        color: "black",
+        fontSize: 18,
+        lineHeight: 30,
+        textAlign: "center",
+        top: 5,
+        left: 5,
+      },
+
+      subheadings:{
+        color: "black",
+        fontSize: 16,
+        fontWeight: "bold",
+        lineHeight: 30,
+        textAlign: "left",
+        top: 5,
+        left: 10,
+      },
+      input: {
+        height: 40,
+        margin: 5,
+        borderWidth: 1,
+        padding: 5,
+        backgroundColor: "white",
+      },
+      promoinput: {
+        height: 40,
+        width: '50%',
+        margin: 5,
+        borderWidth: 1,
+        padding: 5,
+        backgroundColor: "white",
+      },
+      promobutton: {
+        // position: 'absolute',
+        left: 21,
+        top: 300,
+        flexDirection:'row', 
+        flexWrap:'wrap',
+      },
+      checkoutback: {
+        flexDirection:'row', 
+        flexWrap:'wrap',
+      },
+
+
+})
+
+
+
+
+
+>>>>>>> f7772c82c006356582a64ecb5ae0d0db2d6b6f1c
 
   text: {
     color: "white",

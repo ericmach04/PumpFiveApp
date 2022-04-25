@@ -4,7 +4,6 @@ import {
   View,
   SafeAreaView,
   ImageBackground,
-  Image,
   Button,
   ScrollView,
   ActivityIndicator,

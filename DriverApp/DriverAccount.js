@@ -53,12 +53,12 @@ import {
                 </View>
               </View>
               <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
-              <Text style={styles.boxfontsbody}>Member Number: 773123456789</Text>
+              {/* <Text style={styles.boxfontsbody}>Member Number: 773123456789</Text> */}
               <Text style={styles.boxfontsbody}>
                 User Phone Number: 414-***-****
               </Text>
   
-              <View
+              {/* <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
@@ -79,7 +79,7 @@ import {
                     <Image source={require("../icons/arrow.png")} />
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
   
               <View
                 style={{
@@ -157,13 +157,13 @@ import {
                     <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
                     <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
             {/* </View> */}
-            <View style={styles.paybutton}>
+            {/* <View style={styles.paybutton}>
                                   <Button
                                     title="View Customer Side"
                                     color="white"
                                     onPress={() => navigation.navigate('Tabs')}
                                   />
-                    </View>
+                    </View> */}
           </SafeAreaView>
         </ImageBackground>
       </View>

@@ -113,15 +113,6 @@ export default class Addresses extends Component {
               count += 1;
 
               return (
-                /* 
-                <View style={{ top: "15%", left: "2%" }}>
-                  <View style={styles.BoundingBox}>
-                    <Text style={styles.bofadeeznutsbold}>
-                      Address #{count}
-                    </Text>
-                  </View>
-                */
-
                 <View style={styles.BoundingBox}>
                   <View>
                     <Text style={styles.bofadeeznutsbold}>
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
   //Bounding Box
   BoundingBox: {
     backgroundColor: "#CDCABF",
-    //borderWidth: 2,
+    //borderWidth: 2,s
     borderColor: "#000000",
     backgroundColor: "#FFFFFF",
     borderRadius: 5,

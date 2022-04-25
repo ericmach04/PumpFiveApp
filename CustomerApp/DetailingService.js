@@ -32,6 +32,7 @@ export default class DetailingService extends Component{
     this.handleMakeChange = this.handleMakeChange.bind(this)
     this.handleModelChange = this.handleModelChange.bind(this)
     this.handleYearChange = this.handleYearChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
     this.handleLicenseChange = this.handleLicenseChange.bind(this)
 
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -47,7 +48,7 @@ export default class DetailingService extends Component{
 
     this.state = {
       reviewpressed: false,
-      quantity: 0,
+      quantity: 1,
       detailingtype: '',
       detailingprice: '',
       prices: [],
@@ -62,6 +63,7 @@ export default class DetailingService extends Component{
         make: '',
         model: '',
         year: '',
+        color: '',
         license: ''
       },
       cardinfo:{
@@ -103,7 +105,7 @@ export default class DetailingService extends Component{
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
-        service: 'tire',
+        service: 'Detailing Service',
         type: this.state.detailingtype,
         price: this.state.detailingprice,
         quantity: this.state.quantity,
@@ -112,6 +114,7 @@ export default class DetailingService extends Component{
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
+        color: this.state.carinfo.color,
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
@@ -157,11 +160,11 @@ export default class DetailingService extends Component{
     const state = this.state
     // console.log("State: ", state);;/.
     state["detailingtype"]= option
-    if(option.toLowerCase() == "small"){
+    if(option.toLowerCase() == "basic"){
       state["detailingprice"] = this.state.prices[0]["basic"]
     }
 
-    else if(option.toLowerCase() == "medium"){
+    else if(option.toLowerCase() == "premium"){
       state["detailingprice"] = this.state.prices[0]["premium"]
     }
 
@@ -171,7 +174,8 @@ export default class DetailingService extends Component{
     this.setState(state)
 
     console.log("option: ", option)
-    console.log("State: ", this.state.tireprice)
+    console.log("Type State: ", this.state.detailingtype)
+    console.log("State: ", this.state.detailingprice)
   }
   
 
@@ -276,6 +280,12 @@ export default class DetailingService extends Component{
     this.setState(state)
     
   }
+  handleColorChange(color){
+    const state = this.state
+    state.carinfo["color"] = color
+    this.setState(state)
+    
+  }
   handleLicenseChange(license){
     const state = this.state
     state.carinfo["license"] = license
@@ -345,13 +355,13 @@ export default class DetailingService extends Component{
     // else{
     const state = this.state;
     // console.log("State: ", state)
-    var total = parseFloat(state["tireprice"]) * parseFloat(state["quantity"])
+    var total = parseFloat(state["detailingprice"]) * parseFloat(state["quantity"])
     total = total.toFixed(2)
     console.log("Total: ", total)
     state["reviewpressed"] = true;
     state["total"] = total
     this.setState(state)
-    console.log("Final gas type: ", this.state.tiretype)
+    console.log("Final gas type: ", this.state.detailingtype)
     console.log("Final gas quantity: ", this.state.quantity)
     console.log("Final gas price: ", this.state.price)
     console.log("Final addy state: ", this.state.addressinfo)
@@ -374,6 +384,7 @@ export default class DetailingService extends Component{
   const make = this.props.make
   const model = this.props.model
   const year = this.props.year
+  const color = this.props.color
   const license = this.props.license
 
   const { open, value, items } = this.state;
@@ -435,7 +446,7 @@ export default class DetailingService extends Component{
                             <View>
                               <Picker
                                 onValueChange={this.showType}
-                                selectedValue={this.state.tiretype}
+                                selectedValue={this.state.detailingtype}
                               >
                                 <Picker.Item label="Please Select" value="disabled" color="#aaa"/>
                                 <Picker.Item label="Basic" value="Basic" />
@@ -487,9 +498,11 @@ export default class DetailingService extends Component{
                           model={model}
                           year={year}
                           license={license}
+                          color={color}
                           onMakeValChange = {this.handleMakeChange}
                           onModelValChange = {this.handleModelChange}
                           onYearValChange = {this.handleYearChange}
+                          onColorValChange = {this.handleColorChange}
                           onLicenseValChange = {this.handleLicenseChange}
                         >
 
@@ -586,8 +599,8 @@ export default class DetailingService extends Component{
 
                       <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
                         <View>
-                          <Text>{this.state.detailingtype} tire price: $</Text>
-                          <Text>Number of tires: </Text>
+                          <Text>{this.state.detailingtype} Detailing price: $</Text>
+                          <Text>Detailing: </Text>
                         </View>
 
                         <View>

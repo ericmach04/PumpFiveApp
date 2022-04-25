@@ -10,6 +10,8 @@ import {
   TextInput,
   UselessTextInput,
   Image,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { Component } from "react";
 import firebase from "firebase";
@@ -38,6 +40,36 @@ export default class Payment extends Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  deleteCard(deletekey) {
+    const dbRef = firebase
+      .firestore()
+      .collection("Credit_Cards")
+      .doc(deletekey);
+
+    Alert.alert(
+      "Delete ",
+      "Are you sure you want to remove this card?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            dbRef.delete().then((res) => {
+              console.log("Item removed from database");
+            });
+          },
+        },
+        {
+          text: "No",
+          onPress: () => console.log("No item was removed"),
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
   }
 
   getCardData = (querySnapshot) => {
@@ -77,35 +109,37 @@ export default class Payment extends Component {
           source={require("../../images/pumpfivebackground.jpeg")}
           style={styles.image}
         >
-          <SafeAreaView style={styles.container}>
-            <View style={styles.container}>
-              <View style={styles.Memberships}>
-                <View
+          {/* <SafeAreaView style={styles.container}> */}
+          {/* <View style={styles.container}> */}
+          <View style={styles.box1}>
+            {/* <View
                   style={{
                     top: -0,
                     flex: 1,
                     flexDirection: "row",
                     justifyContent: "space-around",
                   }}
-                >
-                  <Text style={styles.text}>Payment Management</Text>
-                  <View style={buttonstyles.backbutton}>
-                    <Button
-                      title="Back"
-                      color="white"
-                      onPress={() => this.props.navigation.goBack()}
-                    />
-                  </View>
-                </View>
-                {/* <View style={{ bottom: "45%", left: "5%" }}>
+                > */}
+            <Text style={styles.h1}>Payment Management</Text>
+            <View style={buttonstyles.backbutton}>
+              <Button
+                title="Back"
+                color="white"
+                onPress={() => this.props.navigation.goBack()}
+              />
+            </View>
+            {/* </View> */}
+            {/* <View style={{ bottom: "45%", left: "5%" }}>
                 <Text style={styles.boxfontsbody}>{auth.currentUser?.email}</Text>
                 <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
                 <Text style={styles.boxfontsbody}>414-***-****</Text>
               </View> */}
 
-                {/* <View style={{ bottom: "55%",}}>
+            {/* <View style={{ bottom: "55%",}}>
                 <Text style={styles.creditdebit}>Credit/Debit Card (Add up to 3)</Text>
               </View>  */}
+            <View style={styles.scrollbox}>
+              <ScrollView style={styles.scroll1}>
                 {this.state.cards.map((res, i) => {
                   var image;
                   var text;
@@ -159,22 +193,31 @@ export default class Payment extends Component {
                             Exp: {res.expiry}
                           </Text>
                         </View>
+                        <TouchableOpacity
+                          onPress={() => this.deleteCard(res.key)}
+                        >
+                          <Text style={styles.bofadeeznutsunderline}>
+                            Remove
+                          </Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   );
                 })}
-
-                <View style={buttonstyles.paybutton}>
-                  <Button
-                    title="+ Add Payment Method"
-                    color="black"
-                    onPress={() => this.props.navigation.navigate("AddCard")}
-                  />
-                  {/* <Button title="Get Cards" color="black" onPress={getCards} /> */}
-                </View>
-              </View>
+              </ScrollView>
             </View>
-          </SafeAreaView>
+
+            <View style={buttonstyles.paybutton}>
+              <Button
+                title="+ Add Payment Method"
+                color="black"
+                onPress={() => this.props.navigation.navigate("AddCard")}
+              />
+              {/* <Button title="Get Cards" color="black" onPress={getCards} /> */}
+            </View>
+          </View>
+          {/* </View> */}
+          {/* </SafeAreaView> */}
         </ImageBackground>
       </View>
     );
@@ -272,17 +315,25 @@ const styles = StyleSheet.create({
   },
 
   //Bounding Box
+  // BoundingBox: {
+  //   //If overlay occurs with cars, delete position: absolute,
+  //   width: "100%",
+  //   height: "30%",
+  //   bottom: "30%",
+  //   backgroundColor: "#CDCABF",
+  //   borderWidth: 2,
+  //   borderColor: "#000000",
+  //   backgroundColor: "#FFFFFF",
+  //   borderRadius: 10,
+  // },
   BoundingBox: {
-    //If overlay occurs with cars, delete position: absolute,
-    width: "100%",
-    height: "30%",
-    bottom: "15%",
-    marginTop: "5%",
     backgroundColor: "#CDCABF",
-    borderWidth: 2,
+    //borderWidth: 2,
     borderColor: "#000000",
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 5,
+    marginBottom: 5,
+    height: 200,
   },
 
   //bofadeeznuts
@@ -432,5 +483,41 @@ const styles = StyleSheet.create({
     top: "50%",
     left: "40%",
     borderWidth: 1,
+  },
+  scrollbox: {
+    flex: 0.7,
+    width: "90%",
+    left: "5%",
+    top: 90,
+  },
+  scroll1: {
+    flex: 1,
+  },
+  h1: {
+    position: "absolute",
+    top: 40,
+    left: "5%",
+    fontWeight: "bold",
+    fontSize: 30,
+    lineHeight: 42,
+    textDecorationLine: "underline",
+  },
+  box1: {
+    position: "absolute",
+    width: 338,
+    height: 672,
+    top: 74,
+    left: 24,
+    backgroundColor: "#CDCABF",
+    borderWidth: 3,
+    borderRadius: 20,
+  },
+  bofadeeznutsunderline: {
+    color: "black",
+    fontSize: 25,
+    // lineHeight: 20,
+    //fontWeight: "bold",
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
 });

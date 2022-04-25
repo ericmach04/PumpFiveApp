@@ -1,29 +1,79 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
-import React, { useCallback } from 'react'
+import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator } from 'react-native'
+import React, { Component, useCallback } from 'react'
 import { TouchableOpacity } from 'react-native-web';
+import firebase from "firebase"
+import {auth} from "../firebase"
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
 const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
 
-// const OpenURLButton = ({ url, children }) => {
-//   const handlePress = useCallback(async () => {
-//     // Checking if the link is supported for links with custom URL scheme.
-//     const supported = await Linking.canOpenURL(url);
+export default class DriverOrder extends Component {
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection("Orders");
+    this.state = {
+      isLoading: true,
+      allorders: [],
+      units: ''
+    };
+    
+  }
 
-//     if (supported) {
-//       // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-//       // by some browser in the mobile
-//       await Linking.openURL(url);
-//     } else {
-//       Alert.alert(`Don't know how to open this URL: ${url}`);
-//     }
-//   }, [url]);
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getOrderData);
+  }
 
-//   return <Button title={children} onPress={handlePress} />;
-// };
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
-export default function DriverOrder() {
+  getOrderData = (querySnapshot) => {
+    const allorders = [];
+    var units=''
+    querySnapshot.forEach((res) => {
+      const { email, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber} = res.data();
+      // console.log("epicemail: ", email)
+      // console.log("auth: ", auth.currentUser?.email)
+      if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
+        if(service == 'gas'){
+          units = "gallons of " + type + " gas"
+        }
+        else if (service == 'tire'){
+          units = "tires"
+        }
+        allorders.push({
+          key: res.id,
+          fulfilled,
+          deliverydate,
+          quantity,
+          make,
+          model,
+          year,
+          type,
+          service,
+          ordernumber,
+          units: units
+        });
+      }
+    });
+    this.setState({
+      allorders,
+      isLoading: false,
+    });
+    console.log("orders: ", this.state.allorders)
+  };
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="red" />
+        </View>
+      );
+    }
+
+    var currorder = this.state.allorders.shift()
+    console.log("Current order: ", currorder)
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
@@ -59,6 +109,7 @@ export default function DriverOrder() {
       </ImageBackground>
     </View>
   )
+}
 }
 
 const styles = StyleSheet.create({
