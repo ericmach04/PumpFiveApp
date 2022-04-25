@@ -13,6 +13,7 @@ export default class EditCarInfo extends Component {
       make: '',
       model: '',
       year: '',
+      color: '',
       license: '',
       isLoading: false
     };
@@ -29,6 +30,7 @@ export default class EditCarInfo extends Component {
           make: car.make,
           model: car.model,
           year: car.year,
+          color: car.color,
           license: car.license,
           isLoading: false
         });
@@ -53,6 +55,7 @@ export default class EditCarInfo extends Component {
       make: this.state.make,
       model: this.state.model,
       year: this.state.year,
+      color: this.state.color,
       license: this.state.license,
     }).then((docRef) => {
       this.setState({
@@ -61,6 +64,7 @@ export default class EditCarInfo extends Component {
         make: '',
         model: '',
         year: '',
+        color: '',
         license: '',
         isLoading: false,
       });
@@ -114,6 +118,14 @@ export default class EditCarInfo extends Component {
                         placeholder={'Enter Car Year'}
                         value={this.state.year}
                         onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                />
+
+                <Text style={styles.email}>Color: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Color of the Car'}
+                        value={this.state.color}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'color')}
                 />
 
                 <Text style={styles.email}>License Plate: *</Text>
@@ -215,7 +227,7 @@ export default class EditCarInfo extends Component {
     paybutton: {
         width: "77%",
         height: "5%",
-        bottom: "25%",
+        bottom: "20%",
         left: "10%",
         backgroundColor: "#DAAC3F",
         position: "absolute",

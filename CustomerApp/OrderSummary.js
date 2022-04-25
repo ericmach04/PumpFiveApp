@@ -9,6 +9,7 @@ export default class OrderSummary extends Component{
     this.state = {
       card: '',
       city: '',
+      color: '',
       deliverydate: '',
       deliverytime: '',
       discount: '',
@@ -43,6 +44,7 @@ export default class OrderSummary extends Component{
         this.setState({
           card: order.card,
           city: order.city,
+          color: order.color,
           deliverydate: order.deliverydate,
           deliverytime: order.deliverytime,
           discount: order.discount,
@@ -172,7 +174,7 @@ export default class OrderSummary extends Component{
                           borderBottomWidth: 2,
                         }}
                       />
-                <Text style={styles.boxfontsbody}>Deliver To: <Text style={styles.boxfontshead}>{this.state.year} {this.state.make} {this.state.model}</Text></Text>
+                <Text style={styles.boxfontsbody}>Deliver To: <Text style={styles.boxfontshead}>{this.state.year} {this.state.color} {this.state.make} {this.state.model}</Text></Text>
                 <Text style={styles.boxfontsbody}>License Plate: <Text style={styles.boxfontshead}>{this.state.license}</Text></Text>
                 <Text style={styles.boxfontsbody}>at</Text>
                 <Text style={styles.boxfontshead}>{this.state.streetnumber}</Text>

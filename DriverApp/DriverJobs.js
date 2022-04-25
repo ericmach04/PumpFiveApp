@@ -32,7 +32,7 @@ export default class DriverJobs extends Component {
       const { email, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber} = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
-      if (fulfilled=="no") {
+      if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
@@ -88,33 +88,16 @@ export default class DriverJobs extends Component {
               // count += 1;
 
               return (
-                /* 
-                <View style={{ top: "15%", left: "2%" }}>
-                  <View style={styles.BoundingBox}>
-                    <Text style={styles.bofadeeznutsbold}>
-                      Address #{count}
-                    </Text>
-                  </View>
-                */
-
+                
                 <View style={styles.section}>
                   <View>
                     <Text style={styles.bofadeeznutsbold}>
-                    {res.service.toUpperCase()} Delivery Service
+                    {/* {res.service.toUpperCase()} Delivery Service */}
+                    {res.service}
                     </Text>
                   </View>
 
-                  {/* <View>
-                          <Image source={image} />
-                        </View> */}
-                  {/* <View>
-                    <Text style={styles.bofadeeznuts}>{res.quantity}</Text>
-                  </View>
-                  <View>
-                    <Text style={styles.bofadeeznuts}>
-                      {res.quantity}, {res.quantity}, {res.quantity}
-                    </Text>
-                  </View> */}
+                  
                    <View style= {styles.textp}>
                       <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text>
                       <Text>Date of Order: {res.deliverydate}</Text>
@@ -122,19 +105,10 @@ export default class DriverJobs extends Component {
                       <Text>O. no.:  {res.ordernumber}</Text>
                       {/* <Text>Order#:  {res.ordernumber}</Text> */}
                   </View>
-                  {/* <TouchableOpacity onPress={() => {
-                                this.props.navigation.navigate('EditAddress', {
-                                  userkey: res.key
-                                });
-                              }}>
-                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Edit</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.deleteAddress(res.key)}>
-                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Delete</Text>
-                  </TouchableOpacity> */}
+                 
                    <TouchableOpacity style={styles.button1}>
                     <Button 
-                    title="View All Job Details"
+                    title="View All Details"
                     onPress={() => this.props.navigation.navigate('Receipt', {
                       userkey: res.ordernumber
                     })}/>
@@ -277,10 +251,10 @@ export default class DriverJobs extends Component {
       top: 347,
     },
     button: {
-      width: 100,
+      width: "50%",
       height: 40,
-      top: 5,
-      left: 220,
+      bottom: "2%",
+      // left: 220,
       backgroundColor: "#DAAC3F",
       position: "absolute",
       borderWidth: 1,
@@ -342,12 +316,14 @@ export default class DriverJobs extends Component {
 
   },
   button1: {
-      width: 292,
-      backgroundColor: "#DAAC3F", 
-      height:35,
-      top:44,
-      borderWidth: 1,
-      left: -1,
+    width: "100%",
+    height: 40,
+    bottom: "0%",
+    // left: 220,
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
+    // borderWidth: 1,
+    borderRadius: 20,
   }
   });
   

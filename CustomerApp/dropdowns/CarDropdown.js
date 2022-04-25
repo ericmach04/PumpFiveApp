@@ -16,6 +16,7 @@ export default class AddressDropdown extends Component{
     this.handleMakeChange  = this.handleMakeChange.bind(this)
     this.handleYearChange  = this.handleYearChange.bind(this)
     this.handleLicenseChange  = this.handleLicenseChange.bind(this)
+    this.handleColorChange  = this.handleColorChange.bind(this)
     this.state = {
       // cards: [],
       addresses:{
@@ -66,6 +67,13 @@ handleLicenseChange(e) {
   // console.log("value: ", e)
 }
 
+handleColorChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'color')
+  this.props.onColorValChange(e)
+  // console.log("value: ", e)
+}
+
 
   componentDidMount() {
         this.unsubscribe = this.docs.onSnapshot(this.getCarData);
@@ -113,7 +121,7 @@ handleLicenseChange(e) {
     data.push(emptyarr)
 
     querySnapshot.forEach((res) => {
-      const { email, license, make, model, year } = res.data();
+      const { email, license, make, model, year, color } = res.data();
       if (email == auth.currentUser?.email) {
         carinfo.push({
           key: res.id,
@@ -122,9 +130,10 @@ handleLicenseChange(e) {
           make,
           model,
           year,
+          color
         });
 
-        var string = year + " " + make + " " + model
+        var string = year + " " + color + " " + make + " " + model
         data[0].push(string)
 
         keyvals[string] = {
@@ -132,7 +141,8 @@ handleLicenseChange(e) {
             license: license,
             make: make,
             model: model,
-            year: year
+            year: year,
+            color: color,
             // cvv: '000'
             // cvv: cvv
           }
@@ -146,6 +156,7 @@ handleLicenseChange(e) {
       make: '',
       model: '',
       year: '',
+      color: ''
     }
     data[0].push("Other")
 
@@ -236,6 +247,17 @@ handleLicenseChange(e) {
                 />
                 </View>
 
+                <Text style={styles.email}>Color: *</Text>
+                <View style={styles.input}>
+                <TextInput
+                        // style={styles.input}
+                        placeholder={'Enter Color'}
+                        placeholderTextColor="#D3D3D3"
+                        value={this.state.keyvals[this.state.text].color}
+                        onChangeText={this.handleColorChange}
+                />
+                </View>
+
                 <Text style={styles.email}>License Plate: *</Text>
                 <View style={styles.input}>
                 <TextInput
@@ -289,7 +311,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "40%",
+      top: "25%",
       color: "black",
      
       fontSize: 20,
@@ -300,13 +322,13 @@ const styles = StyleSheet.create({
       // left: "2%",
     },
     input: {
-      height: "7%",
+      height: "6%",
       margin: "1%",
       width: "90%",
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "40%",
+      top: "25%",
       // left: "2%",
     },
     inputGroup: {
@@ -327,33 +349,3 @@ const styles = StyleSheet.create({
       // justifyContent: "center",
     },
 })
-  
-
-// const PaymentDropdown = () => {
-//   const [open, setOpen] = useState(false);
-//   const [value, setValue] = useState(null);
-//   const [items, setItems] = useState([
-//     {label: 'creditcard1', value: 'Credit Card ending in 5079'},
-//     {label: 'creditcard2', value: 'Credit Card ending in 4984'},
-//   ]);
-
-//   return (
-//     <DropDownPicker style={styles.containerStyle}
-//       open={open}
-//       value={value}
-//       items={items}
-//       setOpen={setOpen}
-//       setValue={setValue}
-//       setItems={setItems}
-//     />
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//     containerStyle: {
-//         left: 0,
-//         top: 5,
-//     }
-// })
-
-// export default PaymentDropdown;

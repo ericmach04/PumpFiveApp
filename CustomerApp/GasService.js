@@ -32,6 +32,7 @@ export default class GasService extends Component{
     this.handleMakeChange = this.handleMakeChange.bind(this)
     this.handleModelChange = this.handleModelChange.bind(this)
     this.handleYearChange = this.handleYearChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
     this.handleLicenseChange = this.handleLicenseChange.bind(this)
 
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -63,6 +64,7 @@ export default class GasService extends Component{
         make: '',
         model: '',
         year: '',
+        color: '',
         license: ''
       },
       cardinfo:{
@@ -104,7 +106,7 @@ export default class GasService extends Component{
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
-        service: 'gas',
+        service: 'Gas Delivery Service',
         type: this.state.gastype,
         price: this.state.gasprice,
         quantity: this.state.quantity,
@@ -113,6 +115,7 @@ export default class GasService extends Component{
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
+        color: this.state.carinfo.color,
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
@@ -276,6 +279,12 @@ export default class GasService extends Component{
     this.setState(state)
     
   }
+  handleColorChange(color){
+    const state = this.state
+    state.carinfo["color"] = color
+    this.setState(state)
+    
+  }
   handleLicenseChange(license){
     const state = this.state
     state.carinfo["license"] = license
@@ -374,6 +383,7 @@ export default class GasService extends Component{
   const make = this.props.make
   const model = this.props.model
   const year = this.props.year
+  const color = this.props.color
   const license = this.props.license
 
   const { open, value, items } = this.state;
@@ -443,27 +453,7 @@ export default class GasService extends Component{
                                 <Picker.Item label="Diesel" value="Diesel" />
                                 
                               </Picker>
-                              {/* <GasDropdown childToParent={this.childToParent}></GasDropdown> */}
-                              {/* <DropDownPicker
-                                items={[
-                                    {label: 'France', value: 'fr'},
-                                    {label: 'Spain', value: 'es'},
-                                ]}
-                                // defaultNull
-                                placeholder="Select your country"
-                                containerStyle={{height: 40, width: "50%"}}
-                                onChangeItem={item => this.changeCountry(item)}
-                                // dropDownMaxHeight={540}
-                              /> */}
-                              {/* <DropDownPicker
-                                  open={open}
-                                  value={value}
-                                  items={items}
-                                  setOpen={this.setOpen}
-                                  setValue={this.setValue}
-                                  setItems={this.setItems}
-                                  
-                              /> */}
+                              
                               </View>
                             
                            
@@ -507,9 +497,11 @@ export default class GasService extends Component{
                           model={model}
                           year={year}
                           license={license}
+                          color={color}
                           onMakeValChange = {this.handleMakeChange}
                           onModelValChange = {this.handleModelChange}
                           onYearValChange = {this.handleYearChange}
+                          onColorValChange = {this.handleColorChange}
                           onLicenseValChange = {this.handleLicenseChange}
                         >
 
@@ -592,7 +584,7 @@ export default class GasService extends Component{
                           <View style={{justifyContent: "right"}}>
                           <Text></Text>
                               <Text>Car Information: </Text>
-                              <Text>{this.state.carinfo.year} {this.state.carinfo.make} {this.state.carinfo.model}</Text>
+                              <Text>{this.state.carinfo.year} {this.state.carinfo.color} {this.state.carinfo.make} {this.state.carinfo.model}</Text>
                               <Text>Licence Plate: {this.state.carinfo.license}</Text>
                           </View>  
                                                   
@@ -820,7 +812,7 @@ const styles = StyleSheet.create({
       carInfo:{
         flex: 1,
         width: "90%",
-        height: 750,
+        height: 850,
         left: "5%",
         right: "5%",
         //top: "0%",

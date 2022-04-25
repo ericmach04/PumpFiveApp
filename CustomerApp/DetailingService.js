@@ -32,6 +32,7 @@ export default class DetailingService extends Component{
     this.handleMakeChange = this.handleMakeChange.bind(this)
     this.handleModelChange = this.handleModelChange.bind(this)
     this.handleYearChange = this.handleYearChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
     this.handleLicenseChange = this.handleLicenseChange.bind(this)
 
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -62,6 +63,7 @@ export default class DetailingService extends Component{
         make: '',
         model: '',
         year: '',
+        color: '',
         license: ''
       },
       cardinfo:{
@@ -103,7 +105,7 @@ export default class DetailingService extends Component{
         state: this.state.addressinfo.state,
         zip: this.state.addressinfo.zip,
 
-        service: 'detailing',
+        service: 'Detailing Service',
         type: this.state.detailingtype,
         price: this.state.detailingprice,
         quantity: this.state.quantity,
@@ -112,6 +114,7 @@ export default class DetailingService extends Component{
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
+        color: this.state.carinfo.color,
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
@@ -277,6 +280,12 @@ export default class DetailingService extends Component{
     this.setState(state)
     
   }
+  handleColorChange(color){
+    const state = this.state
+    state.carinfo["color"] = color
+    this.setState(state)
+    
+  }
   handleLicenseChange(license){
     const state = this.state
     state.carinfo["license"] = license
@@ -375,6 +384,7 @@ export default class DetailingService extends Component{
   const make = this.props.make
   const model = this.props.model
   const year = this.props.year
+  const color = this.props.color
   const license = this.props.license
 
   const { open, value, items } = this.state;
@@ -488,9 +498,11 @@ export default class DetailingService extends Component{
                           model={model}
                           year={year}
                           license={license}
+                          color={color}
                           onMakeValChange = {this.handleMakeChange}
                           onModelValChange = {this.handleModelChange}
                           onYearValChange = {this.handleYearChange}
+                          onColorValChange = {this.handleColorChange}
                           onLicenseValChange = {this.handleLicenseChange}
                         >
 
