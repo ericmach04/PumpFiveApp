@@ -410,7 +410,7 @@ export default class TireService extends Component {
                     />
                   </View>
 
-                  <Text style={styles.subheadings}>Tire Size</Text>
+                  
                   {/* <View 
                         style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}} 
                         > */}

@@ -1,4 +1,4 @@
-import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator, Alert,} from 'react-native'
+import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking, ActivityIndicator, Alert, TextInput} from 'react-native'
 import React, { Component, useCallback } from 'react'
 import { TouchableOpacity } from 'react-native-web';
 import firebase from "firebase"
@@ -20,6 +20,8 @@ export default class DriverOrder extends Component {
       servicetype: '',
       gasprice: '',
       tireprice: '',
+      drivernotes: "",
+      orderfulfilled: false,
       prices: [],
       units: ''
     };
@@ -29,6 +31,11 @@ export default class DriverOrder extends Component {
   getData() {
     this.docs.onSnapshot(this.getOrderData);
     // this.pricedocs.onSnapshot(this.getPriceData);
+  }
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
   }
 
   componentDidMount() {
@@ -91,6 +98,9 @@ export default class DriverOrder extends Component {
       updateDBRef.update("subtotal", subtotal)
       updateDBRef.update("quantity", quantity)
       updateDBRef.update("fulfilled", "yes")
+      const state = this.state;
+      state["orderfulfilled"] = true;
+      this.setState(state);
     })
     
 
@@ -110,11 +120,32 @@ export default class DriverOrder extends Component {
     const state = this.state;
     state.servicetype = ''
     state.tireprice = ''
+    state["orderfulfilled"] = true;
+    this.setState(state);
+
+  }
+
+  updateDetailingOrder(id, notes){
+    console.log("TIre id: ", id)
+    const updateDBRef = firebase.firestore().collection('Orders').doc(id)
+    updateDBRef.update("drivernotes", notes)
+    // updateDBRef.update("price", this.state.tireprice)
+    // var subtotal = parseFloat(this.state.tireprice) * parseFloat(quantity);
+    // subtotal = subtotal.toFixed(2);
+    // console.log("SubTotal: ", subtotal);
+    // updateDBRef.update("subtotal", subtotal)
+    // var total;
+    updateDBRef.update("fulfilled", "yes")
+    const state = this.state;
+    state.servicetype = ''
+    state.drivernotes = ''
+    state["orderfulfilled"] = true;
     this.setState(state);
 
   }
 
   onButtonPress(id, service){
+    console.log("lol service: ", service)
     if(service == "Gas Delivery Service")
     {
       Alert.prompt(
@@ -163,23 +194,11 @@ export default class DriverOrder extends Component {
         }
         )
       
-      // Alert.prompt(
-      //   "Tire Delivery",
-      //   "Select the size of the tires you put on",
-      //   [
-      //     {
-      //       text: "Cancel",
-      //       onPress: () => console.log("Cancel Pressed"),
-      //       style: "cancel"
-      //     },
-      //     {
-      //       text: "Submit",
-      //       onPress: size => this.updateQuantity(size, id)
-      //     }
-      //   ],
-        
-        
-      // );
+    }
+    else if (service == "Detailing Service"){
+      const state = this.state;
+      state.servicetype = "detailing"
+      this.setState(state);
     }
   };
 
@@ -249,7 +268,7 @@ export default class DriverOrder extends Component {
     //   console.log("Current order: ", res)
     //   })
     
-
+      console.log("My service type: ", this.state.servicetype)
       if(this.state.servicetype ==  "tire")
       {
         return (
@@ -305,6 +324,63 @@ export default class DriverOrder extends Component {
             </ImageBackground>
           </View>
         )
+      }
+      else if (this.state.servicetype ==  "detailing")
+      {
+        return (
+          <View style={styles.container}>
+            <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.text}>Current Order: {currorder.service} </Text>
+            <View style={styles.rect1}>
+              
+              <Text style={styles.detailtext}>Please add any additional details for the customer: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Details'}
+                        value={this.state.drivernotes}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'drivernotes')}
+                        // value = {year}
+                        // onChangeText={text => setYear(text)}
+                        // placeholder="Enter Car Year"
+                        // keyboardType="numeric"
+                />
+            </View>
+    
+            <View style={styles.button}>
+              <Button
+                  title="Submit"
+                  color="white"
+                  onPress={() => this.updateDetailingOrder(currorder.ordernumber, this.state.drivernotes)}
+                  // onPress={() => navigation.navigate('CalendarScreen')}
+              />
+            </View>
+            </ImageBackground>
+          </View>
+        )
+      }
+      else if(this.state.orderfulfilled==true){
+        return (
+          <View style={styles.container}>
+            <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
+            {/* <Text style={styles.text}>Current Order: {currorder.service} </Text> */}
+            <View style={styles.rect1}>
+              
+              <Text style={styles.boxfontshead}>This order has been processed successfully. Click "next order" to retrieve your next order</Text>
+              <View style={styles.button1}>
+              <Button
+                  title="Next Order"
+                  color="white"
+                  onPress={() => this.setState({
+                      orderfulfilled: false
+                  })}
+                  // onPress={() => navigation.navigate('CalendarScreen')}
+              />
+            </View>
+            </View>
+            </ImageBackground>
+          </View>
+        )
+
       }
       else{
     return (
@@ -453,7 +529,7 @@ const styles = StyleSheet.create({
   button1: {
     position: 'absolute',
     width: "50%",
-    height: "5%",
+    height: "7%",
     left: "5%",
     top: "89%",
     backgroundColor: '#B96835',
@@ -500,6 +576,27 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     top: 620,
     left: 105,
+  },
+  detailtext: {
+    top: "20%",
+    color: "black",
+   
+    fontSize: 20,
+    lineHeight: 44,
+    fontWeight: "bold",
+    textAlign: "left",
+
+    left: "2%",
+  },
+  input: {
+    height: "20%",
+    margin: "1%",
+    width: "90%",
+    borderWidth: 1,
+    padding: "1%",
+    backgroundColor: "white",
+    top: "20%",
+    left: "2%",
   },
 })
 
