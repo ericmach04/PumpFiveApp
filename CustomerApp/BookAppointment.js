@@ -18,35 +18,22 @@ import { auth } from '../firebase';
 export default class BookAppointment extends Component {
   constructor(props) {
     super(props);
+    this.user = auth.currentUser;
+    this.uid =  user.uid
+    this.updateDBRef = firebase.firestore().collection('Orders').doc(uid)
     this.state = {
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      fname: user.
+
       isDateTimePickerVisible: false,
       deliveryTime: "No delivery time set",
-      isLoading: true
-    };
-
-    //Const variables 
-    const GAS = 1;
-    const TIRE = 2;
-    const DETAIL = 3;
-
-    //class variables 
-    const user = auth.currentUser;
-    const uid = "Bz9HwzemQsLby5PBZ0n4";
-
-    const service = 1;
+      isLoading: true,
 
 
+    }
+    let delivery 
+  };
 
-    let currentDate
-    let dateTimeString
-    var day
-    var month
-    var year
-    var hours
-    var minutes
-
-
-  }
 
   //class methods 
   showDateTimePicker = () => {
@@ -57,21 +44,21 @@ export default class BookAppointment extends Component {
     this.setState({ isDateTimePickerVisible: false });
   }
 
-  setDeliveryTime = () => {
-    this.setState({deliveryTime: this.deliveryTime})
-  }
+
+  setDeliveryTime = (data) => {
+    day = data.getDate();
+    month = (data.getMonth() + 1);
+    year = data.getFullYear();
+    hours = data.getHours();
+    minutes = data.getMinutes();
+
+    ampm = hours >= 12 ? 'PM' : 'AM';
+    hours =  (hours % 12);
+    this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
 
 
-  formatDate = (data) => {
-    this.day = data.getDate();
-    this.month = (data.getMonth() + 1);
-    this.year = data.getFullYear();
-    this.hours = data.getHours();
-    this.minutes = data.getMinutes();
-
-    this.ampm = this.hours >= 12 ? 'PM' : 'AM';
-    this.hours = this.hours % 12;
-    this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
+    this.setState({deliveryTime: this.delivery}, () => 
+    console.log(this.state))
 
   }
 
@@ -81,10 +68,7 @@ export default class BookAppointment extends Component {
 
   //set correct service to update
   updateService = () => {
-    const user = auth.currentUser;
-    const uid =  user.uid
-    const updateDBRef = firebase.firestore().collection('Orders').doc(uid)
-    updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
+    this.updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
       .then(() => {
         this.setState({
           isLoading: false,
@@ -104,11 +88,9 @@ export default class BookAppointment extends Component {
 
 
   handleDatePicked = date => {
-    this.formatDate(date)
-    this.setDeliveryTime()
-    console.log("A date has been picked: ", this.state.deliveryTime)
-    this.hideDateTimePicker()
+    this.setDeliveryTime(date)
     this.updateService()
+    this.hideDateTimePicker()
 
   }
 
@@ -122,8 +104,6 @@ export default class BookAppointment extends Component {
   //rendering view 
   render() {
     this.currentDate = new Date()
-    //const service =  this.props.route.params;
-
 
     return (
       <SafeAreaView style={styles.container}>

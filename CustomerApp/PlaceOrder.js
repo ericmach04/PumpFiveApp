@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, ScrollVi
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
 import { auth } from "../firebase";
-import React, { Component } from 'react'
+import React, { Component,} from 'react'
 import GasService from './GasService';
 import GasButton from '../CustomerApp/buttons/GasButton'
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,6 +19,7 @@ export default class PlaceOrder extends Component{
     this.state = {
       isLoading: true,
       users:[],
+      service: 0
     };
     // this.deleteUser = this.deleteUser.bind(this);
 
