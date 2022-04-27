@@ -53,6 +53,7 @@ export default class DetailingService extends Component{
       detailingprice: '',
       prices: [],
       total: 0,
+      drivernotes: "",
       addressinfo:{
         streetnumber: '',
         city: '',
@@ -128,6 +129,7 @@ export default class DetailingService extends Component{
 
         ordernumber: '',
         fulfilled: "no",
+        drivernotes: "",
 
       }).then((res) => {
         console.log("Res id: ", res.id)
@@ -160,17 +162,17 @@ export default class DetailingService extends Component{
     const state = this.state
     // console.log("State: ", state);;/.
     state["detailingtype"]= option
-    if(option.toLowerCase() == "basic"){
-      state["detailingprice"] = this.state.prices[0]["basic"]
+    if(option == "Inside"){
+      state["detailingprice"] = this.state.prices[0]["inside"]
     }
 
-    else if(option.toLowerCase() == "premium"){
-      state["detailingprice"] = this.state.prices[0]["premium"]
+    else if(option == "Outside"){
+      state["detailingprice"] = this.state.prices[0]["outside"]
     }
 
-    // else{
-    //   state["tireprice"] = this.state.prices[0]["large"]
-    // }
+    else{
+      state["detailingprice"] = this.state.prices[0]["both"]
+    }
     this.setState(state)
 
     console.log("option: ", option)
@@ -202,14 +204,16 @@ export default class DetailingService extends Component{
     .collection("Prices")
     .doc("Detailing_Prices");
   dbRef.get().then((res) => {
-      const { basic, premium, } = res.data();
-      console.log("small: ", basic)
-      console.log("medium: ", premium)
+      const {inside, outside, both} = res.data();
+      console.log("inside: ", inside)
+      console.log("outside: ", outside)
+      console.log("both: ", both)
       // console.log("large: ", large)
         prices.push({
           key: res.id,
-          basic,
-          premium,
+          inside,
+          outside,
+          both,
           // large,
         });
         console.log("Prices: ", prices);
@@ -449,8 +453,9 @@ export default class DetailingService extends Component{
                                 selectedValue={this.state.detailingtype}
                               >
                                 <Picker.Item label="Please Select" value="disabled" color="#aaa"/>
-                                <Picker.Item label="Basic" value="Basic" />
-                                <Picker.Item label="Premium" value="Premium" />
+                                <Picker.Item label="Inside" value="Inside" />
+                                <Picker.Item label="Outside" value="Outside" />
+                                <Picker.Item label="Both" value="Both" />
                                 {/* <Picker.Item label="Large" value="Large" /> */}
                                 
                               </Picker>
