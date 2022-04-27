@@ -23,7 +23,7 @@ export default class BookAppointment extends Component {
     this.updateDBRef = firebase.firestore().collection('Orders').doc(uid)
     this.state = {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      fname: user.
+      fname: user,
 
       isDateTimePickerVisible: false,
       deliveryTime: "No delivery time set",
@@ -57,10 +57,10 @@ export default class BookAppointment extends Component {
     this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
 
 
-<<<<<<< HEAD
     this.setState({deliveryTime: this.delivery}, () => 
     console.log(this.state))
-=======
+  }
+  
   formatDate = (data) => {
     this.day = data.getDate();
     this.month = (data.getMonth() + 1);
@@ -71,7 +71,6 @@ export default class BookAppointment extends Component {
     this.ampm = this.hours >= 12 ? 'PM' : 'AM';
     this.hours = this.hours % 12;i
     this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
->>>>>>> 56bf4f2687194276ee420a09f24c47601959c784
 
   }
 

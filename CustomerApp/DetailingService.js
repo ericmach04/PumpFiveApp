@@ -24,6 +24,8 @@ export default class DetailingService extends Component{
     this.docs = firebase.firestore().collection("Prices");
     this.dbRef = firebase.firestore().collection('Orders');
 
+    this.dbusers = firebase.firestore().collection('Users');
+
     this.handleSNChange = this.handleSNChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
@@ -48,6 +50,11 @@ export default class DetailingService extends Component{
 
     this.state = {
       reviewpressed: false,
+      fname: '',
+      lname: '',
+      phone: '',
+      email: '',
+      customernotes: "",
       quantity: 1,
       detailingtype: '',
       detailingprice: '',
@@ -93,6 +100,11 @@ export default class DetailingService extends Component{
     console.log("Imported Text: ", this.state.text)
 
   }
+  inputValueUpdate2 = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
 
   addOrderToDB() {
       this.setState({
@@ -100,6 +112,12 @@ export default class DetailingService extends Component{
       });      
       this.dbRef.add({
         email: auth.currentUser?.email,
+        fname: this.state.fname,
+        lname: this.state.lname,
+        phone: this.state.phone,
+
+        driveremail: '',
+        customernotes: this.state.customernotes,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,
@@ -188,9 +206,33 @@ export default class DetailingService extends Component{
     console.log("Gas type?: ", this.state.type)
 
   }
+  getUserData = (querySnapshot) => {
+    
+    querySnapshot.forEach((res) => {
+      const {email, fname, lname, phone } = res.data();
+      // console.log("email: ", email)
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        // console.log("email: ", email)
+        const state = this.state
+        state.email = email
+        state.fname = fname
+        state.lname = lname
+        state.phone = phone
+        this.setState(state)
+        
+      }
+      
+    });
+    this.setState({
+      // keyvals: keyvalues,
+      isLoading: false,
+    });
+    
+  };
 
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.getPriceData);
+    this.dbusers.onSnapshot(this.getUserData);
   }
 
   componentWillUnmount() {
@@ -520,6 +562,18 @@ export default class DetailingService extends Component{
                         <Text style={styles.boxfontshead}>Payment Information</Text>
                         <PaymentDropdown/>
                     </View> */}
+                     <View style={styles.addNotes}>
+                        <Text style={styles.boxfontshead}>Please provide any additonal notes for the driver (optional)</Text>
+                        <View style={styles.input2}>
+                          <TextInput
+                                  placeholder={'Additional Notes'}
+                                  placeholderTextColor="#D3D3D3"
+                                  value={this.state.customernotes}
+                                  onChangeText={(val) => this.inputValueUpdate2(val, 'customernotes')}
+                          />
+                        </View>
+                          
+                    </View>
 
                     <View style={styles.paybutton}>
                               <Button
@@ -630,6 +684,13 @@ export default class DetailingService extends Component{
                           <Text>${this.state.total} </Text>
                         </View>
                       </View>
+                      <View
+                          style={{
+                            borderBottomColor: 'black',
+                            borderBottomWidth: 1,
+                          }}
+                        />
+                        <Text>Additonal Notes: {this.state.customernotes}</Text>
 
                       
 
@@ -723,6 +784,19 @@ export default class DetailingService extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+      },
+      addNotes: {
+        flex: 1,
+        width: "90%",
+        height: 500,
+        left: "5%",
+        right: "5%",
+        //top: "0%",
+        backgroundColor: "#CDCABF",
+        borderWidth: 2,
+        borderColor: "#000000",
+        borderRadius: 10,
+        marginBottom: 20,
       },
       paybutton: {
         // width: "77%",
@@ -872,7 +946,16 @@ const styles = StyleSheet.create({
         left: 10,
       },
       input: {
-        height: 40,
+        height: "40%",
+        top:"20%",
+        margin: 5,
+        borderWidth: 1,
+        padding: 5,
+        backgroundColor: "white",
+      },
+      input2: {
+        height: "40%",
+        top:"20%",
         margin: 5,
         borderWidth: 1,
         padding: 5,

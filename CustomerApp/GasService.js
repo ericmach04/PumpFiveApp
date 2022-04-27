@@ -63,6 +63,7 @@ export default class GasService extends Component {
       lname: '',
       phone: '',
       email: '',
+      customernotes: "",
       quantity: 'TBD',
       gastype: "",
       gasprice: "",
@@ -110,12 +111,7 @@ export default class GasService extends Component {
   }
 
   getUserData = (querySnapshot) => {
-    // const user = userCredentials.user;
-    // console.log("In getifdriver")
-    // console.log("this email: ", this.state.email)
     
-    // var keyvalues = {}
-    // console.log("this.state.email: ", this.state.email)
     querySnapshot.forEach((res) => {
       const {email, fname, lname, phone } = res.data();
       // console.log("email: ", email)
@@ -135,10 +131,7 @@ export default class GasService extends Component {
       // keyvals: keyvalues,
       isLoading: false,
     });
-    // console.log("epicemail: ", this.state.email)
-    // console.log("epicfname: ", this.state.fname)
-    // console.log("epiclname: ", this.state.lname)
-    // console.log("epicephone: ", this.state.phone)
+    
   };
 
   importText(text){
@@ -165,6 +158,9 @@ export default class GasService extends Component {
         fname: this.state.fname,
         lname: this.state.lname,
         phone: this.state.phone,
+
+        driveremail: '',
+        customernotes: this.state.customernotes,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,
@@ -369,6 +365,12 @@ export default class GasService extends Component {
     // console.log("Gas type?: ", this.state.type)
   };
 
+  inputValueUpdate2 = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
+
   quantityInputValueUpdate = (val, prop) => {
     const state = this.state;
     state[prop] = val;
@@ -549,6 +551,19 @@ export default class GasService extends Component {
                           
                     </View>
 
+                    <View style={styles.addNotes}>
+                        <Text style={styles.boxfontshead}>Please provide any additonal notes for the driver (optional)</Text>
+                        <View style={styles.input}>
+                          <TextInput
+                                  placeholder={'Additional Notes'}
+                                  placeholderTextColor="#D3D3D3"
+                                  value={this.state.customernotes}
+                                  onChangeText={(val) => this.inputValueUpdate2(val, 'customernotes')}
+                          />
+                        </View>
+                          
+                    </View>
+
                 <View style={styles.paybutton}>
                   <Button
                     title="Review Order"
@@ -656,7 +671,13 @@ export default class GasService extends Component {
                           </View>
                         </View>
   
-                        
+                        <View
+                          style={{
+                            borderBottomColor: 'black',
+                            borderBottomWidth: 1,
+                          }}
+                        />
+                        <Text>Additonal Notes: {this.state.customernotes}</Text>
   
                       </View>
                     
@@ -852,6 +873,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
   },
+  addNotes: {
+    flex: 1,
+    width: "90%",
+    height: 500,
+    left: "5%",
+    right: "5%",
+    //top: "0%",
+    backgroundColor: "#CDCABF",
+    borderWidth: 2,
+    borderColor: "#000000",
+    borderRadius: 10,
+    marginBottom: 20,
+  },
 
   paymentinfo: {
     flex: 1,
@@ -896,7 +930,8 @@ const styles = StyleSheet.create({
     left: 10,
   },
   input: {
-    height: 40,
+    height: "40%",
+    top:"20%",
     margin: 5,
     borderWidth: 1,
     padding: 5,

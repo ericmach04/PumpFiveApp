@@ -9,23 +9,33 @@ import {
     TouchableHighlight,
     TouchableOpacity,
   } from "react-native";
-  import React from "react";
+  import {React, Component} from "react";
   import { NavigationContainer } from "@react-navigation/native";
   import { createStackNavigator } from "@react-navigation/stack";
+  import firebase from "firebase"
   import { auth } from "../firebase";
   
   //Addresses Page - In Progresss
   
-  export default function AcctSettings({ navigation }) {
+  export default class AcctSettings extends Component {
+    constructor() {
+      super();
+      this.docs = firebase.firestore().collection("Users");
+      this.state = {
+        isLoading: true,
+        users: [],
+      };
+    }
   
-    const handleSignOut = () => {
+    handleSignOut = () => {
       auth
         .signOut()
         .then(() => {
-          navigation.replace("Login")
+          this.props.navigation.navigate("Login");
         })
-        .catch(error => alert(error.message))
-    }
+        .catch((error) => alert(error.message));
+    };
+    render(){
   
     return (
       <View style={styles.container}>
@@ -48,7 +58,7 @@ import {
                   <Button
                     title="Logout"
                     color="white"
-                    onPress={handleSignOut}
+                    onPress={this.handleSignOut}
                   />
                 </View>
               </View>
@@ -103,8 +113,27 @@ import {
                   </TouchableHighlight>
                 </View>
               </View>
-  
+
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("DriverJobHistory")}>
               <View
+                style={{
+                  flexDirection: "row",
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
+                }}
+              >
+                  <View style={{left: 20, top: "40%"}}>
+                  <Image source={require("../icons/menu.png")}/>
+                  </View>
+                  <View style={{left: 50, top: "40%"}}>
+                  <Text style={styles.boxfontshead2}>Job History</Text>
+                  </View>
+              </View>
+              </TouchableOpacity>
+  
+              {/* <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
@@ -125,7 +154,7 @@ import {
                     <Image source={require("../icons/arrow.png")} />
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
   
               <View
                 style={{
@@ -147,27 +176,11 @@ import {
               </View>
             </View>
   
-            {/* <View style={Logoutstyles.button}>       
-                    <Button title="< == "color="black" onPress={() => navigation.navigate('HomePage')}/>
-                    <Text style={styles.addrfontshead}>* Default Billing Address</Text>
-                    <View style={Logoutstyles.button}>       
-                      <Button title="==>" color="black" onPress={() => navigation.navigate('Login')}/> 
-                    </View>      */}
-            {/* <Text style={styles.mem2fontsbody}>Monthly Membership: 3/1/2022</Text>    
-                    <Text style={styles.mmlfontsbody}>Make: Toyota Camry</Text>
-                    <Text style={styles.licfontsbody}>License Plate: 123abc</Text>        */}
-            {/* </View> */}
-            {/* <View style={styles.paybutton}>
-                                  <Button
-                                    title="View Customer Side"
-                                    color="white"
-                                    onPress={() => navigation.navigate('Tabs')}
-                                  />
-                    </View> */}
           </SafeAreaView>
         </ImageBackground>
       </View>
     );
+              }
   }
   
   const buttonstyles = StyleSheet.create({
