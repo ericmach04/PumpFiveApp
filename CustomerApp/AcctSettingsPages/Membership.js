@@ -29,6 +29,16 @@ export default class Membership extends Component{
     super(props);
     this.docs = firebase.firestore().collection("Users");
     this.ccdocs = firebase.firestore().collection("Credit_Cards");
+
+    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handleNumberChange = this.handleNumberChange.bind(this)
+    this.handleTypeChange = this.handleTypeChange.bind(this)
+    this.handleExpiryChange = this.handleExpiryChange.bind(this)
+    this.handleCvvChange = this.handleCvvChange.bind(this)
+
+    this.importCard = this.importCard.bind(this)
+    this.importText = this.importText.bind(this)
+
     this.state = {
       isLoading: true,
       key: '',
@@ -38,14 +48,72 @@ export default class Membership extends Component{
       data:[],
       buttononepressed: 'false',
       buttontwopressed: 'false',
-      selectedCard : {
+      cardinfo : {
         name: '',
         number: '',
+        type: '',
         expiry: '',
         cvv: ''
-      }
+      },
+      importedcardinfo : {
+        name: '',
+        number: '',
+        type: '',
+        expiry: '',
+        cvv: ''
+      },
     };
     // this.deleteUser = this.deleteUser.bind(this);
+  }
+
+  importCard(carddata){
+    const state = this.state
+    state.importedcardinfo = carddata
+    this.setState(state)
+    console.log("Imported Card state: ", this.state.importedcardinfo)
+
+  }
+
+  importText(text){
+    const state = this.state
+    state.text = text
+    this.setState(state)
+    console.log("Imported Text: ", this.state.text)
+
+  }
+
+  handleNameChange(name){
+    // console.log("In name change")
+    const state = this.state
+    state.cardinfo["name"] = name
+    this.setState(state)
+   
+  }
+
+
+  handleNumberChange(number){
+    const state = this.state
+    state.cardinfo["number"] = number
+    this.setState(state)
+    
+  }
+  handleTypeChange(type){
+    const state = this.state
+    state.cardinfo["type"] = type
+    this.setState(state)
+    
+  }
+  handleExpiryChange(expiry){
+    const state = this.state
+    state.cardinfo["expiry"] = expiry
+    this.setState(state)
+    
+  }
+  handleCvvChange(cvv){
+    const state = this.state
+    state.cardinfo["cvv"] = cvv
+    this.setState(state)
+   
   }
 
   componentDidMount() {
@@ -60,6 +128,51 @@ export default class Membership extends Component{
   handleButtonOnePress() {
     console.log("In button 1 pressed")
     this.setState({buttononepressed: "true"});
+  }
+  checkCards() {
+    console.log("mytext: ", this.state.text)
+    console.log("card info: ", this.state.cardinfo)
+    console.log("imported card info: ", this.state.importedcardinfo)
+    if(this.state.importedcardinfo[this.state.text].cvv != this.state.cardinfo.cvv)
+    {
+      Alert.alert(
+        'Sorry, the fields for this card do not match',
+        'Please try again',
+        [
+          {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
+        ],
+        { 
+          cancelable: true 
+        }
+      );
+    }
+    else{
+      // Alert.alert(
+      //   'Fields match',
+      //   'LFG',
+      //   [
+      //     {text: 'Dismiss', onPress: () => console.log('Error'), style: 'cancel'},
+      //   ],
+      //   { 
+      //     cancelable: true 
+      //   }
+      // );
+      this.updatePaidYes()
+      console.log("payment info correct")
+    }
+  }
+  updatePaidYes() {
+    
+    const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
+    
+    updateDBRef.update("paid", "yes")
+    
+    .catch((error) => {
+      console.error("Error: ", error);
+      this.setState({
+        isLoading: false,
+      });
+    });
   }
 
   updatePaidNo() {
@@ -104,6 +217,7 @@ export default class Membership extends Component{
 
   getCardData = (querySnapshot) => {
     const cards = [];
+    console.log("In card data")
     querySnapshot.forEach((res) => {
       const { createdAt, cvv, email, expiry, number, type } = res.data();
       if (email == auth.currentUser?.email) {
@@ -178,16 +292,25 @@ export default class Membership extends Component{
     var buttononepressed = this.state.buttononepressed;
     // let dropdown;
     if(this.state.paid == "no"){
-      console.log("in no")
+      // console.log("in no")
 
       if (buttononepressed == "true") {
-        console.log("Button 1 pressed")
+        // console.log("Button 1 pressed")
         // dropdown = 
         // <View style={{justifyContent:"center"}}>
         //   <Text style={{top:"400%", left: "25%"}}>Please Select Payment Method</Text>
         //   <PaymentDropdown/>
         // </View>
+        const name = this.props.name
+        const number = this.props.number
+        const type = this.props.type
+        const expiry = this.props.expiry
+        const cvv = this.props.cvv
+
+        const carddata = this.props.carddata
+        const text = this.props.text
         return (
+          
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={styles.container}>
             
@@ -210,7 +333,22 @@ export default class Membership extends Component{
                                   </View>
                               </View>
                                 <Text style={{top:"5%", left: "25%"}}>Please Select Payment Method</Text>
-                                <PaymentDropdown/>
+                                <PaymentDropdown
+                                  name={name}
+                                  number={number}
+                                  type={type}
+                                  expiry={expiry}
+                                  cvv={cvv}
+                                  carddata={carddata}
+                                  text={text}
+                                  onNameValChange = {this.handleNameChange}
+                                  onNumberValChange = {this.handleNumberChange}
+                                  onTypeValChange = {this.handleTypeChange}
+                                  onExpiryValChange = {this.handleExpiryChange}
+                                  onCvvValChange = {this.handleCvvChange}
+                                  onExportCard = {this.importCard}
+                                  onTextValChange = {this.importText}
+                                />
                                 {/* <View style={{top: "50%"}}>
                                 <DropdownMenu
                                   // style={{top: "10%"}}
@@ -224,6 +362,17 @@ export default class Membership extends Component{
                                 >
                                 </DropdownMenu>
                                 </View> */}
+                        <View style={styles.paybutton3}>
+                          <Button
+                          title="Checkout"
+                          color="white"
+                          onPress={() => this.checkCards()}
+                          // onPress={() => console.log("Card info: ", this.state.cardinfo)}
+                          // onPress={() => this.checkCards()}
+                        /> 
+                     
+                       
+                   </View> 
                                 
                               
                           </View> 
@@ -297,8 +446,8 @@ export default class Membership extends Component{
                                       />
                                   </View>
                               </View>
-                              <Text style={styles.email}>Current Membership: Monthly</Text>
-                              <Text style={styles.email}>Member Number: {this.state.key}</Text>
+                              <Text style={styles.email}>Current Membership: <Text style={{fontWeight: "bold",}}>$19.99 Monthly</Text></Text>
+                              <Text style={styles.email}>Member Number: <Text style={{fontWeight: "bold",}}>{this.state.key}</Text></Text>
                               <View style={styles.paybutton}>
                                 
                                   <Button
@@ -350,7 +499,7 @@ export default class Membership extends Component{
     // width: "77%",
     // height: "7%",
     top: "30%",
-    left: "30%",
+    left: "20%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
     justifyContent: "center",
@@ -370,9 +519,9 @@ const styles = StyleSheet.create({
   
     Memberships: {
       position: 'absolute',
-      width: "98%",
-      height: "85%",
-      left: "2%",
+      width: "90%",
+      height: "80%",
+      left: "5%",
       top: "8%",
       backgroundColor: '#CDCABF',
       borderWidth: 2,
@@ -382,7 +531,7 @@ const styles = StyleSheet.create({
   email: {
     top: "10%",
     color: "black",
-   
+    paddingLeft: 15,
     fontSize: 15,
     lineHeight: 44,
     // fontWeight: "bold",
@@ -394,7 +543,7 @@ const styles = StyleSheet.create({
     // width: "77%",
     // height: "7%",
     top: "30%",
-    left: "30%",
+    left: "25%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
     justifyContent: "center",
@@ -581,6 +730,16 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center'
+      },
+      paybutton3: {
+        // width: "77%",
+        // height: "7%",
+        top: "95%",
+        right: "20%",
+        borderRadius: 30,
+        backgroundColor: "#DAAC3F",
+        position: "absolute",
+        // alignItems: "center",
       },
       
   

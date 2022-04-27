@@ -88,19 +88,11 @@ export default class AcctSettings extends Component {
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-around",
-                        left: 5,
                       }}
                     >
                       <Text style={styles.boxfontshead}>
                         {res.fname} {res.lname}
                       </Text>
-                      <View style={styles.loginview}>
-                        <Button
-                          title="Logout"
-                          color="white"
-                          onPress={this.handleSignOut}
-                        />
-                      </View>
                     </View>
                     <Text style={styles.boxfontsbody}>{res.email}</Text>
                     {/* <Text style={styles.boxfontsbody}>
@@ -112,141 +104,123 @@ export default class AcctSettings extends Component {
                   </View>
                 );
               })}
-
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Addresses")}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
+                  //justifyContent: "space-around",
                   top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
-                  <Image source={require("../icons/menu.png")} />
-                </View>
-                <View>
+                  <View style={{left: 20, top: 6}}>
+                  <Image source={require("../icons/menu.png")}/>
+                  </View>
+                  <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Addresses</Text>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Addresses")}
-                  >
-                    <Image source={require("../icons/arrow.png")} />
-                  </TouchableOpacity>
-                </View>
+                  </View>
               </View>
-
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Membership")}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
-                  top: 70,
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
+                <View style={{left: 20, top: 6}}>
                   <Image source={require("../icons/tag.png")} />
                 </View>
-                <View>
+                <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Your Membership</Text>
                 </View>
-                <View>
-                  <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate("Membership")}
-                  >
-                    <Image source={require("../icons/arrow.png")} />
-                  </TouchableHighlight>
-                </View>
               </View>
-
+              </TouchableOpacity>
+              
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("CarInfo")}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
-                  top: 100,
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
+                <View style={{left: 20, top: 6}}>
                   <Image source={require("../icons/car.png")} />
                 </View>
-                <View>
+                <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Car Information</Text>
                 </View>
-                <View>
-                  <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate("CarInfo")}
-                  >
-                    <Image source={require("../icons/arrow.png")} />
-                  </TouchableHighlight>
-                </View>
               </View>
-
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Payment")}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
-                  top: 130,
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
+                <View style={{left: 20, top: 6}}>
                   <Image source={require("../icons/card.png")} />
                 </View>
-                <View>
+                <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Payment</Text>
                 </View>
-                <View>
-                  <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate("Payment")}
-                  >
-                    <Image source={require("../icons/arrow.png")} />
-                  </TouchableHighlight>
-                </View>
               </View>
-
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("OrderHistory")}>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
-                  top: 160,
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
+                <View style={{left: 20, top: 6}}>
                   <Image source={require("../icons/bag.png")} />
                 </View>
-                <View>
+                <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Order History</Text>
                 </View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate("OrderHistory")
-                    }
-                  >
-                    <Image source={require("../icons/arrow.png")} />
-                  </TouchableOpacity>
-                </View>
               </View>
+              </TouchableOpacity>
 
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-around",
-                  left: 5,
-                  top: 190,
+                  //justifyContent: "space-around",
+                  top: 40,
+                  height: 50,
+                  marginBottom: 20,
                 }}
               >
-                <View>
+                <View style={{left: 20, top: 6}}>
                   <Image source={require("../icons/bell.png")} />
                 </View>
-                <View>
+                <View style={{left: 50}}>
                   <Text style={styles.boxfontshead2}>Notifications</Text>
                 </View>
-                <View>
+                <View style={{left: 100}}>
                   <Image source={require("../icons/off.png")} />
                 </View>
+              </View>
+              <View style={styles.loginview}>
+                        <Button
+                          title="Logout"
+                          color="white"
+                          onPress={this.handleSignOut}
+                        />
               </View>
             </View>
           </SafeAreaView>
@@ -295,9 +269,9 @@ const styles = StyleSheet.create({
 
   Addresses: {
     position: "absolute",
-    width: 350,
+    width: "90%",
     height: 620,
-    left: 21,
+    left: "5%",
     top: 120,
     backgroundColor: "#CDCABF",
     borderWidth: 2,
@@ -307,12 +281,12 @@ const styles = StyleSheet.create({
 
   text: {
     color: "white",
-    fontSize: 48,
-    lineHeight: 44,
+    fontSize: 44,
+    lineHeight: 46,
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    top: 30,
+    top: 20,
   },
 
   // Addresses
@@ -372,31 +346,12 @@ const styles = StyleSheet.create({
     right: -15,
   },
 
-  boxfontshead: {
-    color: "black",
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: "bold",
-    textAlign: "left",
-    top: 5,
-    left: 5,
-  },
-
-  boxfontsbody: {
-    color: "black",
-    fontSize: 18,
-    lineHeight: 30,
-    textAlign: "left",
-    top: 5,
-    left: 5,
-  },
-
   boxfontshead2: {
     color: "black",
     fontSize: 24,
     lineHeight: 30,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "right",
   },
 
   image: {
@@ -409,42 +364,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
 
-  gasservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: -275,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
-  tireservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: -80,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
-  detailingservice: {
-    position: "absolute",
-    width: 350,
-    height: 175,
-    left: 21,
-    top: 115,
-    backgroundColor: "#CDCABF",
-    borderWidth: 2,
-    borderColor: "#000000",
-    borderRadius: 10,
-  },
-
   boxfontshead: {
     color: "black",
     fontSize: 24,
@@ -452,7 +371,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     top: 5,
-    left: 5,
   },
 
   boxfontsbody: {
@@ -461,17 +379,16 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     textAlign: "left",
     top: 5,
-    left: 5,
+    left: "5%",
   },
   loginview: {
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    width: 100,
+    width: "50%",
+    top: 30,
     height: 40,
-    top: 5,
-    right: 10,
-    left: 5,
+    left: "25%",
+    borderRadius: 30,
     backgroundColor: "#DAAC3F",
   },
 });

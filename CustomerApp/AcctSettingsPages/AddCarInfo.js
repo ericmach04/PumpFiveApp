@@ -13,6 +13,7 @@ export default class AddCarInfo extends Component {
       make: '',
       model: '',
       year: '',
+      color: '',
       license: '',
       isLoading: false
     };
@@ -24,7 +25,7 @@ export default class AddCarInfo extends Component {
   }
 
   addCar() {
-    if(this.state.make === '' || this.state.model === '' || this.state.year === '' || this.state.license === ''){
+    if(this.state.make === '' || this.state.model === '' || this.state.year === '' || this.state.color === '' || this.state.license === ''){
      alert('Please fill out all fields')
     } else {
       this.setState({
@@ -35,6 +36,7 @@ export default class AddCarInfo extends Component {
         make: this.state.make,
         model: this.state.model,
         year: this.state.year,
+        color: this.state.color,
         license: this.state.license,
       }).then((res) => {
         this.setState({
@@ -43,6 +45,7 @@ export default class AddCarInfo extends Component {
           model: '',
           year: '',
           license: '',
+          color: '',
           isLoading: false,
         });
         this.props.navigation.navigate('CarInfo')
@@ -70,7 +73,7 @@ export default class AddCarInfo extends Component {
           <View style={styles.box1}>
             <Text style={styles.h1}>Add Car Info</Text>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => navigation.navigate('CarInfo')}/>
+             <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('CarInfo')}/>
             </View>
             
                 <Text style={styles.email}>Car Make: *</Text>
@@ -103,6 +106,18 @@ export default class AddCarInfo extends Component {
                         placeholder={'Enter Car Year'}
                         value={this.state.year}
                         onChangeText={(val) => this.inputValueUpdate(val, 'year')}
+                        // value = {year}
+                        // onChangeText={text => setYear(text)}
+                        // placeholder="Enter Car Year"
+                        // keyboardType="numeric"
+                />
+
+                <Text style={styles.email}>Color: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Color of the Car'}
+                        value={this.state.color}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'color')}
                         // value = {year}
                         // onChangeText={text => setYear(text)}
                         // placeholder="Enter Car Year"
@@ -146,10 +161,10 @@ export default class AddCarInfo extends Component {
       },
       box1: {
         position: "absolute",
-        width:"95%",
+        width:"90%",
         height: "80%",
         top:"10%",
-        left: "2%",
+        left: "5%",
         backgroundColor: "#CDCABF",
         borderWidth: 3,
         borderRadius: 20,
@@ -212,8 +227,8 @@ export default class AddCarInfo extends Component {
     paybutton: {
         width: "77%",
         height: "5%",
-        bottom: "25%",
-        left: "10%",
+        bottom: "20%",
+        left: "11.5%",
         backgroundColor: "#DAAC3F",
         position: "absolute",
       },

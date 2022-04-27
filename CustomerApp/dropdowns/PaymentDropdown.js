@@ -17,6 +17,17 @@ export default class PaymentDropdown extends Component{
     super(props);
     this.docs = firebase.firestore().collection("Credit_Cards");
     this.userdocs = firebase.firestore().collection("Users");
+
+    this.handleNameChange  = this.handleNameChange.bind(this)
+    this.handleNumberChange  = this.handleNumberChange.bind(this)
+    this.handleTypeChange  = this.handleTypeChange.bind(this)
+    this.handleExpiryChange  = this.handleExpiryChange.bind(this)
+    this.handleCvvChange  = this.handleCvvChange.bind(this)
+
+    this.exportCardData  = this.exportCardData.bind(this)
+    this.exportText  = this.exportText.bind(this)
+
+
     this.state = {
       // cards: [],
       cards:{
@@ -41,6 +52,42 @@ export default class PaymentDropdown extends Component{
 //   updatedd = (choice) => {
 //     this.setState({ driver: choice })
 //  }
+handleNameChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'name')
+  this.props.onNameValChange(e)
+  // console.log("value: ", e)
+}
+handleNumberChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'number')
+  this.props.onNumberValChange(e)
+  // console.log("value: ", e)
+}
+handleTypeChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'type')
+  this.props.onTypeValChange(e)
+  // console.log("value: ", e)
+}
+handleExpiryChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'expiry')
+  this.props.onExpiryValChange(e)
+  // console.log("value: ", e)
+}
+handleCvvChange(e) {
+  // console.log("e: ", e)
+  this.inputValueUpdate(e, 'cvv')
+  this.props.onCvvValChange(e)
+  // console.log("value: ", e)
+}
+
+exportCardData(card){
+  console.log("Card?: ", card)
+  this.props.onExportCard(card)
+}
+
   componentDidMount() {
         this.unsubscribe = this.docs.onSnapshot(this.getCardData);
         this.unsubscribe2 = this.userdocs.onSnapshot(this.getUserKey)
@@ -82,25 +129,17 @@ export default class PaymentDropdown extends Component{
       //     cancelable: true 
       //   }
       // );
-      this.updatePaidYes()
+      // this.updatePaidYes()
+      console.log("payment info correct")
     }
   }
 
   updatePaidYes() {
-    // this.setState({
-    //   isLoading: true,
-    // });
+    
     const updateDBRef = firebase.firestore().collection('Users').doc(this.state.key)
     
     updateDBRef.update("paid", "yes")
-    // .then((docRef) => {
-    //   this.setState({
-    //     email: '',
-    //     password: '',
-    //     isLoading: false,
-    //   });
-    //   // this.props.navigation.navigate('Login');
-    // })
+    
     .catch((error) => {
       console.error("Error: ", error);
       this.setState({
@@ -120,7 +159,20 @@ export default class PaymentDropdown extends Component{
     }
 
     )
-    console.log("Epic key: ", this.state.key)
+    // console.log("Epic key: ", this.state.key)
+  }
+
+  exportText = (selection, row, data) => {
+    console.log("selection: ", selection)
+    console.log("row: ", row)
+    console.log("data", this.state.data)
+    const state = this.state;
+    state.text = data[selection][row];
+    this.setState(state);
+    // this.setState({text: data[selection][row]})
+    console.log("Text in export text: ", this.state.text)
+
+    this.props.onTextValChange(this.state.text)
   }
 
   getCardData = (querySnapshot) => {
@@ -151,7 +203,7 @@ export default class PaymentDropdown extends Component{
         var cardarr = number.split(' ')
         var lastfour = cardarr[3]
         var string = type + " ending in " + lastfour
-        console.log("String", string)
+        // console.log("String", string)
         data[0].push(string)
 
         const state = this.state;
@@ -171,20 +223,31 @@ export default class PaymentDropdown extends Component{
           cvv: cvv
         }
 
+        
+
       }
     })
+    this.exportCardData(cards)
   ;
-    console.log("KeyVals", keyvals)
+    // console.log("KeyVals", keyvals)
+    keyvals["Other"] = {
+      email: '',  
+      streetnumber:'',
+      city: '',
+      state: '',
+      zip: '',
+    }
+    data[0].push("Other")
     this.setState({
       cards,
       data,
       keyvals,
       isLoading: false,
     });
-    console.log("Cards: ", this.state.cards)
-    console.log("epic before werid Data: ", this.state.data)
-    console.log("KeyVals(state)", this.state.keyvals)
-    console.log("uid: ", this.state.key)
+    // console.log("Cards: ", this.state.cards)
+    // console.log("epic before werid Data: ", this.state.data)
+    // console.log("KeyVals(state)", this.state.keyvals)
+    // console.log("uid: ", this.state.key)
 
     // data[0].push("Other")
 
@@ -206,17 +269,17 @@ export default class PaymentDropdown extends Component{
     else{
       var data = this.state.data;
       var keys = this.state.keyvals
-      var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
+      // var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     
-    console.log("Keys in render: ", keys)
-    console.log("Text: ", this.state.text)
+    // console.log("Keys in render: ", keys)
+    // console.log("Text: ", this.state.text)
     // console.log(typeof this.state.text)
-    console.log("Text Object: ", this.state.keyvals)
-    console.log("New Data: ", data)
+    // console.log("Text Object: ", this.state.keyvals)
+    // console.log("New Data: ", data)
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
-        <View style={{top: "7%"}}> 
+        <View style={{top: "1%"}}> 
           <DropdownMenu
             // style={{top: "20%"}}
             // useNativeDriver={true}
@@ -224,8 +287,10 @@ export default class PaymentDropdown extends Component{
             bgColor={'white'}
             tintColor={'#000000'}
             activityTintColor={'red'}
-            handler={(selection,row) => this.setState({text: data[selection][row]})}
             data={data}
+            handler={(selection,row,data) => this.exportText(selection, row, this.state.data)}
+            // handler={(selection,row) => this.setState({text: data[selection][row]})}
+            
           >
           </DropdownMenu>
 
@@ -237,7 +302,7 @@ export default class PaymentDropdown extends Component{
                         placeholder="Enter Name on the Card"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].name}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'name')}
+                        onChangeText={this.handleNameChange}
                 />
                 </View>
 
@@ -248,7 +313,7 @@ export default class PaymentDropdown extends Component{
                         placeholder='Enter Card Type (Visa, Mastercard, etc)'
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].type}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'type')}
+                        onChangeText={this.handleTypeChange}
                 />
                 </View>
 
@@ -259,7 +324,7 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter Card Number (****-****-****-****)'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].number}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'number')}
+                        onChangeText={this.handleNumberChange}
                 />
                 </View>
 
@@ -270,7 +335,7 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter Expiration Date (MM/YY)'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].expiry}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'expiry')}
+                        onChangeText={this.handleExpiryChange}
                 />
                 </View>
                 <Text style={styles.email}>CVC: *</Text>
@@ -280,19 +345,21 @@ export default class PaymentDropdown extends Component{
                         placeholder={'Enter CVC'}
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].cvv}
-                        onChangeText={(val) => this.inputValueUpdate(val, 'cvv')}
+                        onChangeText={this.handleCvvChange}
                         keyboardType="numeric"
                 />
-                <View style={styles.paybutton}>
-                              <Button
-                              title="Confirm Payment"
-                              color="white"
-                              onPress={() => this.checkCards()}
-                            /> 
-                          
-                            
-                        </View>  
+                
                 </View>
+                {/* <View style={styles.paybutton3}>
+                          <Button
+                          title="Checkout"
+                          color="white"
+                          // onPress={() => console.log("Card info: ", this.state.cardinfo)}
+                          onPress={() => this.checkCards()}
+                        /> 
+                     
+                       
+                   </View>  */}
                 </View>
                 
                 
@@ -333,7 +400,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "9%",
+      top: "30%",
       color: "black",
      
       fontSize: 15,
@@ -350,7 +417,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "9%",
+      top: "30%",
       // left: "2%",
     },
     inputGroup: {
@@ -370,34 +437,15 @@ const styles = StyleSheet.create({
       position: "absolute",
       // justifyContent: "center",
     },
+    paybutton3: {
+      // width: "77%",
+      // height: "7%",
+      top: "135%",
+      right: "20%",
+      borderRadius: 30,
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+      // alignItems: "center",
+    },
 })
   
-
-// const PaymentDropdown = () => {
-//   const [open, setOpen] = useState(false);
-//   const [value, setValue] = useState(null);
-//   const [items, setItems] = useState([
-//     {label: 'creditcard1', value: 'Credit Card ending in 5079'},
-//     {label: 'creditcard2', value: 'Credit Card ending in 4984'},
-//   ]);
-
-//   return (
-//     <DropDownPicker style={styles.containerStyle}
-//       open={open}
-//       value={value}
-//       items={items}
-//       setOpen={setOpen}
-//       setValue={setValue}
-//       setItems={setItems}
-//     />
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//     containerStyle: {
-//         left: 0,
-//         top: 5,
-//     }
-// })
-
-// export default PaymentDropdown;

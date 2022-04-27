@@ -4,90 +4,117 @@ import {
   View,
   SafeAreaView,
   ImageBackground,
-  Image,
   Button,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { Component } from "react";
 import firebase from "firebase";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
-export default class OrderSummary extends Component {
+export default class Receipt extends Component {
   constructor() {
     super();
+    this.docs = firebase.firestore().collection("Orders");
     this.state = {
-      card: '',
-      city: '',
-      color: '',
-      deliverydate: '',
-      deliverytime: '',
-      discount: '',
-      drivercar: '',
-      drivername: '',
-      email: '',
-      fulfilled: '',
-      license: '',
-      make: '',
-      model: '',
-      ordernumber: '',
-      price: '',
-      quantity: 0,
-      service: "",
-      state: "",
-      streetnumber: "",
-      subtotal: 0,
-      taxes: "",
-      type: "",
-      year: "",
-      zip: "",
       isLoading: true,
+      orders: [],
     };
   }
+
   componentDidMount() {
-    const dbRef = firebase
-      .firestore()
-      .collection("Orders")
-      .doc(this.props.route.params.userkey);
-    // const dbRef = firebase.firestore().collection('Orders').doc("YTdzKDUCVZ101z4dQmhn")
-    dbRef.get().then((res) => {
-      if (res.exists) {
-        const order = res.data();
-        this.setState({
-          card: order.card,
-          city: order.city,
-          color: order.color,
-          deliverydate: order.deliverydate,
-          deliverytime: order.deliverytime,
-          discount: order.discount,
-          drivercar: order.drivercar,
-          drivername: order.drivername,
-          email: order.email,
-          fulfilled: order.fulfilled,
-          license: order.license,
-          make: order.make,
-          model: order.model,
-          ordernumber: order.ordernumber,
-          price: order.price,
-          quantity: order.quantity,
-          service: order.service,
-          state: order.state,
-          streetnumber: order.streetnumber,
-          subtotal: order.subtotal,
-          taxes: order.taxes,
-          type: order.type,
-          year: order.year,
-          zip: order.zip,
+    this.unsubscribe = this.docs.onSnapshot(this.getOrderData);
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+  getOrderData = (querySnapshot) => {
+    const orders = [];
+    querySnapshot.forEach((res) => {
+      const {
+        card,
+        city,
+        deliverydate,
+        deliverytime,
+        discount,
+        drivercar,
+        drivername,
+        email,
+        fulfilled,
+        license,
+        make,
+        model,
+        ordernumber,
+        price,
+        quantity,
+        service,
+        state,
+        streetnumber,
+        subtotal,
+        taxes,
+        type,
+        year,
+        zip,
+      } = res.data();
+      // console.log("Email1: ", email)
+      // console.log("Email2: ", auth.currentUser?.email)
+      console.log("email: ", email);
+      console.log("auth email: ", auth.currentUser?.email);
+      console.log("ordernumber: ", ordernumber);
+      console.log("params: ", this.props.route.params.userkey);
+      if (
+        email == auth.currentUser?.email &&
+        ordernumber == this.props.route.params.userkey
+      ) {
+        orders.push({
+          card,
+          city,
+          deliverydate,
+          deliverytime,
+          discount,
+          drivercar,
+          drivername,
+          email,
+          fulfilled,
+          license,
+          make,
+          model,
+          ordernumber,
+          price,
+          quantity,
+          service,
+          state,
+          streetnumber,
+          subtotal,
+          taxes,
+          type,
+          year,
+          zip,
         });
-      } else {
-        console.log("Document does not exist!");
       }
     });
-  }
+    // console.log(cars);
+    this.setState({
+      orders,
+      isLoading: false,
+    });
+    console.log("Orders object: ", this.state.orders);
+  };
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="red" />
+        </View>
+      );
+    }
+    console.log("Orders object in render: ", this.state.orders);
     return (
+     
+
       <View style={styles.container}>
         <ImageBackground
-          source={require("../images/pumpfivebackground.jpeg")}
+          source={require("../../images/pumpfivebackground.jpeg")}
           resizeMode="cover"
           style={styles.image}
         >
@@ -95,14 +122,13 @@ export default class OrderSummary extends Component {
             <View
               style={{ flexDirection: "row", justifyContent: "space-around" }}
             >
-              <Text style={styles.text}>Order Summary</Text>
-              {/* {
-      
-                                  } */}
+              <Text style={styles.text}>Receipt for Order </Text>
+
               <View style={buttonstyles.backbutton}>
                 <Button
                   title="Back"
                   color="white"
+                  //   onPress={() => console.log('Clicked')}
                   onPress={() => this.props.navigation.navigate("Tabs")}
                 />
               </View>
@@ -112,16 +138,14 @@ export default class OrderSummary extends Component {
             <View style={styles.gasservice}>
               <ScrollView style={styles.scroll}>
                 <Text style={styles.boxfontsbody}>
-                  Your Order is Confirmed! Thank You!
+                  Receipt for Order: 
+                  <Text style={styles.boxfontshead}>#{this.state.orders[0].ordernumber}</Text>
                   {"\n"}
                 </Text>
                 <Text style={styles.boxfontsbody}>
-                  Hi,{" "}
-                  <Text style={styles.boxfontshead}>{this.state.email}</Text>,
-                  your confirmation number is{" "}
+                  Fulfilled?{" "}
                   <Text style={styles.boxfontshead}>
-                    {this.state.ordernumber}
-                    {/* Throw a /n to make a new line*/}
+                    {this.state.orders[0].fulfilled}
                     {"\n"}
                   </Text>
                 </Text>
@@ -132,22 +156,21 @@ export default class OrderSummary extends Component {
                   }}
                 />
                 <Text style={styles.boxfontsbody}>
-                  {"\n"}
-                  Purchase Info:{" "}
+                  {"\n"}Purchase Info:{" "}
                   <Text style={styles.boxfontshead}>
-                    {this.state.service} service
-                    {"\n"}
+                    {this.state.orders[0].service} service{"\n"}
                   </Text>
                 </Text>
                 <Text style={styles.boxfontsbody}>
-                  <Text style={styles.boxfontshead}>{this.state.quantity}</Text>{" "}
+                  <Text style={styles.boxfontshead}>
+                    {this.state.orders[0].quantity}
+                  </Text>{" "}
                   gallons of
                   <Text style={styles.boxfontshead}>
                     {" "}
-                    {this.state.type}
+                    {this.state.orders[0].type}
                   </Text>{" "}
-                  gasoline
-                  {"\n"}
+                  gasoline{"\n"}
                 </Text>
                 <View
                   style={{
@@ -165,20 +188,20 @@ export default class OrderSummary extends Component {
                 >
                   <View>
                     <Text style={styles.boxfontsbody}>
-                      {"\n"}
-                      {this.state.type}Gas price per gallon:{" "}
+                      {this.state.orders[0].type}
+                      {"\n"}Gas price per gallon:{" "}
                     </Text>
                     <Text style={styles.boxfontsbody}>
-                      {"\n"}Number of gallons: {"\n"}
+                      {"\n"}Number of gallons:{" "}
                     </Text>
                   </View>
 
                   <View>
                     <Text style={styles.boxfontshead}>
-                      {"\n"} ${this.state.price} {"\n"}
+                      {"\n"}${this.state.orders[0].price} {"\n"}
                     </Text>
                     <Text style={styles.boxfontshead}>
-                      x {this.state.quantity}{" "}
+                      x {this.state.orders[0].quantity} {"\n"}
                     </Text>
                   </View>
                 </View>
@@ -205,13 +228,13 @@ export default class OrderSummary extends Component {
                   <View>
                     <Text style={styles.boxfontshead}>
                       {"\n"}
-                      {this.state.subtotal}
+                      {this.state.orders[0].subtotal}
                     </Text>
                     <Text style={styles.boxfontshead}>
-                      + {this.state.taxes}
+                      + {this.state.orders[0].taxes}
                     </Text>
                     <Text style={styles.boxfontshead}>
-                      - {this.state.discount}
+                      - {this.state.orders[0].discount}
                       {"\n"}
                     </Text>
                   </View>
@@ -236,29 +259,44 @@ export default class OrderSummary extends Component {
                   <View>
                     <Text style={styles.boxfontshead}>
                       {"\n"}
-                      {this.state.subtotal}
+                      {this.state.orders[0].subtotal}
                     </Text>
                   </View>
                 </View>
 
                 <Text style={styles.boxfontsbody}>
-                  Paid using: {"\n"}
-                  <Text style={styles.boxfontshead}>{this.state.card}</Text>
+                  Paid using:{" "}
+                  <Text style={styles.boxfontshead}>
+                    {this.state.orders[0].card}
+                    {"\n"}
+                  </Text>
                 </Text>
                 <View
-                        style={{
-                          borderBottomColor: 'black',
-                          borderBottomWidth: 2,
-                        }}
-                      />
-                <Text style={styles.boxfontsbody}>Deliver To: <Text style={styles.boxfontshead}>{this.state.year} {this.state.color} {this.state.make} {this.state.model}</Text></Text>
-                <Text style={styles.boxfontsbody}>License Plate: <Text style={styles.boxfontshead}>{this.state.license}</Text></Text>
+                  style={{
+                    borderBottomColor: "black",
+                    borderBottomWidth: 2,
+                  }}
+                />
+                <Text style={styles.boxfontsbody}>
+                  {"\n"}Deliver To:{" "}
+                  <Text style={styles.boxfontshead}>
+                    {this.state.orders[0].year} {this.state.orders[0].make}{" "}
+                    {this.state.orders[0].model}
+                  </Text>
+                </Text>
+                <Text style={styles.boxfontsbody}>
+                  License Plate:{" "}
+                  <Text style={styles.boxfontshead}>
+                    {this.state.orders[0].license}
+                  </Text>
+                </Text>
                 <Text style={styles.boxfontsbody}>at</Text>
                 <Text style={styles.boxfontshead}>
-                  {this.state.streetnumber}
+                  {this.state.orders[0].streetnumber}
                 </Text>
                 <Text style={styles.boxfontshead}>
-                  {this.state.city}, {this.state.state}, {this.state.zip}
+                  {this.state.orders[0].city}, {this.state.orders[0].state},{" "}
+                  {this.state.orders[0].zip}
                   {"\n"}
                 </Text>
                 <View
@@ -271,29 +309,29 @@ export default class OrderSummary extends Component {
                 <Text style={styles.boxfontshead}>Delivery Driver Info:</Text>
                 <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivername}
+                    {this.state.orders[0].drivername}
                   </Text>{" "}
                   will deliver your order on
                   <Text style={styles.boxfontshead}>
-                    {this.state.deliverydate}
+                    {this.state.orders[0].deliverydate}
                   </Text>{" "}
                   at{" "}
                   <Text style={styles.boxfontshead}>
-                    {this.state.deliverytime}
+                    {this.state.orders[0].deliverytime}
                   </Text>
                   .
                 </Text>
 
                 <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivername}
+                    {this.state.orders[0].drivername}
                   </Text>{" "}
                   will be driving a
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivercar}
+                    {this.state.orders[0].drivercar}
                   </Text>
                 </Text>
-                <Text style={styles.boxfontsbody}>Notes from driver: </Text>
+                <Text style={styles.boxfontsbody}>Notes from driver: {this.state.orders[0].drivernotes}</Text>
 
                 <View style={buttonstyles.button}>
                   <Button
@@ -330,7 +368,6 @@ const buttonstyles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  //Affects BackButton on Order Summary
   backbutton: {
     width: "18%",
     height: 40,
@@ -520,4 +557,3 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
 });
-

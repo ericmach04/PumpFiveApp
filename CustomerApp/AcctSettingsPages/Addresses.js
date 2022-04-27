@@ -44,7 +44,7 @@ export default class Addresses extends Component {
 
     Alert.alert(
       'Delete ',
-      'Are you sure you want to delete this car?',
+      'Are you sure you want to delete this card?',
       [
         {text: 'Yes', onPress: () => {
           dbRef.delete().then((res) => {
@@ -106,35 +106,15 @@ export default class Addresses extends Component {
                 onPress={() => this.props.navigation.goBack()}
               />
             </View>
-            {/* <View style={{top: "50%"}}>
-            <DropdownMenu
-                                  // style={{top: "50%"}}
-                                  // useNativeDriver={true}
-                                  label={"Select Payment Method"}
-                                  bgColor={'white'}
-                                  tintColor={'#000000'}
-                                  activityTintColor={'red'}
-                                  handler={(selection,row) => this.setState({text: data2[selection][row]})}
-                                  data={data2}
-                                >
-                                </DropdownMenu>
-                                </View> */}
+            <View style={styles.scrollbox}>
+            <ScrollView style={styles.scroll1}>
             
             {this.state.addresses.map((res, i) => {
               count += 1;
 
               return (
-                /* 
-                <View style={{ top: "15%", left: "2%" }}>
-                  <View style={styles.BoundingBox}>
-                    <Text style={styles.bofadeeznutsbold}>
-                      Address #{count}
-                    </Text>
-                  </View>
-                */
-
                 <View style={styles.BoundingBox}>
-                  <View style={{ top: "0.5%", left: "1%" }}>
+                  <View>
                     <Text style={styles.bofadeeznutsbold}>
                       Address #{count}
                     </Text>
@@ -164,7 +144,8 @@ export default class Addresses extends Component {
                 </View>
               );
             })}
-
+            </ScrollView>
+            </View>
             <View style={buttonstyles.paybutton}>
               <Button
                 title="Add an Address"
@@ -203,7 +184,7 @@ const buttonstyles = StyleSheet.create({
     width: "77%",
     height: "7%",
     top: "85%",
-    right: "10%",
+    right: "11.5%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
@@ -221,10 +202,10 @@ const styles = StyleSheet.create({
   //Addresses Box
   box1: {
     position: "absolute",
-    width: 338,
-    height: 672,
+    width: "90%",
+    height: 680,
     top: 74,
-    left: 24,
+    left: "5%",
     backgroundColor: "#CDCABF",
     borderWidth: 3,
     borderRadius: 20,
@@ -232,14 +213,12 @@ const styles = StyleSheet.create({
 
   //Bounding Box
   BoundingBox: {
-    width: "100%",
-
-    top: "15%",
     backgroundColor: "#CDCABF",
-    borderWidth: 2,
+    //borderWidth: 2,s
     borderColor: "#000000",
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 5,
+    marginBottom: 5,
   },
 
   //Addresses Underlined Header
@@ -331,20 +310,13 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
   },
+  scrollbox: {
+    flex: 0.7,
+    width: "90%",
+    left: "5%",
+    top: 90,
+  },
+  scroll1: {
+    flex: 1,
+  },
 });
-
-//Working on implementation
-
-/* <view>
-      rect1: {
-          position: 'absolute',
-          width: 350,
-          height: 243,
-          left: 21,
-          top: 287,
-          backgroundColor: '#CDCABF',
-          borderWidth: 2,
-          borderColor: '#000000',
-          borderRadius: 10,
-          },
-  </view> */

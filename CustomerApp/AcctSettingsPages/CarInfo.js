@@ -84,7 +84,7 @@ export default class CarInfo extends Component {
   getCarData = (querySnapshot) => {
     const cars = [];
     querySnapshot.forEach((res) => {
-      const { email, make, model, year, license } = res.data();
+      const { email, make, model, color, year, license } = res.data();
       // console.log("Email1: ", email)
       // console.log("Email2: ", auth.currentUser?.email)
       if (email == auth.currentUser?.email) {
@@ -93,6 +93,7 @@ export default class CarInfo extends Component {
           email,
           make,
           model,
+          color,
           year,
           license,
         });
@@ -120,16 +121,17 @@ export default class CarInfo extends Component {
           source={require("../../images/pumpfivebackground.jpeg")}
           style={styles.image}
         >
-          <SafeAreaView style={styles.container}>
-            <View style={styles.Memberships}>
-              <View
+          {/* <SafeAreaView style={styles.container}> */}
+            {/* <View style={styles.Memberships}> */}
+            <View style={styles.box1}>
+              {/* <View
                 style={{
                   flex: 1,
                   flexDirection: "row",
                   justifyContent: "space-around",
                 }}
-              >
-                <Text style={styles.text}>Car Information</Text>
+              > */}
+                <Text style={styles.h1}>Car Information</Text>
                 <View style={buttonstyles.backbutton}>
                   <Button
                     title="Back"
@@ -138,29 +140,25 @@ export default class CarInfo extends Component {
                     onPress={() => this.props.navigation.goBack()}
                   />
                 </View>
-              </View>
+            
+              <View style={styles.scrollbox}>
+              <ScrollView style={styles.scroll1}>
 
-              {/* <View style={{top: -100, left: 20}}>
-                        <Text style={styles.boxfontsbody}>Make: Toyota</Text>
-                        <Text style={styles.boxfontsbody}>Model: Camry</Text>
-                        <Text style={styles.boxfontsbody}>License Plate: 8ABC123</Text>
-                        <Text style={styles.boxfontsbody}>Photo:</Text>
-                        </View> */}
-
-              {this.state.cars.map((res, i) => {
+              {
+              this.state.cars.map((res, i) => {
                 count += 1;
 
                 return (
                   <View style={styles.BoundingBox}>
                     <Text style={styles.bofadeeznutsbold}>Car #{count}</Text>
-                    <View style={{ top: "15%", left: "2%" }}>
+                    <View style={{ top: "10%", left: "2%" }}>
                       <Text style={styles.bofadeeznuts}>
-                        {res.year} {res.make} {res.model}
+                        {res.year} {res.color} {res.make} {res.model}
                       </Text>
                       <Text style={styles.bofadeeznuts}>
                         License Plate: {res.license}
                       </Text>
-                      {/* <Text style={styles.bofadeeznuts}>Photo:</Text> */}
+                     
                       <View style={{flexDirection: "row", justifyContent: "space-around", left: 5,}}>
                         <TouchableOpacity onPress={() => {
                                 this.props.navigation.navigate('EditCarInfo', {
@@ -173,18 +171,16 @@ export default class CarInfo extends Component {
                         <TouchableOpacity onPress={() => this.deleteUser(res.key)}>
                           <Text style={styles.bofadeeznutsunderline}>Delete</Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity onPress={() => this.deleteUser(res.key)}>
-                          <Text style={styles.bofadeeznutsunderline}>Delete</Text>
-                        </TouchableOpacity> */}
+                       
                       </View>
                     </View>
                   </View>
                 );
-              })}
-
-              {/* <View style={{top: "10%", left: 20}}>
-                            <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
-                        </View> */}
+              })
+              
+              }
+              </ScrollView>
+              </View>
 
               <View style={buttonstyles.paybutton}>
                 <Button
@@ -194,7 +190,7 @@ export default class CarInfo extends Component {
                 />
               </View>
             </View>
-          </SafeAreaView>
+          {/* </SafeAreaView> */}
         </ImageBackground>
       </View>
     );
@@ -224,7 +220,7 @@ const buttonstyles = StyleSheet.create({
     width: "77%",
     height: "7%",
     top: "85%",
-    right: "10%",
+    right: "11.5%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
@@ -241,14 +237,14 @@ const styles = StyleSheet.create({
   },
   bofadeeznuts: {
     color: "black",
-    fontSize: 25,
+    fontSize: 20,
     // lineHeight: 20,
     //fontWeight: "bold",
     textAlign: "center",
   },
   bofadeeznutsunderline: {
     color: "black",
-    fontSize: 25,
+    fontSize: 20,
     // lineHeight: 20,
     //fontWeight: "bold",
     textAlign: "center",
@@ -264,14 +260,24 @@ const styles = StyleSheet.create({
 
   Memberships: {
     position: "absolute",
-    width: 350,
-    height: 620,
-    left: 21,
+    width: "90%",
+    height: "80%",
+    left: "5%",
     top: 90,
     backgroundColor: "#CDCABF",
     borderWidth: 2,
     borderColor: "#000000",
     borderRadius: 10,
+  },
+  box1: {
+    position: "absolute",
+    width: "90%",
+    height: "80%",
+    top: 74,
+    left: "5%",
+    backgroundColor: "#CDCABF",
+    borderWidth: 3,
+    borderRadius: 20,
   },
 
   //Car Information Bold Header
@@ -284,19 +290,28 @@ const styles = StyleSheet.create({
     flex: 1,
     top: "12%",
   },
-
-  //Bounding Box
   BoundingBox: {
-    //If overlay occurs with cars, delete position: absolute,
-    width: "100%",
-    height: "30%",
-    bottom: "20%",
     backgroundColor: "#CDCABF",
-    borderWidth: 2,
+    //borderWidth: 2,
     borderColor: "#000000",
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 5,
+    marginBottom: 5,
+    height: 170,
   },
+
+  //Bounding Box
+  // BoundingBox: {
+  //   //If overlay occurs with cars, delete position: absolute,
+  //   width: "100%",
+  //   height: "30%",
+  //   bottom: "20%",
+  //   backgroundColor: "#CDCABF",
+  //   borderWidth: 2,
+  //   borderColor: "#000000",
+  //   backgroundColor: "#FFFFFF",
+  //   borderRadius: 10,
+  // },
 
   // Addresses
   addrfontshead: {
@@ -457,5 +472,23 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  scrollbox: {
+    flex: 0.7,
+    width: "90%",
+    left: "5%",
+    top: 90,
+  },
+  scroll1: {
+    flex: 1,
+  },
+  h1: {
+    position: "absolute",
+    top: 40,
+    left: "13%",
+    fontWeight: "bold",
+    fontSize: 36,
+    lineHeight: 42,
+    textDecorationLine: "underline",
   },
 });

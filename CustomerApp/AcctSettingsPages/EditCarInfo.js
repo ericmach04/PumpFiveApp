@@ -13,6 +13,7 @@ export default class EditCarInfo extends Component {
       make: '',
       model: '',
       year: '',
+      color: '',
       license: '',
       isLoading: false
     };
@@ -29,6 +30,7 @@ export default class EditCarInfo extends Component {
           make: car.make,
           model: car.model,
           year: car.year,
+          color: car.color,
           license: car.license,
           isLoading: false
         });
@@ -53,6 +55,7 @@ export default class EditCarInfo extends Component {
       make: this.state.make,
       model: this.state.model,
       year: this.state.year,
+      color: this.state.color,
       license: this.state.license,
     }).then((docRef) => {
       this.setState({
@@ -61,6 +64,7 @@ export default class EditCarInfo extends Component {
         make: '',
         model: '',
         year: '',
+        color: '',
         license: '',
         isLoading: false,
       });
@@ -116,6 +120,14 @@ export default class EditCarInfo extends Component {
                         onChangeText={(val) => this.inputValueUpdate(val, 'year')}
                 />
 
+                <Text style={styles.email}>Color: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Enter Color of the Car'}
+                        value={this.state.color}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'color')}
+                />
+
                 <Text style={styles.email}>License Plate: *</Text>
                 <TextInput
                         style={styles.input}
@@ -149,10 +161,10 @@ export default class EditCarInfo extends Component {
       },
       box1: {
         position: "absolute",
-        width:"95%",
+        width:"90%",
         height: "80%",
         top:"10%",
-        left: "2%",
+        left: "5%",
         backgroundColor: "#CDCABF",
         borderWidth: 3,
         borderRadius: 20,
@@ -215,8 +227,8 @@ export default class EditCarInfo extends Component {
     paybutton: {
         width: "77%",
         height: "5%",
-        bottom: "25%",
-        left: "10%",
+        bottom: "20%",
+        left: "11.5%",
         backgroundColor: "#DAAC3F",
         position: "absolute",
       },

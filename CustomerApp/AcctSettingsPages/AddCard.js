@@ -29,6 +29,7 @@ import {addCard} from '../../firebasefunctions'
             cvv: dataobject["values"]["cvc"],
             expiry: dataobject["values"]["expiry"],
         })
+        this.props.navigation.navigate('Payment')
 
         
 
@@ -103,10 +104,10 @@ import {addCard} from '../../firebasefunctions'
       },
       box1: {
         position: "absolute",
-        width:"95%",
+        width:"90%",
         height: "80%",
         top:"10%",
-        left: "2%",
+        left: "5%",
         backgroundColor: "#CDCABF",
         borderWidth: 3,
         borderRadius: 20,
@@ -170,7 +171,7 @@ import {addCard} from '../../firebasefunctions'
         width: "77%",
         height: "5%",
         bottom: "25%",
-        left: "10%",
+        left: "11.5%",
         backgroundColor: "#DAAC3F",
         position: "absolute",
       },
