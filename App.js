@@ -21,6 +21,7 @@ import AddAddress from './CustomerApp/AcctSettingsPages/AddAddress';
 import AddCarInfo from './CustomerApp/AcctSettingsPages/AddCarInfo';
 import EditCarInfo from './CustomerApp/AcctSettingsPages/EditCarInfo';
 import EditAddress from './CustomerApp/AcctSettingsPages/EditAddress';
+import Stripe from "./CustomerApp/Stripe";
 
 
 
@@ -98,6 +99,7 @@ const App = () => {
         <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
         <Stack.Screen name="DriverInfo" component={DriverInfo} />
         <Stack.Screen name="JobHistory" component={JobHistory} />
+        <Stack.Screen name="Stripe" component={Stripe} />
 
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />
