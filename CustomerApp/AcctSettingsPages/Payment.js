@@ -263,7 +263,7 @@ const buttonstyles = StyleSheet.create({
     width: "77%",
     height: "7%",
     top: "88%",
-    right: "10%",
+    right: "11.5%",
     borderRadius: 4,
     backgroundColor: "#DAAC3F",
     position: "absolute",
@@ -282,9 +282,9 @@ const styles = StyleSheet.create({
 
   Memberships: {
     position: "absolute",
-    width: 350,
+    width: "90%",
     height: 620,
-    left: 21,
+    left: "5%",
     top: 90,
     backgroundColor: "#CDCABF",
     borderWidth: 2,
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
   h1: {
     position: "absolute",
     top: 40,
-    left: "5%",
+    left: "4%",
     fontWeight: "bold",
     fontSize: 30,
     lineHeight: 42,
@@ -504,10 +504,10 @@ const styles = StyleSheet.create({
   },
   box1: {
     position: "absolute",
-    width: 338,
-    height: 672,
+    width: "90%",
+    height: "80%",
     top: 74,
-    left: 24,
+    left: "5%",
     backgroundColor: "#CDCABF",
     borderWidth: 3,
     borderRadius: 20,

@@ -269,9 +269,9 @@ const styles = StyleSheet.create({
 
   Addresses: {
     position: "absolute",
-    width: 350,
+    width: "90%",
     height: 620,
-    left: 21,
+    left: "5%",
     top: 120,
     backgroundColor: "#CDCABF",
     borderWidth: 2,
