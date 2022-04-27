@@ -499,7 +499,7 @@ export default class Membership extends Component{
     // width: "77%",
     // height: "7%",
     top: "30%",
-    left: "30%",
+    left: "20%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
     justifyContent: "center",
@@ -519,9 +519,9 @@ const styles = StyleSheet.create({
   
     Memberships: {
       position: 'absolute',
-      width: "98%",
-      height: "85%",
-      left: "2%",
+      width: "90%",
+      height: "80%",
+      left: "5%",
       top: "8%",
       backgroundColor: '#CDCABF',
       borderWidth: 2,
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
   email: {
     top: "10%",
     color: "black",
-   
+    paddingLeft: 15,
     fontSize: 15,
     lineHeight: 44,
     // fontWeight: "bold",
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     // width: "77%",
     // height: "7%",
     top: "30%",
-    left: "30%",
+    left: "25%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
     justifyContent: "center",

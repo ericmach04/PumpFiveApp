@@ -202,10 +202,10 @@ const styles = StyleSheet.create({
   //Addresses Box
   box1: {
     position: "absolute",
-    width: 338,
-    height: 672,
+    width: "90%",
+    height: 680,
     top: 74,
-    left: 24,
+    left: "5%",
     backgroundColor: "#CDCABF",
     borderWidth: 3,
     borderRadius: 20,
