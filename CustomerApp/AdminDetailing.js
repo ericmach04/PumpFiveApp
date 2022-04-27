@@ -28,9 +28,9 @@ import {
       super();
       this.docs = firebase.firestore().collection("Prices");
       this.state = {
-        basic: "",
-        premium: "",
-        // diesel: "",
+        inside: "",
+        outside: "",
+        both: "",
         isLoading: true,
         prices: [],
       };
@@ -56,9 +56,9 @@ import {
           const prices = res.data();
           this.setState({
             key: res.id,
-            basic: prices.basic,
-            premium: prices.premium,
-            // diesel: prices.diesel,
+            inside: prices.inside,
+            outside: prices.outside,
+            both: prices.both,
             isLoading: false,
           });
         } else {
@@ -82,22 +82,25 @@ import {
   
     getPrices = (querySnapshot) => {
       const prices = [];
-      var basic = ''
-      var premium = ''
+      var inside = ''
+      var outside = ''
+      var both = ''
       const dbRef = firebase
         .firestore()
         .collection("Prices")
         .doc("Detailing_Prices");
       
       dbRef.get().then((res) => {
-        basic = res.data().basic
-        premium = res.data().premium
+        inside = res.data().inside
+        outside = res.data().outside
+        both = res.data().both
         // console.log("Email1: ", email)
         // console.log("Email2: ", auth.currentUser?.email)
         prices.push({
           key: res.id,
-          basic,
-          premium,
+          inside,
+          outside,
+          both,
         //   diesel,
         });
         this.setState({
@@ -121,8 +124,9 @@ import {
       // console.log("This.state: ", this.state)
       updateDBRef
         .set({
-          basic: this.state.basic,
-          premium: this.state.premium,
+          inside: this.state.inside,
+          outside: this.state.outside,
+          both: this.state.both,
         //   diesel: this.state.diesel,
         })
         .then((docRef) => {
@@ -171,50 +175,49 @@ import {
                   </View>
   
                   <Text style={styles.gastext}>
-                    Enter Today's Basic Detailing Price: *
+                    Enter Today's Inside Detailing Price: *
                   </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder={"basic"}
-                    value={this.state.basic}
-                    onChangeText={(val) => this.inputValueUpdate(val, "basic")}
+                    placeholder={"Inside"}
+                    value={this.state.inside}
+                    onChangeText={(val) => this.inputValueUpdate(val, "inside")}
                     keyboardType="numeric"
                   />
   
                   <Text style={styles.gastext}>
-                    Enter Today's Premium Detailing Price: *
+                    Enter Today's Outside Detailing Price: *
                   </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder={"Premium"}
-                    value={this.state.premium}
-                    onChangeText={(val) => this.inputValueUpdate(val, "premium")}
+                    placeholder={"Outside"}
+                    value={this.state.outside}
+                    onChangeText={(val) => this.inputValueUpdate(val, "outside")}
                     keyboardType="numeric"
                   />
-  
-                  {/* <Text style={styles.gastext}>
-                    Enter Today's Diesel Gas Price: *
+                  <Text style={styles.gastext}>
+                    Enter Today's Detailing Price for Both: *
                   </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder={"Diesel"}
-                    value={this.state.diesel}
-                    onChangeText={(val) => this.inputValueUpdate(val, "diesel")}
+                    placeholder={"Both"}
+                    value={this.state.both}
+                    onChangeText={(val) => this.inputValueUpdate(val, "both")}
                     keyboardType="numeric"
-                  /> */}
+                  />
   
                   {this.state.prices.map((res, i) => {
                     return (
                       <View>
                         <Text style={styles.gastext2}>
-                          Current Regular Price: {res.basic}
+                          Current Inside Price: {res.inside}
                         </Text>
                         <Text style={styles.gastext2}>
-                          Current Premium Price: {res.premium}
+                          Current Outside Price: {res.outside}
                         </Text>
-                        {/* <Text style={styles.gastext2}>
-                          Current Diesel Price: {res.diesel}
-                        </Text> */}
+                        <Text style={styles.gastext2}>
+                          Current Price for Both: {res.both}
+                        </Text>
                       </View>
                     );
                   })}
@@ -264,7 +267,7 @@ import {
     paybutton: {
       width: "77%",
       height: "7%",
-      top: "70%",
+      top: "63%",
       right: "12%",
       backgroundColor: "#DAAC3F",
       position: "absolute",
@@ -313,7 +316,7 @@ import {
       top: "-10%",
       color: "black",
   
-      fontSize: 20,
+      fontSize: 16,
       lineHeight: 44,
       fontWeight: "bold",
       textAlign: "left",

@@ -63,12 +63,12 @@ export default class GasService extends Component {
       lname: '',
       phone: '',
       email: '',
-      quantity: 0,
+      quantity: 'TBD',
       gastype: "",
       gasprice: "",
       text: "",
       prices: [],
-      total: 0,
+      total: 'TBD',
       addressinfo: {
         streetnumber: "",
         city: "",
@@ -234,6 +234,9 @@ export default class GasService extends Component {
     else if(option == "Premium Gasoline"){
       state["gasprice"] = this.state.prices[0]["premium"]
     }
+    else{
+      state["gasprice"] = this.state.prices[0]["diesel"]
+    }
     this.setState(state);
 
     console.log("option: ", option);
@@ -382,11 +385,11 @@ export default class GasService extends Component {
     // else{
     const state = this.state;
     // console.log("State: ", state)
-    var total = parseFloat(state["gasprice"]) * parseFloat(state["quantity"]);
-    total = total.toFixed(2);
-    console.log("Total: ", total);
+    // var total = parseFloat(state["gasprice"]) * parseFloat(state["quantity"]);
+    // total = total.toFixed(2);
+    // console.log("Total: ", total);
     state["reviewpressed"] = true;
-    state["total"] = total;
+    // state["total"] = total;
     this.setState(state);
     console.log("Final gas type: ", this.state.gastype);
     console.log("Final gas quantity: ", this.state.quantity);
@@ -461,7 +464,7 @@ export default class GasService extends Component {
                     </View>
                   </View>
 
-                  <View>
+                  {/* <View>
                     <Text style={styles.subheadings}>Quantity</Text>
                     <TextInput
                       style={styles.input}
@@ -472,7 +475,7 @@ export default class GasService extends Component {
                       }
                       keyboardType="numeric"
                     />
-                  </View>
+                  </View> */}
 
                   <Text style={styles.subheadings}>Type of Fuel</Text>
                   {/* <View 
@@ -626,7 +629,7 @@ export default class GasService extends Component {
   
                         <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
                           <View>
-                            <Text>{this.state.gastype} Gas price: $</Text>
+                            <Text>{this.state.gastype} Gas price: ${this.state.gasprice}</Text>
                             <Text>Number of gallons: </Text>
                           </View>
   

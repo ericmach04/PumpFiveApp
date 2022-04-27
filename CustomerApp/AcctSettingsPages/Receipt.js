@@ -110,26 +110,7 @@ export default class Receipt extends Component {
     }
     console.log("Orders object in render: ", this.state.orders);
     return (
-      // <View style={styles.container}>
-      // <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
-      //     <SafeAreaView style={styles.container}>
-      //     <View style={{flexDirection:'row', justifyContent: 'space-around',}}>
-      //                           <Text style={styles.text}>Order Summary</Text>
-      //                           {/* {
-
-      //                           } */}
-      //                           <View style={buttonstyles.backbutton}>
-      //                               <Button
-      //                               title="Back"
-      //                               color="white"
-      //                               //   onPress={() => console.log('Clicked')}
-      //                               onPress={() => this.props.navigation.navigate('Tabs')}
-      //                               />
-      //                           </View>
-      //                       </View>
-      //                       </SafeAreaView>
-      //                       </ImageBackground>
-      //                       </View>
+     
 
       <View style={styles.container}>
         <ImageBackground
@@ -157,7 +138,8 @@ export default class Receipt extends Component {
             <View style={styles.gasservice}>
               <ScrollView style={styles.scroll}>
                 <Text style={styles.boxfontsbody}>
-                  Receipt for Order: #{this.state.orders[0].ordernumber}
+                  Receipt for Order: 
+                  <Text style={styles.boxfontshead}>#{this.state.orders[0].ordernumber}</Text>
                   {"\n"}
                 </Text>
                 <Text style={styles.boxfontsbody}>
@@ -349,6 +331,7 @@ export default class Receipt extends Component {
                     {this.state.orders[0].drivercar}
                   </Text>
                 </Text>
+                <Text style={styles.boxfontsbody}>Notes from driver: {this.state.orders[0].drivernotes}</Text>
 
                 <View style={buttonstyles.button}>
                   <Button

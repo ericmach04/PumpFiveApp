@@ -293,6 +293,7 @@ export default class OrderSummary extends Component {
                     {this.state.drivercar}
                   </Text>
                 </Text>
+                <Text style={styles.boxfontsbody}>Notes from driver: </Text>
 
                 <View style={buttonstyles.button}>
                   <Button

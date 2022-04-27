@@ -53,8 +53,9 @@ export default class HomePage extends Component {
     var medium=''
     var large=''
 
-    var basic=''
-    var premiumdetailing=''
+    var inside=''
+    var outside=''
+    var both=''
     querySnapshot.forEach((res) => {
 
       if(res.id=="Gas_Prices")
@@ -71,8 +72,9 @@ export default class HomePage extends Component {
       }
       else if(res.id=="Detailing_Prices")
       {
-        basic = res.data().basic
-        premiumdetailing = res.data().premium
+        inside = res.data().inside
+        outside = res.data().outside
+        both = res.data().both
       }
 
       
@@ -84,8 +86,9 @@ export default class HomePage extends Component {
       small,
       medium,
       large,
-      basic,
-      premiumdetailing
+      inside,
+      outside,
+      both
     });
     console.log("All prices: ", prices)
   
@@ -132,8 +135,9 @@ export default class HomePage extends Component {
                     <Text style={styles.bofadeeznutsbold}>Medium Tire Price: <Text style={styles.embeddedText}>${this.state.prices[0].medium}</Text></Text>
                     <Text style={styles.bofadeeznutsbold}>Large Tire Price: <Text style={styles.embeddedText}>${this.state.prices[0].large}</Text></Text>
 
-                    <Text style={styles.bofadeeznutsbold}>Basic Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].basic}</Text></Text>
-                    <Text style={styles.bofadeeznutsbold}>Premium Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].premiumdetailing}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Inside Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].inside}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Outside Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].outside}</Text></Text>
+                    <Text style={styles.bofadeeznutsbold}>Both: <Text style={styles.embeddedText}>${this.state.prices[0].both}</Text></Text>
                     
                 </View>
               </ScrollView>

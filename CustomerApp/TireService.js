@@ -58,10 +58,10 @@ export default class TireService extends Component {
     this.state = {
       reviewpressed: false,
       quantity: 0,
-      tiretype: "",
-      tireprice: "",
+      tiretype: "TBD",
+      tireprice: "TBD",
       prices: [],
-      total: 0,
+      total: "TBD",
       addressinfo: {
         streetnumber: "",
         city: "",
@@ -114,10 +114,10 @@ export default class TireService extends Component {
         zip: this.state.addressinfo.zip,
 
         service: 'Tire Delivery Service',
-        type: this.state.tiretype,
-        price: this.state.tireprice,
+        type: "TBD",
+        price: "TBD",
         quantity: this.state.quantity,
-        subtotal: this.state.total,
+        subtotal: "TBD",
         make: this.state.carinfo.make,
         model: this.state.carinfo.model,
         year: this.state.carinfo.year,
@@ -326,11 +326,11 @@ export default class TireService extends Component {
     // else{
     const state = this.state;
     // console.log("State: ", state)
-    var total = parseFloat(state["tireprice"]) * parseFloat(state["quantity"]);
-    total = total.toFixed(2);
-    console.log("Total: ", total);
+    // var total = parseFloat(state["tireprice"]) * parseFloat(state["quantity"]);
+    // total = total.toFixed(2);
+    // console.log("Total: ", total);
     state["reviewpressed"] = true;
-    state["total"] = total;
+    // state["total"] = total;
     this.setState(state);
     console.log("Final gas type: ", this.state.tiretype);
     console.log("Final gas quantity: ", this.state.quantity);
@@ -415,7 +415,7 @@ export default class TireService extends Component {
                         style ={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}} 
                         > */}
 
-                  <View>
+                  {/* <View>
                     <Picker
                       onValueChange={this.showType}
                       selectedValue={this.state.tiretype}
@@ -429,7 +429,7 @@ export default class TireService extends Component {
                       <Picker.Item label="Medium" value="Medium" />
                       <Picker.Item label="Large" value="Large" />
                     </Picker>
-                  </View>
+                  </View> */}
                 </View>
                 {/* </View> */}
 
