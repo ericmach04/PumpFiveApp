@@ -184,7 +184,7 @@ const buttonstyles = StyleSheet.create({
     width: "77%",
     height: "7%",
     top: "85%",
-    right: "10%",
+    right: "11.5%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
