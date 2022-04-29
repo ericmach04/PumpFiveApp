@@ -54,6 +54,8 @@ export default class DetailingService extends Component{
       lname: '',
       phone: '',
       email: '',
+      cancelled: 'no',
+      canceldetails: '',
       customernotes: "",
       quantity: 1,
       detailingtype: '',
@@ -118,6 +120,8 @@ export default class DetailingService extends Component{
 
         driveremail: '',
         customernotes: this.state.customernotes,
+        cancelled: this.state.cancelled,
+        canceldetails: this.state.canceldetails,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,

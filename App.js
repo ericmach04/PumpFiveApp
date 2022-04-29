@@ -32,11 +32,12 @@ import AdminTabs from './navigation/AdminTabs'
 import AdminGas from './CustomerApp/AdminGas'
 import AdminTires from './CustomerApp/AdminTires'
 import AdminDetailing from './CustomerApp/AdminDetailing'
+import AdminUpdates from './CustomerApp/AdminUpdates'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './CustomerApp/Login';
 
-import DriverHome from './DriverApp/DriverHome';
+import DriverHomePage from './DriverApp/DriverHome';
 import DriverOrder from './DriverApp/DriverOrder';
 import DriverJobs from './DriverApp/DriverJobs';
 import DriverAccount from './DriverApp/DriverAccount';
@@ -90,7 +91,7 @@ const App = () => {
         <Stack.Screen name="Payment" component={Payment} />
 
         <Stack.Screen name="DriverTabs" component={DriverTabs} />
-        <Stack.Screen name="DriverHome" component={DriverHome} />
+        <Stack.Screen name="DriverHomePage" component={DriverHomePage} />
         <Stack.Screen name="DriverOrder" component={DriverOrder} />
         <Stack.Screen name="DriverJobs" component={DriverJobs} />
         <Stack.Screen name="DriverAccount" component={DriverAccount} />
@@ -114,6 +115,7 @@ const App = () => {
           <Stack.Screen name="AdminGas" component={AdminGas} />
           <Stack.Screen name="AdminTires" component={AdminTires} />
           <Stack.Screen name="AdminDetailing" component={AdminDetailing} />
+          <Stack.Screen name="AdminUpdates" component={AdminUpdates} />
 
           
 

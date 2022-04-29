@@ -25,7 +25,9 @@ export default class DriverOrder extends Component {
       driveremail: "",
       orderfulfilled: false,
       prices: [],
-      units: ''
+      units: '',
+      cancelAttempt: false,
+      canceldetails: "",
     };
     
   }
@@ -47,6 +49,62 @@ export default class DriverOrder extends Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  cancelAlert(){
+    Alert.alert(
+      "Cancel Order",
+      "Are you sure you want to cancel this order?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => this.setState({
+            cancelAttempt: true
+          })
+        }
+      ],
+      
+      
+    );
+  }
+  cancelAlert2(id, details){
+    Alert.alert(
+      "Cancel Order",
+      "Are you sure you want to cancel this order?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => this.handleCancel(id, details)
+        }
+      ],
+      
+      
+    );
+  }
+
+  handleCancel(id, details){
+    console.log("In handle Cancel")
+    console.log("In handle Cancel id: ", id)
+    const updateDBRef = firebase.firestore().collection('Orders').doc(id)
+    updateDBRef.get().then((res) => {
+      updateDBRef.update("cancelled", "yes")
+      updateDBRef.update("canceldetails", details)
+      const state = this.state;
+      state["cancelAttempt"] = false;
+      this.setState(state);
+    })
+
+
   }
 
   getPriceData = () => {
@@ -214,10 +272,10 @@ export default class DriverOrder extends Component {
     
     querySnapshot.forEach((res) => {
       const { fname, lname, phone, email, color, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, 
-        streetnumber, city, state, zip, license, subtotal, customernotes} = res.data();
+        streetnumber, city, state, zip, license, subtotal, customernotes, cancelled} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
-      if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
+      if (cancelled=="no" && fulfilled=="no" && email=="ericmach04@yahoo.com") {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
@@ -388,6 +446,45 @@ export default class DriverOrder extends Component {
         )
 
       }
+      else if (this.state.cancelAttempt ==  true){
+        return (
+          <View style={styles.container}>
+            <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.text}>Current Order: {currorder.service} </Text>
+            <View style={styles.rect1}>
+              
+              <Text style={styles.detailtext}>Please provide a reason for cancelation: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Details'}
+                        value={this.state.canceldetails}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'canceldetails')}
+                />
+            </View>
+    
+            <View style={styles.button}>
+              <Button
+                  title="Submit"
+                  color="white"
+                  onPress={() => this.cancelAlert2(currorder.ordernumber, this.state.canceldetails)}
+                  // onPress={() => navigation.navigate('CalendarScreen')}
+              />
+            </View>
+            <View style={styles.button2}>
+              <Button
+                  title="Go Back"
+                  color="white"
+                  onPress={() => this.setState({
+                    cancelAttempt: false
+                  })}
+              />
+
+            </View>
+            </ImageBackground>
+          </View>
+        )
+
+      }
       else{
     return (
       <View style={styles.container}>
@@ -422,7 +519,7 @@ export default class DriverOrder extends Component {
           <Button
               title="Cancel Order"
               color="white"
-              // onPress={() => navigation.navigate('CalendarScreen')}
+              onPress={() => this.cancelAlert(currorder.ordernumber)}
           />
 
         </View>

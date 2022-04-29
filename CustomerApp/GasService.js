@@ -63,6 +63,8 @@ export default class GasService extends Component {
       lname: '',
       phone: '',
       email: '',
+      cancelled: "no",
+      canceldetails: "",
       customernotes: "",
       quantity: 'TBD',
       gastype: "",
@@ -158,9 +160,11 @@ export default class GasService extends Component {
         fname: this.state.fname,
         lname: this.state.lname,
         phone: this.state.phone,
+        cancelled: this.state.cancelled,
 
         driveremail: '',
         customernotes: this.state.customernotes,
+        canceldetails: this.state.canceldetails,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,
