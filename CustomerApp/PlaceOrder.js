@@ -11,11 +11,11 @@ import {
 import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import { auth } from "../firebase";
-import React, { Component } from "react";
-import GasService from "./GasService";
-import GasButton from "../CustomerApp/buttons/GasButton";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import React, { Component,} from 'react'
+import GasService from './GasService';
+import GasButton from '../CustomerApp/buttons/GasButton'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 // import Tabs from '../navigation/tabs';
 
 const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -27,7 +27,7 @@ export default class PlaceOrder extends Component {
     this.state = {
       isLoading: true,
       users:[],
-      service: 0,
+      service: 0
     };
     // this.deleteUser = this.deleteUser.bind(this);
   }

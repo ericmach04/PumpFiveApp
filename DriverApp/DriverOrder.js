@@ -20,7 +20,9 @@ export default class DriverOrder extends Component {
       servicetype: '',
       gasprice: '',
       tireprice: '',
+      customernotes: "",
       drivernotes: "",
+      driveremail: "",
       orderfulfilled: false,
       prices: [],
       units: ''
@@ -98,6 +100,7 @@ export default class DriverOrder extends Component {
       updateDBRef.update("subtotal", subtotal)
       updateDBRef.update("quantity", quantity)
       updateDBRef.update("fulfilled", "yes")
+      updateDBRef.update("driveremail", auth.currentUser?.email)
       const state = this.state;
       state["orderfulfilled"] = true;
       this.setState(state);
@@ -117,6 +120,7 @@ export default class DriverOrder extends Component {
     updateDBRef.update("subtotal", subtotal)
     // var total;
     updateDBRef.update("fulfilled", "yes")
+    updateDBRef.update("driveremail", auth.currentUser?.email)
     const state = this.state;
     state.servicetype = ''
     state.tireprice = ''
@@ -136,6 +140,7 @@ export default class DriverOrder extends Component {
     // updateDBRef.update("subtotal", subtotal)
     // var total;
     updateDBRef.update("fulfilled", "yes")
+    updateDBRef.update("driveremail", auth.currentUser?.email)
     const state = this.state;
     state.servicetype = ''
     state.drivernotes = ''
@@ -209,7 +214,7 @@ export default class DriverOrder extends Component {
     
     querySnapshot.forEach((res) => {
       const { fname, lname, phone, email, color, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, 
-        streetnumber, city, state, zip, license, subtotal} = res.data();
+        streetnumber, city, state, zip, license, subtotal, customernotes} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
       if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
@@ -240,6 +245,7 @@ export default class DriverOrder extends Component {
           zip,
           license,
           subtotal,
+          customernotes,
           units: units
         });
       }
@@ -399,6 +405,7 @@ export default class DriverOrder extends Component {
           <Text style={styles.boxfontshead}>Location: <Text style={{color: "green"}}>{currorder.streetnumber} {currorder.city} {currorder.state} {currorder.zip}</Text></Text>
           <Text style={styles.boxfontshead}>Vehicle: <Text style={{color: "green"}}>{currorder.year} {currorder.color} {currorder.make} {currorder.model}</Text></Text>
           <Text style={styles.boxfontshead}>License Plate: <Text style={{color: "green"}}>{currorder.license}</Text></Text>
+          <Text style={styles.boxfontshead}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text>
         </View>
 
         

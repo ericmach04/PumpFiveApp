@@ -44,7 +44,7 @@ import DriverAccount from './DriverApp/DriverAccount';
 
 import DriverAddresses from './DriverApp/DriverAccountPages/DriverAddresses';
 import DriverInfo from './DriverApp/DriverAccountPages/DriverInfo';
-import JobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
+import DriverJobHistory from './DriverApp/DriverAccountPages/DriverJobHistory';
 
 import Admin from './CustomerApp/Admin'
 import ForgotPassword from './CustomerApp/ForgotPassword';
@@ -98,8 +98,8 @@ const App = () => {
 
         <Stack.Screen name="DriverAddresses" component={DriverAddresses} />
         <Stack.Screen name="DriverInfo" component={DriverInfo} />
-        <Stack.Screen name="JobHistory" component={JobHistory} />
         <Stack.Screen name="Stripe" component={Stripe} />
+        <Stack.Screen name="DriverJobHistory" component={DriverJobHistory} />
 
           <Stack.Screen name="AddCard" component={AddCard} />
           <Stack.Screen name="AddAddress" component={AddAddress} />

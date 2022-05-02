@@ -56,7 +56,11 @@ export default class BookAppointment extends Component {
     hours =  (hours % 12);
     this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
 
+
+    this.setState({deliveryTime: this.delivery}, () => 
+    console.log(this.state))
   }
+  
   formatDate = (data) => {
     this.day = data.getDate();
     this.month = (data.getMonth() + 1);
