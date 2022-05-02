@@ -27,18 +27,37 @@ export default class DriverHomePage extends Component{
   constructor() {
     super();
     this.docs = firebase.firestore().collection("Admin");
+    this.dbref = firebase.firestore().collection("Users");
     this.state = {
       isLoading: true,
       updates: "",
+      drivers:0,
     };
   }
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.getUpdates);
+    this.dbref.onSnapshot(this.getDrivers);
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+  getDrivers = (querySnapshot) => {
+    var drivers=0
+    querySnapshot.forEach((res) => {
+      const { driver,email} = res.data();
+      if(driver == "yes")
+      {
+        drivers++
+        console.log("Driver email: ", email)
+      }
+    });
+    this.setState({
+      drivers,
+      isLoading: false,
+    })
+  };
 
   getUpdates = (querySnapshot) => {
     var updates=""
@@ -79,7 +98,7 @@ export default class DriverHomePage extends Component{
       </View>
       
       <View style={styles.rect2}>
-        <Text style={styles.boxfontsbody}>Number of Drivers in Area: </Text>
+        <Text style={styles.boxfontsbody}>Number of Drivers in Area: {this.state.drivers}</Text>
       </View>
       {/* <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>

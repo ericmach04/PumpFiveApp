@@ -71,6 +71,11 @@ export default class GasService extends Component {
       gasprice: "",
       text: "",
       prices: [],
+      drivers: [],
+      driveremail: '',
+      driverfname: '',
+      driverlname: '',
+      driverphone: '',
       total: 'TBD',
       addressinfo: {
         streetnumber: "",
@@ -111,11 +116,15 @@ export default class GasService extends Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
   getUserData = (querySnapshot) => {
+    var drivers=[]
     
     querySnapshot.forEach((res) => {
-      const {email, fname, lname, phone } = res.data();
+      const {email, fname, lname, phone, driver } = res.data();
       // console.log("email: ", email)
       if (email.toLowerCase() == auth.currentUser?.email) {
         // console.log("email: ", email)
@@ -127,12 +136,34 @@ export default class GasService extends Component {
         this.setState(state)
         
       }
+      if(driver == "yes"){
+        drivers.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+        });
+      }
       
     });
+    
     this.setState({
       // keyvals: keyvalues,
+      drivers,
       isLoading: false,
     });
+    var driverindex = this.getRandomInt(3)
+    this.setState({
+      // keyvals: keyvalues,
+      driveremail: this.state.drivers[driverindex].email,
+      driverfname: this.state.drivers[driverindex].fname,
+      driverlname: this.state.drivers[driverindex].lname,
+      driverphone: this.state.drivers[driverindex].phone,
+      isLoading: false,
+    });
+
+    console.log("Random driver: ", this.state.driveremail)
     
   };
 
@@ -162,7 +193,10 @@ export default class GasService extends Component {
         phone: this.state.phone,
         cancelled: this.state.cancelled,
 
-        driveremail: '',
+        driveremail: this.state.driveremail,
+        driverfname: this.state.driverfname,
+        driverlname: this.state.driverlname,
+        driverphone: this.state.driverphone,
         customernotes: this.state.customernotes,
         canceldetails: this.state.canceldetails,
 

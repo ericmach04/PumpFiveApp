@@ -109,12 +109,12 @@ export default class Registration extends Component {
         .then((userCredentials) => {
           const user = userCredentials.user;
           console.log("Registered with: ", user.email);
-          console.log("pass ", password);
-          console.log("fname: ", fname);
-          console.log("lname: ", lname);
-          console.log("phone: ", phone);
-          console.log("driver: ", driver);
-          console.log("paid: ", paid);
+          console.log("pass ", this.state.password);
+          console.log("fname: ", this.state.fname);
+          console.log("lname: ", this.state.lname);
+          console.log("phone: ", this.state.phone);
+          console.log("driver: ", this.state.driver);
+          console.log("paid: ", this.state.paid);
         })
         //  this.props.navigation.navigate('Addresses')
         .catch((err) => {
