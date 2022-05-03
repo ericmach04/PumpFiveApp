@@ -134,6 +134,7 @@ export default class BookAppointment extends Component {
             <Button
               title="Select a date and time"
               onPress={this.showDateTimePicker}
+              color= "white"
             />
             </View>
             <DateTimePickerModal
