@@ -42,6 +42,9 @@ export default class Receipt extends Component {
         discount,
         drivercar,
         drivername,
+        driverfname,
+        driverlname,
+        driverphone,
         drivernotes,
         email,
         fulfilled,
@@ -80,6 +83,9 @@ export default class Receipt extends Component {
           discount,
           drivercar,
           drivername,
+          driverfname,
+          driverlname,
+          driverphone,
           drivernotes,
           email,
           fulfilled,
@@ -126,6 +132,31 @@ export default class Receipt extends Component {
     {
       tag=<Text style={styles.boxfontsbody}>Reason for cancellation: {this.state.orders[0].canceldetails}</Text>
     }
+
+    var fulfilled;
+    if(this.state.orders[0].fulfilled == "no")
+    {
+      fulfilled= <Text style={styles.boxfontsbody}>
+                  
+      <Text style={styles.boxfontshead}>
+          {this.state.orders[0].driverfname} {this.state.orders[0].driverlname}
+      </Text>{" "}
+      will deliver your order on
+      <Text style={styles.boxfontshead}>
+        {this.state.orders[0].deliverydate}
+      </Text>{" "}
+      at{" "}
+      <Text style={styles.boxfontshead}>
+        {this.state.orders[0].deliverytime}
+      </Text>
+      .
+    </Text>
+    }
+    else
+    {
+      fulfilled=<Text style={styles.boxfontsbody}>Reason for cancellation: {this.state.orders[0].canceldetails}</Text>
+    }
+
     return (
      
 
@@ -324,7 +355,9 @@ export default class Receipt extends Component {
                 />
 
                 <Text style={styles.boxfontshead}>Delivery Driver Info:</Text>
-                <Text style={styles.boxfontsbody}>
+                {fulfilled}
+                {/* <Text style={styles.boxfontsbody}>
+                  
                   <Text style={styles.boxfontshead}>
                     {this.state.orders[0].drivername}
                   </Text>{" "}
@@ -337,15 +370,15 @@ export default class Receipt extends Component {
                     {this.state.orders[0].deliverytime}
                   </Text>
                   .
-                </Text>
+                </Text> */}
 
                 <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
-                    {this.state.orders[0].drivername}
+                    {this.state.orders[0].driverfname}'s
                   </Text>{" "}
-                  will be driving a
+                  phone number:
                   <Text style={styles.boxfontshead}>
-                    {this.state.orders[0].drivercar}
+                    {this.state.orders[0].driverphone}
                   </Text>
                 </Text>
                 <Text style={styles.boxfontsbody}>Notes from driver: {this.state.orders[0].drivernotes}</Text>

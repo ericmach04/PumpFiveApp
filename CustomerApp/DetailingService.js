@@ -9,6 +9,7 @@ import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from './dropdowns/PaymentDropdown';
 import AddressDropdown from './dropdowns/AddressDropdown';
 import CarDropdown from './dropdowns/CarDropdown';
+import BookAppointment from './BookAppointment';
 import firebase from 'firebase'
 import { auth } from "../firebase";
 // import DropDownPicker from 'react-native-dropdown-picker';
@@ -464,7 +465,8 @@ export default class DetailingService extends Component{
                       
                         <Text style={styles.boxfontshead}>Detailing Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
-                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
+                        {/* <BookAppointment></BookAppointment> */}
+                        {/* <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
                           
                             <View>
                                 <TimeDropdown></TimeDropdown>
@@ -474,7 +476,7 @@ export default class DetailingService extends Component{
                                 <DayDropdown></DayDropdown>
                             </View>  
                                                     
-                        </View>
+                        </View> */}
 
                         {/* <View>
                           <Text style={styles.subheadings}>What type of detailing would you like to order?</Text>
