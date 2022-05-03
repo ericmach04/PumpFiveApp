@@ -271,11 +271,11 @@ export default class DriverOrder extends Component {
     var units=''
     
     querySnapshot.forEach((res) => {
-      const { fname, lname, phone, email, color, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, 
+      const { fname, lname, phone, email, color, fulfilled, deliverydate, driveremail, quantity, make, model, year, type, service, ordernumber, 
         streetnumber, city, state, zip, license, subtotal, customernotes, cancelled} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
-      if (cancelled=="no" && fulfilled=="no" && email=="ericmach04@yahoo.com") {
+      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email) {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
@@ -290,6 +290,7 @@ export default class DriverOrder extends Component {
           color,
           fulfilled,
           deliverydate,
+          driveremail,
           quantity,
           make,
           model,
@@ -570,7 +571,7 @@ const styles = StyleSheet.create({
   rect1: {
     position: 'absolute',
     width: "90%",
-    height: "43%",
+    height: "50%",
     left: "5%",
     right: "5%",
     top: "20%",
@@ -585,7 +586,7 @@ const styles = StyleSheet.create({
     height: "22%",
     left: "5%",
     right: "5%",
-    top: "65%",
+    top: "70%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
@@ -640,41 +641,20 @@ const styles = StyleSheet.create({
   button: { 
     width: "40%", 
     height: "5%",
-    bottom: "12%",
+    bottom: "10%",
     left: "55%",
     // right: "5%",
     borderRadius: 20,
     backgroundColor:"green", 
     position: "absolute"
 },
-  // button1: {
-  //   position: 'absolute',
-  //   width: "50%",
-  //   height: "7%",
-  //   left: "5%",
-  //   top: "89%",
-  //   backgroundColor: '#B96835',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   borderRadius: 20,
-  //   textAlign: "center",
-  // },
-  // button2: {
-  //   width: "40%", 
-  //   height: "5%",
-  //   bottom: "5%",
-  //   left: "55%",
-  //   // right: "5%",
-  //   borderRadius: 20,
-  //   backgroundColor:"#EB8585", 
-  //   position: "absolute"
-  // },
+  
   button1: {
     position: 'absolute',
     width: "37%",
     height: "5%",
     left: "8%",
-    top: "89%",
+    top: "93%",
     backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -686,7 +666,7 @@ const styles = StyleSheet.create({
     width: "31%",
     height: "5%",
     right: "8%",
-    top: "89%",
+    top: "93%",
     backgroundColor: '#EB8585',
     flexDirection: 'row',
     justifyContent: 'space-between',

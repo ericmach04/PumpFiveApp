@@ -23,7 +23,10 @@ export default class OrderSummary extends Component {
       deliverytime: '',
       discount: '',
       drivercar: '',
-      drivername: '',
+      driverfname: '',
+      driverlname: '',
+      driveremail: '',
+      driverphone: '',
       email: '',
       fulfilled: '',
       license: '',
@@ -61,6 +64,10 @@ export default class OrderSummary extends Component {
           discount: order.discount,
           drivercar: order.drivercar,
           drivername: order.drivername,
+          driverfname: order.driverfname,
+          driverlname: order.driverlname,
+          driveremail: order.driveremail,
+          driverphone: order.driverphone,
           email: order.email,
           fulfilled: order.fulfilled,
           license: order.license,
@@ -271,7 +278,7 @@ export default class OrderSummary extends Component {
                 <Text style={styles.boxfontshead}>Delivery Driver Info:</Text>
                 <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivername}
+                    {this.state.driverfname} {this.state.driverlname}
                   </Text>{" "}
                   will deliver your order on
                   <Text style={styles.boxfontshead}>
@@ -286,11 +293,11 @@ export default class OrderSummary extends Component {
 
                 <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivername}
+                    {this.state.driverfname}'s
                   </Text>{" "}
-                  will be driving a
+                  phone number:
                   <Text style={styles.boxfontshead}>
-                    {this.state.drivercar}
+                    {this.state.driverphone}
                   </Text>
                 </Text>
                 <Text style={styles.boxfontsbody}>Notes from driver: </Text>

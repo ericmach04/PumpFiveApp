@@ -9,8 +9,11 @@ import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from './dropdowns/PaymentDropdown';
 import AddressDropdown from './dropdowns/AddressDropdown';
 import CarDropdown from './dropdowns/CarDropdown';
+import BookAppointment from './BookAppointment';
 import firebase from 'firebase'
 import { auth } from "../firebase";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 // import DropDownPicker from 'react-native-dropdown-picker';
 
 import returnKeyVals from './dropdowns/AddressDropdown';
@@ -24,7 +27,20 @@ export default class DetailingService extends Component{
     this.docs = firebase.firestore().collection("Prices");
     this.dbRef = firebase.firestore().collection('Orders');
 
+    this.user = auth.currentUser;
+    this.uid =  this.user.uid
+
     this.dbusers = firebase.firestore().collection('Users');
+
+    //binding for datetimepicker methods 
+    // this.handleDeliveryDateSet = this.handleDeliveryDateSet(this)
+    // this.handleDeliveryTimeSet = this.handleDeliveryTimeSet(this)
+    // this.handleDatePicked = this.handleDatePicked(this)
+
+    this.handleShowDTPick = this.handleShowDTPick.bind(this)
+    this.handleHideDTPick = this.handleHideDTPick.bind(this)
+    this.handleDTPicked = this.handleDTPicked.bind(this)
+
 
     this.handleSNChange = this.handleSNChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
@@ -62,6 +78,7 @@ export default class DetailingService extends Component{
       detailingprice: '',
       prices: [],
       total: 0,
+      text: "",
       drivernotes: "",
       addressinfo:{
         streetnumber: '',
@@ -90,11 +107,135 @@ export default class DetailingService extends Component{
         expiry: '',
         cvv: '',
       },
+
+      datetimepicker:{
+        isDateTimePickerVisible: false,
+        deliverydate: " ",
+        deliverytime: " ",
+        deliverydatetime: " ",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        // fname: this.user,
+      },
       isLoading: false
       
     };
   }
 
+  //class methods for date picker 
+  showDateTimePicker(){
+    this.setState({ isDateTimePickerVisible: true });
+  }
+
+  hideDateTimePicker() {
+    this.setState({ isDateTimePickerVisible: false });
+  }
+
+  setDeliveryTime = (data) => {
+    day = data.getDate();
+    month = (data.getMonth() + 1);
+    year = data.getFullYear();
+    hours = data.getHours();
+    minutes = data.getMinutes();
+
+    ampm = hours >= 12 ? 'PM' : 'AM';
+    hours =  (hours % 12);
+    this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
+
+
+    this.setState({deliveryTime: this.delivery}, () => 
+    console.log(this.state))
+  }
+  
+  formatDate = (data) => {
+    this.day = data.getDate();
+    this.month = (data.getMonth() + 1);
+    this.year = data.getFullYear();
+    this.hours = data.getHours();
+    this.minutes = data.getMinutes();
+
+    this.ampm = this.hours >= 12 ? 'PM' : 'AM';
+    this.hours = this.hours % 12;i
+    this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
+
+  }
+  //set correct service to update
+  updateService = () => {
+    this.updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        this.setState({
+          isLoading: false,
+        });
+      });
+
+
+  }
+
+  handleDatePicked = date => {
+    this.setDeliveryTime(date)
+    this.updateService()
+    this.hideDateTimePicker()
+
+  }
+
+
+  formatDelivery(data){
+    day = data.getDate();
+    month = (data.getMonth() + 1);
+    year = data.getFullYear();
+    hours = data.getHours();
+    minutes = data.getMinutes();
+
+    ampm = hours >= 12 ? 'PM' : 'AM';
+    hours =  (hours % 12);
+    this.deliverydate =  month + '/' + day + '/' + year 
+    this.deliverytime = hours + ':' + minutes + ' ' + ampm
+ 
+  }
+
+  handleDeliveryDateSet(deliverydate){
+    const state = this.state
+    console.log("Date time state: ", state.datetimepicker)
+    state.datetimepicker["deliverydate"] = deliverydate
+    this.setState(state)
+  }
+
+  handleDeliveryTimeSet(deliverytime){
+    const state = this.state
+    console.log("Date time state: ", state.datetimepicker)
+    state.datetimepicker["deliverytime"] = deliverytime
+    this.setState(state)
+  }
+
+  handleShowDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleHideDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleDTPicked(state){
+    // console.log("DT State: ", state)
+    var string = state.deliveryTime
+    console.log("Epic string: ", string)
+    const mystate = this.state.datetimepicker
+    mystate.deliverydatetime = string
+    this.setState(mystate)
+  }
+
+  // handleDatePicked(date) {
+  //   this.formatDelivery(date)
+  //   this.hideDateTimePicker()
+
+  // }
+
+ //Class methods for 
   importText(text){
     const state = this.state
     state.text = text
@@ -142,8 +283,8 @@ export default class DetailingService extends Component{
 
         card: this.state.cardinfo.type,
 
-        deliverytime: "TBD",
-        deliverydate: "TBD",
+        deliverytime: this.state.datetimepicker.deliverytime,
+        deliverydate: this.state.datetimepicker.deliverydate,
         drivername: "TBD",
         drivercar: "TBD",
         taxes: "TBD",
@@ -437,7 +578,13 @@ export default class DetailingService extends Component{
   const color = this.props.color
   const license = this.props.license
 
+  //datetimepicker
+  const deliverydate = this.props.deliverydate
+  const deliverytime = this.props.deliverytime
+  const currentDate = new Date()
+
   const { open, value, items } = this.state;
+  console.log("Date time state: ", this.state.datetimepicker)
   if(this.state.reviewpressed == false) {
   return (
     <View style={styles.container}>
@@ -464,29 +611,45 @@ export default class DetailingService extends Component{
                       
                         <Text style={styles.boxfontshead}>Detailing Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
-                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
-                          
-                            <View>
-                                <TimeDropdown></TimeDropdown>
-                            </View>
-                            
-                            <View>
-                                <DayDropdown></DayDropdown>
-                            </View>  
-                                                    
-                        </View>
+                        {/* <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}> */}
+                          <BookAppointment
+                            deliverydate={deliverydate}
+                            deliverytime={deliverytime}
+                            onShowDateTimePicker = {this.handleShowDTPick}
+                            onHideDateTimePicker = {this.handleHideDTPick}
+                            onHandleDatePicked = {this.handleDTPicked}
+                            >
+
+                          </BookAppointment>
+                          <Text style={styles.subheadings}>Selected date and time: {this.state.datetimepicker.deliverydatetime}</Text>
+                        {/* </View> */}
 
                         {/* <View>
-                          <Text style={styles.subheadings}>What type of detailing would you like to order?</Text>
-                          <TextInput
-                           style={styles.input}
-                           placeholder="Number of Tires"
-                           placeholderTextColor="#D3D3D3"
-                           onChangeText={(val) =>this.quantityInputValueUpdate(val, 'quantity')}
-                            keyboardType="numeric"
+                          <Button
+                            title="Select a date and time"
+                            onPress={this.showDateTimePicker}
                           />
-  
+                          <DateTimePickerModal
+                            isVisible={this.state.datetimepicker["isDateTimePickerVisible"]}
+                            mode="datetime"
+                            minimumDate={currentDate}
+                            onConfirm={(this.handleDatePicked)}
+                            onCancel={this.hideDateTimePicker}
+                          />
+
                         </View> */}
+                        {/* <TextInput
+                          // onChangeText={onChangeText}
+                          value={text}
+                          placeholder="Date"
+                        />
+                        <TextInput
+                          // onChangeText={onChangeText}
+                          value={text}
+                          placeholder="Time"
+                        /> */}
+                                            
+                        {/* </View> */}
                        
                         <Text style={styles.subheadings}>Detailing Type</Text>
                         {/* <View 

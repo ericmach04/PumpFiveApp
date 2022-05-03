@@ -63,6 +63,10 @@ export default class TireService extends Component {
       lname: '',
       phone: '',
       email: '',
+      driveremail: '',
+      driverfname: '',
+      driverlname: '',
+      driverphone: '',
       cancelled: "no",
       canceldetails: '',
       quantity: 0,
@@ -113,8 +117,12 @@ export default class TireService extends Component {
     state[prop] = val;
     this.setState(state);
   }
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
   getUserData = (querySnapshot) => {
+    var drivers=[]
     // const user = userCredentials.user;
     // console.log("In getifdriver")
     // console.log("this email: ", this.state.email)
@@ -122,7 +130,7 @@ export default class TireService extends Component {
     // var keyvalues = {}
     // console.log("this.state.email: ", this.state.email)
     querySnapshot.forEach((res) => {
-      const {email, fname, lname, phone } = res.data();
+      const {email, fname, lname, phone, driver } = res.data();
       // console.log("email: ", email)
       if (email.toLowerCase() == auth.currentUser?.email) {
         // console.log("email: ", email)
@@ -134,12 +142,33 @@ export default class TireService extends Component {
         this.setState(state)
         
       }
+      if(driver == "yes"){
+        drivers.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+        });
+      }
       
     });
     this.setState({
       // keyvals: keyvalues,
+      drivers,
       isLoading: false,
     });
+    var driverindex = this.getRandomInt(3)
+    this.setState({
+      // keyvals: keyvalues,
+      driveremail: this.state.drivers[driverindex].email,
+      driverfname: this.state.drivers[driverindex].fname,
+      driverlname: this.state.drivers[driverindex].lname,
+      driverphone: this.state.drivers[driverindex].phone,
+      isLoading: false,
+    });
+
+    console.log("Random driver: ", this.state.driveremail)
     
   };
 
@@ -158,6 +187,11 @@ export default class TireService extends Component {
         customernotes: this.state.customernotes,
         cancelled: this.state.cancelled,
         canceldetails: this.state.cancelled,
+
+        driveremail: this.state.driveremail,
+        driverfname: this.state.driverfname,
+        driverlname: this.state.driverlname,
+        driverphone: this.state.driverphone,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,

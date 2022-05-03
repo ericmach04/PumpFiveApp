@@ -27,23 +27,15 @@ export default class AddressDropdown extends Component{
       text: 'Other',
       data:[],
       keyvals: {
-        // "Other": {
-        //   email: '',  
-        //   streetnumber:'',
-        //   city: '',
-        //   state: '',
-        //   zip: '',
-        // }
+        
       },
     };
   }
-//   updatedd = (choice) => {
-//     this.setState({ driver: choice })
-//  }
+
 
 
 handleMakeChange(e) {
-  // console.log("e: ", e)
+  console.log("e: ", e)
   this.inputValueUpdate(e, 'make')
   this.props.onMakeValChange(e)
   // console.log("value: ", e)
@@ -222,6 +214,7 @@ handleColorChange(e) {
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].make}
                         onChangeText={this.handleMakeChange}
+                        // onSelectionChange={this.handleMakeChange}
                 />
                 </View>
 
