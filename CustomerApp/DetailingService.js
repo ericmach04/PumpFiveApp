@@ -27,12 +27,19 @@ export default class DetailingService extends Component{
     this.docs = firebase.firestore().collection("Prices");
     this.dbRef = firebase.firestore().collection('Orders');
 
+    this.user = auth.currentUser;
+    this.uid =  this.user.uid
+
     this.dbusers = firebase.firestore().collection('Users');
 
     //binding for datetimepicker methods 
-    this.handleDeliveryDateSet = this.handleDeliveryDateSet(this)
-    this.handleDeliveryTimeSet = this.handleDeliveryTimeSet(this)
-    //this.handleDatePicked = this.handleDatePicked(this)
+    // this.handleDeliveryDateSet = this.handleDeliveryDateSet(this)
+    // this.handleDeliveryTimeSet = this.handleDeliveryTimeSet(this)
+    // this.handleDatePicked = this.handleDatePicked(this)
+
+    this.handleShowDTPick = this.handleShowDTPick.bind(this)
+    this.handleHideDTPick = this.handleHideDTPick.bind(this)
+    this.handleDTPicked = this.handleDTPicked.bind(this)
 
 
     this.handleSNChange = this.handleSNChange.bind(this)
@@ -71,6 +78,7 @@ export default class DetailingService extends Component{
       detailingprice: '',
       prices: [],
       total: 0,
+      text: "",
       drivernotes: "",
       addressinfo:{
         streetnumber: '',
@@ -103,7 +111,9 @@ export default class DetailingService extends Component{
       datetimepicker:{
         isDateTimePickerVisible: false,
         deliverydate: " ",
-        deliverytime: " "
+        deliverytime: " ",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        // fname: this.user,
       },
       isLoading: false
       
@@ -117,6 +127,59 @@ export default class DetailingService extends Component{
 
   hideDateTimePicker() {
     this.setState({ isDateTimePickerVisible: false });
+  }
+
+  setDeliveryTime = (data) => {
+    day = data.getDate();
+    month = (data.getMonth() + 1);
+    year = data.getFullYear();
+    hours = data.getHours();
+    minutes = data.getMinutes();
+
+    ampm = hours >= 12 ? 'PM' : 'AM';
+    hours =  (hours % 12);
+    this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
+
+
+    this.setState({deliveryTime: this.delivery}, () => 
+    console.log(this.state))
+  }
+  
+  formatDate = (data) => {
+    this.day = data.getDate();
+    this.month = (data.getMonth() + 1);
+    this.year = data.getFullYear();
+    this.hours = data.getHours();
+    this.minutes = data.getMinutes();
+
+    this.ampm = this.hours >= 12 ? 'PM' : 'AM';
+    this.hours = this.hours % 12;i
+    this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
+
+  }
+  //set correct service to update
+  updateService = () => {
+    this.updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        this.setState({
+          isLoading: false,
+        });
+      });
+
+
+  }
+
+  handleDatePicked = date => {
+    this.setDeliveryTime(date)
+    this.updateService()
+    this.hideDateTimePicker()
+
   }
 
 
@@ -136,21 +199,35 @@ export default class DetailingService extends Component{
 
   handleDeliveryDateSet(deliverydate){
     const state = this.state
+    console.log("Date time state: ", state.datetimepicker)
     state.datetimepicker["deliverydate"] = deliverydate
     this.setState(state)
   }
 
   handleDeliveryTimeSet(deliverytime){
     const state = this.state
+    console.log("Date time state: ", state.datetimepicker)
     state.datetimepicker["deliverytime"] = deliverytime
     this.setState(state)
   }
 
-  handleDatePicked(date) {
-    this.formatDelivery(date)
-    this.hideDateTimePicker()
-
+  handleShowDTPick(state){
+    console.log("State: ", this.state)
   }
+
+  handleHideDTPick(state){
+    console.log("State: ", this.state)
+  }
+
+  handleDTPicked(state){
+    console.log("State: ", this.state)
+  }
+
+  // handleDatePicked(date) {
+  //   this.formatDelivery(date)
+  //   this.hideDateTimePicker()
+
+  // }
 
  //Class methods for 
   importText(text){
@@ -501,6 +578,7 @@ export default class DetailingService extends Component{
   const currentDate = new Date()
 
   const { open, value, items } = this.state;
+  console.log("Date time state: ", this.state.datetimepicker)
   if(this.state.reviewpressed == false) {
   return (
     <View style={styles.container}>
@@ -527,9 +605,18 @@ export default class DetailingService extends Component{
                       
                         <Text style={styles.boxfontshead}>Detailing Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
-                        <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
+                        {/* <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}> */}
+                          <BookAppointment
+                            deliverydate={deliverydate}
+                            deliverytime={deliverytime}
+                            onShowDateTimePicker = {this.handleShowDTPick}
+                            onHideDateTimePicker = {this.handleHideDTPick}
+                            onHandleDatePicked = {this.handleDTPicked}
+                            >
 
-                        <View>
+                          </BookAppointment>
+
+                        {/* <View>
                           <Button
                             title="Select a date and time"
                             onPress={this.showDateTimePicker}
@@ -542,31 +629,19 @@ export default class DetailingService extends Component{
                             onCancel={this.hideDateTimePicker}
                           />
 
-                      </View>
-                        <TextInput
-                          onChangeText={onChangeText}
+                        </View> */}
+                        {/* <TextInput
+                          // onChangeText={onChangeText}
                           value={text}
                           placeholder="Date"
                         />
                         <TextInput
-                          onChangeText={onChangeText}
+                          // onChangeText={onChangeText}
                           value={text}
                           placeholder="Time"
-                        />
+                        /> */}
                                             
-                        </View>
-
-                        {/* <View>
-                          <Text style={styles.subheadings}>What type of detailing would you like to order?</Text>
-                          <TextInput
-                           style={styles.input}
-                           placeholder="Number of Tires"
-                           placeholderTextColor="#D3D3D3"
-                           onChangeText={(val) =>this.quantityInputValueUpdate(val, 'quantity')}
-                            keyboardType="numeric"
-                          />
-  
-                        </View> */}
+                        {/* </View> */}
                        
                         <Text style={styles.subheadings}>Detailing Type</Text>
                         {/* <View 

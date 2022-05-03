@@ -19,11 +19,15 @@ export default class BookAppointment extends Component {
   constructor(props) {
     super(props);
     this.user = auth.currentUser;
-    this.uid =  user.uid
-    this.updateDBRef = firebase.firestore().collection('Orders').doc(uid)
+    this.uid =  this.user.uid
+    this.updateDBRef = firebase.firestore().collection('Orders').doc(this.uid)
+
+    this.showDateTimePicker = this.showDateTimePicker.bind(this)
+    this.hideDateTimePicker = this.hideDateTimePicker.bind(this)
+    this.handleDatePicked = this.handleDatePicked.bind(this)
     this.state = {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      fname: user,
+      fname: this.user,
 
       isDateTimePickerVisible: false,
       deliveryTime: "No delivery time set",
@@ -38,10 +42,20 @@ export default class BookAppointment extends Component {
   //class methods 
   showDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: true });
+    this.props.onShowDateTimePicker(this.state)
   }
 
   hideDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: false });
+    this.props.onHideDateTimePicker(this.state)
+  }
+
+  handleDatePicked = date => {
+    this.setDeliveryTime(date)
+    this.updateService()
+    this.hideDateTimePicker()
+    this.props.onHandleDatePicked(this.state)
+
   }
 
 
@@ -73,11 +87,6 @@ export default class BookAppointment extends Component {
     this.deliveryTime = this.month + '/' + this.day + '/' + this.year + ' ' + this.hours + ':' + this.minutes + ' ' + this.ampm
 
   }
-
-
-
-
-
   //set correct service to update
   updateService = () => {
     this.updateDBRef.update({ "deliveryTime": this.state.deliveryTime })
@@ -96,15 +105,7 @@ export default class BookAppointment extends Component {
 
   }
 
-
-
-
-  handleDatePicked = date => {
-    this.setDeliveryTime(date)
-    this.updateService()
-    this.hideDateTimePicker()
-
-  }
+  
 
 
 
@@ -120,20 +121,21 @@ export default class BookAppointment extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
-
-          <View style={buttonStyles.backButton}>
+        <View>
+          {/* <View style={buttonStyles.backButton}>
             <Button
               title="Back"
               color="black"
               onPress={() => this.props.navigation.goBack()}
             />
-          </View>
+          </View> */}
 
           <View style={buttonStyles.dateButton}>
             <Button
               title="Select a date and time"
               onPress={this.showDateTimePicker}
             />
+            </View>
             <DateTimePickerModal
               isVisible={this.state.isDateTimePickerVisible}
               mode="datetime"
@@ -142,6 +144,7 @@ export default class BookAppointment extends Component {
               onCancel={this.hideDateTimePicker}
             />
 
+          
           </View>
 
         </ImageBackground>

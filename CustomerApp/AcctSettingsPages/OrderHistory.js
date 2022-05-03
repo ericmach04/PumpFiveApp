@@ -40,6 +40,8 @@ export default class OrderHistory extends Component {
         fulfilled,
         cancelled,
         deliverydate,
+        driverfname,
+        driverlname,
         quantity,
         make,
         model,
@@ -59,6 +61,8 @@ export default class OrderHistory extends Component {
           fulfilled,
           cancelled,
           deliverydate,
+          driverfname,
+          driverlname,
           quantity,
           make,
           model,
@@ -124,6 +128,7 @@ export default class OrderHistory extends Component {
                         </Text>
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
+                        <Text>Driver: {res.driverfname} {res.driverlname}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                       <TouchableOpacity style={styles.button1}>

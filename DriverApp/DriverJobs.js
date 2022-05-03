@@ -29,10 +29,10 @@ export default class DriverJobs extends Component {
     const orders = [];
     var units=''
     querySnapshot.forEach((res) => {
-      const { email, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, cancelled} = res.data();
+      const { email, fulfilled, deliverydate, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled} = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
-      if (cancelled=="no" && fulfilled=="no" && email=="ericmach04@yahoo.com") {
+      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email) {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
