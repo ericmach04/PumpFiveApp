@@ -63,6 +63,8 @@ export default class TireService extends Component {
       lname: '',
       phone: '',
       email: '',
+      cancelled: "no",
+      canceldetails: '',
       quantity: 0,
       customernotes: "",
       tiretype: "TBD",
@@ -154,6 +156,8 @@ export default class TireService extends Component {
 
         driveremail: '',
         customernotes: this.state.customernotes,
+        cancelled: this.state.cancelled,
+        canceldetails: this.state.cancelled,
 
         streetnumber: this.state.addressinfo.streetnumber,
         city: this.state.addressinfo.city,

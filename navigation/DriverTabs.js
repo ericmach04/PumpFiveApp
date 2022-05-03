@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import HomePage from '../CustomerApp/HomePage';
 // import PlaceOrder from '../CustomerApp/PlaceOrder';
 // import AcctSettings from '../CustomerApp/AcctSettings';
-import DriverHome from '../DriverApp/DriverHome';
+import DriverHomePage from '../DriverApp/DriverHome';
 import DriverOrder from '../DriverApp/DriverOrder';
 import DriverJobs from '../DriverApp/DriverJobs';
 import DriverAccount from '../DriverApp/DriverAccount';
@@ -25,7 +25,7 @@ const Tabs = () =>{
             },
          }}
          >
-            <Tab.Screen name="Home" component={DriverHome} options={{
+            <Tab.Screen name="Home" component={DriverHomePage} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{alignItems: 'center', justifyContent: 'center', }}>
                         <Image 

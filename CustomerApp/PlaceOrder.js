@@ -151,7 +151,7 @@ export default class PlaceOrder extends Component {
                   />
                 </View>
               </View>
-              <View style={styles.gasservice}>
+              {/* <View style={styles.gasservice}>
                 <Text style={styles.boxfontshead}>Tinting Services</Text>
                 <Text style={styles.boxfontsbody}>
                   PumpFive can provide you with a quick tinting service. Book
@@ -166,7 +166,7 @@ export default class PlaceOrder extends Component {
                     }
                   />
                 </View>
-              </View>
+              </View> */}
             </ScrollView>
           </SafeAreaView>
         </ImageBackground>

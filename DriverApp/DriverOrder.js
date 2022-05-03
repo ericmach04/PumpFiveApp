@@ -25,7 +25,9 @@ export default class DriverOrder extends Component {
       driveremail: "",
       orderfulfilled: false,
       prices: [],
-      units: ''
+      units: '',
+      cancelAttempt: false,
+      canceldetails: "",
     };
     
   }
@@ -47,6 +49,62 @@ export default class DriverOrder extends Component {
 
   componentWillUnmount() {
     this.unsubscribe();
+  }
+
+  cancelAlert(){
+    Alert.alert(
+      "Cancel Order",
+      "Are you sure you want to cancel this order?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => this.setState({
+            cancelAttempt: true
+          })
+        }
+      ],
+      
+      
+    );
+  }
+  cancelAlert2(id, details){
+    Alert.alert(
+      "Cancel Order",
+      "Are you sure you want to cancel this order?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => this.handleCancel(id, details)
+        }
+      ],
+      
+      
+    );
+  }
+
+  handleCancel(id, details){
+    console.log("In handle Cancel")
+    console.log("In handle Cancel id: ", id)
+    const updateDBRef = firebase.firestore().collection('Orders').doc(id)
+    updateDBRef.get().then((res) => {
+      updateDBRef.update("cancelled", "yes")
+      updateDBRef.update("canceldetails", details)
+      const state = this.state;
+      state["cancelAttempt"] = false;
+      this.setState(state);
+    })
+
+
   }
 
   getPriceData = () => {
@@ -214,10 +272,10 @@ export default class DriverOrder extends Component {
     
     querySnapshot.forEach((res) => {
       const { fname, lname, phone, email, color, fulfilled, deliverydate, quantity, make, model, year, type, service, ordernumber, 
-        streetnumber, city, state, zip, license, subtotal, customernotes} = res.data();
+        streetnumber, city, state, zip, license, subtotal, customernotes, cancelled} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
-      if (fulfilled=="no" && email=="ericmach04@yahoo.com") {
+      if (cancelled=="no" && fulfilled=="no" && email=="ericmach04@yahoo.com") {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
@@ -388,6 +446,45 @@ export default class DriverOrder extends Component {
         )
 
       }
+      else if (this.state.cancelAttempt ==  true){
+        return (
+          <View style={styles.container}>
+            <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.text}>Current Order: {currorder.service} </Text>
+            <View style={styles.rect1}>
+              
+              <Text style={styles.detailtext}>Please provide a reason for cancelation: *</Text>
+                <TextInput
+                        style={styles.input}
+                        placeholder={'Details'}
+                        value={this.state.canceldetails}
+                        onChangeText={(val) => this.inputValueUpdate(val, 'canceldetails')}
+                />
+            </View>
+    
+            <View style={styles.button}>
+              <Button
+                  title="Submit"
+                  color="white"
+                  onPress={() => this.cancelAlert2(currorder.ordernumber, this.state.canceldetails)}
+                  // onPress={() => navigation.navigate('CalendarScreen')}
+              />
+            </View>
+            <View style={styles.button2}>
+              <Button
+                  title="Go Back"
+                  color="white"
+                  onPress={() => this.setState({
+                    cancelAttempt: false
+                  })}
+              />
+
+            </View>
+            </ImageBackground>
+          </View>
+        )
+
+      }
       else{
     return (
       <View style={styles.container}>
@@ -405,12 +502,17 @@ export default class DriverOrder extends Component {
           <Text style={styles.boxfontshead}>Location: <Text style={{color: "green"}}>{currorder.streetnumber} {currorder.city} {currorder.state} {currorder.zip}</Text></Text>
           <Text style={styles.boxfontshead}>Vehicle: <Text style={{color: "green"}}>{currorder.year} {currorder.color} {currorder.make} {currorder.model}</Text></Text>
           <Text style={styles.boxfontshead}>License Plate: <Text style={{color: "green"}}>{currorder.license}</Text></Text>
-          <Text style={styles.boxfontshead}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text>
+          {/* <Text style={styles.boxfontshead}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text> */}
+        </View>
+
+        <View style={styles.rect2}>
+          <Text style={styles.boxfontshead2}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text>
+
         </View>
 
         
 
-        <View style={styles.button}>
+        <View style={styles.button1}>
           <Button
               title="Job Completed"
               color="white"
@@ -422,7 +524,7 @@ export default class DriverOrder extends Component {
           <Button
               title="Cancel Order"
               color="white"
-              // onPress={() => navigation.navigate('CalendarScreen')}
+              onPress={() => this.cancelAlert(currorder.ordernumber)}
           />
 
         </View>
@@ -460,18 +562,30 @@ const styles = StyleSheet.create({
   Logo: {
     position: "absolute",
     width: "98%",
-    height: "40%",
+    height: "35%",
     left: "1%",
     right: "17.5%",
-    top: "2%",
+    top: "1%",
   },
   rect1: {
     position: 'absolute',
     width: "90%",
-    height: "77%",
+    height: "43%",
     left: "5%",
     right: "5%",
     top: "20%",
+    backgroundColor: '#CDCABF',
+    borderWidth: 3,
+    borderColor: '#000000',
+    borderRadius: 10,
+  },
+  rect2: {
+    position: 'absolute',
+    width: "90%",
+    height: "22%",
+    left: "5%",
+    right: "5%",
+    top: "65%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
@@ -483,7 +597,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: "bold",
     textAlign: "left",
-    top: "42%",
+    top: "35%",
     left: "2%",
     // justifyContent: "center",
     // alignItems: "center",
@@ -501,18 +615,18 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // alignContent: "center"
   },
-  rect2: {
-    position: 'absolute',
-    width: "90%",
-    height: "8%",
-    left: "5%",
-    right: "5%",
-    top: "66%",
-    backgroundColor: '#CDCABF',
-    borderWidth: 3,
-    borderColor: '#000000',
-    borderRadius: 10,
-  },
+  // rect2: {
+  //   position: 'absolute',
+  //   width: "90%",
+  //   height: "8%",
+  //   left: "5%",
+  //   right: "5%",
+  //   top: "85%",
+  //   backgroundColor: '#CDCABF',
+  //   borderWidth: 3,
+  //   borderColor: '#000000',
+  //   borderRadius: 10,
+  // },
   boxfontsbody:{
     color: "black",
     fontSize: 24,
@@ -533,27 +647,50 @@ const styles = StyleSheet.create({
     backgroundColor:"green", 
     position: "absolute"
 },
+  // button1: {
+  //   position: 'absolute',
+  //   width: "50%",
+  //   height: "7%",
+  //   left: "5%",
+  //   top: "89%",
+  //   backgroundColor: '#B96835',
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   borderRadius: 20,
+  //   textAlign: "center",
+  // },
+  // button2: {
+  //   width: "40%", 
+  //   height: "5%",
+  //   bottom: "5%",
+  //   left: "55%",
+  //   // right: "5%",
+  //   borderRadius: 20,
+  //   backgroundColor:"#EB8585", 
+  //   position: "absolute"
+  // },
   button1: {
     position: 'absolute',
-    width: "50%",
-    height: "7%",
-    left: "5%",
+    width: "37%",
+    height: "5%",
+    left: "8%",
     top: "89%",
-    backgroundColor: '#B96835',
+    backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 20,
     textAlign: "center",
   },
   button2: {
-    width: "40%", 
+    position: 'absolute',
+    width: "31%",
     height: "5%",
-    bottom: "5%",
-    left: "55%",
-    // right: "5%",
+    right: "8%",
+    top: "89%",
+    backgroundColor: '#EB8585',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderRadius: 20,
-    backgroundColor:"#EB8585", 
-    position: "absolute"
   },
   text: {
     color: "white",

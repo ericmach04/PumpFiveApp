@@ -38,6 +38,7 @@ export default class OrderHistory extends Component {
       const {
         email,
         fulfilled,
+        cancelled,
         deliverydate,
         quantity,
         make,
@@ -56,6 +57,7 @@ export default class OrderHistory extends Component {
         orders.push({
           key: res.id,
           fulfilled,
+          cancelled,
           deliverydate,
           quantity,
           make,
@@ -106,16 +108,8 @@ export default class OrderHistory extends Component {
               <ScrollView style={styles.scroll1}>
                 {this.state.orders.map((res, i) => {
                   // count += 1;
-
+                  if(res.cancelled=="no"){
                   return (
-                    /* 
-                <View style={{ top: "15%", left: "2%" }}>
-                  <View style={styles.BoundingBox}>
-                    <Text style={styles.bofadeeznutsbold}>
-                      Address #{count}
-                    </Text>
-                  </View>
-                */
 
                 <View style={styles.section}>
                   <View>
@@ -123,18 +117,6 @@ export default class OrderHistory extends Component {
                     {res.service}
                     </Text>
                   </View>
-
-                      {/* <View>
-                          <Image source={image} />
-                        </View> */}
-                      {/* <View>
-                    <Text style={styles.bofadeeznuts}>{res.quantity}</Text>
-                  </View>
-                  <View>
-                    <Text style={styles.bofadeeznuts}>
-                      {res.quantity}, {res.quantity}, {res.quantity}
-                    </Text>
-                  </View> */}
                       <View style={styles.textp}>
                         <Text>
                           {res.quantity} {res.units} delivered to {res.year}{" "}
@@ -144,16 +126,6 @@ export default class OrderHistory extends Component {
                         <Text>Delivered?: {res.fulfilled}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
-                      {/* <TouchableOpacity onPress={() => {
-                                this.props.navigation.navigate('EditAddress', {
-                                  userkey: res.key
-                                });
-                              }}>
-                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Edit</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.deleteAddress(res.key)}>
-                    <Text style={{ textDecorationLine: "underline",textAlign: "center",bottom: "25%",left: "40%",}}>Delete</Text>
-                  </TouchableOpacity> */}
                       <TouchableOpacity style={styles.button1}>
                         <Button
                           title="View Receipt"
@@ -166,36 +138,48 @@ export default class OrderHistory extends Component {
                       </TouchableOpacity>
                     </View>
                   );
+                 }
+                 else{
+                  return (
+
+                <View style={styles.section}>
+                  <View>
+                    <Text style={styles.bofadeeznutsbold}>
+                    {res.service}
+                    </Text>
+                  </View>
+                      <View style={styles.textp}>
+                        <Text>
+                          {res.quantity} {res.units} delivered to {res.year}{" "}
+                          {res.make} {res.model}
+                        </Text>
+                        <Text>Date of Order: {res.deliverydate}</Text>
+                        <Text>Delivered?: {res.fulfilled} (cancelled)</Text>
+                        {/* <Text>Order#:  {res.ordernumber}</Text> */}
+                      </View>
+                      <TouchableOpacity style={styles.button1}>
+                        <Button
+                          title="View Receipt"
+                          onPress={() =>
+                            this.props.navigation.navigate("Receipt", {
+                              userkey: res.ordernumber,
+                            })
+                          }
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  );
+                 }
                 })}
               </ScrollView>
             </View>
-            {/* <View style={styles.scrollbox}> */}
-            {/* <ScrollView style={styles.scroll1}> */}
-
-            {/* {
-            this.state.orders.map((res, i) => {
-              <View style={styles.section}>
-                <Text>Here</Text>
-                <Text style={styles.texth1}>{res.service} Delivery Service</Text>
-                <View style= {styles.textp}>
-                  <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text>
-                  <Text>Date of Order: {res.deliverydate}</Text>
-                  <Text>Delivered?:  {res.fulfilled}</Text>
-                </View>
-                <View style={styles.button1}>
-                    <Button title="View Receipt"/>
-               </View>
-             </View>
-
-            }
-            )
-          } */}
-            {/* </ScrollView> */}
-            {/* </View> */}
+            
           </View>
         </ImageBackground>
       </View>
     );
+  
+  
   }
 }
 const styles = StyleSheet.create({

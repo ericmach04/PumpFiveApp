@@ -1,5 +1,6 @@
 import { ImageBackground, Image, StyleSheet, Button, Text, View, Linking } from 'react-native'
-import React, { useCallback } from 'react'
+import React, { Component, useCallback } from 'react'
+import firebase from "firebase"
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
@@ -22,7 +23,68 @@ const OpenURLButton = ({ url, children }) => {
   return <Button title={children} onPress={handlePress} />;
 };
 
-export default function HomePage() {
+export default class DriverHomePage extends Component{
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection("Admin");
+    this.dbref = firebase.firestore().collection("Users");
+    this.state = {
+      isLoading: true,
+      updates: "",
+      drivers:0,
+    };
+  }
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getUpdates);
+    this.dbref.onSnapshot(this.getDrivers);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getDrivers = (querySnapshot) => {
+    var drivers=0
+    querySnapshot.forEach((res) => {
+      const { driver,email} = res.data();
+      if(driver == "yes")
+      {
+        drivers++
+        console.log("Driver email: ", email)
+      }
+    });
+    this.setState({
+      drivers,
+      isLoading: false,
+    })
+  };
+
+  getUpdates = (querySnapshot) => {
+    var updates=""
+    querySnapshot.forEach((res) => {
+
+      updates=res.data().updates
+    });
+    
+    console.log("Updates: ", updates)
+  
+    // console.log(cars);
+    this.setState({
+      updates,
+      isLoading: false,
+    });
+  };
+  render(){
+    var today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    today = mm + '/' + dd + '/' + yyyy;
+    // console.log("Today: ", today)
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
@@ -31,21 +93,23 @@ export default function HomePage() {
         source={require('../images/pumpfivelogo.png')}
       />
       <View style={styles.rect1}>
-        <Text style={styles.boxfontshead}>Company Updates</Text>
+        <Text style={styles.boxfontshead}>Company Updates: {today}</Text>
+        <Text style={styles.boxfontsbody}>{this.state.updates}</Text>
       </View>
       
       <View style={styles.rect2}>
-        <Text style={styles.boxfontsbody}>Number of Drivers in Area: </Text>
+        <Text style={styles.boxfontsbody}>Number of Drivers in Area: {this.state.drivers}</Text>
       </View>
-      <View style={styles.button1}>
+      {/* <View style={styles.button1}>
       <OpenURLButton color="white" url={supportedURL}>Terms and Conditions</OpenURLButton>
       </View>
       <View style={styles.button2}>
       <OpenURLButton color="white" url={supportedURL2}>Contact Us</OpenURLButton>
-      </View>
+      </View> */}
       </ImageBackground>
     </View>
   )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -83,7 +147,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     top: "3%",
-    left: "27%",
+    left: "12%",
     // justifyContent: "center",
     // alignItems: "center",
     // alignContent: "center"

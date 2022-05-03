@@ -18,6 +18,7 @@ export default class Receipt extends Component {
     this.docs = firebase.firestore().collection("Orders");
     this.state = {
       isLoading: true,
+      cancelled: '',
       orders: [],
     };
   }
@@ -34,6 +35,8 @@ export default class Receipt extends Component {
       const {
         card,
         city,
+        cancelled,
+        canceldetails,
         deliverydate,
         deliverytime,
         discount,
@@ -70,6 +73,8 @@ export default class Receipt extends Component {
         orders.push({
           card,
           city,
+          cancelled,
+          canceldetails,
           deliverydate,
           deliverytime,
           discount,
@@ -111,6 +116,16 @@ export default class Receipt extends Component {
       );
     }
     console.log("Orders object in render: ", this.state.orders);
+
+    var tag
+    if(this.state.orders[0].cancelled == "no")
+    {
+      tag=<Text style={styles.boxfontsbody}></Text>
+    }
+    else
+    {
+      tag=<Text style={styles.boxfontsbody}>Reason for cancellation: {this.state.orders[0].canceldetails}</Text>
+    }
     return (
      
 
@@ -334,6 +349,7 @@ export default class Receipt extends Component {
                   </Text>
                 </Text>
                 <Text style={styles.boxfontsbody}>Notes from driver: {this.state.orders[0].drivernotes}</Text>
+                {tag}
 
                 <View style={buttonstyles.button}>
                   <Button
@@ -342,9 +358,7 @@ export default class Receipt extends Component {
                     onPress={() => this.props.navigation.navigate("Tabs")}
                   />
                 </View>
-                {/* <View style={buttonstyles.button2}>
-                  <Button title="Home" color="white" onPress={() => this.props.navigation.navigate('Tabs')}/>
-                </View> */}
+                
               </ScrollView>
             </View>
           </SafeAreaView>

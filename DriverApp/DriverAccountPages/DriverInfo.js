@@ -1,49 +1,84 @@
 import { ImageBackground, Image, Button, StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { Component } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from "firebase"
+import { auth } from "../../firebase";
 
 
 //car info Page - In Progresss 
 
-export default function DriverInfo({ navigation }) {
+export default class DriverInfo extends Component {
+  constructor() {
+    super();
+    this.docs = firebase.firestore().collection("Users");
+    this.state = {
+      isLoading: true,
+      users: [],
+    };
+  }
+  componentDidMount() {
+    this.unsubscribe = this.docs.onSnapshot(this.getUserData);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getUserData = (querySnapshot) => {
+    const users = [];
+    querySnapshot.forEach((res) => {
+      const { email, phone, fname, lname } = res.data();
+      console.log(email);
+      // console.log(phone)
+      // console.log(fname)
+      // console.log(lname)
+      // console.log("email1: ", email)
+      // console.log("email2: ", auth.currentUser?.email)
+      if (email.toLowerCase() == auth.currentUser?.email) {
+        users.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+        });
+      }
+      // console.log(users)
+    });
+    this.setState({
+      users,
+      isLoading: false,
+    });
+  };
+  render(){
   return (
     <View style={styles.container}>
          <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} style={styles.image}>
             <SafeAreaView style={styles.container}>
                 <View style={styles.container}>
+                <Text style={styles.text}>Driver Information</Text>
+                <View style={styles.backbutton}>
+                  <Button
+                    title="Back"
+                    color="white"
+                    onPress={() => this.props.navigation.goBack()}
+                  />
+                </View>
                     <View style={styles.Memberships}>
-                        <View style={{flex: 1, flexDirection:'row', justifyContent: 'space-around',}}>
-                            <Text style={styles.text}>Driver Information</Text>
-                            <View style={buttonstyles.backbutton}>
-                                <Button
-                                title="Back"
-                                color="white"
-                                //   onPress={() => console.log('Clicked')}
-                                onPress={() => navigation.goBack()}
-                                />
-                            </View>
-                        </View>
-                        <View style={{top: -150, left: 20}}>
-                            <Text style={styles.boxfontsbody}>a1234@gmail.com</Text>
-                            <Text style={styles.boxfontsbody}>Member no. 773123456789</Text>
-                            <Text style={styles.boxfontsbody}>414-***-****</Text>
-                        </View>
-
-                        <View style={{top: -100, left: 20}}>
-                        <Text style={styles.boxfontsbody}>Make: Toyota</Text>
-                        <Text style={styles.boxfontsbody}>Model: Camry</Text>
-                        <Text style={styles.boxfontsbody}>License Plate: 8ABC123</Text>
-                        <Text style={styles.boxfontsbody}>Photo:</Text>
-                        <View style={{flexDirection:'row', justifyContent: 'space-around', left:-15, top: 10,}}>
-                          <Image source={require('../../images/car1.png')} />
-                          <Image source={require('../../images/car2.png')} />
-                        </View>
-                        </View>
-
-                        <View style={{top: -90, left: 20}}>
-                            <Text style={{textDecorationLine: 'underline'}}>Edit</Text>
-                        </View>
+                    {this.state.users.map((res, i) => {
+                    console.log(res.email);
+    
+                    return (
+                      <View>
+                        <Text style={styles.boxfontsbody}>First Name: {res.fname}</Text>
+                        <Text style={styles.boxfontsbody}>Last Name: {res.lname}</Text>
+                        <Text style={styles.boxfontsbody}>Email: {res.email}</Text>
+                        <Text style={styles.boxfontsbody}>Phone Number: {res.phone}</Text>
+                        <Text style={styles.boxfontsbody}>Driver id: {res.key}</Text>
+                      </View>
+                    );
+                  })}
                         
                     </View>    
                         
@@ -51,7 +86,8 @@ export default function DriverInfo({ navigation }) {
             </SafeAreaView>
          </ImageBackground>   
     </View>
-  )}
+  )
+}}
     
   const buttonstyles = StyleSheet.create({
     button: { 
@@ -65,13 +101,13 @@ export default function DriverInfo({ navigation }) {
         position: "absolute"
     },
     backbutton: {
-        width: '18%', 
-        height: 40,
-        // top: 65,
-        right: 0,
-        backgroundColor:"#DAAC3F", 
-        position: "absolute"
-    }
+      width: "18%",
+      height: 40,
+      // top: 65,
+      right: 0,
+      backgroundColor: "#DAAC3F",
+      position: "absolute",
+    },
 })
 
 const styles = StyleSheet.create({
@@ -98,7 +134,7 @@ const styles = StyleSheet.create({
   },
   
   text: {
-    color: "black",
+    color: "white",
     fontSize: 40,
     lineHeight: 44,
     fontWeight: "bold",
@@ -172,6 +208,14 @@ const styles = StyleSheet.create({
         textAlign: "left",
         top: 5,
         left: 5,
+      },
+      backbutton: {
+        width: "18%",
+        height: 40,
+        // top: 65,
+        right: 0,
+        backgroundColor: "#DAAC3F",
+        position: "absolute",
       },
   
       boxfontsbody:{
