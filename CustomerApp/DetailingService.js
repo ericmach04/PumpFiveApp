@@ -11,6 +11,8 @@ import AddressDropdown from './dropdowns/AddressDropdown';
 import CarDropdown from './dropdowns/CarDropdown';
 import firebase from 'firebase'
 import { auth } from "../firebase";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 // import DropDownPicker from 'react-native-dropdown-picker';
 
 import returnKeyVals from './dropdowns/AddressDropdown';
@@ -25,6 +27,12 @@ export default class DetailingService extends Component{
     this.dbRef = firebase.firestore().collection('Orders');
 
     this.dbusers = firebase.firestore().collection('Users');
+
+    //binding for datetimepicker methods 
+    this.handleDeliveryDateSet = this.handleDeliveryDateSet(this)
+    this.handleDeliveryTimeSet = this.handleDeliveryTimeSet(this)
+    //this.handleDatePicked = this.handleDatePicked(this)
+
 
     this.handleSNChange = this.handleSNChange.bind(this)
     this.handleCityChange = this.handleCityChange.bind(this)
@@ -90,11 +98,60 @@ export default class DetailingService extends Component{
         expiry: '',
         cvv: '',
       },
+
+      datetimepicker:{
+        isDateTimePickerVisible: false,
+        deliverydate: " ",
+        deliverytime: " "
+      },
       isLoading: false
       
     };
   }
 
+  //class methods for date picker 
+  showDateTimePicker(){
+    this.setState({ isDateTimePickerVisible: true });
+  }
+
+  hideDateTimePicker() {
+    this.setState({ isDateTimePickerVisible: false });
+  }
+
+
+  formatDelivery(data){
+    day = data.getDate();
+    month = (data.getMonth() + 1);
+    year = data.getFullYear();
+    hours = data.getHours();
+    minutes = data.getMinutes();
+
+    ampm = hours >= 12 ? 'PM' : 'AM';
+    hours =  (hours % 12);
+    this.deliverydate =  month + '/' + day + '/' + year 
+    this.deliverytime = hours + ':' + minutes + ' ' + ampm
+ 
+  }
+
+  handleDeliveryDateSet(deliverydate){
+    const state = this.state
+    state.datetimepicker["deliverydate"] = deliverydate
+    this.setState(state)
+  }
+
+  handleDeliveryTimeSet(deliverytime){
+    const state = this.state
+    state.datetimepicker["deliverytime"] = deliverytime
+    this.setState(state)
+  }
+
+  handleDatePicked(date) {
+    this.formatDelivery(date)
+    this.hideDateTimePicker()
+
+  }
+
+ //Class methods for 
   importText(text){
     const state = this.state
     state.text = text
@@ -142,8 +199,8 @@ export default class DetailingService extends Component{
 
         card: this.state.cardinfo.type,
 
-        deliverytime: "TBD",
-        deliverydate: "TBD",
+        deliverytime: this.state.datetimepicker.deliverytime,
+        deliverydate: this.state.datetimepicker.deliverydate,
         drivername: "TBD",
         drivercar: "TBD",
         taxes: "TBD",
@@ -437,6 +494,11 @@ export default class DetailingService extends Component{
   const color = this.props.color
   const license = this.props.license
 
+  //datetimepicker
+  const deliverydate = this.props.deliverydate
+  const deliverytime = this.props.deliverytime
+  const currentDate = new Date()
+
   const { open, value, items } = this.state;
   if(this.state.reviewpressed == false) {
   return (
@@ -465,15 +527,32 @@ export default class DetailingService extends Component{
                         <Text style={styles.boxfontshead}>Detailing Service</Text>
                         <Text style={styles.subheadings}>Schedule</Text>
                         <View style={{flexDirection:'row', flexWrap:'nowrap', zIndex: 1}}>
-                          
-                            <View>
-                                <TimeDropdown></TimeDropdown>
-                            </View>
-                            
-                            <View>
-                                <DayDropdown></DayDropdown>
-                            </View>  
-                                                    
+
+                        <View>
+                          <Button
+                            title="Select a date and time"
+                            onPress={this.showDateTimePicker}
+                          />
+                          <DateTimePickerModal
+                            isVisible={this.state.datetimepicker["isDateTimePickerVisible"]}
+                            mode="datetime"
+                            minimumDate={currentDate}
+                            onConfirm={(this.handleDatePicked)}
+                            onCancel={this.hideDateTimePicker}
+                          />
+
+                      </View>
+                        <TextInput
+                          onChangeText={onChangeText}
+                          value={text}
+                          placeholder="Date"
+                        />
+                        <TextInput
+                          onChangeText={onChangeText}
+                          value={text}
+                          placeholder="Time"
+                        />
+                                            
                         </View>
 
                         {/* <View>
