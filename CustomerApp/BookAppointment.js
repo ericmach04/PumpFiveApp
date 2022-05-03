@@ -54,7 +54,8 @@ export default class BookAppointment extends Component {
     this.setDeliveryTime(date)
     this.updateService()
     this.hideDateTimePicker()
-    this.props.onHandleDatePicked(this.state)
+    console.log("In handle date picked")
+    // this.props.onHandleDatePicked(this.state)
 
   }
 
@@ -71,8 +72,8 @@ export default class BookAppointment extends Component {
     this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
 
 
-    this.setState({deliveryTime: this.delivery}, () => 
-    console.log(this.state))
+    this.setState({deliveryTime: this.delivery}, () =>
+    (this.props.onHandleDatePicked(this.state)))
   }
   
   formatDate = (data) => {

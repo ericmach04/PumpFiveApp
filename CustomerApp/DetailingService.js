@@ -112,6 +112,7 @@ export default class DetailingService extends Component{
         isDateTimePickerVisible: false,
         deliverydate: " ",
         deliverytime: " ",
+        deliverydatetime: " ",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         // fname: this.user,
       },
@@ -212,15 +213,20 @@ export default class DetailingService extends Component{
   }
 
   handleShowDTPick(state){
-    console.log("State: ", this.state)
+    // console.log("State: ", state)
   }
 
   handleHideDTPick(state){
-    console.log("State: ", this.state)
+    // console.log("State: ", state)
   }
 
   handleDTPicked(state){
-    console.log("State: ", this.state)
+    // console.log("DT State: ", state)
+    var string = state.deliveryTime
+    console.log("Epic string: ", string)
+    const mystate = this.state.datetimepicker
+    mystate.deliverydatetime = string
+    this.setState(mystate)
   }
 
   // handleDatePicked(date) {
@@ -615,6 +621,7 @@ export default class DetailingService extends Component{
                             >
 
                           </BookAppointment>
+                          <Text style={styles.subheadings}>Selected date and time: {this.state.datetimepicker.deliverydatetime}</Text>
                         {/* </View> */}
 
                         {/* <View>
