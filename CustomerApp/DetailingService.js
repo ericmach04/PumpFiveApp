@@ -615,6 +615,7 @@ export default class DetailingService extends Component{
                             >
 
                           </BookAppointment>
+                        {/* </View> */}
 
                         {/* <View>
                           <Button

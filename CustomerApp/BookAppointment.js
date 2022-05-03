@@ -121,7 +121,7 @@ export default class BookAppointment extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.container} source={require("../images/pumpfivebackground.jpeg")}>
-        <View>
+        {/* <View> */}
           {/* <View style={buttonStyles.backButton}>
             <Button
               title="Back"
@@ -145,7 +145,7 @@ export default class BookAppointment extends Component {
             />
 
           
-          </View>
+          {/* </View> */}
 
         </ImageBackground>
       </SafeAreaView>
