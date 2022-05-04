@@ -113,10 +113,9 @@ export default class DriverJobs extends Component {
 
                 {orders
                   .sort(function (a, b) {
-                    a.deliverydate = a.deliverydate.concat(a.deliverytime)
-                    b.deliverydate = b.deliverydate.concat(b.deliverytime)
-                    console.log("New datetime string: " + a.deliverydate)
-                    return new Date(a.deliverydate) - new Date(b.deliverydate)
+                    a.datetime = a.deliverydate.concat(" ",a.deliverytime)
+                    b.datetime = b.deliverydate.concat(" ",b.deliverytime)
+                    return new Date(a.datetime) - new Date(b.datetime)
                   }) 
                   .map((res, i) => {
                     // count += 1;
