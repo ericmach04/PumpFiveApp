@@ -419,6 +419,16 @@ export default class DriverOrder extends Component {
                   // onPress={() => navigation.navigate('CalendarScreen')}
               />
             </View>
+            <View style={styles.button2}>
+              <Button
+                  title="Go Back"
+                  color="white"
+                  onPress={() => this.setState({
+                    cancelAttempt: false
+                  })}
+              />
+
+            </View>
             </ImageBackground>
           </View>
         )
@@ -430,8 +440,8 @@ export default class DriverOrder extends Component {
             {/* <Text style={styles.text}>Current Order: {currorder.service} </Text> */}
             <View style={styles.rect1}>
               
-              <Text style={styles.boxfontshead}>This order has been processed successfully. Click "next order" to retrieve your next order</Text>
-              <View style={styles.button1}>
+              <Text style={styles.boxfontshead}>This order has been processed successfully. Click "Next Order" to retrieve your next order</Text>
+              <View style={styles.button3}>
               <Button
                   title="Next Order"
                   color="white"
@@ -671,6 +681,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 20,
+  },
+  button3: {
+    position: 'absolute',
+    width: "37%",
+    height: "8%",
+    left: "8%",
+    top: "93%",
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    textAlign: "center",
   },
   text: {
     color: "white",

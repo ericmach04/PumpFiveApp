@@ -57,9 +57,10 @@ export default class DriverJobHistory extends Component {
         service,
         ordernumber,
       } = res.data();
-      console.log("Email1: ", email)
+      console.log("Email1: ", driveremail)
       console.log("Email2: ", auth.currentUser?.email)
-      if ((driveremail == auth.currentUser?.email && fulfilled == "yes") || (driveremail == auth.currentUser?.email && cancelled == "yes")) {
+      console.log("cancelled: ", cancelled)
+      if (((driveremail.toLowerCase() == auth.currentUser?.email) && fulfilled == "yes") || ((driveremail.toLowerCase() == auth.currentUser?.email) && cancelled == "yes")) {
         // this.state.count++
         if(cancelled=="no"){
           if (service == "gas") {
@@ -150,6 +151,18 @@ export default class DriverJobHistory extends Component {
               
                 {this.state.orders.map((res, i) => {
                   // count += 1;
+                  var tag
+                  if(res.service == "Gas Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} gallon(s) of gas delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else if(res.service == "Tire Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} tire(s) delivered to{res.year} {res.make} {res.model}</Text>
+                  }
+                  else{
+                    tag=<Text>{res.type} detailing delivered to {res.year} {res.make} {res.model}</Text>
+                  }
 
                   return (
                   
@@ -163,10 +176,11 @@ export default class DriverJobHistory extends Component {
 
                       
                       <View style={styles.textp}>
-                        <Text>
+                        {tag}
+                        {/* <Text>
                           {res.quantity} {res.units} delivered to {res.year}{" "}
                           {res.make} {res.model}
-                        </Text>
+                        </Text> */}
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
@@ -190,6 +204,18 @@ export default class DriverJobHistory extends Component {
 
                 {this.state.cancelledorders.map((res, i) => {
                   // count += 1;
+                  var tag
+                  if(res.service == "Gas Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} gallon(s) of gas NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else if(res.service == "Tire Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} tire(s) NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else{
+                    tag=<Text>{res.type} detailing NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
 
                   return (
                   
@@ -203,10 +229,11 @@ export default class DriverJobHistory extends Component {
 
                       
                       <View style={styles.textp}>
-                        <Text>
+                        {tag}
+                        {/* <Text>
                           {res.quantity} {res.units} NOT delivered to {res.year}{" "}
                           {res.make} {res.model}
-                        </Text>
+                        </Text> */}
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
@@ -269,10 +296,10 @@ const styles = StyleSheet.create({
   },
   section: {
     // position: 'absolute',
-    width: "95%",
-    height: 164,
+    width: "98%",
+    height: 200,
     left: "1%",
-    top:"45%",
+    top:"15%",
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 25,
@@ -419,7 +446,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   textp: {
-    left: 20,
+    left: "2%",
   },
 
   //View Receipt Button - Order History
