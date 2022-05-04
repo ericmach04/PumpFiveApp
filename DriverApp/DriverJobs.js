@@ -164,29 +164,6 @@ export default class DriverJobs extends Component {
                 }
               </ScrollView>
             </View>
-            {/* <View style={styles.scrollbox}> */}
-            {/* <ScrollView style={styles.scroll1}> */}
-
-            {/* {
-            this.state.orders.map((res, i) => {
-              <View style={styles.section}>
-                <Text>Here</Text>
-                <Text style={styles.texth1}>{res.service} Delivery Service</Text>
-                <View style= {styles.textp}>
-                  <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text>
-                  <Text>Date of Order: {res.deliverydate}</Text>
-                  <Text>Delivered?:  {res.fulfilled}</Text>
-                </View>
-                <View style={styles.button1}>
-                    <Button title="View Receipt"/>
-               </View>
-             </View>
-
-            }
-            )
-          } */}
-            {/* </ScrollView> */}
-            {/* </View> */}
           </View>
         </ImageBackground>
       </View>
