@@ -151,9 +151,10 @@ export default class DriverJobs extends Component {
                           {/* <Text>Order#:  {res.ordernumber}</Text> */}
                         </View>
 
-                        <TouchableOpacity style={styles.button1}>
+                        <TouchableOpacity style={styles.button1} disabled={true}>
                           <Button
-                            title="View All Details"
+                            title=""
+                            disabled={true}
                             onPress={() => this.props.navigation.navigate('Receipt', {
                               userkey: res.ordernumber
                             })} />

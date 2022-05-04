@@ -190,9 +190,10 @@ export default class DriverJobHistory extends Component {
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
-                      <TouchableOpacity style={styles.button1}>
+                      <TouchableOpacity style={styles.button1} disabled={true}>
                         <Button
-                          title="View Receipt"
+                          title=""
+                          disabled={true}
                           onPress={() =>
                             this.props.navigation.navigate("Receipt", {
                               userkey: res.ordernumber,
@@ -244,9 +245,10 @@ export default class DriverJobHistory extends Component {
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
-                      <TouchableOpacity style={styles.button1}>
+                      <TouchableOpacity style={styles.button1} disabled={true}>
                         <Button
                           title="View Receipt"
+                          disabled={true}
                           onPress={() =>
                             this.props.navigation.navigate("Receipt", {
                               userkey: res.ordernumber,
