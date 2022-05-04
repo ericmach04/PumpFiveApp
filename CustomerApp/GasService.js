@@ -11,6 +11,7 @@ import AddressDropdown from "./dropdowns/AddressDropdown";
 import CarDropdown from "./dropdowns/CarDropdown";
 import firebase from "firebase";
 import { auth } from "../firebase";
+import BookAppointment from './BookAppointment';
 // import DropDownPicker from 'react-native-dropdown-picker';
 
 import returnKeyVals from "./dropdowns/AddressDropdown";
@@ -30,6 +31,10 @@ export default class GasService extends Component {
     this.handleCityChange = this.handleCityChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
     this.handleZipChange = this.handleZipChange.bind(this)
+
+    this.handleShowDTPick = this.handleShowDTPick.bind(this)
+    this.handleHideDTPick = this.handleHideDTPick.bind(this)
+    this.handleDTPicked = this.handleDTPicked.bind(this)
 
 
     this.dbRef = firebase.firestore().collection("Orders");
@@ -104,9 +109,45 @@ export default class GasService extends Component {
         expiry: "",
         cvv: "",
       },
+      datetimepicker:{
+        isDateTimePickerVisible: false,
+        deliverydate: " ",
+        deliverytime: " ",
+        deliverydatetime: " ",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        // fname: this.user,
+      },
       isLoading: false,
     };
   }
+
+  handleShowDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleHideDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleDTPicked(state){
+    // console.log("DT State: ", state)
+    var string = state.deliveryTime
+    var stringarr;
+    console.log("Epic string: ", string)
+    const mystate = this.state.datetimepicker
+    mystate.deliverydatetime = string
+    stringarr=string.split(" ")
+    var date = stringarr[0]
+    mystate.deliverydate = date
+    var time = stringarr[1] + " " + stringarr[2]
+    mystate.deliverytime = time
+    // console.log("date: ", date)
+    // console.log("time: ", time)
+    this.setState(mystate)
+    console.log("Date state: ", this.state.datetimepicker.deliverydate)
+    console.log("Time state: ", this.state.datetimepicker.deliverytime)
+  }
+
 
   componentDidMount() {
     this.unsubscribe = this.docs.onSnapshot(this.getPriceData);
@@ -153,7 +194,8 @@ export default class GasService extends Component {
       drivers,
       isLoading: false,
     });
-    var driverindex = this.getRandomInt(3)
+    console.log("Drivers length: ", drivers.length)
+    var driverindex = this.getRandomInt(drivers.length)
     this.setState({
       // keyvals: keyvalues,
       driveremail: this.state.drivers[driverindex].email,
@@ -218,9 +260,9 @@ export default class GasService extends Component {
         license: this.state.carinfo.license,
 
         card: this.state.cardinfo.type,
+        deliverytime: this.state.datetimepicker.deliverytime,
+        deliverydate: this.state.datetimepicker.deliverydate,
 
-        deliverytime: "TBD",
-        deliverydate: "TBD",
         drivername: "TBD",
         drivercar: "TBD",
         taxes: "TBD",
@@ -457,6 +499,10 @@ export default class GasService extends Component {
   const color = this.props.color
   const license = this.props.license
 
+  const deliverydate = this.props.deliverydate
+  const deliverytime = this.props.deliverytime
+  const currentDate = new Date()
+
   const { open, value, items } = this.state;
   if (this.state.isLoading) {
     return (
@@ -488,7 +534,17 @@ export default class GasService extends Component {
                 <View style={styles.gasservice}>
                   <Text style={styles.boxfontshead}>Gas Service</Text>
                   <Text style={styles.subheadings}>Schedule</Text>
-                  <View
+                  <BookAppointment
+                            deliverydate={deliverydate}
+                            deliverytime={deliverytime}
+                            onShowDateTimePicker = {this.handleShowDTPick}
+                            onHideDateTimePicker = {this.handleHideDTPick}
+                            onHandleDatePicked = {this.handleDTPicked}
+                            >
+
+                          </BookAppointment>
+                  <Text style={styles.subheadings}>Selected date and time: {this.state.datetimepicker.deliverydatetime}</Text>
+                  {/* <View
                     style={{
                       flexDirection: "row",
                       flexWrap: "nowrap",
@@ -502,7 +558,7 @@ export default class GasService extends Component {
                     <View>
                       <DayDropdown></DayDropdown>
                     </View>
-                  </View>
+                  </View> */}
 
                   {/* <View>
                     <Text style={styles.subheadings}>Quantity</Text>
