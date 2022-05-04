@@ -68,25 +68,6 @@ const Stripe = props => {
             <View style={styles.heading}>
               <Text style={styles.head}>Checkout</Text>
             </View>
-            <View style={styles.paymentinfo}>
-                          <Text style={styles.boxfontshead}>Payment Information</Text>
-                          <PaymentDropdown
-                          name={name}
-                          number={number}
-                          type={type}
-                          expiry={expiry}
-                          cvv={cvv}
-                          carddata={carddata}
-                          text={text}
-                          onNameValChange = {this.handleNameChange}
-                          onNumberValChange = {this.handleNumberChange}
-                          onTypeValChange = {this.handleTypeChange}
-                          onExpiryValChange = {this.handleExpiryChange}
-                          onCvvValChange = {this.handleCvvChange}
-                          onExportCard = {this.importCard}
-                          onTextValChange = {this.importText}
-                          />
-                      </View>
             <TextInput
               autoCapitalize="none"
               placeholder="E-mail"
