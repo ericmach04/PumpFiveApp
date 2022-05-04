@@ -29,7 +29,7 @@ export default class DriverJobs extends Component {
     const orders = [];
     var units=''
     querySnapshot.forEach((res) => {
-      const { email, fulfilled, deliverydate, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled} = res.data();
+      const { email, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled} = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
       if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email) {
@@ -43,6 +43,7 @@ export default class DriverJobs extends Component {
           key: res.id,
           fulfilled,
           deliverydate,
+          deliverytime,
           quantity,
           make,
           model,
@@ -70,6 +71,7 @@ export default class DriverJobs extends Component {
       );
     }
     console.log("orders: ", this.state.orders)
+    
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
@@ -86,6 +88,20 @@ export default class DriverJobs extends Component {
             
             {this.state.orders.map((res, i) => {
               // count += 1;
+              console.log("Service: ", res.service)
+              console.log("Order Number: ", res.ordernumber)
+              var tag
+              if(res.service == "Gas Delivery Service")
+              {
+                tag=<Text>{res.quantity} gallon(s) of gas for {res.year} {res.make} {res.model}</Text>
+              }
+              else if(res.service == "Tire Delivery Service")
+              {
+                tag=<Text>{res.quantity} tire(s) for {res.year} {res.make} {res.model}</Text>
+              }
+              else{
+                tag=<Text>{res.type} detailing service for {res.year} {res.make} {res.model}</Text>
+              }
 
               return (
                 
@@ -99,8 +115,10 @@ export default class DriverJobs extends Component {
 
                   
                    <View style= {styles.textp}>
-                      <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text>
-                      <Text>Date of Order: {res.deliverydate}</Text>
+                      {/* <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text> */}
+                      {tag}
+                      <Text>Date for Order: {res.deliverydate}</Text>
+                      <Text>Time for Order: {res.deliverytime}</Text>
                       <Text>Delivered?:  {res.fulfilled}</Text>
                       <Text>O. no.:  {res.ordernumber}</Text>
                       {/* <Text>Order#:  {res.ordernumber}</Text> */}
@@ -178,8 +196,8 @@ export default class DriverJobs extends Component {
     },
     section: {
       // position: 'absolute',
-      width: "95%",
-      height:164,
+      width: "98%",
+      height:200,
       left:"1%",
       // top:"5%",
       borderWidth: 1,
@@ -312,7 +330,7 @@ export default class DriverJobs extends Component {
       fontWeight: "bold",
   },
   textp: {
-      left: 20,
+      left: "2%",
 
   },
   button1: {
