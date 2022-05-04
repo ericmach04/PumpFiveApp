@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, ImageBackground, Button, ScrollView, ActivityIndicator, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Button, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { Component } from 'react';
 import firebase from 'firebase'
-import {auth} from '../firebase'
+import { auth } from '../firebase'
 
 //Research how to do a column flex for these objects
 
@@ -14,7 +14,7 @@ export default class DriverJobs extends Component {
       orders: [],
       units: ''
     };
-    
+
   }
 
   componentDidMount() {
@@ -25,29 +25,36 @@ export default class DriverJobs extends Component {
     this.unsubscribe();
   }
 
+
+
   getOrderData = (querySnapshot) => {
     const orders = [];
-    var units=''
+    var units = ''
     querySnapshot.forEach((res) => {
-      const { email, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled} = res.data();
+      const { email, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled } = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
-      var today = new Date();
-      const yyyy = today.getFullYear();
-      let mm = today.getMonth() + 1; // Months start at 0!
-      let dd = today.getDate();
+      if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email) {
+        if (service == 'gas') {
+          var today = new Date();
+          const yyyy = today.getFullYear();
+          let mm = today.getMonth() + 1; // Months start at 0!
+          let dd = today.getDate();
 
-      // if (dd < 10) dd = '0' + dd;
-      // if (mm < 10) mm = '0' + mm;
+          // if (dd < 10) dd = '0' + dd;
+          // if (mm < 10) mm = '0' + mm;
 
-      today = mm + '/' + dd + '/' + yyyy;
-      console.log("Today: ", today)
+          today = mm + '/' + dd + '/' + yyyy;
+          console.log("Today: ", today)
+        }
+      }
       console.log("Delivery date: ", deliverydate)
-      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email && today==deliverydate) {
-        if(service == 'gas'){
+      if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email && today == deliverydate) {
+        if (service == 'gas') {
+
           units = "gallons of " + type + " gas"
         }
-        else if (service == 'tire'){
+        else if (service == 'tire') {
           units = "tires"
         }
         orders.push({
@@ -68,9 +75,11 @@ export default class DriverJobs extends Component {
     });
     this.setState({
       orders,
-      isLoading: false,
+      isLoading: false
     });
+
     console.log("orders: ", this.state.orders)
+
   };
 
   render() {
@@ -82,70 +91,75 @@ export default class DriverJobs extends Component {
       );
     }
     console.log("orders: ", this.state.orders)
-    
+
+    const orders = this.state.orders
+
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
             <View style={styles.backbutton}>
-             <Button title="Back" color="white" onPress={() => this.props.navigation.goBack()}/>
+              <Button title="Back" color="white" onPress={() => this.props.navigation.goBack()} />
             </View>
             <View>
-                <Text style={styles.h1}>Jobs for Today</Text>
+              <Text style={styles.h1}>Jobs for Today</Text>
             </View>
 
             <View style={styles.scrollbox}>
-            <ScrollView style={styles.scroll1}>
-            
-            {this.state.orders.map((res, i) => {
-              // count += 1;
-              console.log("Service: ", res.service)
-              console.log("Order Number: ", res.ordernumber)
-              var tag
-              if(res.service == "Gas Delivery Service")
-              {
-                tag=<Text>{res.quantity} gallon(s) of gas for {res.year} {res.make} {res.model}</Text>
-              }
-              else if(res.service == "Tire Delivery Service")
-              {
-                tag=<Text>{res.quantity} tire(s) for {res.year} {res.make} {res.model}</Text>
-              }
-              else{
-                tag=<Text>{res.type} detailing service for {res.year} {res.make} {res.model}</Text>
-              }
+              <ScrollView style={styles.scroll1}>
 
-              return (
-                
-                <View style={styles.section}>
-                  <View>
-                    <Text style={styles.bofadeeznutsbold}>
-                    {/* {res.service.toUpperCase()} Delivery Service */}
-                    {res.service}
-                    </Text>
-                  </View>
+                {orders
+                  .sort(function (a, b) {
+                    return new Date(a.deliverydate) - new Date(b.deliverydate)
+                  })
+                  .map((res, i) => {
+                    // count += 1;
+                    console.log("Service: ", res.service)
+                    console.log("Order Number: ", res.ordernumber)
+                    var tag
+                    if (res.service == "Gas Delivery Service") {
+                      tag = <Text>{res.quantity} gallon(s) of gas for {res.year} {res.make} {res.model}</Text>
+                    }
+                    else if (res.service == "Tire Delivery Service") {
+                      tag = <Text>{res.quantity} tire(s) for {res.year} {res.make} {res.model}</Text>
+                    }
+                    else {
+                      tag = <Text>{res.type} detailing service for {res.year} {res.make} {res.model}</Text>
+                    }
 
-                  
-                   <View style= {styles.textp}>
-                      {/* <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text> */}
-                      {tag}
-                      <Text>Date for Order: {res.deliverydate}</Text>
-                      <Text>Time for Order: {res.deliverytime}</Text>
-                      <Text>Delivered?:  {res.fulfilled}</Text>
-                      <Text>O. no.:  {res.ordernumber}</Text>
-                      {/* <Text>Order#:  {res.ordernumber}</Text> */}
-                  </View>
-                 
-                   <TouchableOpacity style={styles.button1}>
-                    <Button 
-                    title="View All Details"
-                    onPress={() => this.props.navigation.navigate('Receipt', {
-                      userkey: res.ordernumber
-                    })}/>
-                    </TouchableOpacity>
-                </View>
-              );
-            })}
-            </ScrollView>
+                    return (
+
+                      <View style={styles.section}>
+                        <View>
+                          <Text style={styles.bofadeeznutsbold}>
+                            {/* {res.service.toUpperCase()} Delivery Service */}
+                            {res.service}
+                          </Text>
+                        </View>
+
+
+                        <View style={styles.textp}>
+                          {/* <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text> */}
+                          {tag}
+                          <Text>Date for Order: {res.deliverydate}</Text>
+                          <Text>Time for Order: {res.deliverytime}</Text>
+                          <Text>Delivered?:  {res.fulfilled}</Text>
+                          <Text>O. no.:  {res.ordernumber}</Text>
+                          {/* <Text>Order#:  {res.ordernumber}</Text> */}
+                        </View>
+
+                        <TouchableOpacity style={styles.button1}>
+                          <Button
+                            title="View All Details"
+                            onPress={() => this.props.navigation.navigate('Receipt', {
+                              userkey: res.ordernumber
+                            })} />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })
+                }
+              </ScrollView>
             </View>
             {/* <View style={styles.scrollbox}> */}
             {/* <ScrollView style={styles.scroll1}> */}
@@ -173,175 +187,176 @@ export default class DriverJobs extends Component {
           </View>
         </ImageBackground>
       </View>
-  )
-}}
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    image: {
-      flex: 1,
-      justifyContent: "center",
-    },
-  
-    //Addresses Box
-    box1: {
-      position: "absolute",
-      width: 338,
-      height: 672,
-      top: 74,
-      left: 24,
-      backgroundColor: "#CDCABF",
-      borderWidth: 3,
-      borderRadius: 20,
-    },
-  
-    //Bounding Box
-    BoundingBox: {
-      backgroundColor: "#CDCABF",
-      //borderWidth: 2,
-      borderColor: "#000000",
-      backgroundColor: "#FFFFFF",
-      borderRadius: 5,
-      marginBottom: 5,
-    },
-    section: {
-      // position: 'absolute',
-      width: "98%",
-      height:200,
-      left:"1%",
-      // top:"5%",
-      borderWidth: 1,
-      borderRadius: 20,
-      marginBottom: 15,
+    )
+  }
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
   },
-  
-    //Addresses Underlined Header
-    h1: {
-      position: "absolute",
-      top: 40,
-      left: "23%",
-      fontWeight: "bold",
-      fontSize: 36,
-      lineHeight: 42,
-      textDecorationLine: "underline",
-    },
-    box2: {
-      position: "absolute",
-      width: 277,
-      height: 69,
-      left: 40,
-      top: 150,
-    },
-  
-    //Address,City,State,Zip Text
-    bofadeeznuts: {
-      //Made Change:       //Keep: textAlign, color, fontSize,
-      color: "black",
-      fontSize: 25,
-      top: "100%",
-      left: "0.5%",
-      // lineHeight: 20,
-      //fontWeight: "bold",
-      //textAlign: "center",
-    },
-  
-    //Addresses Bold Header
-    bofadeeznutsbold: {
-      // Keep: color, fontSize, fontweight, textAlign // Changes: pos:abs, del col,
-      color: "black",
-      fontSize: 25,
-      top: "10%",
-      //height: "40%",
-      fontWeight: "bold",
-      textAlign: "center",
-    },
-    h2: {
-      fontSize: 20,
-      lineHeight: 23,
-      display: "flex",
-    },
-    box3: {
-      position: "absolute",
-      width: 252,
-      height: 28,
-      left: 40,
-      top: 275,
-    },
-    head3: {
-      fontSize: 24,
-      fontWeight: "bold",
-    },
-    box4: {
-      position: "absolute",
-      width: 212,
-      height: 84,
-      left: 40,
-      top: 347,
-    },
-    button: {
-      width: "50%",
-      height: 40,
-      bottom: "2%",
-      // left: 220,
-      backgroundColor: "#DAAC3F",
-      position: "absolute",
-      borderWidth: 1,
-    },
-    backbutton: {
-      width: "18%",
-      height: 40,
-      // top: 65,
-      right: 0,
-      backgroundColor: "#DAAC3F",
-      position: "absolute",
-    },
-    loader: {
-      position: "absolute",
-      alignItems: "center",
-      justifyContent: "center",
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-    },
-    scrollbox: {
-      flex: 0.7,
-      width: "90%",
-      left: "5%",
-      top: 90,
-    },
-    scroll1: {
-      flex: 1,
-    },
-    h1: {
-      position: "absolute",
-      top: 40,
-      left: 40,
-      fontWeight: "bold",
-      fontSize: 36,
-      lineHeight: 42,
-    },
-    
-    section2: {
-      position: 'absolute',
-      width: 292,
-      height:164,
-      left:20,
-      top:361,
-      borderWidth: 1,
-      borderRadius: 20,
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  //Addresses Box
+  box1: {
+    position: "absolute",
+    width: 338,
+    height: 672,
+    top: 74,
+    left: 24,
+    backgroundColor: "#CDCABF",
+    borderWidth: 3,
+    borderRadius: 20,
+  },
+
+  //Bounding Box
+  BoundingBox: {
+    backgroundColor: "#CDCABF",
+    //borderWidth: 2,
+    borderColor: "#000000",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  section: {
+    // position: 'absolute',
+    width: "98%",
+    height: 200,
+    left: "1%",
+    // top:"5%",
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: 15,
+  },
+
+  //Addresses Underlined Header
+  h1: {
+    position: "absolute",
+    top: 40,
+    left: "23%",
+    fontWeight: "bold",
+    fontSize: 36,
+    lineHeight: 42,
+    textDecorationLine: "underline",
+  },
+  box2: {
+    position: "absolute",
+    width: 277,
+    height: 69,
+    left: 40,
+    top: 150,
+  },
+
+  //Address,City,State,Zip Text
+  bofadeeznuts: {
+    //Made Change:       //Keep: textAlign, color, fontSize,
+    color: "black",
+    fontSize: 25,
+    top: "100%",
+    left: "0.5%",
+    // lineHeight: 20,
+    //fontWeight: "bold",
+    //textAlign: "center",
+  },
+
+  //Addresses Bold Header
+  bofadeeznutsbold: {
+    // Keep: color, fontSize, fontweight, textAlign // Changes: pos:abs, del col,
+    color: "black",
+    fontSize: 25,
+    top: "10%",
+    //height: "40%",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  h2: {
+    fontSize: 20,
+    lineHeight: 23,
+    display: "flex",
+  },
+  box3: {
+    position: "absolute",
+    width: 252,
+    height: 28,
+    left: 40,
+    top: 275,
+  },
+  head3: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  box4: {
+    position: "absolute",
+    width: 212,
+    height: 84,
+    left: 40,
+    top: 347,
+  },
+  button: {
+    width: "50%",
+    height: 40,
+    bottom: "2%",
+    // left: 220,
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
+    borderWidth: 1,
+  },
+  backbutton: {
+    width: "18%",
+    height: 40,
+    // top: 65,
+    right: 0,
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
+  },
+  loader: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
+  scrollbox: {
+    flex: 0.7,
+    width: "90%",
+    left: "5%",
+    top: 90,
+  },
+  scroll1: {
+    flex: 1,
+  },
+  h1: {
+    position: "absolute",
+    top: 40,
+    left: 40,
+    fontWeight: "bold",
+    fontSize: 36,
+    lineHeight: 42,
+  },
+
+  section2: {
+    position: 'absolute',
+    width: 292,
+    height: 164,
+    left: 20,
+    top: 361,
+    borderWidth: 1,
+    borderRadius: 20,
   },
   texth1: {
-      width: 267,
-      height:50,
-      top:15,
-      left:20,
-      fontSize: 24,
-      fontWeight: "bold",
+    width: 267,
+    height: 50,
+    top: 15,
+    left: 20,
+    fontSize: 24,
+    fontWeight: "bold",
   },
   textp: {
-      left: "2%",
+    left: "2%",
 
   },
   button1: {
@@ -354,8 +369,8 @@ export default class DriverJobs extends Component {
     // borderWidth: 1,
     borderRadius: 20,
   }
-  });
-  
+});
+
 
 
 // export default function PlaceOrder({ navigation }) {
@@ -430,20 +445,20 @@ export default class DriverJobs extends Component {
 //       borderRadius: 20,
 //     },
 //     button: {
-//       width: 100, 
+//       width: 100,
 //       height: 40,
 //       top: 5,
 //       left: 220,
-//       backgroundColor:"#DAAC3F", 
+//       backgroundColor:"#DAAC3F",
 //       position: "absolute",
 //       borderWidth: 1,
 //     },
 //     backbutton: {
-//       width: '18%', 
+//       width: '18%',
 //       height: 40,
 //       top:"1%",
 //       right: "1%",
-//       backgroundColor:"#DAAC3F", 
+//       backgroundColor:"#DAAC3F",
 //       position: "absolute"
 //   },
 //     h1: {
@@ -495,7 +510,7 @@ export default class DriverJobs extends Component {
 //   },
 //   button1: {
 //       width: "90%",
-//       backgroundColor: "#DAAC3F", 
+//       backgroundColor: "#DAAC3F",
 //       height:"22%",
 //       top:"15%",
 //       borderWidth: 1,
