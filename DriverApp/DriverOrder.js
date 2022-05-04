@@ -301,6 +301,7 @@ export default class DriverOrder extends Component {
           color,
           fulfilled,
           deliverydate,
+          deliverytime,
           driveremail,
           quantity,
           make,
@@ -327,6 +328,7 @@ export default class DriverOrder extends Component {
     // console.log("orders: ", this.state.allorders)
   };
   render() {
+
     if (this.state.isLoading) {
       return (
         <View style={styles.loader}>
@@ -345,6 +347,21 @@ export default class DriverOrder extends Component {
     //   })
     
       console.log("My service type: ", this.state.servicetype)
+
+      var ordertype
+      if(currorder.service == "Gas Delivery Service")
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text>
+      }
+      else if(currorder.service == "Tire Delivery Service")
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>Tire Delivery: {currorder.quantity} tires</Text></Text>
+      }
+      else
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type} Detailing</Text></Text>
+      }
+
       if(this.state.servicetype ==  "tire")
       {
         return (
@@ -520,9 +537,11 @@ export default class DriverOrder extends Component {
           <Text style={styles.boxfontshead}>Order Number: <Text style={{color: "green"}}>{currorder.ordernumber}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Phone: <Text style={{color: "green"}}>{currorder.phone}</Text></Text>
-          <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text>
+          {/* <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text> */}
+          {ordertype}
           <Text style={styles.boxfontshead}>Location: <Text style={{color: "green"}}>{currorder.streetnumber} {currorder.city} {currorder.state} {currorder.zip}</Text></Text>
           <Text style={styles.boxfontshead}>Vehicle: <Text style={{color: "green"}}>{currorder.year} {currorder.color} {currorder.make} {currorder.model}</Text></Text>
+          <Text style={styles.boxfontshead}>Time For Delivery: <Text style={{color: "green"}}>{currorder.deliverytime}</Text></Text>
           <Text style={styles.boxfontshead}>License Plate: <Text style={{color: "green"}}>{currorder.license}</Text></Text>
           {/* <Text style={styles.boxfontshead}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text> */}
         </View>
@@ -592,7 +611,7 @@ const styles = StyleSheet.create({
   rect1: {
     position: 'absolute',
     width: "90%",
-    height: "50%",
+    height: "55%",
     left: "5%",
     right: "5%",
     top: "20%",
@@ -604,10 +623,10 @@ const styles = StyleSheet.create({
   rect2: {
     position: 'absolute',
     width: "90%",
-    height: "22%",
+    height: "17%",
     left: "5%",
     right: "5%",
-    top: "70%",
+    top: "75%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
@@ -695,10 +714,10 @@ const styles = StyleSheet.create({
   },
   button3: {
     position: 'absolute',
-    width: "37%",
-    height: "8%",
-    left: "8%",
-    top: "93%",
+    width: "35%",
+    height: "10%",
+    left: "20%",
+    top: "85%",
     backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'space-between',

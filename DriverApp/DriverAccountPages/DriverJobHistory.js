@@ -136,10 +136,12 @@ export default class DriverJobHistory extends Component {
               />
             </View>
            
+            
+              <Text style={styles.h1}>Job History</Text>
+             
+                <Text style={styles.h2}>Total jobs completed: {this.state.count}</Text>
+                <Text style={styles.h3}>Total jobs cancelled: {this.state.cancelledcount}</Text>
               
-            <Text style={styles.h1}>Job History</Text>
-              <Text style={styles.h2}>Total jobs completed: {this.state.count}</Text>
-              <Text style={styles.h3}>Total jobs cancelled: {this.state.cancelledcount}</Text>
               
             
 
@@ -184,6 +186,7 @@ export default class DriverJobHistory extends Component {
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
+                        <Text>O. no: {res.ordernumber}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
@@ -296,10 +299,10 @@ const styles = StyleSheet.create({
   },
   section: {
     // position: 'absolute',
-    width: "98%",
+    width: "100%",
     height: 200,
-    left: "1%",
-    top:"15%",
+    left: "0%",
+    // top:"10%",
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 25,
@@ -397,7 +400,7 @@ const styles = StyleSheet.create({
     flex: 0.7,
     width: "90%",
     left: "5%",
-    top: "5%",
+    top: "20%",
   },
   scroll1: {
     flex: 1,
