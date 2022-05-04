@@ -35,9 +35,10 @@ export default class DriverJobs extends Component {
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
       if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email) {
-        if (service == 'gas') {
+        
           var today = new Date();
           const yyyy = today.getFullYear();
+          
           let mm = today.getMonth() + 1; // Months start at 0!
           let dd = today.getDate();
 
@@ -45,11 +46,12 @@ export default class DriverJobs extends Component {
           // if (mm < 10) mm = '0' + mm;
 
           today = mm + '/' + dd + '/' + yyyy;
-          console.log("Today: ", today)
-        }
+         
+        
       }
-      console.log("Delivery date: ", deliverydate)
+      
       if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email && today == deliverydate) {
+        
         if (service == 'gas') {
 
           units = "gallons of " + type + " gas"
@@ -92,7 +94,8 @@ export default class DriverJobs extends Component {
     }
     console.log("orders: ", this.state.orders)
 
-    const orders = this.state.orders
+    var orders = this.state.orders
+    
 
     return (
       <View style={styles.container}>
