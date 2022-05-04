@@ -18,6 +18,7 @@ import DayDropdown from "./dropdowns/DayDropdown";
 import GasDropdown from "./dropdowns/GasDropdown";
 import PaymentDropdown from "./dropdowns/PaymentDropdown";
 import AddressDropdown from "./dropdowns/AddressDropdown";
+import BookAppointment from "./BookAppointment";
 import CarDropdown from "./dropdowns/CarDropdown";
 import firebase from "firebase";
 import { auth } from "../firebase";
@@ -34,6 +35,10 @@ export default class TireService extends Component {
     this.dbRef = firebase.firestore().collection("Orders");
 
     this.dbusers = firebase.firestore().collection('Users');
+
+    this.handleShowDTPick = this.handleShowDTPick.bind(this)
+    this.handleHideDTPick = this.handleHideDTPick.bind(this)
+    this.handleDTPicked = this.handleDTPicked.bind(this)
 
     this.handleSNChange = this.handleSNChange.bind(this);
     this.handleCityChange = this.handleCityChange.bind(this);
@@ -74,6 +79,8 @@ export default class TireService extends Component {
       tiretype: "TBD",
       tireprice: "TBD",
       prices: [],
+      drivers: [],
+      drivernotes: "",
       total: "TBD",
       addressinfo: {
         streetnumber: "",
@@ -101,6 +108,14 @@ export default class TireService extends Component {
         type: "",
         expiry: "",
         cvv: "",
+      },
+      datetimepicker:{
+        isDateTimePickerVisible: false,
+        deliverydate: " ",
+        deliverytime: " ",
+        deliverydatetime: " ",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        // fname: this.user,
       },
       isLoading: false,
     };
@@ -158,7 +173,7 @@ export default class TireService extends Component {
       drivers,
       isLoading: false,
     });
-    var driverindex = this.getRandomInt(3)
+    var driverindex = this.getRandomInt(drivers.length)
     this.setState({
       // keyvals: keyvalues,
       driveremail: this.state.drivers[driverindex].email,
@@ -172,6 +187,33 @@ export default class TireService extends Component {
     
   };
 
+  handleShowDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleHideDTPick(state){
+    // console.log("State: ", state)
+  }
+
+  handleDTPicked(state){
+    // console.log("DT State: ", state)
+    var string = state.deliveryTime
+    var stringarr;
+    console.log("Epic string: ", string)
+    const mystate = this.state.datetimepicker
+    mystate.deliverydatetime = string
+    stringarr=string.split(" ")
+    var date = stringarr[0]
+    mystate.deliverydate = date
+    var time = stringarr[1] + " " + stringarr[2]
+    mystate.deliverytime = time
+    // console.log("date: ", date)
+    // console.log("time: ", time)
+    this.setState(mystate)
+    console.log("Date state: ", this.state.datetimepicker.deliverydate)
+    console.log("Time state: ", this.state.datetimepicker.deliverytime)
+  }
+
   addOrderToDB() {
     this.setState({
       isLoading: true,
@@ -183,7 +225,6 @@ export default class TireService extends Component {
         lname: this.state.lname,
         phone: this.state.phone,
 
-        driveremail: '',
         customernotes: this.state.customernotes,
         cancelled: this.state.cancelled,
         canceldetails: this.state.cancelled,
@@ -209,8 +250,8 @@ export default class TireService extends Component {
         color: this.state.carinfo.color,
         license: this.state.carinfo.license,
         card: this.state.cardinfo.type,
-        deliverytime: "TBD",
-        deliverydate: "TBD",
+        deliverytime: this.state.datetimepicker.deliverytime,
+        deliverydate: this.state.datetimepicker.deliverydate,
         drivername: "TBD",
         drivercar: "TBD",
         taxes: "TBD",
@@ -444,6 +485,11 @@ export default class TireService extends Component {
   const license = this.props.license
 
   const { open, value, items } = this.state;
+
+  const deliverydate = this.props.deliverydate
+  const deliverytime = this.props.deliverytime
+  const currentDate = new Date()
+
   if(this.state.reviewpressed == false) {
   return (
     <View style={styles.container}>
@@ -465,7 +511,17 @@ export default class TireService extends Component {
                 <View style={styles.gasservice}>
                   <Text style={styles.boxfontshead}>Tire Service</Text>
                   <Text style={styles.subheadings}>Schedule</Text>
-                  <View
+                  <BookAppointment
+                            deliverydate={deliverydate}
+                            deliverytime={deliverytime}
+                            onShowDateTimePicker = {this.handleShowDTPick}
+                            onHideDateTimePicker = {this.handleHideDTPick}
+                            onHandleDatePicked = {this.handleDTPicked}
+                            >
+
+                          </BookAppointment>
+                          <Text style={styles.subheadings}>Selected date and time: {this.state.datetimepicker.deliverydatetime}</Text>
+                  {/* <View
                     style={{
                       flexDirection: "row",
                       flexWrap: "nowrap",
@@ -479,7 +535,7 @@ export default class TireService extends Component {
                     <View>
                       <DayDropdown></DayDropdown>
                     </View>
-                  </View>
+                  </View> */}
 
                   <View>
                     <Text style={styles.subheadings}>

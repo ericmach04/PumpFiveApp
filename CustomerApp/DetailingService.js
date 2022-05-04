@@ -77,6 +77,11 @@ export default class DetailingService extends Component{
       detailingtype: '',
       detailingprice: '',
       prices: [],
+      drivers: [],
+      driveremail: '',
+      driverfname: '',
+      driverlname: '',
+      driverphone: '',
       total: 0,
       text: "",
       drivernotes: "",
@@ -223,10 +228,20 @@ export default class DetailingService extends Component{
   handleDTPicked(state){
     // console.log("DT State: ", state)
     var string = state.deliveryTime
+    var stringarr;
     console.log("Epic string: ", string)
     const mystate = this.state.datetimepicker
     mystate.deliverydatetime = string
+    stringarr=string.split(" ")
+    var date = stringarr[0]
+    mystate.deliverydate = date
+    var time = stringarr[1] + " " + stringarr[2]
+    mystate.deliverytime = time
+    // console.log("date: ", date)
+    // console.log("time: ", time)
     this.setState(mystate)
+    console.log("Date state: ", this.state.datetimepicker.deliverydate)
+    console.log("Time state: ", this.state.datetimepicker.deliverytime)
   }
 
   // handleDatePicked(date) {
@@ -259,7 +274,10 @@ export default class DetailingService extends Component{
         lname: this.state.lname,
         phone: this.state.phone,
 
-        driveremail: '',
+        driveremail: this.state.driveremail,
+        driverfname: this.state.driverfname,
+        driverlname: this.state.driverlname,
+        driverphone: this.state.driverphone,
         customernotes: this.state.customernotes,
         cancelled: this.state.cancelled,
         canceldetails: this.state.canceldetails,
@@ -319,6 +337,10 @@ export default class DetailingService extends Component{
     
   }
 
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
 
   showType = option =>{
     console.log("option: ", option)
@@ -352,9 +374,10 @@ export default class DetailingService extends Component{
 
   }
   getUserData = (querySnapshot) => {
+    var drivers=[]
     
     querySnapshot.forEach((res) => {
-      const {email, fname, lname, phone } = res.data();
+      const {email, fname, lname, phone, driver } = res.data();
       // console.log("email: ", email)
       if (email.toLowerCase() == auth.currentUser?.email) {
         // console.log("email: ", email)
@@ -366,12 +389,34 @@ export default class DetailingService extends Component{
         this.setState(state)
         
       }
+      if(driver == "yes"){
+        drivers.push({
+          key: res.id,
+          email,
+          phone,
+          fname,
+          lname,
+        });
+      }
       
     });
     this.setState({
       // keyvals: keyvalues,
+      drivers,
       isLoading: false,
     });
+    console.log("Drivers length: ", drivers.length)
+    var driverindex = this.getRandomInt(drivers.length)
+    this.setState({
+      // keyvals: keyvalues,
+      driveremail: this.state.drivers[driverindex].email,
+      driverfname: this.state.drivers[driverindex].fname,
+      driverlname: this.state.drivers[driverindex].lname,
+      driverphone: this.state.drivers[driverindex].phone,
+      isLoading: false,
+    });
+
+    console.log("Random driver: ", this.state.driveremail)
     
   };
 
