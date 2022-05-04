@@ -329,6 +329,7 @@ export default class DriverOrder extends Component {
   };
   render() {
 
+
     if (this.state.isLoading) {
       return (
         <View style={styles.loader}>
@@ -337,14 +338,20 @@ export default class DriverOrder extends Component {
       );
     }
     console.log("All orders: ", this.state.allorders)
+
+    //sorts all orders by delivery date and time 
+    this.state.allorders
+    .sort(function (a, b) {
+      a.datetime = a.deliverydate.concat(" ",a.deliverytime)
+      b.datetime = b.deliverydate.concat(" ",b.deliverytime)
+      return new Date(a.datetime) - new Date(b.datetime)
+    }) 
+
     if(this.state.allorders.length != 0)
     {
       console.log("Here for some reason ")
       var currorder = this.state.allorders[0]
-    //   var currorder=firebase.firestore().collection("Orders").doc("kRyLqxYoeloCrM2HpFvL").get()
-    //   .then((res) => {
-    //   console.log("Current order: ", res)
-    //   })
+
     
       console.log("My service type: ", this.state.servicetype)
 
