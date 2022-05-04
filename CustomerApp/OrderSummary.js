@@ -91,6 +91,41 @@ export default class OrderSummary extends Component {
     });
   }
   render() {
+    var service
+    if(this.state.service == "Gas Delivery Service")
+    {
+        service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.quantity}
+        </Text>{" "}
+        gallons of
+        <Text style={styles.boxfontshead}>
+          {" "}
+          {this.state.type}
+        </Text>{"\n"}
+      </Text>
+    }
+
+    else if(this.state.service == "Tire Delivery Service")
+    {
+        service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.quantity}{" "}
+          {this.state.type}
+        </Text>{" "}
+        tires{"\n"}
+      </Text>
+    }
+    
+    else{
+      service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.type}
+        </Text>{" "}
+        Detailing Service{"\n"}
+      </Text>
+
+    }
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -146,7 +181,8 @@ export default class OrderSummary extends Component {
                     {"\n"}
                   </Text>
                 </Text>
-                <Text style={styles.boxfontsbody}>
+                {service}
+                {/* <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>{this.state.quantity}</Text>{" "}
                   gallons of
                   <Text style={styles.boxfontshead}>
@@ -155,7 +191,7 @@ export default class OrderSummary extends Component {
                   </Text>{" "}
                   gasoline
                   {"\n"}
-                </Text>
+                </Text> */}
                 <View
                   style={{
                     borderBottomColor: "black",

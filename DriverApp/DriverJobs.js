@@ -34,8 +34,24 @@ export default class DriverJobs extends Component {
       const { email, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled } = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
+<<<<<<< HEAD
       if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email) {
         if (service == 'gas') {
+=======
+      var today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0!
+      let dd = today.getDate();
+
+      // if (dd < 10) dd = '0' + dd;
+      // if (mm < 10) mm = '0' + mm;
+
+      today = mm + '/' + dd + '/' + yyyy;
+      console.log("Today: ", today)
+      console.log("Delivery date: ", deliverydate)
+      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email && today==deliverydate) {
+        if(service == 'gas'){
+>>>>>>> 047775d6880189947d84c6066b70b55d8478ec66
           units = "gallons of " + type + " gas"
         }
         else if (service == 'tire') {

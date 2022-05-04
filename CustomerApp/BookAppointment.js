@@ -52,7 +52,7 @@ export default class BookAppointment extends Component {
 
   handleDatePicked = date => {
     this.setDeliveryTime(date)
-    this.updateService()
+    // this.updateService()
     this.hideDateTimePicker()
     console.log("In handle date picked")
     // this.props.onHandleDatePicked(this.state)
