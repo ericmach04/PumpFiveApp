@@ -67,6 +67,11 @@ export default class BookAppointment extends Component {
     hours = data.getHours();
     minutes = data.getMinutes();
 
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+
     ampm = hours >= 12 ? 'PM' : 'AM';
     hours =  (hours % 12);
     this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
