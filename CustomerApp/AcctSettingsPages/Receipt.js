@@ -157,6 +157,42 @@ export default class Receipt extends Component {
       fulfilled=<Text style={styles.boxfontsbody}>Reason for cancellation: {this.state.orders[0].canceldetails}</Text>
     }
 
+    var service
+    if(this.state.orders[0].service == "Gas Delivery Service")
+    {
+        service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.orders[0].quantity}
+        </Text>{" "}
+        gallons of
+        <Text style={styles.boxfontshead}>
+          {" "}
+          {this.state.orders[0].type}
+        </Text>{"\n"}
+      </Text>
+    }
+
+    else if(this.state.orders[0].service == "Tire Delivery Service")
+    {
+        service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.orders[0].quantity}{" "}
+          {this.state.orders[0].type}
+        </Text>{" "}
+        tires{"\n"}
+      </Text>
+    }
+    
+    else{
+      service=<Text style={styles.boxfontsbody}>
+        <Text style={styles.boxfontshead}>
+          {this.state.orders[0].type}
+        </Text>{" "}
+        Detailing Service{"\n"}
+      </Text>
+
+    }
+
     return (
      
 
@@ -206,10 +242,11 @@ export default class Receipt extends Component {
                 <Text style={styles.boxfontsbody}>
                   {"\n"}Purchase Info:{" "}
                   <Text style={styles.boxfontshead}>
-                    {this.state.orders[0].service} service{"\n"}
+                    {this.state.orders[0].service}{"\n"}
                   </Text>
                 </Text>
-                <Text style={styles.boxfontsbody}>
+                {service}
+                {/* <Text style={styles.boxfontsbody}>
                   <Text style={styles.boxfontshead}>
                     {this.state.orders[0].quantity}
                   </Text>{" "}
@@ -219,7 +256,7 @@ export default class Receipt extends Component {
                     {this.state.orders[0].type}
                   </Text>{" "}
                   gasoline{"\n"}
-                </Text>
+                </Text> */}
                 <View
                   style={{
                     borderBottomColor: "black",

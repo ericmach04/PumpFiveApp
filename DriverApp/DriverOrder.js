@@ -271,11 +271,22 @@ export default class DriverOrder extends Component {
     var units=''
     
     querySnapshot.forEach((res) => {
-      const { fname, lname, phone, email, color, fulfilled, deliverydate, driveremail, quantity, make, model, year, type, service, ordernumber, 
+      const { fname, lname, phone, email, color, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, 
         streetnumber, city, state, zip, license, subtotal, customernotes, cancelled} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
-      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email) {
+      var today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0!
+      let dd = today.getDate();
+
+      // if (dd < 10) dd = '0' + dd;
+      // if (mm < 10) mm = '0' + mm;
+
+      today = mm + '/' + dd + '/' + yyyy;
+      console.log("Today: ", today)
+      console.log("Delivery date: ", deliverydate)
+      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email && today==deliverydate) {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }

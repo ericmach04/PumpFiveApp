@@ -111,6 +111,18 @@ export default class OrderHistory extends Component {
             <View style={styles.scrollbox}>
               <ScrollView style={styles.scroll1}>
                 {this.state.orders.map((res, i) => {
+                  var tag
+                  if(res.service == "Gas Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} gallon(s) of gas for {res.year} {res.make} {res.model}</Text>
+                  }
+                  else if(res.service == "Tire Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} tire(s) for {res.year} {res.make} {res.model}</Text>
+                  }
+                  else{
+                    tag=<Text>{res.type} detailing for {res.year} {res.make} {res.model}</Text>
+                  }
                   // count += 1;
                   if(res.cancelled=="no"){
                   return (
@@ -122,10 +134,11 @@ export default class OrderHistory extends Component {
                     </Text>
                   </View>
                       <View style={styles.textp}>
-                        <Text>
+                        {tag}
+                        {/* <Text>
                           {res.quantity} {res.units} delivered to {res.year}{" "}
                           {res.make} {res.model}
-                        </Text>
+                        </Text> */}
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Driver: {res.driverfname} {res.driverlname}</Text>
@@ -225,7 +238,7 @@ const styles = StyleSheet.create({
     // top:"5%",
     borderWidth: 1,
     borderRadius: 20,
-    marginBottom: 15,
+    marginBottom: 25,
   },
 
   //Addresses Underlined Header
