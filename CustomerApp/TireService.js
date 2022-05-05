@@ -111,9 +111,9 @@ export default class TireService extends Component {
       },
       datetimepicker:{
         isDateTimePickerVisible: false,
-        deliverydate: " ",
-        deliverytime: " ",
-        deliverydatetime: " ",
+        deliverydate: "",
+        deliverytime: "",
+        deliverydatetime: "",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         // fname: this.user,
       },

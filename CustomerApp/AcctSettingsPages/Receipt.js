@@ -154,10 +154,25 @@ export default class Receipt extends Component {
     }
     else
     {
-      fulfilled=<Text style={styles.boxfontsbody}>Reason for cancellation: {this.state.orders[0].canceldetails}</Text>
+      fulfilled=<Text style={styles.boxfontsbody}>
+                  
+      <Text style={styles.boxfontshead}>
+          {this.state.orders[0].driverfname} {this.state.orders[0].driverlname}
+      </Text>{" "}
+      delivered your order on
+      <Text style={styles.boxfontshead}>
+        {this.state.orders[0].deliverydate}
+      </Text>{" "}
+      at{" "}
+      <Text style={styles.boxfontshead}>
+        {this.state.orders[0].deliverytime}
+      </Text>
+      .
+    </Text>
     }
 
     var service
+    var serviceprice
     if(this.state.orders[0].service == "Gas Delivery Service")
     {
         service=<Text style={styles.boxfontsbody}>
@@ -170,6 +185,34 @@ export default class Receipt extends Component {
           {this.state.orders[0].type}
         </Text>{"\n"}
       </Text>
+
+      serviceprice=
+              <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                    zIndex: 1,
+                  }}
+                >
+                  <View>
+                    <Text style={styles.boxfontsbody}>
+                      {this.state.orders[0].type}
+                      {"\n"}Gas price per gallon:{" "}
+                    </Text>
+                    <Text style={styles.boxfontsbody}>
+                      {"\n"}Number of gallons:{" "}
+                    </Text>
+                  </View>
+
+                  <View>
+                    <Text style={styles.boxfontshead}>
+                      {"\n"}${this.state.orders[0].price} {"\n"}
+                    </Text>
+                    <Text style={styles.boxfontshead}>
+                      x {this.state.orders[0].quantity} {"\n"}
+                    </Text>
+                  </View>
+                </View>
     }
 
     else if(this.state.orders[0].service == "Tire Delivery Service")
@@ -181,6 +224,34 @@ export default class Receipt extends Component {
         </Text>{" "}
         tires{"\n"}
       </Text>
+
+      serviceprice=
+      <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                    zIndex: 1,
+                  }}
+                >
+                  <View>
+                    <Text style={styles.boxfontsbody}>
+                      {this.state.orders[0].type}
+                      {"\n"}Price per tire:{" "}
+                    </Text>
+                    <Text style={styles.boxfontsbody}>
+                      {"\n"}Number of tires:{" "}
+                    </Text>
+                  </View>
+
+                  <View>
+                    <Text style={styles.boxfontshead}>
+                      {"\n"}${this.state.orders[0].price} {"\n"}
+                    </Text>
+                    <Text style={styles.boxfontshead}>
+                      x {this.state.orders[0].quantity} {"\n"}
+                    </Text>
+                  </View>
+                </View>
     }
     
     else{
@@ -190,6 +261,34 @@ export default class Receipt extends Component {
         </Text>{" "}
         Detailing Service{"\n"}
       </Text>
+
+      serviceprice=
+      <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                    zIndex: 1,
+                  }}
+                >
+                  <View>
+                    <Text style={styles.boxfontsbody}>
+                      {this.state.orders[0].type}
+                      {"\n"}Detailing Price:{" "}
+                    </Text>
+                    <Text style={styles.boxfontsbody}>
+                      {"\n"}1 delivery:{" "}
+                    </Text>
+                  </View>
+
+                  <View>
+                    <Text style={styles.boxfontshead}>
+                      {"\n"}${this.state.orders[0].price} {"\n"}
+                    </Text>
+                    <Text style={styles.boxfontshead}>
+                      x {this.state.orders[0].quantity} {"\n"}
+                    </Text>
+                  </View>
+                </View>
 
     }
 
@@ -263,8 +362,9 @@ export default class Receipt extends Component {
                     borderBottomWidth: 2,
                   }}
                 />
+                {serviceprice}
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     flexWrap: "nowrap",
@@ -289,7 +389,7 @@ export default class Receipt extends Component {
                       x {this.state.orders[0].quantity} {"\n"}
                     </Text>
                   </View>
-                </View>
+                </View> */}
 
                 <View
                   style={{
@@ -421,13 +521,13 @@ export default class Receipt extends Component {
                 <Text style={styles.boxfontsbody}>Notes from driver: {this.state.orders[0].drivernotes}</Text>
                 {tag}
 
-                <View style={buttonstyles.button}>
+                {/* <View style={buttonstyles.button}>
                   <Button
                     title="Home"
                     color="white"
                     onPress={() => this.props.navigation.navigate("Tabs")}
                   />
-                </View>
+                </View> */}
                 
               </ScrollView>
             </View>
@@ -510,9 +610,10 @@ const styles = StyleSheet.create({
     fontSize: 35,
     lineHeight: 70,
     fontWeight: "bold",
-    textAlign: "center",
-    // flex: 1,
-    top: 0,
+    // textAlign: "left",
+    flex: 1,
+    // top: 0,
+    left: 20
   },
 
   services: {

@@ -5,6 +5,7 @@ import {
   Button,
   Text,
   ImageBackground,
+  Alert
 } from 'react-native'
 import { React, Component } from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -61,24 +62,55 @@ export default class BookAppointment extends Component {
 
 
   setDeliveryTime = (data) => {
-    day = data.getDate();
-    month = (data.getMonth() + 1);
-    year = data.getFullYear();
-    hours = data.getHours();
-    minutes = data.getMinutes();
+    // console.log("Booking time data: ", data)
+    var day = data.getDate();
+    var month = (data.getMonth() + 1);
+    var year = data.getFullYear();
+    var hours = data.getHours();
+    var minutes = data.getMinutes();
 
     if(minutes < 10)
     {
       minutes = '0'+minutes
     }
 
-    ampm = hours >= 12 ? 'PM' : 'AM';
-    hours =  (hours % 12);
-    this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
+    console.log("Epic hours: ",hours)
+
+    if(hours < 9 || hours > 16){
+      Alert.alert(
+        "Alert",
+        "Please choose at time between 9:00 AM and 5:00 PM",
+        [
+          {
+            text: "Dismiss",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          // { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    }
+
+    else{
+
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        // hours =  (hours % 12);
+        if (hours % 12 == 0)
+        {
+          hours = 12
+        }
+        else{
+          hours =  (hours % 12)
+        }
+        
 
 
-    this.setState({deliveryTime: this.delivery}, () =>
-    (this.props.onHandleDatePicked(this.state)))
+        this.delivery =  month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm
+
+
+        this.setState({deliveryTime: this.delivery}, () =>
+        (this.props.onHandleDatePicked(this.state)))
+      }
   }
   
   formatDate = (data) => {

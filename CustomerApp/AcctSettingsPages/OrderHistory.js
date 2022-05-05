@@ -142,6 +142,7 @@ export default class OrderHistory extends Component {
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Driver: {res.driverfname} {res.driverlname}</Text>
+                        <Text>O. no: {res.ordernumber}:</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                       <TouchableOpacity style={styles.button1}>
@@ -168,11 +169,12 @@ export default class OrderHistory extends Component {
                   </View>
                       <View style={styles.textp}>
                         <Text>
-                          {res.quantity} {res.units} delivered to {res.year}{" "}
+                          Order NOT delivered to {res.year}{" "}
                           {res.make} {res.model}
                         </Text>
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled} (cancelled)</Text>
+                        <Text>O. no: {res.ordernumber}:</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                       <TouchableOpacity style={styles.button1}>
@@ -380,7 +382,7 @@ const styles = StyleSheet.create({
     //height: 35,
     height: "24%",
     //top: 44,
-    top: "28%",
+    top: "15%",
     padding: "-5%",
     borderWidth: 1,
     borderRadius: 10,

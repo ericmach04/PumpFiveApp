@@ -149,6 +149,16 @@ export default class DriverOrder extends Component {
   };
 
   updateGasQuantity(quantity, id){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.get().then((res) => {
       const { price } = res.data();
@@ -159,6 +169,7 @@ export default class DriverOrder extends Component {
       updateDBRef.update("quantity", quantity)
       updateDBRef.update("fulfilled", "yes")
       updateDBRef.update("driveremail", auth.currentUser?.email)
+      updateDBRef.update("deliverytime", time)
       const state = this.state;
       state["orderfulfilled"] = true;
       this.setState(state);
@@ -168,6 +179,18 @@ export default class DriverOrder extends Component {
   }
 
   updateTireSize(size, id, quantity){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
+    
+
     console.log("TIre id: ", id)
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.update("type", size)
@@ -179,6 +202,7 @@ export default class DriverOrder extends Component {
     // var total;
     updateDBRef.update("fulfilled", "yes")
     updateDBRef.update("driveremail", auth.currentUser?.email)
+    updateDBRef.update("deliverytime", time)
     const state = this.state;
     state.servicetype = ''
     state.tireprice = ''
@@ -188,6 +212,16 @@ export default class DriverOrder extends Component {
   }
 
   updateDetailingOrder(id, notes){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
     console.log("TIre id: ", id)
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.update("drivernotes", notes)
@@ -199,6 +233,7 @@ export default class DriverOrder extends Component {
     // var total;
     updateDBRef.update("fulfilled", "yes")
     updateDBRef.update("driveremail", auth.currentUser?.email)
+    updateDBRef.update("deliverytime", time)
     const state = this.state;
     state.servicetype = ''
     state.drivernotes = ''
@@ -276,6 +311,7 @@ export default class DriverOrder extends Component {
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
       var today = new Date();
+      console.log("New date today: ", today)
       const yyyy = today.getFullYear();
       let mm = today.getMonth() + 1; // Months start at 0!
       let dd = today.getDate();
@@ -321,6 +357,7 @@ export default class DriverOrder extends Component {
         });
       }
     });
+
     this.setState({
       allorders,
       isLoading: false,
@@ -328,7 +365,6 @@ export default class DriverOrder extends Component {
     // console.log("orders: ", this.state.allorders)
   };
   render() {
-
 
     if (this.state.isLoading) {
       return (
@@ -338,20 +374,20 @@ export default class DriverOrder extends Component {
       );
     }
     console.log("All orders: ", this.state.allorders)
-
-    //sorts all orders by delivery date and time 
     this.state.allorders
     .sort(function (a, b) {
       a.datetime = a.deliverydate.concat(" ",a.deliverytime)
       b.datetime = b.deliverydate.concat(" ",b.deliverytime)
       return new Date(a.datetime) - new Date(b.datetime)
     }) 
-
     if(this.state.allorders.length != 0)
     {
       console.log("Here for some reason ")
       var currorder = this.state.allorders[0]
-
+    //   var currorder=firebase.firestore().collection("Orders").doc("kRyLqxYoeloCrM2HpFvL").get()
+    //   .then((res) => {
+    //   console.log("Current order: ", res)
+    //   })
     
       console.log("My service type: ", this.state.servicetype)
 

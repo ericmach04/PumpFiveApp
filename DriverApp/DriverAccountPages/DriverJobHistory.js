@@ -242,12 +242,13 @@ export default class DriverJobHistory extends Component {
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
                         <Text>Reason: {res.canceldetails}</Text>
+                        <Text>O. no: {res.ordernumber}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
                       <TouchableOpacity style={styles.button1} disabled={true}>
                         <Button
-                          title="View Receipt"
+                          title=""
                           disabled={true}
                           onPress={() =>
                             this.props.navigation.navigate("Receipt", {
