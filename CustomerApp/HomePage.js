@@ -126,7 +126,9 @@ export default class HomePage extends Component {
         
               <View style={styles.scrollbox}>
               <ScrollView style={styles.scroll1}>
-                <View style={styles.rect2}>
+                {/* <View style={styles.rect2}> */}
+                <View style={styles.BoundingBox}>
+                  <View>
                     <Text style={styles.bofadeeznutsbold}>Regular Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].regular}</Text></Text>
                     <Text style={styles.bofadeeznutsbold}>Premium Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].premiumgas}</Text></Text>
                     <Text style={styles.bofadeeznutsbold}>Diesel Gas Price: <Text style={styles.embeddedText}>${this.state.prices[0].diesel}</Text></Text>
@@ -138,6 +140,7 @@ export default class HomePage extends Component {
                     <Text style={styles.bofadeeznutsbold}>Inside Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].inside}</Text></Text>
                     <Text style={styles.bofadeeznutsbold}>Outside Detailing Price: <Text style={styles.embeddedText}>${this.state.prices[0].outside}</Text></Text>
                     <Text style={styles.bofadeeznutsbold}>Both: <Text style={styles.embeddedText}>${this.state.prices[0].both}</Text></Text>
+                  </View>
                     
                 </View>
               </ScrollView>
@@ -266,6 +269,14 @@ const styles = StyleSheet.create({
     width: "90%",
     left: "5%",
     top: "50%",
+  },
+  BoundingBox: {
+    backgroundColor: "#CDCABF",
+    //borderWidth: 2,s
+    borderColor: "#000000",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 5,
+    marginBottom: 5,
   },
 })
 

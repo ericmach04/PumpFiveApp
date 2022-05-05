@@ -149,6 +149,16 @@ export default class DriverOrder extends Component {
   };
 
   updateGasQuantity(quantity, id){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.get().then((res) => {
       const { price } = res.data();
@@ -159,6 +169,7 @@ export default class DriverOrder extends Component {
       updateDBRef.update("quantity", quantity)
       updateDBRef.update("fulfilled", "yes")
       updateDBRef.update("driveremail", auth.currentUser?.email)
+      updateDBRef.update("deliverytime", time)
       const state = this.state;
       state["orderfulfilled"] = true;
       this.setState(state);
@@ -168,6 +179,18 @@ export default class DriverOrder extends Component {
   }
 
   updateTireSize(size, id, quantity){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
+    
+
     console.log("TIre id: ", id)
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.update("type", size)
@@ -179,6 +202,7 @@ export default class DriverOrder extends Component {
     // var total;
     updateDBRef.update("fulfilled", "yes")
     updateDBRef.update("driveremail", auth.currentUser?.email)
+    updateDBRef.update("deliverytime", time)
     const state = this.state;
     state.servicetype = ''
     state.tireprice = ''
@@ -188,6 +212,16 @@ export default class DriverOrder extends Component {
   }
 
   updateDetailingOrder(id, notes){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours=hours%12
+    if(minutes < 10)
+    {
+      minutes = '0'+minutes
+    }
+    var time = hours + ":" + minutes + ' '+ ampm
     console.log("TIre id: ", id)
     const updateDBRef = firebase.firestore().collection('Orders').doc(id)
     updateDBRef.update("drivernotes", notes)
@@ -199,6 +233,7 @@ export default class DriverOrder extends Component {
     // var total;
     updateDBRef.update("fulfilled", "yes")
     updateDBRef.update("driveremail", auth.currentUser?.email)
+    updateDBRef.update("deliverytime", time)
     const state = this.state;
     state.servicetype = ''
     state.drivernotes = ''
@@ -271,11 +306,23 @@ export default class DriverOrder extends Component {
     var units=''
     
     querySnapshot.forEach((res) => {
-      const { fname, lname, phone, email, color, fulfilled, deliverydate, driveremail, quantity, make, model, year, type, service, ordernumber, 
+      const { fname, lname, phone, email, color, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, 
         streetnumber, city, state, zip, license, subtotal, customernotes, cancelled} = res.data();
       // console.log("epicemail: ", email)
       // console.log("auth: ", auth.currentUser?.email)
-      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email) {
+      var today = new Date();
+      console.log("New date today: ", today)
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0!
+      let dd = today.getDate();
+
+      // if (dd < 10) dd = '0' + dd;
+      // if (mm < 10) mm = '0' + mm;
+
+      today = mm + '/' + dd + '/' + yyyy;
+      console.log("Today: ", today)
+      console.log("Delivery date: ", deliverydate)
+      if (cancelled=="no" && fulfilled=="no" && driveremail.toLowerCase()==auth.currentUser?.email && today==deliverydate) {
         if(service == 'gas'){
           units = "gallons of " + type + " gas"
         }
@@ -290,6 +337,7 @@ export default class DriverOrder extends Component {
           color,
           fulfilled,
           deliverydate,
+          deliverytime,
           driveremail,
           quantity,
           make,
@@ -309,6 +357,7 @@ export default class DriverOrder extends Component {
         });
       }
     });
+
     this.setState({
       allorders,
       isLoading: false,
@@ -354,6 +403,7 @@ export default class DriverOrder extends Component {
     getDirections(data)
   }
   render() {
+
     if (this.state.isLoading) {
       return (
         <View style={styles.loader}>
@@ -362,6 +412,12 @@ export default class DriverOrder extends Component {
       );
     }
     console.log("All orders: ", this.state.allorders)
+    this.state.allorders
+    .sort(function (a, b) {
+      a.datetime = a.deliverydate.concat(" ",a.deliverytime)
+      b.datetime = b.deliverydate.concat(" ",b.deliverytime)
+      return new Date(a.datetime) - new Date(b.datetime)
+    }) 
     if(this.state.allorders.length != 0)
     {
       console.log("Here for some reason ")
@@ -372,6 +428,21 @@ export default class DriverOrder extends Component {
     //   })
     
       console.log("My service type: ", this.state.servicetype)
+
+      var ordertype
+      if(currorder.service == "Gas Delivery Service")
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text>
+      }
+      else if(currorder.service == "Tire Delivery Service")
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>Tire Delivery: {currorder.quantity} tires</Text></Text>
+      }
+      else
+      {
+        ordertype = <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type} Detailing</Text></Text>
+      }
+
       if(this.state.servicetype ==  "tire")
       {
         return (
@@ -457,6 +528,16 @@ export default class DriverOrder extends Component {
                   // onPress={() => navigation.navigate('CalendarScreen')}
               />
             </View>
+            <View style={styles.button2}>
+              <Button
+                  title="Go Back"
+                  color="white"
+                  onPress={() => this.setState({
+                    cancelAttempt: false
+                  })}
+              />
+
+            </View>
             </ImageBackground>
           </View>
         )
@@ -468,8 +549,8 @@ export default class DriverOrder extends Component {
             {/* <Text style={styles.text}>Current Order: {currorder.service} </Text> */}
             <View style={styles.rect1}>
               
-              <Text style={styles.boxfontshead}>This order has been processed successfully. Click "next order" to retrieve your next order</Text>
-              <View style={styles.button1}>
+              <Text style={styles.boxfontshead}>This order has been processed successfully. Click "Next Order" to retrieve your next order</Text>
+              <View style={styles.button3}>
               <Button
                   title="Next Order"
                   color="white"
@@ -539,9 +620,11 @@ export default class DriverOrder extends Component {
           <Text style={styles.boxfontshead}>Order Number: <Text style={{color: "green"}}>{currorder.ordernumber}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Phone: <Text style={{color: "green"}}>{currorder.phone}</Text></Text>
-          <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text>
+          {/* <Text style={styles.boxfontshead}>Order Type: <Text style={{color: "green"}}>{currorder.type}</Text></Text> */}
+          {ordertype}
           <Text style={styles.boxfontshead}>Location: <Text style={{color: "green"}}>{currorder.streetnumber} {currorder.city} {currorder.state} {currorder.zip}</Text></Text>
           <Text style={styles.boxfontshead}>Vehicle: <Text style={{color: "green"}}>{currorder.year} {currorder.color} {currorder.make} {currorder.model}</Text></Text>
+          <Text style={styles.boxfontshead}>Time For Delivery: <Text style={{color: "green"}}>{currorder.deliverytime}</Text></Text>
           <Text style={styles.boxfontshead}>License Plate: <Text style={{color: "green"}}>{currorder.license}</Text></Text>
           {/* <Text style={styles.boxfontshead}>Notes from customer: <Text style={{color: "green"}}>{currorder.customernotes}</Text></Text> */}
         </View>
@@ -611,7 +694,7 @@ const styles = StyleSheet.create({
   rect1: {
     position: 'absolute',
     width: "90%",
-    height: "50%",
+    height: "55%",
     left: "5%",
     right: "5%",
     top: "20%",
@@ -623,10 +706,10 @@ const styles = StyleSheet.create({
   rect2: {
     position: 'absolute',
     width: "90%",
-    height: "22%",
+    height: "17%",
     left: "5%",
     right: "5%",
-    top: "70%",
+    top: "75%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
@@ -711,6 +794,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 20,
+  },
+  button3: {
+    position: 'absolute',
+    width: "35%",
+    height: "10%",
+    left: "20%",
+    top: "85%",
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    textAlign: "center",
   },
   text: {
     color: "white",

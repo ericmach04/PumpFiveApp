@@ -57,9 +57,10 @@ export default class DriverJobHistory extends Component {
         service,
         ordernumber,
       } = res.data();
-      console.log("Email1: ", email)
+      console.log("Email1: ", driveremail)
       console.log("Email2: ", auth.currentUser?.email)
-      if ((driveremail == auth.currentUser?.email && fulfilled == "yes") || (driveremail == auth.currentUser?.email && cancelled == "yes")) {
+      console.log("cancelled: ", cancelled)
+      if (((driveremail.toLowerCase() == auth.currentUser?.email) && fulfilled == "yes") || ((driveremail.toLowerCase() == auth.currentUser?.email) && cancelled == "yes")) {
         // this.state.count++
         if(cancelled=="no"){
           if (service == "gas") {
@@ -135,10 +136,12 @@ export default class DriverJobHistory extends Component {
               />
             </View>
            
+            
+              <Text style={styles.h1}>Job History</Text>
+             
+                <Text style={styles.h2}>Total jobs completed: {this.state.count}</Text>
+                <Text style={styles.h3}>Total jobs cancelled: {this.state.cancelledcount}</Text>
               
-            <Text style={styles.h1}>Job History</Text>
-              <Text style={styles.h2}>Total jobs completed: {this.state.count}</Text>
-              <Text style={styles.h3}>Total jobs cancelled: {this.state.cancelledcount}</Text>
               
             
 
@@ -150,6 +153,18 @@ export default class DriverJobHistory extends Component {
               
                 {this.state.orders.map((res, i) => {
                   // count += 1;
+                  var tag
+                  if(res.service == "Gas Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} gallon(s) of gas delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else if(res.service == "Tire Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} tire(s) delivered to{res.year} {res.make} {res.model}</Text>
+                  }
+                  else{
+                    tag=<Text>{res.type} detailing delivered to {res.year} {res.make} {res.model}</Text>
+                  }
 
                   return (
                   
@@ -163,19 +178,22 @@ export default class DriverJobHistory extends Component {
 
                       
                       <View style={styles.textp}>
-                        <Text>
+                        {tag}
+                        {/* <Text>
                           {res.quantity} {res.units} delivered to {res.year}{" "}
                           {res.make} {res.model}
-                        </Text>
+                        </Text> */}
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
+                        <Text>O. no: {res.ordernumber}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
-                      <TouchableOpacity style={styles.button1}>
+                      <TouchableOpacity style={styles.button1} disabled={true}>
                         <Button
-                          title="View Receipt"
+                          title=""
+                          disabled={true}
                           onPress={() =>
                             this.props.navigation.navigate("Receipt", {
                               userkey: res.ordernumber,
@@ -190,6 +208,18 @@ export default class DriverJobHistory extends Component {
 
                 {this.state.cancelledorders.map((res, i) => {
                   // count += 1;
+                  var tag
+                  if(res.service == "Gas Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} gallon(s) of gas NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else if(res.service == "Tire Delivery Service")
+                  {
+                    tag=<Text>{res.quantity} tire(s) NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
+                  else{
+                    tag=<Text>{res.type} detailing NOT delivered to {res.year} {res.make} {res.model}</Text>
+                  }
 
                   return (
                   
@@ -203,20 +233,23 @@ export default class DriverJobHistory extends Component {
 
                       
                       <View style={styles.textp}>
-                        <Text>
+                        {tag}
+                        {/* <Text>
                           {res.quantity} {res.units} NOT delivered to {res.year}{" "}
                           {res.make} {res.model}
-                        </Text>
+                        </Text> */}
                         <Text>Date of Order: {res.deliverydate}</Text>
                         <Text>Delivered?: {res.fulfilled}</Text>
                         <Text>Cancelled?: {res.cancelled}</Text>
                         <Text>Reason: {res.canceldetails}</Text>
+                        <Text>O. no: {res.ordernumber}</Text>
                         {/* <Text>Order#:  {res.ordernumber}</Text> */}
                       </View>
                      
-                      <TouchableOpacity style={styles.button1}>
+                      <TouchableOpacity style={styles.button1} disabled={true}>
                         <Button
-                          title="View Receipt"
+                          title=""
+                          disabled={true}
                           onPress={() =>
                             this.props.navigation.navigate("Receipt", {
                               userkey: res.ordernumber,
@@ -269,10 +302,10 @@ const styles = StyleSheet.create({
   },
   section: {
     // position: 'absolute',
-    width: "95%",
-    height: 164,
-    left: "1%",
-    top:"45%",
+    width: "100%",
+    height: 200,
+    left: "0%",
+    // top:"10%",
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 25,
@@ -370,7 +403,7 @@ const styles = StyleSheet.create({
     flex: 0.7,
     width: "90%",
     left: "5%",
-    top: "5%",
+    top: "20%",
   },
   scroll1: {
     flex: 1,
@@ -419,7 +452,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   textp: {
-    left: 20,
+    left: "2%",
   },
 
   //View Receipt Button - Order History
