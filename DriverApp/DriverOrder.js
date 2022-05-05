@@ -4,10 +4,10 @@ import { TouchableOpacity } from 'react-native-web';
 import firebase from "firebase"
 import {auth} from "../firebase"
 import { Picker } from "@react-native-picker/picker";
+import getDirections from 'react-native-google-maps-directions'
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
-const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
 
 export default class DriverOrder extends Component {
   constructor() {
@@ -315,6 +315,44 @@ export default class DriverOrder extends Component {
     });
     // console.log("orders: ", this.state.allorders)
   };
+  handleGetDirections = () => {
+    const data = {
+       source: {
+        latitude: -43.0385,
+        longitude: 18.6947617
+      },
+      destination: {
+        latitude: -33.8600024,
+        longitude: 18.697459
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "driving"        // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate"       // this instantly initializes navigation using the given travel mode
+        }
+      ],
+      waypoints: [
+        {
+          latitude: -33.8600025,
+          longitude: 18.697452
+        },
+        {
+          latitude: -33.8600026,
+          longitude: 18.697453
+        },
+           {
+          latitude: -33.8600036,
+          longitude: 18.697493
+        }
+      ]
+    }
+ 
+    getDirections(data)
+  }
   render() {
     if (this.state.isLoading) {
       return (
@@ -494,7 +532,9 @@ export default class DriverOrder extends Component {
         <View style={styles.rect1}>
           
 
-          <Image style={styles.Logo} source={require('../images/placeholdermap.png')}/>
+        <View style={styles.container}>
+        <Button onPress={this.handleGetDirections} title="Get Directions" />
+        </View>
           
           <Text style={styles.boxfontshead}>Order Number: <Text style={{color: "green"}}>{currorder.ordernumber}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
