@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-web';
 import firebase from "firebase"
 import {auth} from "../firebase"
 import { Picker } from "@react-native-picker/picker";
-import getDirections from 'react-native-google-maps-directions'
+import getDirections from 'react-native-google-maps-directions';
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";

@@ -4,6 +4,7 @@ import firebase from "firebase";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
 const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
@@ -98,6 +99,8 @@ export default class HomePage extends Component {
       isLoading: false,
     });
   };
+
+
   render(){
     console.log("Regular gas: ", this.state.prices)
     if (this.state.isLoading) {
