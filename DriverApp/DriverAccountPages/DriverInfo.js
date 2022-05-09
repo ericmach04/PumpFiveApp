@@ -70,7 +70,7 @@ export default class DriverInfo extends Component {
                     console.log(res.email);
     
                     return (
-                      <View>
+                      <View key={i}>
                         <Text style={styles.boxfontsbody}>First Name: {res.fname}</Text>
                         <Text style={styles.boxfontsbody}>Last Name: {res.lname}</Text>
                         <Text style={styles.boxfontsbody}>Email: {res.email}</Text>

@@ -149,7 +149,7 @@ export default class CarInfo extends Component {
                 count += 1;
 
                 return (
-                  <View style={styles.BoundingBox}>
+                  <View style={styles.BoundingBox} key={i}>
                     <Text style={styles.bofadeeznutsbold}>Car #{count}</Text>
                     <View style={{ top: "10%", left: "2%" }}>
                       <Text style={styles.bofadeeznuts}>

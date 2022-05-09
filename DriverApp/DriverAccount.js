@@ -85,7 +85,7 @@ import {
                   console.log(res.email);
   
                   return (
-                    <View>
+                    <View key={i}>
                       <View
                         style={{
                           flexDirection: "row",
@@ -359,16 +359,25 @@ import {
       borderColor: "#000000",
       borderRadius: 10,
     },
-  
     text: {
       color: "white",
       fontSize: 44,
       lineHeight: 46,
       fontWeight: "bold",
       textAlign: "center",
-      // flex: 1,
-      top: "10%",
+      flex: 1,
+      top: 20,
     },
+  
+    // text: {
+    //   color: "white",
+    //   fontSize: 44,
+    //   lineHeight: 46,
+    //   fontWeight: "bold",
+    //   textAlign: "center",
+    //   // flex: 1,
+    //   top: "10%",
+    // },
   
     // Addresses
     addrfontshead: {

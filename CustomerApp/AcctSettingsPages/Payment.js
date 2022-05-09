@@ -159,7 +159,7 @@ export default class Payment extends Component {
 
                   return (
                     //It will go here
-                    <View style={styles.BoundingBox}>
+                    <View style={styles.BoundingBox} key={i}>
                       <View
                         style={{
                           top: "12%",

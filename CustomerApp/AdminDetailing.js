@@ -208,7 +208,7 @@ import {
   
                   {this.state.prices.map((res, i) => {
                     return (
-                      <View>
+                      <View key={i}>
                         <Text style={styles.gastext2}>
                           Current Inside Price: {res.inside}
                         </Text>

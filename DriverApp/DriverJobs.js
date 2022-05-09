@@ -31,7 +31,7 @@ export default class DriverJobs extends Component {
     const orders = [];
     var units = ''
     querySnapshot.forEach((res) => {
-      const { email, fulfilled, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled } = res.data();
+      const { email, fulfilled, fname, deliverydate, deliverytime, driveremail, quantity, make, model, year, type, service, ordernumber, cancelled } = res.data();
       console.log("epicemail: ", email)
       console.log("auth: ", auth.currentUser?.email)
       if (cancelled == "no" && fulfilled == "no" && driveremail.toLowerCase() == auth.currentUser?.email) {
@@ -64,6 +64,7 @@ export default class DriverJobs extends Component {
           fulfilled,
           deliverydate,
           deliverytime,
+          fname,
           quantity,
           make,
           model,
@@ -134,7 +135,7 @@ export default class DriverJobs extends Component {
 
                     return (
 
-                      <View style={styles.section}>
+                      <View style={styles.section} key={i}>
                         <View>
                           <Text style={styles.bofadeeznutsbold}>
                             {/* {res.service.toUpperCase()} Delivery Service */}
@@ -146,6 +147,7 @@ export default class DriverJobs extends Component {
                         <View style={styles.textp}>
                           {/* <Text>{res.quantity} {res.units} delivered to {res.year} {res.make} {res.model}</Text> */}
                           {tag}
+                          <Text>Customer Name: {res.fname}</Text>
                           <Text>Date for Order: {res.deliverydate}</Text>
                           <Text>Time for Order: {res.deliverytime}</Text>
                           <Text>Delivered?:  {res.fulfilled}</Text>

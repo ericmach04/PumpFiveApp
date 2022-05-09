@@ -127,7 +127,7 @@ export default class OrderHistory extends Component {
                   if(res.cancelled=="no"){
                   return (
 
-                <View style={styles.section}>
+                <View style={styles.section} key={i}>
                   <View>
                     <Text style={styles.bofadeeznutsbold}>
                     {res.service}
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   textp: {
-    left: 20,
+    left: "2%",
   },
 
   //View Receipt Button - Order History
