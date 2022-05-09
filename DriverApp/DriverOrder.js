@@ -4,10 +4,11 @@ import { TouchableOpacity } from 'react-native-web';
 import firebase from "firebase"
 import {auth} from "../firebase"
 import { Picker } from "@react-native-picker/picker";
+import getDirections from 'react-native-google-maps-directions';
+
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
-const map = {uri: "https://entrecourier.com/wp-content/uploads/2020/06/storemap.jpg.webp"}
 
 export default class DriverOrder extends Component {
   constructor() {
@@ -370,6 +371,41 @@ export default class DriverOrder extends Component {
     });
     // console.log("orders: ", this.state.allorders)
   };
+  handleGetDirections = () => {
+    var currorder = this.state.allorders[0]
+    const data = {
+       source: {
+        latitude: "",
+        longitude: ""
+      },
+       destination: {
+         latitude: currorder.streetnumber,
+         longitude: ""
+       },
+      params: [
+        {
+          key: "travelmode",
+          value: "driving"        // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate"       // this instantly initializes navigation using the given travel mode
+        }
+      ],
+      waypoints: [
+        {
+          latitude: currorder.streetnumber, //destination goes here street number from firebase
+          longitude: ""
+        },
+        {
+          latitude: currorder.streetnumber, //destination goes here street number from firebase
+          longitude: ""
+        },
+      ]
+    }
+ 
+    getDirections(data)
+  }
   render() {
 
     if (this.state.isLoading) {
@@ -581,7 +617,8 @@ export default class DriverOrder extends Component {
         <View style={styles.rect1}>
           
 
-          <Image style={styles.Logo} source={require('../images/placeholdermap.png')}/>
+        
+        <Button onPress={this.handleGetDirections} title="Get Directions" />
           
           <Text style={styles.boxfontshead}>Order Number: <Text style={{color: "green"}}>{currorder.ordernumber}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
@@ -687,7 +724,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: "bold",
     textAlign: "left",
-    top: "35%",
+    top: "10%",
     left: "2%",
     // justifyContent: "center",
     // alignItems: "center",

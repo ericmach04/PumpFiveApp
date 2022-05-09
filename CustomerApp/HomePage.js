@@ -3,6 +3,8 @@ import React, { Component, useCallback } from 'react'
 import firebase from "firebase";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ScrollView } from 'react-native-gesture-handler';
+//import Geolocation from '@react-native-community/geolocation';
+
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";
 const supportedURL2 = "https://www.pumpfive.com/contact/";
@@ -98,6 +100,8 @@ export default class HomePage extends Component {
       isLoading: false,
     });
   };
+
+
   render(){
     console.log("Regular gas: ", this.state.prices)
     if (this.state.isLoading) {

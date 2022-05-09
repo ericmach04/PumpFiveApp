@@ -286,7 +286,7 @@ export default class GasService extends Component {
           zip: "",
           isLoading: false,
         });
-        this.props.navigation.navigate("OrderSummary", {
+        this.props.navigation.navigate("Stripe", {
           userkey: res.id,
         });
       })
@@ -820,9 +820,10 @@ export default class GasService extends Component {
                             <Button
                             title="Checkout"
                             color="white"
-                            onPress={() => this.addOrderToDB()}
+                            //onPress={() => this.addOrderToDB()}
                             // onPress={() => console.log("Card info: ", this.state.cardinfo)}
                             // onPress={() => this.checkCards()}
+                            onPress={() => this.addOrderToDB()}
                           /> 
                        
                          
