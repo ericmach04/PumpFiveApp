@@ -9,7 +9,8 @@ import {
   Keyboard,
   ActivityIndicator,
 } from "react-native";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useState,} from "react";
+import { KeyboardAvoidingView } from "react-native";
 import firebase from "firebase";
 import { auth } from "../../firebase";
 import { addAddress } from "../../firebasefunctions";
@@ -99,13 +100,16 @@ export default class AddAddress extends Component {
     }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      
+        {/* <View style={styles.container}> */}
           <ImageBackground
             source={require("../../images/pumpfivebackground.jpeg")}
             resizeMode="cover"
             style={styles.image}
           >
             <View style={styles.box1}>
+              <View style={styles.inputContainer}>
               <Text style={styles.h1}>Add Address</Text>
               <View style={styles.backbutton}>
                 <Button
@@ -115,10 +119,13 @@ export default class AddAddress extends Component {
                 />
               </View>
 
+              
+
               <Text style={styles.email}>Street Address: *</Text>
               <TextInput
                 style={styles.input}
                 placeholder={"Enter Street Address"}
+                placeholderTextColor="#D3D3D3"
                 value={this.state.streetnumber}
                 onChangeText={(val) =>
                   this.inputValueUpdate(val, "streetnumber")
@@ -133,6 +140,7 @@ export default class AddAddress extends Component {
               <TextInput
                 style={styles.input}
                 placeholder={"Enter City"}
+                placeholderTextColor="#D3D3D3"
                 value={this.state.city}
                 onChangeText={(val) => this.inputValueUpdate(val, "city")}
                 // value = {city}
@@ -144,7 +152,8 @@ export default class AddAddress extends Component {
               <Text style={styles.email}>State: *</Text>
               <TextInput
                 style={styles.input}
-                placeholder={"Enter State"}
+                placeholder={"Enter State Initials (ex: WI)"}
+                placeholderTextColor="#D3D3D3"
                 value={this.state.state}
                 onChangeText={(val) => this.inputValueUpdate(val, "state")}
                 // value = {state}
@@ -156,7 +165,8 @@ export default class AddAddress extends Component {
               <Text style={styles.email}>Zip Code: *</Text>
               <TextInput
                 style={styles.input}
-                placeholder={"Enter Zip Code"}
+                placeholder={"Enter Zip Code (5 digits)"}
+                placeholderTextColor="#D3D3D3"
                 value={this.state.zip}
                 onChangeText={(val) => this.inputValueUpdate(val, "zip")}
                 // value = {zip}
@@ -164,7 +174,8 @@ export default class AddAddress extends Component {
                 // placeholder="Enter Zip Code"
                 keyboardType="numeric"
               />
-            </View>
+              </View>
+            
             <View style={styles.paybutton}>
               <Button
                 title="Add Address"
@@ -173,8 +184,12 @@ export default class AddAddress extends Component {
                 //   onPress={() => navigation.navigate("AddCard")}
               />
             </View>
+            </View>
+            
           </ImageBackground>
-        </View>
+        {/* </View> */}
+      
+      </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
   }
@@ -197,6 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#CDCABF",
     borderWidth: 3,
     borderRadius: 20,
+    flex: 1,
   },
   h1: {
     position: "absolute",
@@ -255,14 +271,14 @@ const styles = StyleSheet.create({
   },
   paybutton: {
     width: "77%",
-    height: "5%",
-    bottom: "25%",
+    height: "6%",
+    bottom: "3%",
     left: "10%",
     backgroundColor: "#DAAC3F",
     position: "absolute",
   },
   email: {
-    top: "20%",
+    top: "30%",
     color: "black",
 
     fontSize: 20,
@@ -273,13 +289,13 @@ const styles = StyleSheet.create({
     left: "2%",
   },
   input: {
-    height: "4%",
+    height: "7.5%",
     margin: "1%",
     width: "90%",
     borderWidth: 1,
     padding: "1%",
     backgroundColor: "white",
-    top: "20%",
+    top: "30%",
     left: "2%",
   },
   preloader: {
@@ -290,5 +306,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });

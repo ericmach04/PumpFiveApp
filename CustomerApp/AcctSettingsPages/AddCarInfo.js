@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, Keyboard, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, TextInput, View, ImageBackground, Button, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, ActivityIndicator} from 'react-native'
 import React, {Component, useEffect, useState} from 'react';
 import firebase from "firebase";
 import { auth } from "../../firebase";
@@ -68,9 +68,11 @@ export default class AddCarInfo extends Component {
       }
     return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.container}>
         <ImageBackground source={require('../../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
           <View style={styles.box1}>
+            <View style={styles.inputContainer}>
             <Text style={styles.h1}>Add Car Info</Text>
             <View style={styles.backbutton}>
              <Button title="Back" color="white" onPress={() => this.props.navigation.navigate('CarInfo')}/>
@@ -79,7 +81,8 @@ export default class AddCarInfo extends Component {
                 <Text style={styles.email}>Car Make: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Make'}
+                        placeholder={'Enter Car Make (ex: Honda)'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.make}
                         onChangeText={(val) => this.inputValueUpdate(val, 'make')}
                         // value = {make}
@@ -91,7 +94,8 @@ export default class AddCarInfo extends Component {
                 <Text style={styles.email}>Car Model: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Model'}
+                        placeholder={'Enter Car Model (ex: Accord)'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.model}
                         onChangeText={(val) => this.inputValueUpdate(val, 'model')}
                         // value = {model}
@@ -103,7 +107,8 @@ export default class AddCarInfo extends Component {
                 <Text style={styles.email}>Car Year: *</Text>
                 <TextInput
                         style={styles.input}
-                        placeholder={'Enter Car Year'}
+                        placeholder={'Enter Car Year (YYYY)'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.year}
                         onChangeText={(val) => this.inputValueUpdate(val, 'year')}
                         // value = {year}
@@ -116,6 +121,7 @@ export default class AddCarInfo extends Component {
                 <TextInput
                         style={styles.input}
                         placeholder={'Enter Color of the Car'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.color}
                         onChangeText={(val) => this.inputValueUpdate(val, 'color')}
                         // value = {year}
@@ -128,6 +134,7 @@ export default class AddCarInfo extends Component {
                 <TextInput
                         style={styles.input}
                         placeholder={'Enter License Plate'}
+                        placeholderTextColor="#D3D3D3"
                         value={this.state.license}
                         onChangeText={(val) => this.inputValueUpdate(val, 'license')}
                         // value = {license}
@@ -136,7 +143,7 @@ export default class AddCarInfo extends Component {
                         // keyboardType="default"
                 />
 
-            
+            </View>
           </View>
           <View style={styles.paybutton}>
                 <Button
@@ -148,6 +155,7 @@ export default class AddCarInfo extends Component {
               </View>
         </ImageBackground>
       </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )}}
  
@@ -233,7 +241,7 @@ export default class AddCarInfo extends Component {
         position: "absolute",
       },
       email: {
-        top: "20%",
+        top: "25%",
         color: "black",
        
         fontSize: 20,
@@ -244,13 +252,13 @@ export default class AddCarInfo extends Component {
         left: "2%",
       },
       input: {
-        height: "4%",
+        height: "6%",
         margin: "1%",
         width: "90%",
         borderWidth: 1,
         padding: "1%",
         backgroundColor: "white",
-        top: "20%",
+        top: "25%",
         left: "2%",
       },
       preloader: {
@@ -261,5 +269,10 @@ export default class AddCarInfo extends Component {
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center'
+      },
+      inputContainer: {
+        width: "100%",
+        // justifyContent: 'center',
+        // alignItems: 'center',
       },
   })
