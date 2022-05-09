@@ -83,7 +83,7 @@ export default class AcctSettings extends Component {
                 console.log(res.email);
 
                 return (
-                  <View>
+                  <View key={i}>
                     <View
                       style={{
                         flexDirection: "row",

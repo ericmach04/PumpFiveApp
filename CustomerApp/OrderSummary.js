@@ -92,6 +92,7 @@ export default class OrderSummary extends Component {
   }
   render() {
     var service
+    var serviceprice
     if(this.state.service == "Gas Delivery Service")
     {
         service=<Text style={styles.boxfontsbody}>
@@ -104,6 +105,34 @@ export default class OrderSummary extends Component {
           {this.state.type}
         </Text>{"\n"}
       </Text>
+
+serviceprice=
+<View
+    style={{
+      flexDirection: "row",
+      flexWrap: "nowrap",
+      zIndex: 1,
+    }}
+  >
+    <View>
+      <Text style={styles.boxfontsbody}>
+        {this.state.type}
+        {"\n"}Gas price per gallon:{" "}
+      </Text>
+      <Text style={styles.boxfontsbody}>
+        {"\n"}Number of gallons:{" "}
+      </Text>
+    </View>
+
+    <View>
+      <Text style={styles.boxfontshead}>
+        {"\n"}${this.state.price} {"\n"}
+      </Text>
+      <Text style={styles.boxfontshead}>
+        x {this.state.quantity} {"\n"}
+      </Text>
+    </View>
+  </View>
     }
 
     else if(this.state.service == "Tire Delivery Service")
@@ -115,6 +144,34 @@ export default class OrderSummary extends Component {
         </Text>{" "}
         tires{"\n"}
       </Text>
+
+          serviceprice=
+          <View
+                      style={{
+                        flexDirection: "row",
+                        flexWrap: "nowrap",
+                        zIndex: 1,
+                      }}
+                    >
+                      <View>
+                        <Text style={styles.boxfontsbody}>
+                          {this.state.type}
+                          {"\n"}Price per tire:{" "}
+                        </Text>
+                        <Text style={styles.boxfontsbody}>
+                          {"\n"}Number of tires:{" "}
+                        </Text>
+                      </View>
+
+                      <View>
+                        <Text style={styles.boxfontshead}>
+                          {"\n"}${this.state.price} {"\n"}
+                        </Text>
+                        <Text style={styles.boxfontshead}>
+                          x {this.state.quantity} {"\n"}
+                        </Text>
+                      </View>
+                    </View>
     }
     
     else{
@@ -124,6 +181,34 @@ export default class OrderSummary extends Component {
         </Text>{" "}
         Detailing Service{"\n"}
       </Text>
+
+        serviceprice=
+        <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "nowrap",
+                      zIndex: 1,
+                    }}
+                  >
+                    <View>
+                      <Text style={styles.boxfontsbody}>
+                        {this.state.type}
+                        {"\n"}Detailing Price:{" "}
+                      </Text>
+                      <Text style={styles.boxfontsbody}>
+                        {"\n"}1 delivery:{" "}
+                      </Text>
+                    </View>
+
+                    <View>
+                      <Text style={styles.boxfontshead}>
+                        {"\n"}${this.state.price} {"\n"}
+                      </Text>
+                      <Text style={styles.boxfontshead}>
+                        x {this.state.quantity} {"\n"}
+                      </Text>
+                    </View>
+                  </View>
 
     }
     return (
@@ -177,7 +262,7 @@ export default class OrderSummary extends Component {
                   {"\n"}
                   Purchase Info:{" "}
                   <Text style={styles.boxfontshead}>
-                    {this.state.service} service
+                    {this.state.service}
                     {"\n"}
                   </Text>
                 </Text>
@@ -198,8 +283,9 @@ export default class OrderSummary extends Component {
                     borderBottomWidth: 2,
                   }}
                 />
+                {serviceprice}
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     flexWrap: "nowrap",
@@ -224,7 +310,7 @@ export default class OrderSummary extends Component {
                       x {this.state.quantity}{" "}
                     </Text>
                   </View>
-                </View>
+                </View> */}
 
                 <View
                   style={{
@@ -316,7 +402,7 @@ export default class OrderSummary extends Component {
                   <Text style={styles.boxfontshead}>
                     {this.state.driverfname} {this.state.driverlname}
                   </Text>{" "}
-                  will deliver your order on
+                  will deliver your order on{" "}
                   <Text style={styles.boxfontshead}>
                     {this.state.deliverydate}
                   </Text>{" "}
@@ -338,13 +424,13 @@ export default class OrderSummary extends Component {
                 </Text>
                 <Text style={styles.boxfontsbody}>Notes from driver: </Text>
 
-                <View style={buttonstyles.button}>
+                {/* <View style={buttonstyles.button}>
                   <Button
                     title="Home"
                     color="white"
                     onPress={() => this.props.navigation.navigate("Tabs")}
                   />
-                </View>
+                </View> */}
                 {/* <View style={buttonstyles.button2}>
                   <Button title="Home" color="white" onPress={() => this.props.navigation.navigate('Tabs')}/>
                 </View> */}
@@ -430,9 +516,10 @@ const styles = StyleSheet.create({
     fontSize: 35,
     lineHeight: 70,
     fontWeight: "bold",
-    textAlign: "center",
-    // flex: 1,
-    top: 0,
+    // textAlign: "left",
+    flex: 1,
+    // top: 0,
+    left: 20
   },
 
   services: {

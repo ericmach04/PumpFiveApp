@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, KeyboardAvoidingView, Keyboard, Alert } from 'react-native'
 // import {Dropdown } from 'react-native-material-dropdown';
 
 import firebase from 'firebase';
@@ -37,8 +37,9 @@ export default class AddressDropdown extends Component{
 handleMakeChange(e) {
   console.log("e: ", e)
   this.inputValueUpdate(e, 'make')
+  // console.log("Make: ", this.state.keyvals[this.state.text].make)
   this.props.onMakeValChange(e)
-  // console.log("value: ", e)
+  console.log("value: ", e)
 }
 handleModelChange(e) {
   // console.log("e: ", e)
@@ -182,17 +183,21 @@ handleColorChange(e) {
       var keys = this.state.keyvals
       var data2 = [["Big Data", "Hadoop", "Spark", "Hive"], ["Data Science" ,"Python","Ruby"]];
     
-    // console.log("Keys in render: ", keys)
-    // console.log("Text: ", this.state.text)
-    // // console.log(typeof this.state.text)
-    // console.log("Text Object: ", this.state.keyvals)
-    // console.log("New Data: ", data)
-    // console.log("Text: ", this.state.text)
-    // console.log("Object State: ", this.state.keyvals)
+      // if(this.state.keyvals[this.state.text]["make"] != '')
+      // {
+      //   console.log("Epic make: ", this.state.keyvals[this.state.text]["make"])
+      //   var count =1
+      //   if(count != 0)
+      //   {
+      //     this.handleMakeChange()
+      //   }
+       
+      //   // 
+      // }
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           
-        <View style={{top: "1%"}}> 
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
           <DropdownMenu
             // style={{top: "20%"}}
             // useNativeDriver={true}
@@ -205,7 +210,7 @@ handleColorChange(e) {
           >
           </DropdownMenu>
 
-          
+          <View style={styles.inputContainer}>
           <Text style={styles.email}>Car Make: *</Text>
           <View style={styles.input}>
                 <TextInput
@@ -213,6 +218,7 @@ handleColorChange(e) {
                         placeholder="Enter Car Make"
                         placeholderTextColor="#D3D3D3"
                         value={this.state.keyvals[this.state.text].make}
+                        // onChange={this.handleMakeChange}
                         onChangeText={this.handleMakeChange}
                         // onSelectionChange={this.handleMakeChange}
                 />
@@ -261,14 +267,9 @@ handleColorChange(e) {
                         onChangeText={this.handleLicenseChange}
                 />
                 </View>
-                
-                
-               
                 </View>
+                </KeyboardAvoidingView>
                 
-                
-                
-        // </TouchableWithoutFeedback>
       );
         }
       
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "25%",
+      // top: "25%",
       color: "black",
      
       fontSize: 20,
@@ -321,7 +322,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "25%",
+      // top: "25%",
       // left: "2%",
     },
     inputGroup: {

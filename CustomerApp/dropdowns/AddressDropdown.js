@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import { StyleSheet, Text, TextInput, View, SafeAreaView, ImageBackground, Button, ActivityIndicator, TouchableWithoutFeedback, Keyboard, Alert, KeyboardAvoidingView } from 'react-native'
 // import {Dropdown } from 'react-native-material-dropdown';
 
 import firebase from 'firebase';
@@ -198,8 +198,9 @@ export default class AddressDropdown extends Component{
     // console.log("Object State: ", this.state.keyvals)
       return (
         // <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
           
-        <View style={{top: "1%"}}> 
+        {/* // <View style={{top: "1%"}}>  */}
           <DropdownMenu
             // style={{top: "20%"}}
             // useNativeDriver={true}
@@ -212,7 +213,7 @@ export default class AddressDropdown extends Component{
           >
           </DropdownMenu>
 
-          
+          <View style={styles.inputContainer}>
           <Text style={styles.email}>Street Name and Number: *</Text>
           <View style={styles.input}>
                 <TextInput
@@ -257,16 +258,16 @@ export default class AddressDropdown extends Component{
                         onChangeText={this.handleZipChange}
                 />
                 </View>
-               
-                
-                
-                
-               
                 </View>
+               
                 
                 
                 
-        // </TouchableWithoutFeedback>
+               
+        {/* </View> */}
+        </KeyboardAvoidingView>
+                
+                
       );
         }
     
@@ -276,6 +277,7 @@ export default class AddressDropdown extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top: "1%"
   },
     backbutton2: {
       width: '18%', 
@@ -296,7 +298,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
     },
     email: {
-      top: "40%",
+      // top: "40%",
       color: "black",
      
       fontSize: 20,
@@ -307,13 +309,13 @@ const styles = StyleSheet.create({
       // left: "2%",
     },
     input: {
-      height: "7%",
+      height: "7.5%",
       margin: "1%",
       width: "90%",
       borderWidth: 1,
       padding: "1%",
       backgroundColor: "white",
-      top: "40%",
+      // top: "40%",
       // left: "2%",
     },
     inputGroup: {
@@ -332,6 +334,11 @@ const styles = StyleSheet.create({
       backgroundColor: "#DAAC3F",
       position: "absolute",
       // justifyContent: "center",
+    },
+    inputContainer: {
+      width: "100%",
+      // justifyContent: 'center',
+      // alignItems: 'center',
     },
 })
   

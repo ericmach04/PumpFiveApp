@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ScrollView, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ScrollView, ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import React, { Component } from 'react'
 import {useState} from "react";
@@ -383,6 +383,7 @@ export default class GasService extends Component {
 
   handleMakeChange(make) {
     const state = this.state;
+    console.log("Make: ", make)
     state.carinfo["make"] = make;
     this.setState(state);
   }
@@ -514,7 +515,8 @@ export default class GasService extends Component {
   if(this.state.reviewpressed == false) 
   {
     return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
          <ImageBackground source={require('../images/pumpfivebackground.jpeg')} style={styles.image}>
 
             {/* <SafeAreaView style={styles.container}> */}
@@ -674,7 +676,8 @@ export default class GasService extends Component {
               {/* </SafeAreaView> */}
             </SafeAreaView>
           </ImageBackground>
-        </View>
+        </KeyboardAvoidingView>
+        // </View>
       )
     } 
     else{

@@ -113,7 +113,7 @@ export default class Addresses extends Component {
               count += 1;
 
               return (
-                <View style={styles.BoundingBox}>
+                <View style={styles.BoundingBox} key={i}>
                   <View>
                     <Text style={styles.bofadeeznutsbold}>
                       Address #{count}
