@@ -10,13 +10,13 @@ import Stripe from "stripe";
 const stripe = Stripe(SECRET_KEY, { apiVersion: "2020-08-27" });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://10.162.21.79:${port}`);
+  console.log(`Example app listening at http://10.162.5.64:${port}`);
 });
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 100000, //lowest denomination of particular currency
+      amount: 1999, //lowest denomination of particular currency
       currency: "usd",
       payment_method_types: ["card"], //by default
     });

@@ -820,10 +820,7 @@ export default class GasService extends Component {
                             //onPress={() => this.addOrderToDB()}
                             // onPress={() => console.log("Card info: ", this.state.cardinfo)}
                             // onPress={() => this.checkCards()}
-                            //onPress={() => this.addOrderToDB()} 
-                            onPress={() =>
-                              this.props.navigation.navigate("Stripe")
-                            }
+                            onPress={() => this.addOrderToDB()}
                           /> 
                        
                          

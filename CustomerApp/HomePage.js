@@ -3,6 +3,7 @@ import React, { Component, useCallback } from 'react'
 import firebase from "firebase";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { ScrollView } from 'react-native-gesture-handler';
+//import Geolocation from '@react-native-community/geolocation';
 
 
 const supportedURL = "https://www.pumpfive.com/terms-conditions/";

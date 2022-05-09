@@ -217,12 +217,13 @@ import {Picker} from '@react-native-picker/picker'
 import reactDom from "react-dom";
 
 //ADD localhost address of your server
-const API_URL = "http://10.162.25.229:19002";
+const API_URL = "http://10.162.5.64:19002";
 
-const Stripe = props => {
+function Stripe({route, navigation}) {
   const [email, setEmail] = useState();
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
+  const userkey = route.params;
 
   const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(`${API_URL}/create-payment-intent`, {
@@ -258,8 +259,15 @@ const Stripe = props => {
         if (error) {
           alert(`Payment Confirmation Error ${error.message}`);
         } else if (paymentIntent) {
-          alert("Payment Successful");
+          alert("Payment Successful",
+          [
+            {
+              text: 'Ok', 
+              onPress: () => navigation.navigate('OrderSummary')
+            },
+          ]);
           console.log("Payment successful ", paymentIntent);
+          console.log("Uid", userkey);
         }
       }
     } catch (e) {
