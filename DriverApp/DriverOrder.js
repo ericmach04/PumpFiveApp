@@ -379,7 +379,7 @@ export default class DriverOrder extends Component {
         longitude: ""
       },
        destination: {
-         latitude: currorder.streetnumber,
+         latitude: currorder.streetnumber + " " +currorder.city + " " +currorder.state,
          longitude: ""
        },
       params: [
@@ -394,11 +394,11 @@ export default class DriverOrder extends Component {
       ],
       waypoints: [
         {
-          latitude: currorder.streetnumber, //destination goes here street number from firebase
+          latitude: currorder.streetnumber + " " + currorder.city + " " +currorder.state, //destination goes here street number from firebase
           longitude: ""
         },
         {
-          latitude: currorder.streetnumber, //destination goes here street number from firebase
+          latitude: currorder.streetnumber + " " +currorder.city + " " +currorder.state, //destination goes here street number from firebase
           longitude: ""
         },
       ]
