@@ -1,212 +1,5 @@
-// import firebase from "firebase";
-// import { auth } from "../firebase";
-// import PaymentDropdown from "./dropdowns/PaymentDropdown";
-// import { StyleSheet, Text, View, SafeAreaView, ImageBackground, Button, TextInput, UselessTextInput, ScrollView, ActivityIndicator } from 'react-native'
-// import {Picker} from '@react-native-picker/picker'
-// import React, { Component, useState } from 'react'
-// import { StripeProvider } from "@stripe/stripe-react-native";
-// import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
-
-// export default class Stripe extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.dbusers = firebase.firestore().collection('Users');
-//     this.handleNameChange = this.handleNameChange.bind(this);
-//     this.handleNumberChange = this.handleNumberChange.bind(this);
-//     this.handleTypeChange = this.handleTypeChange.bind(this);
-//     this.handleExpiryChange = this.handleExpiryChange.bind(this);
-//     this.handleCvvChange = this.handleCvvChange.bind(this);
-
-//     this.importCard = this.importCard.bind(this);
-//     this.importText = this.importText.bind(this);
-//     this.state = {
-//       reviewpressed: false,
-//       cardinfo: {
-//         name: "",
-//         number: "",
-//         type: "",
-//         expiry: "",
-//         cvv: "",
-//       },
-//       importedcardinfo: {
-//         name: "",
-//         number: "",
-//         type: "",
-//         expiry: "",
-//         cvv: "",
-//       },
-//       isLoading: false,
-//     }
-
-//   };
-//   componentDidMount() {
-//     this.dbusers.onSnapshot(this.getUserData);
-//   }
-//   getUserData = (querySnapshot) => {
-//     var drivers=[]
-   
-//     querySnapshot.forEach((res) => {
-//       const {email, fname, lname, phone, driver } = res.data();
-//       // console.log("email: ", email)
-//       if (email.toLowerCase() == auth.currentUser?.email) {
-//         // console.log("email: ", email)
-//         const state = this.state
-//         state.email = email
-//       }
-//     });
-//     this.setState({
-//       // keyvals: keyvalues,
-//       isLoading: false,
-//     });
-//   };
-
-//   importText(text){
-//     const state = this.state
-//     state.text = text
-//     this.setState(state)
-//     console.log("Imported Text: ", this.state.text)
-
-//   }
-//   importCard(carddata) {
-//     const state = this.state;
-//     state.importedcardinfo = carddata;
-//     this.setState(state);
-//     console.log("Imported Card state: ", this.state.importedcardinfo);
-//   }
-//   handleNameChange(name) {
-//     console.log("In name change");
-//     const state = this.state;
-//     state.cardinfo["name"] = name;
-//     this.setState(state);
-//   }
-
-//   handleNumberChange(number) {
-//     const state = this.state;
-//     state.cardinfo["number"] = number;
-//     this.setState(state);
-//   }
-//   handleTypeChange(type) {
-//     const state = this.state;
-//     state.cardinfo["type"] = type;
-//     this.setState(state);
-//   }
-//   handleExpiryChange(expiry) {
-//     const state = this.state;
-//     state.cardinfo["expiry"] = expiry;
-//     this.setState(state);
-//   }
-//   handleCvvChange(cvv) {
-//     const state = this.state;
-//     state.cardinfo["cvv"] = cvv;
-//     this.setState(state);
-//   }
-//   inputValueUpdate = (val, prop) => {
-//     const state = this.state;
-//     state.keyvals[this.state.text][prop] = val;
-//     this.setState(state);
-//     // console.log("Gas type?: ", this.state.type)
-//   };
-
-//   inputValueUpdate2 = (val, prop) => {
-//     const state = this.state;
-//     state[prop] = val;
-//     this.setState(state);
-//   }
-
-//   quantityInputValueUpdate = (val, prop) => {
-//     const state = this.state;
-//     state[prop] = val;
-//     this.setState(state);
-//     // console.log("quantity?: ", this.state.quantity)
-//   };
-//   render() {
-//     const name = this.props.name
-//     const number = this.props.number
-//     const type = this.props.type
-//     const expiry = this.props.expiry
-//     const cvv = this.props.cvv
-
-//   // const [email, setEmail] = useState();
-//   // const [cardDetails, setCardDetails] = useState();
-//   // const { confirmPayment, loading } = useConfirmPayment();
- 
-//     const carddata = this.props.carddata
-//     const text = this.props.text
-//     return (
-//       <StripeProvider publishableKey ="pk_test_uYutcjOEAFLWKxvdHKzCFeCw">
-//           <View style={styles.container}>
-//           <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
-//             <View style={styles.paymentinfo}>
-//                           <Text style={styles.boxfontshead}>Payment Information</Text>
-//                           <PaymentDropdown
-//                           name={name}
-//                           number={number}
-//                           type={type}
-//                           expiry={expiry}
-//                           cvv={cvv}
-//                           carddata={carddata}
-//                           text={text}
-//                           onNameValChange = {this.handleNameChange}
-//                           onNumberValChange = {this.handleNumberChange}
-//                           onTypeValChange = {this.handleTypeChange}
-//                           onExpiryValChange = {this.handleExpiryChange}
-//                           onCvvValChange = {this.handleCvvChange}
-//                           onExportCard = {this.importCard}
-//                           onTextValChange = {this.importText}
-//                           style={styles.dropdown}
-//                           />
-//                       </View>
-//             </ImageBackground>
-//           </View>
-//       </StripeProvider>
-
-//     )
-//   }
-// }
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   paymentinfo: {
-//     width: "90%",
-//     left: "5%",
-//     height: 750,
-//     backgroundColor: "#CDCABF",
-//     borderWidth: 2,
-//     borderColor: "#000000",
-//     borderRadius: 10,
-//   },
-
-//   boxfontshead: {
-//     color: "black",
-//     fontSize: 24,
-//     lineHeight: 30,
-//     fontWeight: "bold",
-//     textAlign: "center",
-//     top: "0%",
-//   },
-//   image: {
-//     flex: 1,
-//     justifyContent: "center",
-//   },
-//   button: {
-//     //flex: 1,
-//     width: "70%",
-//     height: 40,
-//     borderRadius: 5,
-//     backgroundColor: "black",
-//     //position: "absolute",
-//     left: "15%",
-//   },
-//   dropdown: {
-//     top: "20%",
-//     left: "5%",
-//   },
- 
-// })
-
 import React, { Component, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button, Alert, ImageBackground, Image } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Alert, ImageBackground, Image, } from "react-native";
 import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 import {StripeProvider} from "@stripe/stripe-react-native";
 import PaymentDropdown from "./dropdowns/PaymentDropdown";
@@ -217,9 +10,9 @@ import {Picker} from '@react-native-picker/picker'
 import reactDom from "react-dom";
 
 //ADD localhost address of your server
-const API_URL = "http://10.162.5.64:19002";
+const API_URL = "http://10.162.15.50:19002";
 
-function Stripe({route, navigation}) {
+export default function Stripe({ route, navigation }) {
   const [email, setEmail] = useState();
   const [cardDetails, setCardDetails] = useState();
   const { confirmPayment, loading } = useConfirmPayment();
@@ -259,15 +52,20 @@ function Stripe({route, navigation}) {
         if (error) {
           alert(`Payment Confirmation Error ${error.message}`);
         } else if (paymentIntent) {
-          alert("Payment Successful",
+          Alert.alert(
+            "Payment Successful",
+            "Click OK to continue",
           [
             {
               text: 'Ok', 
-              onPress: () => navigation.navigate('OrderSummary')
+              // onPress: () => navigation.navigate('OrderSummary')
+              onPress: () => navigation.navigate('OrderSummary', {
+                userid: userkey
+              })
             },
           ]);
           console.log("Payment successful ", paymentIntent);
-          console.log("Uid", userkey);
+          console.log("Uid:", userkey);
         }
       }
     } catch (e) {
@@ -277,9 +75,17 @@ function Stripe({route, navigation}) {
   };
 
   return (
+    
   <StripeProvider publishableKey ="pk_test_uYutcjOEAFLWKxvdHKzCFeCw">
           <View style={styles.container}>
           <ImageBackground source={require('../images/pumpfivebackground.jpeg')} resizeMode="cover" style={styles.image}>
+          <View style={styles.backbutton}>
+              <Button
+                title="Back"
+                color="white"
+                onPress={() => navigation.goBack()}
+              />
+            </View>
             <View style={styles.heading}>
               <Text style={styles.head}>Checkout</Text>
             </View>
@@ -328,7 +134,7 @@ function Stripe({route, navigation}) {
       </StripeProvider>
   );
 };
-export default Stripe;
+// export default Stripe;
 
 const styles = StyleSheet.create({
   container: {
@@ -366,6 +172,15 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     //position: "absolute",
     left: "15%",
+  },
+  backbutton: {
+    width: "18%",
+    height: 40,
+    top: "10%",
+    right: "5%",
+    borderRadius: 4,
+    backgroundColor: "#DAAC3F",
+    position: "absolute",
   },
   heading: {
     alignItems: "center",

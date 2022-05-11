@@ -47,10 +47,11 @@ export default class OrderSummary extends Component {
     };
   }
   componentDidMount() {
+    console.log("OSummaryKey: ", this.props.route.params.userid.userkey)
     const dbRef = firebase
       .firestore()
       .collection("Orders")
-      .doc(this.props.route.params.userkey);
+      .doc(this.props.route.params.userid.userkey);
     // const dbRef = firebase.firestore().collection('Orders').doc("YTdzKDUCVZ101z4dQmhn")
     dbRef.get().then((res) => {
       if (res.exists) {

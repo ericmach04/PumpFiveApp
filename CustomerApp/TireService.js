@@ -274,7 +274,7 @@ export default class TireService extends Component {
           zip: "",
           isLoading: false,
         });
-        this.props.navigation.navigate("OrderSummary", {
+        this.props.navigation.navigate("Stripe", {
           userkey: res.id,
         });
       })

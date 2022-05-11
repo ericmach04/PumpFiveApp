@@ -324,7 +324,7 @@ export default class DetailingService extends Component{
           zip: '',
           isLoading: false,
         });
-        this.props.navigation.navigate('OrderSummary', {
+        this.props.navigation.navigate('Stripe', {
           userkey: res.id
         })
       })

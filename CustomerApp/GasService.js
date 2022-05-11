@@ -546,34 +546,7 @@ export default class GasService extends Component {
 
                           </BookAppointment>
                   <Text style={styles.subheadings}>Selected date and time: {this.state.datetimepicker.deliverydatetime}</Text>
-                  {/* <View
-                    style={{
-                      flexDirection: "row",
-                      flexWrap: "nowrap",
-                      zIndex: 1,
-                    }}
-                  >
-                    <View>
-                      <TimeDropdown></TimeDropdown>
-                    </View>
-
-                    <View>
-                      <DayDropdown></DayDropdown>
-                    </View>
-                  </View> */}
-
-                  {/* <View>
-                    <Text style={styles.subheadings}>Quantity</Text>
-                    <TextInput
-                      style={styles.input}
-                      placeholder="Quantity (in Gallons)"
-                      placeholderTextColor="#D3D3D3"
-                      onChangeText={(val) =>
-                        this.quantityInputValueUpdate(val, "quantity")
-                      }
-                      keyboardType="numeric"
-                    />
-                  </View> */}
+                 
 
                   <Text style={styles.subheadings}>Type of Fuel</Text>
                   {/* <View 
@@ -786,12 +759,17 @@ export default class GasService extends Component {
                                reviewpressed: false
                              })}
                           /> 
-                       
-                         
-                     </View> 
+                     </View>
+                     <View style={styles.paybutton3}>
+                            <Button
+                            title="Checkout"
+                            color="white"
+                            onPress={() => this.addOrderToDB()}
+                          /> 
+                    </View>  
                  </View>
                  
-                 <View style={styles.paymentinfo}>
+                 {/* <View style={styles.paymentinfo}>
                           <Text style={styles.boxfontshead}>Payment Information</Text>
                           <PaymentDropdown
                           name={name}
@@ -809,25 +787,9 @@ export default class GasService extends Component {
                           onExportCard = {this.importCard}
                           onTextValChange = {this.importText}
                           />
-                      </View>
-                 
-                
-                 
-  
+                      </View> */}
                  
                  
-                  <View style={styles.paybutton3}>
-                            <Button
-                            title="Checkout"
-                            color="white"
-                            //onPress={() => this.addOrderToDB()}
-                            // onPress={() => console.log("Card info: ", this.state.cardinfo)}
-                            // onPress={() => this.checkCards()}
-                            onPress={() => this.addOrderToDB()}
-                          /> 
-                       
-                         
-                     </View> 
                      
                     
                  
@@ -880,7 +842,7 @@ const styles = StyleSheet.create({
   paybutton2: {
     // width: "77%",
     // height: "7%",
-    bottom: "1.5%",
+    bottom: "1.3%",
     left: "20%",
     borderRadius: 30,
     backgroundColor: "#DAAC3F",
@@ -890,7 +852,7 @@ const styles = StyleSheet.create({
   paybutton3: {
     // width: "77%",
     // height: "7%",
-    bottom: "5.5%",
+    bottom: "1.3%",
     right: "20%",
     borderRadius: 30,
     backgroundColor: "#DAAC3F",
