@@ -1,0 +1,24 @@
+{
+    "cust1": {
+        "firstname": "Eric",
+        "lastname": "Machamer",
+        "type": "customer",
+        "email": "ericmach04@yahoo.com",
+        "password": "password"
+    },
+    "cust2": {
+        "firstname": "Eric",
+        "lastname": "Machamer",
+        "type": "customer",
+        "email": "eric.machamer@marquette.edu",
+        "password": "password"
+    },
+    "cust3": {
+        "firstname": "Eric",
+        "lastname": "Machamer",
+        "type": "customer",
+        "email": "machamereric@gmail.com",
+        "password": "password"
+    }
+
+}

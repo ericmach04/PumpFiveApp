@@ -4,11 +4,12 @@
     "slug": "PumpFiveAppFolder",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./images/pumpfivelogo.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./images/pumpfivelogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,7 +18,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.example.PumpFiveApp",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDK6BoT0qxjpzuNCzGkD_M3fZb-wBGZtf8"
+      }
+
     },
     "android": {
       "adaptiveIcon": {
