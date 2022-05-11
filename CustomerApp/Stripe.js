@@ -10,7 +10,7 @@ import {Picker} from '@react-native-picker/picker'
 import reactDom from "react-dom";
 
 //ADD localhost address of your server
-const API_URL = "http://10.162.15.50:19002";
+const API_URL = "http://10.162.5.64:19002";
 
 export default function Stripe({ route, navigation }) {
   const [email, setEmail] = useState();
