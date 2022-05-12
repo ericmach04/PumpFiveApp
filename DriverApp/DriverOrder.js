@@ -617,8 +617,9 @@ export default class DriverOrder extends Component {
         <View style={styles.rect1}>
           
 
-        
+        <View style={{width: "50%", backgroundColor: "#DAAC3F", left: "25%", top: 20, borderRadius: 20}}>
         <Button onPress={this.handleGetDirections} title="Get Directions" />
+        </View>
           
           <Text style={styles.boxfontshead}>Order Number: <Text style={{color: "green"}}>{currorder.ordernumber}</Text></Text>
           <Text style={styles.boxfontshead}>Customer Name: <Text style={{color: "green"}}>{currorder.fname} {currorder.lname}</Text></Text>
@@ -709,10 +710,10 @@ const styles = StyleSheet.create({
   rect2: {
     position: 'absolute',
     width: "90%",
-    height: "17%",
+    height: "12%",
     left: "5%",
     right: "5%",
-    top: "75%",
+    top: "77%",
     backgroundColor: '#CDCABF',
     borderWidth: 3,
     borderColor: '#000000',
